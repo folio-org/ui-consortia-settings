@@ -1,0 +1,99 @@
+{
+  "name": "@folio/consortia-settings",
+  "version": "1.0.0",
+  "description": "Consortia settings",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/folio-org/ui-consortia-settings.git"
+  },
+  "license": "Apache-2.0",
+  "scripts": {
+    "start": "yarn stripes serve",
+    "build": "yarn stripes build --output ./output",
+    "test:unit": "jest --ci --coverage && yarn run test:unit:report",
+    "test:unit:report": "cp -r ./artifacts/coverage-jest ./artifacts/coverage",
+    "test": "yarn run test:unit",
+    "lint": "eslint .",
+    "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-consortia-settings ./translations/ui-consortia-settings/compiled",
+    "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.17.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@folio/eslint-config-stripes": "^6.1.0",
+    "@folio/stripes": "^8.0.0",
+    "@folio/stripes-cli": "^2.6.2",
+    "@formatjs/cli": "^4.2.16",
+    "@testing-library/dom": "^7.29.6",
+    "@testing-library/jest-dom": "^5.11.1",
+    "@testing-library/react": "^11.0.2",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/user-event": "^13.5.0",
+    "babel-jest": "^26.3.0",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "core-js": "^3.6.1",
+    "eslint": "^7.32.0",
+    "eslint-plugin-filenames": "^1.3.2",
+    "eslint-plugin-jest": "^23.0.4",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^26.4.2",
+    "jest-junit": "^11.1.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-final-form": "^6.4.0",
+    "react-intl": "^5.7.1",
+    "react-query": "^3.13.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "regenerator-runtime": "^0.13.3",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@rehooks/local-storage": "^2.4.4",
+    "final-form": "^4.20.9",
+    "lodash": "^4.17.11",
+    "prop-types": "^15.6.0",
+    "query-string": "^7.1.2",
+    "react-final-form": "^6.5.9",
+    "react-final-form-arrays": "^3.1.4",
+    "react-router-prop-types": "^1.0.5"
+  },
+  "peerDependencies": {
+    "@folio/stripes": "^8.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-intl": "^5.8.0",
+    "react-query": "^3.13.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0"
+  },
+  "stripes": {
+    "actsAs": [
+      "settings"
+    ],
+    "displayName": "ui-consortia-settings.meta.title",
+    "queryResource": "query",
+    "route": "/consortia-settings",
+    "okapiInterfaces": {},
+    "stripesDeps": [],
+    "permissionSets": [
+      {
+        "permissionName": "settings.consortia-settings.enabled",
+        "displayName": "Settings (Consortia): Can view settings",
+        "subPermissions": [
+          "settings.enabled"
+        ],
+        "visible": false
+      },
+      {
+        "permissionName": "ui-consortia-settings.settings.membership",
+        "displayName": "Settings (Consortia): Can manage consortium membership",
+        "subPermissions": [
+          "settings.consortia-settings.enabled"
+        ],
+        "visible": true
+      }
+    ]
+  }
+}
