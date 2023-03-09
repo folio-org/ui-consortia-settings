@@ -3,6 +3,10 @@ import { MemoryRouter } from 'react-router-dom';
 
 import ConsortiumSettings from './ConsortiumSettings';
 
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  CommandList: jest.fn(({ children }) => <>{children}</>),
+}));
 jest.mock('@folio/stripes/smart-components', () => ({
   ...jest.requireActual('@folio/stripes/smart-components'),
   Settings: jest.fn(() => 'ConsortiumSettings'),
