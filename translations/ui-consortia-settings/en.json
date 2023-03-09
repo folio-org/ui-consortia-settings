@@ -1,0 +1,11 @@
+{
+  "meta.title": "Consortium",
+
+  "settings.heading": "Network settings",
+  "settings.section.general": "General",
+
+  "settings.membership.heading": "Addresses",
+  "settings.membership.label": "Membership",
+
+  "permission.settings.membership": "Settings (Consortia): Can manage consortium membership"
+}
