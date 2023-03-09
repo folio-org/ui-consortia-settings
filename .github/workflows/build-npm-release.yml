@@ -39,7 +39,7 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - uses: folio-org/checkout@v3
+      - uses: folio-org/checkout@v2
         with:
           fetch-depth: 0
 
@@ -174,7 +174,7 @@ jobs:
         run: git fetch --no-tags ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY} +refs/heads/${{ env.DEFAULT_BRANCH }}:refs/remotes/origin/${{ env.DEFAULT_BRANCH }}
 
       - name: Run SonarCloud scan
-        uses: sonarsource/sonarcloud-github-action@v1
+        uses: sonarsource/sonarcloud-github-action@master
         with:
           args: >
             -Dsonar.organization=folio-org
