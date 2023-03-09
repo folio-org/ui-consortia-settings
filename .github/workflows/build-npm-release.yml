@@ -39,7 +39,7 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - uses: folio-org/checkout@v2
+      - uses: folio-org/checkout@v3
         with:
           fetch-depth: 0
 
@@ -174,7 +174,7 @@ jobs:
         run: git fetch --no-tags ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY} +refs/heads/${{ env.DEFAULT_BRANCH }}:refs/remotes/origin/${{ env.DEFAULT_BRANCH }}
 
       - name: Run SonarCloud scan
-        uses: sonarsource/sonarcloud-github-action@master
+        uses: sonarsource/sonarcloud-github-action@v1
         with:
           args: >
             -Dsonar.organization=folio-org
@@ -217,7 +217,7 @@ jobs:
       - name: Publish module descriptor to FOLIO registry
         if: ${{ env.PUBLISH_MOD_DESCRIPTOR == 'true' }}
         id: modDescriptorPost
-        uses: fjogeleit/http-request-action@master
+        uses: fjogeleit/http-request-action@v1
         with:
           url: ${{ env.FOLIO_MD_REGISTRY }}/_/proxy/modules
           method: 'POST'
