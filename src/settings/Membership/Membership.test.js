@@ -9,7 +9,7 @@ const renderMembershipSettings = () => render(
 );
 
 describe('Membership', () => {
-  it('should display controlled vocabulary setting', async () => {
+  it('should display controlled vocabulary setting', () => {
     renderMembershipSettings();
 
     expect(screen.getByText('ui-consortia-settings.settings.membership.list.tenantName')).toBeInTheDocument();
