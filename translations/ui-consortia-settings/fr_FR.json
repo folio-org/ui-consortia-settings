@@ -1,16 +1,16 @@
 {
     "meta.title": "Consortium",
     "settings.heading": "Network settings",
-    "settings.section.general": "General",
-    "settings.membership.heading": "Addresses",
+    "settings.section.general": "Général",
+    "settings.membership.heading": "Adresses",
     "settings.membership.label": "Membership",
     "settings.membership.list.cannotDeleteTermHeader": "Cannot delete the member",
     "settings.membership.list.cannotDeleteTermMessage": "This member cannot be deleted, as it is in use by one or more records.",
-    "settings.membership.list.deleteEntry": "Delete member",
-    "settings.membership.list.tenantName": "Name",
+    "settings.membership.list.deleteEntry": "Supprimer le membre",
+    "settings.membership.list.tenantName": "Nom",
     "settings.membership.list.tenantAddress": "Tenant address",
     "settings.membership.list.termDeleted": "The member <b>{term}</b> was successfully <b>deleted</b>",
     "settings.membership.list.termWillBeDeleted": "The member <b>{term}</b> will be <b>deleted.</b>",
-    "settings.membership.objectLabel": "Address",
+    "settings.membership.objectLabel": "Adresse",
     "permission.settings.membership": "Settings (Consortia): Can manage consortium membership"
 }
