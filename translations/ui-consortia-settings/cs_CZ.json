@@ -12,5 +12,5 @@
     "settings.membership.list.termDeleted": "Člen <b>{term}</b> byl úspěšně <b>smazán</b>",
     "settings.membership.list.termWillBeDeleted": "Člen <b>{term}</b> bude <b>smazán.</b>",
     "settings.membership.objectLabel": "Adresa",
-    "permission.settings.membership": "Nastavení (Konsorcium): Může spravovat členství v konsorciu"
+    "permission.settings.membership": "Nastavení (Konsorcia): Může spravovat členství v konsorciu"
 }
