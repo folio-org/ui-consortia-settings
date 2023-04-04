@@ -75,7 +75,9 @@
     "displayName": "ui-consortia-settings.meta.title",
     "queryResource": "query",
     "route": "/consortia-settings",
-    "okapiInterfaces": {},
+    "okapiInterfaces": {
+      "consortia": "1.0"
+    },
     "stripesDeps": [
       "@folio/stripes-acq-components"
     ],
@@ -89,10 +91,21 @@
         "visible": false
       },
       {
-        "permissionName": "ui-consortia-settings.settings.membership",
-        "displayName": "Settings (Consortia): Can manage consortium membership",
+        "permissionName": "ui-consortia-settings.settings.membership.view",
+        "displayName": "Settings (Consortia): Can view consortia membership",
         "subPermissions": [
-          "settings.consortia-settings.enabled"
+          "settings.consortia-settings.enabled",
+          "consortia.consortium.collection.get",
+          "consortia.tenants.collection.get"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-consortia-settings.settings.membership.edit",
+        "displayName": "Settings (Consortia): Can view and edit consortia membership",
+        "subPermissions": [
+          "ui-consortia-settings.settings.membership.view",
+          "consortia.tenants.item.put"
         ],
         "visible": true
       }

@@ -16,7 +16,7 @@ const sections = [
         component: Membership,
         label: <FormattedMessage id="ui-consortia-settings.settings.membership.label" />,
         route: 'membership',
-        perm: 'ui-consortia-settings.settings.membership',
+        perm: 'ui-consortia-settings.settings.membership.view',
       },
     ],
   },
