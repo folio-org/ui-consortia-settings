@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
+import { consortium } from '../../../test/jest/fixtures';
+import { useCurrentConsortium } from '../../hooks';
 import ConsortiumSettings from './ConsortiumSettings';
 
 jest.mock('@folio/stripes/components', () => ({
@@ -10,6 +12,10 @@ jest.mock('@folio/stripes/components', () => ({
 jest.mock('@folio/stripes/smart-components', () => ({
   ...jest.requireActual('@folio/stripes/smart-components'),
   Settings: jest.fn(() => 'ConsortiumSettings'),
+}));
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useCurrentConsortium: jest.fn(() => ({ consortium: {}, isLoading: false })),
 }));
 
 const defaultProps = {
@@ -34,6 +40,10 @@ const renderConsortiumSettings = (props = {}) => render(
 );
 
 describe('ConsortiumSettings', () => {
+  beforeEach(() => {
+    useCurrentConsortium.mockClear().mockReturnValue({ consortium, isLoading: false });
+  });
+
   it('should render consortium settings pane', () => {
     renderConsortiumSettings();
 

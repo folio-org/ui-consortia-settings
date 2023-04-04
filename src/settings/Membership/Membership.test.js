@@ -1,10 +1,41 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-import { Membership } from './Membership';
+import {
+  consortium,
+  tenants,
+} from '../../../test/jest/fixtures';
+import Membership from './Membership';
 
-const renderMembershipSettings = () => render(
-  <Membership />,
+jest.mock('@folio/stripes-smart-components/lib/ControlledVocab', () => jest.fn().mockReturnValue('ControlledVocab'));
+
+const defaultProps = {
+  stripes: {
+    hasPerm: jest.fn(),
+    connect: jest.fn(),
+  },
+  resources: {
+    values: {
+      records: tenants,
+    },
+  },
+  mutator: {
+    values: {
+      GET: jest.fn(),
+      PUT: jest.fn(),
+    },
+  },
+  consortium: {
+    ...consortium,
+    isLoading: false,
+  },
+};
+
+const renderMembershipSettings = (props = {}) => render(
+  <Membership
+    {...defaultProps}
+    {...props}
+  />,
   { wrapper: MemoryRouter },
 );
 
@@ -12,8 +43,6 @@ describe('Membership', () => {
   it('should display controlled vocabulary setting', () => {
     renderMembershipSettings();
 
-    expect(screen.getByText('ui-consortia-settings.settings.membership.list.tenantName')).toBeInTheDocument();
-    expect(screen.getByText('ui-consortia-settings.settings.membership.list.tenantAddress')).toBeInTheDocument();
-    expect(screen.getByText('stripes-smart-components.editableList.actionsColumnHeader')).toBeInTheDocument();
+    expect(screen.getByText('ControlledVocab')).toBeInTheDocument();
   });
 });
