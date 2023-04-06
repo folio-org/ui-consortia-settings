@@ -1,71 +1,91 @@
-import { noop } from 'lodash';
-import { FormattedMessage, useIntl } from 'react-intl';
+import PropTypes from 'prop-types';
+import { useMemo } from 'react';
+import { useIntl } from 'react-intl';
+import { flow } from 'lodash';
 
+import { stripesConnect } from '@folio/stripes/core';
 import { ControlledVocab } from '@folio/stripes/smart-components';
-import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
+import {
+  baseManifest,
+  getControlledVocabTranslations,
+  LoadingPane,
+} from '@folio/stripes-acq-components';
 
-import { tenants } from '../../../test/jest/fixtures/tenants';
+import { withConsortium } from '../../withConsortium';
+import {
+  COLUMN_MAPPING,
+  HIDDEN_FILEDS,
+  READONLY_FIELDS,
+  VISIBLE_FIELDS,
+} from './constants';
+import { validate } from './validate';
 
-/* TODO: replace mocks with actual resources during connecting with BE */
-const mockedStripes = {
-  connect: noop,
-  hasPerm: noop,
-};
-
-const mockMutator = {
-  values: {
-    POST: noop,
-  },
-  updaterIds: {
-    replace: noop,
-  },
-};
-
-const mockResources = {
-  values: { records: tenants },
-};
-
-const actionProps = {
-  edit: () => ({ disabled: true }),
-};
-
-const suppressEdit = () => false;
-/* ^^^ */
-
-const columnMapping = {
-  tenantName: <FormattedMessage id="ui-consortia-settings.settings.membership.list.tenantName" />,
-  tenantId: <FormattedMessage id="ui-consortia-settings.settings.membership.list.tenantAddress" />,
-};
-const hiddenFields = ['numberOfObjects', 'lastUpdated'];
-const visibleFields = ['tenantName', 'tenantId'];
-
-const suppressDelete = () => true;
-const actionSuppressor = { edit: suppressEdit, delete: suppressDelete };
-
-export const Membership = () => {
+const Membership = ({
+  stripes,
+  resources,
+  mutator,
+  consortium,
+}) => {
   const intl = useIntl();
+
+  const paneTitle = intl.formatMessage({ id: 'ui-consortia-settings.settings.membership.heading' });
+
+  const actionSuppressor = useMemo(() => ({
+    edit: () => !stripes.hasPerm('consortia.tenants.item.put'),
+    delete: () => true,
+  }), [stripes]);
+
+  if (consortium.isLoading) return <LoadingPane paneTitle={paneTitle} />;
 
   return (
     <ControlledVocab
       id="consortia-membership"
-      actionProps={actionProps}
       actionSuppressor={actionSuppressor}
       canCreate={false}
-      formType="final-form"
-      stripes={mockedStripes}
-      resources={mockResources}
-      readOnlyFields={['tenantId']}
-      mutator={mockMutator}
-      // TODO: replace according to the contract during connecting with BE
-      baseUrl="<REFINE endpoint>"
-      records="<REFINE fieldName>"
-      // ^^^
-      label={intl.formatMessage({ id: 'ui-consortia-settings.settings.membership.heading' })}
+      stripes={stripes}
+      mutator={mutator}
+      resources={resources}
+      readOnlyFields={READONLY_FIELDS}
+      baseUrl={`consortia/${consortium.id}/tenants`}
+      records="tenants"
+      label={paneTitle}
       objectLabel={intl.formatMessage({ id: 'ui-consortia-settings.settings.membership.objectLabel' })}
       translations={getControlledVocabTranslations('ui-consortia-settings.settings.membership.list')}
-      columnMapping={columnMapping}
-      hiddenFields={hiddenFields}
-      visibleFields={visibleFields}
+      columnMapping={COLUMN_MAPPING}
+      hiddenFields={HIDDEN_FILEDS}
+      visibleFields={VISIBLE_FIELDS}
+      validate={validate}
     />
   );
 };
+
+Membership.manifest = Object.freeze({
+  values: {
+    ...baseManifest,
+    path: 'consortia/!{consortium.id}/tenants',
+    records: 'tenants',
+    PUT: {
+      path: 'consortia/!{consortium.id}/tenants/%{activeRecord.id}',
+      headers: {
+        accept: 'application/json',
+      },
+    },
+  },
+  updaterIds: [],
+  activeRecord: {},
+});
+
+Membership.propTypes = {
+  consortium: PropTypes.object.isRequired,
+  stripes: PropTypes.shape({
+    connect: PropTypes.func.isRequired,
+    hasPerm: PropTypes.func.isRequired,
+  }).isRequired,
+  mutator: PropTypes.object.isRequired,
+  resources: PropTypes.object.isRequired,
+};
+
+export default flow(
+  stripesConnect,
+  withConsortium,
+)(Membership);

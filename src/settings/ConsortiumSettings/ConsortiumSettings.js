@@ -6,6 +6,7 @@ import {
 } from '@folio/stripes/components';
 import { Settings } from '@folio/stripes/smart-components';
 
+import { ConsortiumContextProvider } from '../../ConsortiumContext';
 import { Membership } from '../Membership';
 
 const sections = [
@@ -24,14 +25,16 @@ const sections = [
 
 const ConsortiumSettings = ({ ...props }) => {
   return (
-    <CommandList commands={defaultKeyboardShortcuts}>
-      <Settings
-        {...props}
-        navPaneWidth="25%"
-        paneTitle={<FormattedMessage id="ui-consortia-settings.settings.heading" />}
-        sections={sections}
-      />
-    </CommandList>
+    <ConsortiumContextProvider>
+      <CommandList commands={defaultKeyboardShortcuts}>
+        <Settings
+          {...props}
+          navPaneWidth="25%"
+          paneTitle={<FormattedMessage id="ui-consortia-settings.settings.heading" />}
+          sections={sections}
+        />
+      </CommandList>
+    </ConsortiumContextProvider>
   );
 };
 
