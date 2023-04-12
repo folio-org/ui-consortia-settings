@@ -40,6 +40,12 @@ const renderMembershipSettings = (props = {}) => render(
 );
 
 describe('Membership', () => {
+  it('should display loading pane while consortium data is loading', () => {
+    renderMembershipSettings({ consortium: { ...consortium, isLoading: true } });
+
+    expect(screen.queryByText('ControlledVocab')).not.toBeInTheDocument();
+  });
+
   it('should display controlled vocabulary setting', () => {
     renderMembershipSettings();
 
