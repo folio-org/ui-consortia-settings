@@ -14,10 +14,9 @@
 * [ ] Module only uses FOLIO interfaces already provided by previously accepted modules _e.g. a UI module cannot be accepted that relies on an interface only provided by a back end module that hasn't been accepted yet_
   * -_note: this UI module comes together with mod-consortia that is new module as well, can't mark this is completed, but as soon as mod-consortia is accepted this point can be marked as done
 * [x] Module gracefully handles the absence of third party systems or related configuration
-* [ ] Sonarqube hasn't identified any security issues, major code smells or excessive (>3%) duplication
-  * -_note: code coverage has to be imroved
+* [x] Sonarqube hasn't identified any security issues, major code smells or excessive (>3%) duplication
 * [x] Uses [officially supported](https://wiki.folio.org/display/TC/Officially+Supported+Technologies) build tools
-* [ ] Unit tests have 80% coverage or greater, and are based on [officially approved technologies](https://wiki.folio.org/display/TC/Officially+Supported+Technologies)
+* [x] Unit tests have 80% coverage or greater, and are based on [officially approved technologies](https://wiki.folio.org/display/TC/Officially+Supported+Technologies)
 
 ## Frontend
 * [ ] If provided, End-to-end tests must be written in an [officially approved technology](https://wiki.folio.org/display/TC/Officially+Supported+Technologies)
