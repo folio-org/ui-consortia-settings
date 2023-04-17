@@ -12,5 +12,8 @@
     "settings.membership.list.termDeleted": "成员<b> {term} </b>已成功<b>删除</b>",
     "settings.membership.list.termWillBeDeleted": "成员<b> {term} </b>将被<b>删除。 </b>",
     "settings.membership.objectLabel": "地址",
-    "permission.settings.membership": "设置（联盟）：可以管理联盟成员"
+    "settings.membership.error.duplicate": "Name cannot be saved. This name is already in use in the consortium",
+    "settings.membership.error.nameExceedsLength": "Tenant name must not be longer than {count} characters",
+    "permission.settings.membership.view": "Settings (Consortia): Can view consortia membership",
+    "permission.settings.membership.edit": "Settings (Consortia): Can view and edit consortia membership"
 }

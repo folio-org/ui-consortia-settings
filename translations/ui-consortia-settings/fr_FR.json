@@ -12,5 +12,8 @@
     "settings.membership.list.termDeleted": "The member <b>{term}</b> was successfully <b>deleted</b>",
     "settings.membership.list.termWillBeDeleted": "The member <b>{term}</b> will be <b>deleted.</b>",
     "settings.membership.objectLabel": "Adresse",
-    "permission.settings.membership": "Settings (Consortia): Can manage consortium membership"
+    "settings.membership.error.duplicate": "Name cannot be saved. This name is already in use in the consortium",
+    "settings.membership.error.nameExceedsLength": "Tenant name must not be longer than {count} characters",
+    "permission.settings.membership.view": "Settings (Consortia): Can view consortia membership",
+    "permission.settings.membership.edit": "Settings (Consortia): Can view and edit consortia membership"
 }
