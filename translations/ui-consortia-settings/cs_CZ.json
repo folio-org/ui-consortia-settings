@@ -12,5 +12,8 @@
     "settings.membership.list.termDeleted": "Člen <b>{term}</b> byl úspěšně <b>smazán</b>",
     "settings.membership.list.termWillBeDeleted": "Člen <b>{term}</b> bude <b>smazán.</b>",
     "settings.membership.objectLabel": "Adresa",
-    "permission.settings.membership": "Nastavení (Konsorcia): Může spravovat členství v konsorciu"
+    "settings.membership.error.duplicate": "Jméno nelze uložit. Tento název se již v konsorciu používá",
+    "settings.membership.error.nameExceedsLength": "Jméno nájemce nesmí být delší než {count} znaků",
+    "permission.settings.membership.view": "Nastavení (konsorcia): Může zobrazit členství v konsorciích",
+    "permission.settings.membership.edit": "Nastavení (konsorcia): Může prohlížet a upravovat členství v konsorciích"
 }

@@ -12,5 +12,8 @@
     "settings.membership.list.termDeleted": "El miembro <b>{term}</b> se ha <b>eliminado</b> correctamente",
     "settings.membership.list.termWillBeDeleted": "El miembro <b>{term}</b> será <b>eliminado.</b>",
     "settings.membership.objectLabel": "Dirección",
-    "permission.settings.membership": "Configuración (Consorcios): puede administrar la membresía del consorcio"
+    "settings.membership.error.duplicate": "El nombre no se puede guardar. Este nombre ya está en uso en el consorcio",
+    "settings.membership.error.nameExceedsLength": "El nombre del inquilino no debe tener más de {count} caracteres",
+    "permission.settings.membership.view": "Configuración (Consorcios): Puede ver la pertenencia a consorcios",
+    "permission.settings.membership.edit": "Configuración (Consorcios): Puede ver y editar la pertenencia a consorcios"
 }
