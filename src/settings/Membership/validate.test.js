@@ -1,6 +1,8 @@
 import { FormattedMessage } from 'react-intl';
-
-import { MAX_CODE_LENGTH, MAX_NAME_LENGTH } from './constants';
+import {
+  MAX_CODE_LENGTH,
+  MAX_NAME_LENGTH,
+} from './constants';
 import { validate } from './validate';
 
 const items = [
