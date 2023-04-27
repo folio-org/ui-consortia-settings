@@ -1,11 +1,13 @@
 import { FormattedMessage } from 'react-intl';
-
-import { MAX_NAME_LENGTH } from './constants';
+import {
+  MAX_CODE_LENGTH,
+  MAX_NAME_LENGTH,
+} from './constants';
 import { validate } from './validate';
 
 const items = [
-  { name: 'foo', id: 'item-1' },
-  { name: 'bar', id: 'item-2' },
+  { code: 'aaa', name: 'foo', id: 'item-1' },
+  { code: 'bbb', name: 'bar', id: 'item-2' },
 ];
 
 describe('validate', () => {
@@ -34,5 +36,26 @@ describe('validate', () => {
     const errors = validate({ name: 'abc' }, 1, items);
 
     expect(errors.name).toBeUndefined();
+  });
+
+  it('should return max length error message for the code field', () => {
+    const errors = validate({ code: '1234' }, 1, items);
+
+    expect(errors.code).toEqual(
+      <FormattedMessage
+        id="ui-consortia-settings.settings.membership.error.codeExceedsLength"
+        values={{ count: MAX_CODE_LENGTH }}
+      />,
+    );
+  });
+
+  it('should return unique error message for the code field', () => {
+    const errors = validate({ code: 'aaa', name: 'new-item' }, 1, items);
+
+    expect(errors.code).toEqual(
+      <FormattedMessage
+        id="ui-consortia-settings.settings.membership.error.duplicate.code"
+      />,
+    );
   });
 });
