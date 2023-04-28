@@ -15,5 +15,8 @@
     "settings.membership.error.duplicate": "El nombre no se puede guardar. Este nombre ya está en uso en el consorcio",
     "settings.membership.error.nameExceedsLength": "El nombre del inquilino no debe tener más de {count} caracteres",
     "permission.settings.membership.view": "Configuración (Consorcios): Puede ver la pertenencia a consorcios",
-    "permission.settings.membership.edit": "Configuración (Consorcios): Puede ver y editar la pertenencia a consorcios"
+    "permission.settings.membership.edit": "Configuración (Consorcios): Puede ver y editar la pertenencia a consorcios",
+    "settings.membership.error.codeExceedsLength": "El código debe ser {count} caracteres alfanuméricos.",
+    "settings.membership.error.duplicate.code": "El código debe ser único.",
+    "settings.membership.list.tenantCode": "Código"
 }

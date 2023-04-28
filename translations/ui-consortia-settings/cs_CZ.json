@@ -7,13 +7,16 @@
     "settings.membership.list.cannotDeleteTermHeader": "Člena nelze smazat",
     "settings.membership.list.cannotDeleteTermMessage": "Tohoto člena nelze smazat, protože jej používá jeden nebo více záznamů.",
     "settings.membership.list.deleteEntry": "Smazat člena",
-    "settings.membership.list.tenantName": "Název",
+    "settings.membership.list.tenantName": "Jméno",
     "settings.membership.list.tenantAddress": "Adresa nájemce",
     "settings.membership.list.termDeleted": "Člen <b>{term}</b> byl úspěšně <b>smazán</b>",
     "settings.membership.list.termWillBeDeleted": "Člen <b>{term}</b> bude <b>smazán.</b>",
     "settings.membership.objectLabel": "Adresa",
-    "settings.membership.error.duplicate": "Jméno nelze uložit. Tento název se již v konsorciu používá",
+    "settings.membership.error.duplicate": "Název nelze uložit. Tento název je již v konsorciu používán.",
     "settings.membership.error.nameExceedsLength": "Jméno nájemce nesmí být delší než {count} znaků",
     "permission.settings.membership.view": "Nastavení (konsorcia): Může zobrazit členství v konsorciích",
-    "permission.settings.membership.edit": "Nastavení (konsorcia): Může prohlížet a upravovat členství v konsorciích"
+    "permission.settings.membership.edit": "Nastavení (konsorcia): Může prohlížet a upravovat členství v konsorciích",
+    "settings.membership.error.codeExceedsLength": "The code must be {count} character alphanumeric.",
+    "settings.membership.error.duplicate.code": "The code must be unique.",
+    "settings.membership.list.tenantCode": "Code"
 }
