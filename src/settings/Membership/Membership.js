@@ -64,10 +64,16 @@ Membership.manifest = Object.freeze({
     ...baseManifest,
     path: 'consortia/!{consortium.id}/tenants',
     records: 'tenants',
+    GET: {
+      headers: {
+        'X-Okapi-Tenant': '!{consortium.centralTenant}',
+      },
+    },
     PUT: {
       path: 'consortia/!{consortium.id}/tenants/%{activeRecord.id}',
       headers: {
         accept: 'application/json',
+        'X-Okapi-Tenant': '!{consortium.centralTenant}',
       },
     },
   },
