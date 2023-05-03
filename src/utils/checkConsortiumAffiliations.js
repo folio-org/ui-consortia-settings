@@ -11,7 +11,11 @@
    * @returns {boolean} true to show a "switch service points" menu item
    */
 export const checkConsortiumAffiliations = (stripes) => {
-  if (!stripes.hasInterface('consortia')) return false;
+  const moreThanOneAffiliation = stripes.consortium?.userAffiliations?.length > 1;
+  const consortiaEnabled = stripes.hasInterface('consortia');
+  const isVisible = moreThanOneAffiliation && consortiaEnabled;
+
+  if (!isVisible) return false;
 
   return true;
 };
