@@ -13,9 +13,7 @@
 export const checkConsortiumAffiliations = (stripes) => {
   const moreThanOneAffiliation = stripes.consortium?.userAffiliations?.length > 1;
   const consortiaEnabled = stripes.hasInterface('consortia');
-  const isVisible = moreThanOneAffiliation && consortiaEnabled;
+  const isVisible = Boolean(moreThanOneAffiliation && consortiaEnabled);
 
-  if (!isVisible) return false;
-
-  return true;
+  return isVisible;
 };
