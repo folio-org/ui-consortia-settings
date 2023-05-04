@@ -11,9 +11,8 @@ const DEFAULT_DATA = [];
 
 export const useUserAffiliations = ({ userId } = {}, options = {}) => {
   const ky = useOkapiKy();
-  const stripes = useStripes();
+  const { consortium } = useStripes();
 
-  const consortium = stripes.okapi.consortium;
   const api = ky.extend({
     hooks: {
       beforeRequest: [(req) => req.headers.set('X-Okapi-Tenant', consortium.centralTenant)],
