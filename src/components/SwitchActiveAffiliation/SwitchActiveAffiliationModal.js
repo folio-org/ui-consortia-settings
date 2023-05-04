@@ -64,8 +64,8 @@ export const SwitchActiveAffiliationModal = ({
 SwitchActiveAffiliationModal.propTypes = {
   activeAffiliation: PropTypes.string.isRequired,
   dataOptions: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
   })),
   isLoading: PropTypes.bool,
   onChangeActiveAffiliation: PropTypes.func.isRequired,
