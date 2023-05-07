@@ -26,14 +26,16 @@ export const SwitchActiveAffiliation = ({ stripes }) => {
   const history = useHistory();
   const modules = useModules();
   const [open, toggle] = useToggle(true);
-  const [activeAffiliation, setActiveAffiliation] = useState(stripes.consortium?.activeAffiliation?.tenantId);
+  const [activeAffiliation, setActiveAffiliation] = useState(stripes.okapi.tenant);
 
   const {
     affiliations,
     isFetching,
   } = useUserAffiliations({ userId: stripes.user.user.id });
 
-  const userPrimaryTenant = stripes.consortium?.userPrimaryTenant;
+  const userPrimaryTenant = useMemo(() => (
+    affiliations.find(({ isPrimary }) => Boolean(isPrimary))?.tenantId
+  ), [affiliations]);
 
   const dataOptions = useMemo(() => (
     affiliations?.map(({ tenantId, tenantName }) => {

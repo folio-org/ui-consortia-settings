@@ -1,17 +1,20 @@
 import PropTypes from 'prop-types';
-import { createContext } from 'react';
+import { createContext, useMemo } from 'react';
 
-import { useStripes } from '@folio/stripes/core';
+import { useCurrentConsortium } from './hooks';
 
 export const ConsortiumContext = createContext();
 
-const INITIAL_DATA = {};
-
 export const ConsortiumContextProvider = ({ children }) => {
-  const stripes = useStripes();
+  const { consortium, isLoading } = useCurrentConsortium();
+
+  const value = useMemo(() => ({
+    ...(consortium || {}),
+    isLoading,
+  }), [consortium, isLoading]);
 
   return (
-    <ConsortiumContext.Provider value={stripes.consortium || INITIAL_DATA}>
+    <ConsortiumContext.Provider value={value}>
       {children}
     </ConsortiumContext.Provider>
   );
