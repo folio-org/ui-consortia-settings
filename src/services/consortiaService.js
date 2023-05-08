@@ -29,17 +29,6 @@ export const fetchConsortium = ({ okapi }, tenant) => {
     .then(data => data.consortia[0]);
 };
 
-export const fetchConsortiumTenants = ({ okapi }, tenant, { id: consortiumId }) => {
-  return fetch(`${okapi.url}/consortia/${consortiumId}/tenants`, {
-    headers: {
-      'X-Okapi-Tenant': tenant,
-      'Content-Type': 'application/json',
-    },
-  })
-    .then(resp => resp.json())
-    .then(data => data.tenants);
-};
-
 export const fetchConsortiumUserTenants = ({ okapi }, tenant, { id: consortiumId }) => {
   return fetch(`${okapi.url}/consortia/${consortiumId}/user-tenants?userId=${okapi.currentUser.id}`, {
     headers: {

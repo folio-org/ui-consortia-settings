@@ -2,10 +2,9 @@ import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-import { updateConsortium } from '@folio/stripes/core';
+import { updateTenant } from '@folio/stripes/core';
 
 import {
-  consortium,
   tenants,
 } from '../../../test/jest/fixtures';
 import { useUserAffiliations } from '../../hooks';
@@ -17,7 +16,7 @@ jest.mock('../../hooks', () => ({
 }));
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
-  updateConsortium: jest.fn(),
+  updateTenant: jest.fn(),
   useModules: jest.fn(() => ({ app: [{ route: '/' }], settings: [] })),
 }));
 
@@ -75,11 +74,10 @@ describe('SwitchActiveAffiliation', () => {
     userEvent.click(screen.getByText(tenants[2].name));
     userEvent.click(screen.getByText('ui-consortia-settings.button.saveAndClose'));
 
-    expect(updateConsortium).toHaveBeenCalledWith(
+    expect(updateTenant).toHaveBeenCalledWith(
+      defaultProps.stripes.okapi,
       defaultProps.stripes.store,
-      expect.objectContaining({
-        activeAffiliation: affiliations[2],
-      }),
+      tenants[2].id,
     );
   });
 });
