@@ -1,4 +1,8 @@
-// TODO: add legacy token/cookie support
+import {
+  CONTENT_TYPE_HEADER,
+  OKAPI_TENANT_HEADER,
+} from '../constants';
+import { getLegacyTokenHeader } from '../utils';
 
 export const fetchConsortiaCentralTenant = ({ okapi }) => {
   const searchParams = new URLSearchParams({
@@ -6,10 +10,11 @@ export const fetchConsortiaCentralTenant = ({ okapi }) => {
   });
 
   return fetch(`${okapi.url}/configurations/entries?${searchParams}`, {
+    credentials: 'include',
     headers: {
-      'X-Okapi-Tenant': okapi.tenant,
-      'X-Okapi-Token': okapi.token,
-      'Content-Type': 'application/json',
+      [OKAPI_TENANT_HEADER]: okapi.tenant,
+      [CONTENT_TYPE_HEADER]: 'application/json',
+      ...getLegacyTokenHeader(okapi),
     },
   })
     .then(resp => resp.json())
@@ -21,8 +26,8 @@ export const fetchConsortiaCentralTenant = ({ okapi }) => {
 export const fetchConsortium = ({ okapi }, tenant) => {
   return fetch(`${okapi.url}/consortia`, {
     headers: {
-      'X-Okapi-Tenant': tenant,
-      'Content-Type': 'application/json',
+      [OKAPI_TENANT_HEADER]: tenant,
+      [CONTENT_TYPE_HEADER]: 'application/json',
     },
   })
     .then(resp => resp.json())
@@ -31,10 +36,11 @@ export const fetchConsortium = ({ okapi }, tenant) => {
 
 export const fetchConsortiumUserTenants = ({ okapi }, tenant, { id: consortiumId }) => {
   return fetch(`${okapi.url}/consortia/${consortiumId}/user-tenants?userId=${okapi.currentUser.id}`, {
+    credentials: 'include',
     headers: {
-      'X-Okapi-Tenant': tenant,
-      'X-Okapi-Token': okapi.token,
-      'Content-Type': 'application/json',
+      [OKAPI_TENANT_HEADER]: tenant,
+      [CONTENT_TYPE_HEADER]: 'application/json',
+      ...getLegacyTokenHeader(okapi),
     },
   })
     .then(resp => resp.json())

@@ -1,12 +1,14 @@
 import {
+  OKAPI_TENANT_HEADER,
+  OKAPI_TOKEN_HEADER,
+} from '../constants';
+import {
   fetchConsortiaCentralTenant,
   fetchConsortium,
   fetchConsortiumUserTenants,
 } from './consortiaService';
 
 const token = 'qwerty123';
-const xOkapiTenantHeader = 'X-Okapi-Tenant';
-const xOkapiTokenHeader = 'X-Okapi-Token';
 const defaultOkapiUrl = 'https://example.org';
 const defaultOkapiTenant = 'diku';
 
@@ -84,8 +86,9 @@ describe('consortiaService', () => {
       expect(global.fetch).toBeCalledWith(
         `${defaultOkapiUrl}/configurations/entries?${new URLSearchParams({ query: '(module=CONSORTIA and configName=centralTenantId)' })}`,
         {
+          credentials: 'include',
           headers: expect.objectContaining({
-            [xOkapiTenantHeader]: defaultOkapiTenant,
+            [OKAPI_TENANT_HEADER]: defaultOkapiTenant,
           }),
         },
       );
@@ -104,7 +107,7 @@ describe('consortiaService', () => {
         `${defaultOkapiUrl}/consortia`,
         {
           headers: expect.objectContaining({
-            [xOkapiTenantHeader]: defaultOkapiTenant,
+            [OKAPI_TENANT_HEADER]: defaultOkapiTenant,
           }),
         },
       );
@@ -124,9 +127,10 @@ describe('consortiaService', () => {
       expect(global.fetch).toBeCalledWith(
         `${defaultOkapiUrl}/consortia/${consortiumId}/user-tenants?userId=${userId}`,
         {
+          credentials: 'include',
           headers: expect.objectContaining({
-            [xOkapiTenantHeader]: defaultOkapiTenant,
-            [xOkapiTokenHeader]: token,
+            [OKAPI_TENANT_HEADER]: defaultOkapiTenant,
+            [OKAPI_TOKEN_HEADER]: token,
           }),
         },
       );

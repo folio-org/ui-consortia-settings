@@ -7,7 +7,7 @@ import { handleChangeAffilication } from './handleChangeAffilication';
 
 export const HANDLERS = {
   [coreEvents.LOGIN]: stripes => {
-    handleLogin(stripes);
+    handleLogin(stripes).catch();
   },
   CHANGE_ACTIVE_AFFILIATION: handleChangeAffilication,
 };
