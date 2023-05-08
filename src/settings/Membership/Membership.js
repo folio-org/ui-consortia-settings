@@ -11,6 +11,7 @@ import {
   LoadingPane,
 } from '@folio/stripes-acq-components';
 
+import { OKAPI_TENANT_HEADER } from '../../constants';
 import { withConsortium } from '../../withConsortium';
 import {
   COLUMN_MAPPING,
@@ -64,16 +65,13 @@ Membership.manifest = Object.freeze({
     ...baseManifest,
     path: 'consortia/!{consortium.id}/tenants',
     records: 'tenants',
-    GET: {
-      headers: {
-        'X-Okapi-Tenant': '!{consortium.centralTenant}',
-      },
+    headers: {
+      [OKAPI_TENANT_HEADER]: '!{consortium.centralTenant}',
     },
     PUT: {
       path: 'consortia/!{consortium.id}/tenants/%{activeRecord.id}',
       headers: {
         accept: 'application/json',
-        'X-Okapi-Tenant': '!{consortium.centralTenant}',
       },
     },
   },

@@ -7,6 +7,12 @@ import {
 } from '@folio/stripes/core';
 import { LIMIT_MAX } from '@folio/stripes-acq-components';
 
+import {
+  CONSORTIA_API,
+  CONSORTIA_USER_TENANTS_API,
+  OKAPI_TENANT_HEADER,
+} from '../../constants';
+
 const DEFAULT_DATA = [];
 
 export const useUserAffiliations = ({ userId } = {}, options = {}) => {
@@ -16,7 +22,7 @@ export const useUserAffiliations = ({ userId } = {}, options = {}) => {
 
   const api = ky.extend({
     hooks: {
-      beforeRequest: [(req) => req.headers.set('X-Okapi-Tenant', consortium?.centralTenantId)],
+      beforeRequest: [(req) => req.headers.set(OKAPI_TENANT_HEADER, consortium?.centralTenantId)],
     },
   });
 
@@ -25,16 +31,21 @@ export const useUserAffiliations = ({ userId } = {}, options = {}) => {
     limit: LIMIT_MAX,
   };
 
+  const enabled = Boolean(
+    consortium?.centralTenantId
+    && userId,
+  );
+
   const {
     isFetching,
-    isLoading,
+    isLoading: isAffiliationsLoading,
     data = {},
     refetch,
   } = useQuery(
-    [userId, consortium?.id],
+    ['user-tenants', userId, consortium?.id],
     async () => {
       const { userTenants, totalRecords } = await api.get(
-        `consortia/${consortium.id}/user-tenants`,
+        `${CONSORTIA_API}/${consortium.id}/${CONSORTIA_USER_TENANTS_API}`,
         { searchParams },
       ).json();
 
@@ -44,7 +55,7 @@ export const useUserAffiliations = ({ userId } = {}, options = {}) => {
       };
     },
     {
-      enabled: Boolean(consortium?.id && userId),
+      enabled,
       ...options,
     },
   );
@@ -53,9 +64,7 @@ export const useUserAffiliations = ({ userId } = {}, options = {}) => {
     affiliations: data.userTenants || DEFAULT_DATA,
     totalRecords: data.totalRecords,
     isFetching,
-    isLoading,
+    isLoading: isAffiliationsLoading,
     refetch,
   });
 };
-
-export default useUserAffiliations;

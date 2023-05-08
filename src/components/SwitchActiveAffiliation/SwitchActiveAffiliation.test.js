@@ -24,15 +24,13 @@ jest.mock('@folio/stripes/core', () => ({
 const defaultProps = {
   stripes: {
     store: {},
-    consortium: {
-      ...consortium,
-      activeAffiliation: { tenantId: tenants[0].id },
-      userPrimaryTenant: tenants[1].id,
-    },
     user: {
       user: {
         id: 'user-id',
       },
+    },
+    okapi: {
+      tenant: 'college',
     },
   },
 };
