@@ -1,3 +1,4 @@
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -7,6 +8,8 @@ import {
 import { Settings } from '@folio/stripes/smart-components';
 
 import { ConsortiumContextProvider } from '../../ConsortiumContext';
+import { eventHandler } from '../../eventHandler';
+import { checkConsortiumAffiliations } from '../../utils';
 import { Membership } from '../Membership';
 
 const sections = [
@@ -23,19 +26,27 @@ const sections = [
   },
 ];
 
-const ConsortiumSettings = ({ ...props }) => {
-  return (
-    <ConsortiumContextProvider>
-      <CommandList commands={defaultKeyboardShortcuts}>
-        <Settings
-          {...props}
-          navPaneWidth="25%"
-          paneTitle={<FormattedMessage id="ui-consortia-settings.settings.heading" />}
-          sections={sections}
-        />
-      </CommandList>
-    </ConsortiumContextProvider>
-  );
-};
+class ConsortiumSettings extends React.Component {
+  // Checks whether to show "Switch active affiliation" action item in the profile dropdown (package.json::stripes.links.userDropdown[0])
+  static checkConsortiumAffiliations = checkConsortiumAffiliations;
+
+  // Implementation of the handler specified in package.json ("stripes.handlerName")
+  static eventHandler = eventHandler;
+
+  render() {
+    return (
+      <ConsortiumContextProvider>
+        <CommandList commands={defaultKeyboardShortcuts}>
+          <Settings
+            {...this.props}
+            navPaneWidth="25%"
+            paneTitle={<FormattedMessage id="ui-consortia-settings.settings.heading" />}
+            sections={sections}
+          />
+        </CommandList>
+      </ConsortiumContextProvider>
+    );
+  }
+}
 
 export default ConsortiumSettings;

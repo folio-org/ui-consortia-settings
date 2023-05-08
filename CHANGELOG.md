@@ -7,3 +7,4 @@
 * [UICONSET-3](https://issues.folio.org/browse/UICONSET-3) Add controlled vocabulary component to render consortium members.
 * [UICONSET-4](https://issues.folio.org/browse/UICONSET-4) Integrate UI changes with BE contracts.
 * [UICONSET-6](https://issues.folio.org/browse/UICONSET-6) Add tenant code to tenant profile.
+* [UICONSET-18](https://issues.folio.org/browse/UICONSET-18) "Switch active affiliation" profile dropdown action.

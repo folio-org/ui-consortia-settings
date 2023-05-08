@@ -72,6 +72,7 @@
     "actsAs": [
       "settings"
     ],
+    "handlerName": "eventHandler",
     "displayName": "ui-consortia-settings.meta.title",
     "queryResource": "query",
     "route": "/consortia-settings",
@@ -81,6 +82,15 @@
     "stripesDeps": [
       "@folio/stripes-acq-components"
     ],
+    "links": {
+      "userDropdown": [
+        {
+          "event": "CHANGE_ACTIVE_AFFILIATION",
+          "caption": "ui-consortia-settings.switchActiveAffiliation.userDropdown.label",
+          "check": "checkConsortiumAffiliations"
+        }
+      ]
+    },
     "permissionSets": [
       {
         "permissionName": "settings.consortia-settings.enabled",
