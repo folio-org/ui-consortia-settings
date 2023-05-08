@@ -70,7 +70,8 @@
   },
   "stripes": {
     "actsAs": [
-      "settings"
+      "settings",
+      "handler"
     ],
     "handlerName": "eventHandler",
     "displayName": "ui-consortia-settings.meta.title",
