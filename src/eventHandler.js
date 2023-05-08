@@ -1,18 +1,10 @@
-import { coreEvents } from '@folio/stripes/core';
+import { HANDLERS } from './handlers';
 
-import { SwitchActiveAffiliation } from './components';
+export const eventHandler = (event, stripes) => {
+  const handler = HANDLERS[event];
 
-/**
- * eventHandler
- * @param {string} event
- * @param {object} stripes
- * @param {object} data
- *
- * @returns null, or a Component in order to prevent the event from propagating
- */
-export const eventHandler = (event) => {
-  if (event === coreEvents.CHANGE_ACTIVE_AFFILIATION) {
-    return SwitchActiveAffiliation;
+  if (handler) {
+    return handler(stripes);
   }
 
   return null;
