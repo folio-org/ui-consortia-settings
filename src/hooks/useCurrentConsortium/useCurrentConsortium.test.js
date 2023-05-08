@@ -58,7 +58,7 @@ describe('useCurrentConsortium', () => {
     useOkapiKy.mockClear().mockReturnValue(kyMock);
   });
 
-  it('should ', async () => {
+  it('should fetch consortia', async () => {
     const { result, waitFor } = renderHook(() => useCurrentConsortium(), { wrapper });
 
     await waitFor(() => !result.current.isLoading);

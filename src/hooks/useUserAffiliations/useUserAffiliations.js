@@ -1,7 +1,10 @@
 import orderBy from 'lodash/orderBy';
 import { useQuery } from 'react-query';
 
-import { useOkapiKy } from '@folio/stripes/core';
+import {
+  useOkapiKy,
+  useStripes,
+} from '@folio/stripes/core';
 import { LIMIT_MAX } from '@folio/stripes-acq-components';
 
 import {
@@ -9,25 +12,17 @@ import {
   CONSORTIA_USER_TENANTS_API,
   OKAPI_TENANT_HEADER,
 } from '../../constants';
-import { useCurrentConsortium } from '../useCurrentConsortium';
 
 const DEFAULT_DATA = [];
 
 export const useUserAffiliations = ({ userId } = {}, options = {}) => {
   const ky = useOkapiKy();
-
-  const {
-    consortium,
-    isLoading: isConsortiumLoading,
-  } = useCurrentConsortium();
+  const stripes = useStripes();
+  const consortium = stripes.user?.user?.consortium;
 
   const api = ky.extend({
     hooks: {
-      beforeRequest: [
-        request => {
-          request.headers.set(OKAPI_TENANT_HEADER, consortium.centralTenant);
-        },
-      ],
+      beforeRequest: [(req) => req.headers.set(OKAPI_TENANT_HEADER, consortium?.centralTenantId)],
     },
   });
 
@@ -37,8 +32,7 @@ export const useUserAffiliations = ({ userId } = {}, options = {}) => {
   };
 
   const enabled = Boolean(
-    consortium?.centralTenant
-    && consortium?.id
+    consortium?.centralTenantId
     && userId,
   );
 
@@ -66,13 +60,11 @@ export const useUserAffiliations = ({ userId } = {}, options = {}) => {
     },
   );
 
-  const isLoading = isAffiliationsLoading || isConsortiumLoading;
-
   return ({
     affiliations: data.userTenants || DEFAULT_DATA,
     totalRecords: data.totalRecords,
     isFetching,
-    isLoading,
+    isLoading: isAffiliationsLoading,
     refetch,
   });
 };

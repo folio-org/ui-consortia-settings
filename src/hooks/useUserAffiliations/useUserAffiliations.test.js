@@ -5,24 +5,17 @@ import {
 } from 'react-query';
 import orderBy from 'lodash/orderBy';
 
-import { useOkapiKy } from '@folio/stripes/core';
+import '@folio/stripes-acq-components/test/jest/__mock__';
+
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { LIMIT_MAX } from '@folio/stripes-acq-components';
 
 import { tenants } from '../../../test/jest/fixtures';
-import { useCurrentConsortium } from '../useCurrentConsortium';
 import { useUserAffiliations } from './useUserAffiliations';
-
-jest.mock('@folio/stripes/core', () => ({
-  ...jest.requireActual('@folio/stripes/core'),
-  useOkapiKy: jest.fn(),
-}));
-jest.mock('../useCurrentConsortium', () => ({
-  useCurrentConsortium: jest.fn(),
-}));
 
 const consortium = {
   id: 'consortium-id',
-  centralTenant: 'mobius',
+  centralTenantId: 'mobius',
 };
 const affiliations = tenants.map(({ id, name }) => ({ tenantId: id, tenantName: name }));
 
@@ -53,10 +46,21 @@ describe('useUserAffiliations', () => {
     }),
   };
 
+  beforeAll(() => {
+    const user = useStripes().user.user;
+
+    user.consortium = consortium;
+  });
+
   beforeEach(() => {
     mockGet.mockClear();
-    useCurrentConsortium.mockClear().mockReturnValue({ consortium });
     useOkapiKy.mockClear().mockReturnValue(kyMock);
+  });
+
+  afterAll(() => {
+    const user = useStripes().user.user;
+
+    user.consortium = undefined;
   });
 
   it('should fetch user\'s consortium affiliations by user\'s id', async () => {

@@ -11,7 +11,7 @@ import {
 
 import {
   stripesShape,
-  updateConsortium,
+  updateTenant,
   useModules,
 } from '@folio/stripes/core';
 import { useToggle } from '@folio/stripes-acq-components';
@@ -33,15 +33,11 @@ export const SwitchActiveAffiliation = ({ stripes }) => {
     isFetching,
   } = useUserAffiliations({ userId: stripes.user.user.id });
 
-  const userPrimaryTenant = useMemo(() => (
-    affiliations.find(({ isPrimary }) => Boolean(isPrimary))?.tenantId
-  ), [affiliations]);
-
   const dataOptions = useMemo(() => (
-    affiliations?.map(({ tenantId, tenantName }) => {
+    affiliations?.map(({ tenantId, tenantName, isPrimary }) => {
       const label = [
         tenantName,
-        (userPrimaryTenant === tenantId) && intl.formatMessage({ id: 'ui-consortia-settings.affiliation.primary.suffix' }),
+        isPrimary && intl.formatMessage({ id: 'ui-consortia-settings.affiliation.primary.suffix' }),
       ]
         .filter(Boolean)
         .join(' ');
@@ -51,21 +47,25 @@ export const SwitchActiveAffiliation = ({ stripes }) => {
         label,
       };
     })
-  ), [affiliations, intl, userPrimaryTenant]);
+  ), [affiliations, intl]);
 
   const resetCurrentModule = useCallback(() => {
     const path = getCurrentModulePath(modules, location.pathname) ?? '/';
 
     history.replace(path);
+    history.go(0);
   }, [history, modules, location.pathname]);
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = useCallback(async () => {
     const affiliation = affiliations.find(({ tenantId }) => tenantId === activeAffiliation);
 
     toggle();
-    updateConsortium(stripes.store, { activeAffiliation: affiliation });
+
+    await updateTenant(stripes.okapi, stripes.store, affiliation.tenantId);
+
     resetCurrentModule();
-  }, [activeAffiliation, affiliations, resetCurrentModule, stripes.store, toggle]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeAffiliation, affiliations, resetCurrentModule, toggle]);
 
   return (
     <SwitchActiveAffiliationModal
