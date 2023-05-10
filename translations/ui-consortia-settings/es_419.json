@@ -18,5 +18,10 @@
     "permission.settings.membership.edit": "Configuración (Consorcios): Puede ver y editar la pertenencia a consorcios",
     "settings.membership.error.codeExceedsLength": "El código debe ser {count} caracteres alfanuméricos.",
     "settings.membership.error.duplicate.code": "El código debe ser único.",
-    "settings.membership.list.tenantCode": "Código"
+    "settings.membership.list.tenantCode": "Código",
+    "affiliation.primary.suffix": "(Primary)",
+    "button.saveAndClose": "Save & close",
+    "switchActiveAffiliation.userDropdown.label": "Switch active affiliation",
+    "switchActiveAffiliation.modal.heading": "Select affiliation",
+    "switchActiveAffiliation.modal.select.label": "Consortium members"
 }

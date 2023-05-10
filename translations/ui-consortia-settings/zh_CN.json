@@ -18,5 +18,10 @@
     "permission.settings.membership.edit": "设置（联盟）：可以查看和编辑联盟成员",
     "settings.membership.error.codeExceedsLength": "The code must be {count} character alphanumeric.",
     "settings.membership.error.duplicate.code": "The code must be unique.",
-    "settings.membership.list.tenantCode": "Code"
+    "settings.membership.list.tenantCode": "Code",
+    "affiliation.primary.suffix": "(Primary)",
+    "button.saveAndClose": "Save & close",
+    "switchActiveAffiliation.userDropdown.label": "Switch active affiliation",
+    "switchActiveAffiliation.modal.heading": "Select affiliation",
+    "switchActiveAffiliation.modal.select.label": "Consortium members"
 }
