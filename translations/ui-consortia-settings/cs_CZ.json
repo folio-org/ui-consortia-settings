@@ -16,7 +16,12 @@
     "settings.membership.error.nameExceedsLength": "Jméno nájemce nesmí být delší než {count} znaků",
     "permission.settings.membership.view": "Nastavení (konsorcia): Může zobrazit členství v konsorciích",
     "permission.settings.membership.edit": "Nastavení (konsorcia): Může prohlížet a upravovat členství v konsorciích",
-    "settings.membership.error.codeExceedsLength": "The code must be {count} character alphanumeric.",
-    "settings.membership.error.duplicate.code": "The code must be unique.",
-    "settings.membership.list.tenantCode": "Code"
+    "settings.membership.error.codeExceedsLength": "Kód musí obsahovat {count} alfanumerických znaků.",
+    "settings.membership.error.duplicate.code": "Kód musí být jedinečný.",
+    "settings.membership.list.tenantCode": "Kód",
+    "affiliation.primary.suffix": "(Primary)",
+    "button.saveAndClose": "Save & close",
+    "switchActiveAffiliation.userDropdown.label": "Switch active affiliation",
+    "switchActiveAffiliation.modal.heading": "Select affiliation",
+    "switchActiveAffiliation.modal.select.label": "Consortium members"
 }

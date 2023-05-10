@@ -18,5 +18,10 @@
     "permission.settings.membership.edit": "Settings (Consortia): Can view and edit consortia membership",
     "settings.membership.error.codeExceedsLength": "The code must be {count} character alphanumeric.",
     "settings.membership.error.duplicate.code": "The code must be unique.",
-    "settings.membership.list.tenantCode": "コード"
+    "settings.membership.list.tenantCode": "コード",
+    "affiliation.primary.suffix": "(Primary)",
+    "button.saveAndClose": "Save & close",
+    "switchActiveAffiliation.userDropdown.label": "Switch active affiliation",
+    "switchActiveAffiliation.modal.heading": "Select affiliation",
+    "switchActiveAffiliation.modal.select.label": "Consortium members"
 }
