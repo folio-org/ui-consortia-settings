@@ -1,3 +1,5 @@
+import orderBy from 'lodash/orderBy';
+
 import {
   CONTENT_TYPE_HEADER,
   OKAPI_TENANT_HEADER,
@@ -5,11 +7,7 @@ import {
 import { getLegacyTokenHeader } from '../utils';
 
 export const fetchConsortiaCentralTenant = ({ okapi }) => {
-  const searchParams = new URLSearchParams({
-    query: '(module=CONSORTIA and configName=centralTenantId)',
-  });
-
-  return fetch(`${okapi.url}/configurations/entries?${searchParams}`, {
+  return fetch(`${okapi.url}/consortia-configuration`, {
     credentials: 'include',
     headers: {
       [OKAPI_TENANT_HEADER]: okapi.tenant,
@@ -19,7 +17,7 @@ export const fetchConsortiaCentralTenant = ({ okapi }) => {
   })
     .then(resp => resp.json())
     .then(data => {
-      return data.configs[0]?.value || okapi.tenant;
+      return data?.centralTenantId || okapi.tenant;
     });
 };
 
@@ -35,7 +33,7 @@ export const fetchConsortium = ({ okapi }, tenant) => {
 };
 
 export const fetchConsortiumUserTenants = ({ okapi }, tenant, { id: consortiumId }) => {
-  return fetch(`${okapi.url}/consortia/${consortiumId}/user-tenants?userId=${okapi.currentUser.id}`, {
+  return fetch(`${okapi.url}/consortia/${consortiumId}/_self`, {
     credentials: 'include',
     headers: {
       [OKAPI_TENANT_HEADER]: tenant,
@@ -44,5 +42,5 @@ export const fetchConsortiumUserTenants = ({ okapi }, tenant, { id: consortiumId
     },
   })
     .then(resp => resp.json())
-    .then(data => data.userTenants);
+    .then(data => orderBy(data.userTenants || [], 'tenantName'));
 };
