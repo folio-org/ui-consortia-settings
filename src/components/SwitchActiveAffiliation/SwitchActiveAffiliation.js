@@ -26,6 +26,7 @@ export const SwitchActiveAffiliation = ({ stripes }) => {
   const history = useHistory();
   const modules = useModules();
   const [open, toggle] = useToggle(true);
+  const [submitting, toggleSubmit] = useToggle(false);
   const [activeAffiliation, setActiveAffiliation] = useState(stripes.okapi.tenant);
 
   const {
@@ -59,19 +60,19 @@ export const SwitchActiveAffiliation = ({ stripes }) => {
   const onSubmit = useCallback(async () => {
     const affiliation = affiliations.find(({ tenantId }) => tenantId === activeAffiliation);
 
-    toggle();
+    toggleSubmit();
 
     await updateTenant(stripes.okapi, stripes.store, affiliation.tenantId);
 
     resetCurrentModule();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeAffiliation, affiliations, resetCurrentModule, toggle]);
+  }, [activeAffiliation, affiliations, toggleSubmit, resetCurrentModule]);
 
   return (
     <SwitchActiveAffiliationModal
       activeAffiliation={activeAffiliation}
       dataOptions={dataOptions}
-      isLoading={isFetching}
+      isLoading={isFetching || submitting}
       onChangeActiveAffiliation={setActiveAffiliation}
       onSubmit={onSubmit}
       open={open}

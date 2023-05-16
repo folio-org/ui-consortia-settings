@@ -3,15 +3,18 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
-import orderBy from 'lodash/orderBy';
 
 import '@folio/stripes-acq-components/test/jest/__mock__';
 
-import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { LIMIT_MAX } from '@folio/stripes-acq-components';
+import { useStripes } from '@folio/stripes/core';
 
 import { tenants } from '../../../test/jest/fixtures';
+import { fetchConsortiumUserTenants } from '../../services';
 import { useUserAffiliations } from './useUserAffiliations';
+
+jest.mock('../../services', () => ({
+  fetchConsortiumUserTenants: jest.fn(),
+}));
 
 const consortium = {
   id: 'consortium-id',
@@ -29,23 +32,6 @@ const wrapper = ({ children }) => (
 );
 
 describe('useUserAffiliations', () => {
-  const mockGet = jest.fn(() => ({
-    json: () => Promise.resolve({
-      userTenants: affiliations,
-      totalRecords: affiliations.length,
-    }),
-  }));
-  const setHeaderMock = jest.fn();
-  const kyMock = {
-    extend: jest.fn(({ hooks: { beforeRequest } }) => {
-      beforeRequest.forEach(handler => handler({ headers: { set: setHeaderMock } }));
-
-      return {
-        get: mockGet,
-      };
-    }),
-  };
-
   beforeAll(() => {
     const user = useStripes().user.user;
 
@@ -53,8 +39,9 @@ describe('useUserAffiliations', () => {
   });
 
   beforeEach(() => {
-    mockGet.mockClear();
-    useOkapiKy.mockClear().mockReturnValue(kyMock);
+    fetchConsortiumUserTenants
+      .mockClear()
+      .mockReturnValue(affiliations);
   });
 
   afterAll(() => {
@@ -65,14 +52,16 @@ describe('useUserAffiliations', () => {
 
   it('should fetch user\'s consortium affiliations by user\'s id', async () => {
     const userId = 'usedId';
+    const stripes = useStripes();
     const { result, waitFor } = renderHook(() => useUserAffiliations({ userId }), { wrapper });
 
     await waitFor(() => !result.current.isLoading);
 
-    expect(mockGet).toHaveBeenCalledWith(
-      `consortia/${consortium.id}/user-tenants`,
-      expect.objectContaining({ searchParams: { userId, limit: LIMIT_MAX } }),
+    expect(fetchConsortiumUserTenants).toHaveBeenCalledWith(
+      stripes,
+      consortium.centralTenantId,
+      { id: consortium.id },
     );
-    expect(result.current.affiliations).toEqual(orderBy(affiliations, 'tenantName'));
+    expect(result.current.affiliations).toEqual(affiliations);
   });
 });

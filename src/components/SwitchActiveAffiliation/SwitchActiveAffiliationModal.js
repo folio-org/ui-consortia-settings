@@ -25,6 +25,7 @@ export const SwitchActiveAffiliationModal = ({
         buttonStyle="primary"
         id="save-active-affiliation"
         onClick={onSubmit}
+        disabled={isLoading}
         marginBottom0
       >
         <FormattedMessage id="ui-consortia-settings.button.saveAndClose" />

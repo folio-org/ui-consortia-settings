@@ -25,13 +25,8 @@ const stripes = {
 };
 
 const centralTenantResponse = {
-  configs: [{
-    id: 'config-id',
-    module: 'CONSORTIA',
-    configName: 'centralTenant',
-    value: 'mobius',
-  }],
-  totalRecords: 1,
+  id: 'config-id',
+  centralTenantId: 'centralTenantId',
 };
 const consortiaResponse = {
   consortia: [{
@@ -84,7 +79,7 @@ describe('consortiaService', () => {
       const response = await fetchConsortiaCentralTenant(stripes);
 
       expect(global.fetch).toBeCalledWith(
-        `${defaultOkapiUrl}/configurations/entries?${new URLSearchParams({ query: '(module=CONSORTIA and configName=centralTenantId)' })}`,
+        `${defaultOkapiUrl}/consortia-configuration`,
         {
           credentials: 'include',
           headers: expect.objectContaining({
@@ -92,7 +87,7 @@ describe('consortiaService', () => {
           }),
         },
       );
-      expect(response).toEqual(centralTenantResponse.configs[0].value);
+      expect(response).toEqual(centralTenantResponse.centralTenantId);
       mockFetchCleanUp();
     });
   });
@@ -121,11 +116,10 @@ describe('consortiaService', () => {
       mockFetchSuccess(consortiumUserAffiliationsResponse);
 
       const consortiumId = consortiaResponse.consortia[0].id;
-      const userId = stripes.okapi.currentUser.id;
       const response = await fetchConsortiumUserTenants(stripes, defaultOkapiTenant, { id: consortiumId });
 
       expect(global.fetch).toBeCalledWith(
-        `${defaultOkapiUrl}/consortia/${consortiumId}/user-tenants?userId=${userId}`,
+        `${defaultOkapiUrl}/consortia/consortium-id/_self`,
         {
           credentials: 'include',
           headers: expect.objectContaining({
