@@ -19,9 +19,9 @@
     "settings.membership.error.codeExceedsLength": "El código debe ser {count} caracteres alfanuméricos.",
     "settings.membership.error.duplicate.code": "El código debe ser único.",
     "settings.membership.list.tenantCode": "Código",
-    "affiliation.primary.suffix": "(Primary)",
-    "button.saveAndClose": "Save & close",
-    "switchActiveAffiliation.userDropdown.label": "Switch active affiliation",
-    "switchActiveAffiliation.modal.heading": "Select affiliation",
-    "switchActiveAffiliation.modal.select.label": "Consortium members"
+    "affiliation.primary.suffix": "(Primaria)",
+    "button.saveAndClose": "Guardar y cerrar",
+    "switchActiveAffiliation.userDropdown.label": "Cambiar de afiliación activa",
+    "switchActiveAffiliation.modal.heading": "Seleccione afiliación",
+    "switchActiveAffiliation.modal.select.label": "Miembros del consorcio"
 }
