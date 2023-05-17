@@ -1,6 +1,7 @@
 {
   "meta.title": "Consortium",
 
+  "affiliation.primary.field.label": "Primary affiliation",
   "affiliation.primary.suffix": "(Primary)",
 
   "button.saveAndClose": "Save & close",

@@ -1,5 +1,7 @@
 import orderBy from 'lodash/orderBy';
 
+import { LIMIT_MAX } from '@folio/stripes-acq-components';
+
 import {
   CONTENT_TYPE_HEADER,
   OKAPI_TENANT_HEADER,
@@ -30,6 +32,19 @@ export const fetchConsortium = ({ okapi }, tenant) => {
   })
     .then(resp => resp.json())
     .then(data => data.consortia[0]);
+};
+
+export const fetchConsortiumMembers = async ({ okapi, user }) => {
+  const consortium = user?.user?.consortium || await fetchConsortium({ okapi }, okapi.tenant);
+
+  return fetch(`${okapi.url}/consortia/${consortium.id}/tenants?limit=${LIMIT_MAX}`, {
+    headers: {
+      [OKAPI_TENANT_HEADER]: okapi.tenant,
+      [CONTENT_TYPE_HEADER]: 'application/json',
+    },
+  })
+    .then(resp => resp.json())
+    .then(data => orderBy(data.tenants || [], 'name'));
 };
 
 export const fetchConsortiumUserTenants = ({ okapi }, tenant, { id: consortiumId }) => {
