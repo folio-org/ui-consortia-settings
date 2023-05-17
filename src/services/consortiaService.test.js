@@ -1,3 +1,5 @@
+import { LIMIT_MAX } from '@folio/stripes-acq-components';
+
 import {
   OKAPI_TENANT_HEADER,
   OKAPI_TOKEN_HEADER,
@@ -5,6 +7,7 @@ import {
 import {
   fetchConsortiaCentralTenant,
   fetchConsortium,
+  fetchConsortiumMembers,
   fetchConsortiumUserTenants,
 } from './consortiaService';
 
@@ -107,6 +110,37 @@ describe('consortiaService', () => {
         },
       );
       expect(response).toEqual(consortiaResponse.consortia[0]);
+      mockFetchCleanUp();
+    });
+  });
+
+  describe('fetchConsortiumMembers', () => {
+    it('should fetch consortium members (tenants) - user already logged in', async () => {
+      mockFetchSuccess(consortiumTenantsResponse);
+
+      const newStripes = {
+        ...stripes,
+        user: {
+          user: {
+            consortium: {
+              id: 'consortium-id',
+              centralTenantId: 'central-tenant-id',
+            },
+          },
+        },
+      };
+
+      const response = await fetchConsortiumMembers(newStripes, defaultOkapiTenant);
+
+      expect(global.fetch).toBeCalledWith(
+        `${defaultOkapiUrl}/consortia/${newStripes.user.user.consortium.id}/tenants?limit=${LIMIT_MAX}`,
+        {
+          headers: expect.objectContaining({
+            [OKAPI_TENANT_HEADER]: newStripes.user.user.consortium.centralTenantId,
+          }),
+        },
+      );
+      expect(response).toEqual(consortiumTenantsResponse.tenants);
       mockFetchCleanUp();
     });
   });

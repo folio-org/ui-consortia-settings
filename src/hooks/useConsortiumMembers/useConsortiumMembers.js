@@ -1,10 +1,14 @@
 import { useQuery } from 'react-query';
 
+import { useStripes } from '@folio/stripes/core';
+
 import { fetchConsortiumMembers } from '../../services';
 
 const DEFAULT_DATA = [];
 
-export const useConsortiumMembers = ({ stripes }, options = {}) => {
+export const useConsortiumMembers = (options = {}) => {
+  const stripes = useStripes();
+
   const {
     data = DEFAULT_DATA,
     isFetching,

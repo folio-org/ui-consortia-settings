@@ -1,19 +1,16 @@
 import PropTypes from 'prop-types';
 
-import { stripesShape } from '@folio/stripes/core';
-
 import { useConsortiumMembers } from '../../hooks';
 import { FieldTenantSelection } from './FieldTenantSelection';
 
 export const FieldTenantSelectionContainer = ({
   disabled,
-  stripes,
   ...rest
 }) => {
   const {
     tenants,
     isFetching,
-  } = useConsortiumMembers({ stripes });
+  } = useConsortiumMembers();
 
   return (
     <FieldTenantSelection
@@ -26,5 +23,4 @@ export const FieldTenantSelectionContainer = ({
 
 FieldTenantSelectionContainer.propTypes = {
   disabled: PropTypes.bool,
-  stripes: stripesShape,
 };
