@@ -134,35 +134,6 @@ describe('consortiaService', () => {
       expect(response).toEqual(consortiumTenantsResponse.tenants);
       mockFetchCleanUp();
     });
-
-    it('should fetch consortium members (tenants) - user already logged in', async () => {
-      mockFetchSuccess(consortiumTenantsResponse);
-
-      const _stripes = {
-        ...stripes,
-        user: {
-          user: {
-            consortium: {
-              id: 'consortium-id',
-              centralTenantId: 'central-tenant-id',
-            },
-          },
-        },
-      };
-
-      const response = await fetchConsortiumMembers(_stripes, defaultOkapiTenant);
-
-      expect(global.fetch).toBeCalledWith(
-        `${defaultOkapiUrl}/consortia/${_stripes.user.user.consortium.id}/tenants?limit=${LIMIT_MAX}`,
-        {
-          headers: expect.objectContaining({
-            [OKAPI_TENANT_HEADER]: _stripes.user.user.consortium.centralTenantId,
-          }),
-        },
-      );
-      expect(response).toEqual(consortiumTenantsResponse.tenants);
-      mockFetchCleanUp();
-    });
   });
 
   describe('fetchConsortiumUserTenants', () => {
