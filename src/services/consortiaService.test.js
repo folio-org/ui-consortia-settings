@@ -118,7 +118,6 @@ describe('consortiaService', () => {
     it('should fetch consortium members (tenants) - user is not logged in', async () => {
       mockFetchSuccess({
         ...consortiaResponse,
-        ...centralTenantResponse,
         ...consortiumTenantsResponse,
       });
 
@@ -128,7 +127,7 @@ describe('consortiaService', () => {
         `${defaultOkapiUrl}/consortia/${consortiaResponse.consortia[0].id}/tenants?limit=${LIMIT_MAX}`,
         {
           headers: expect.objectContaining({
-            [OKAPI_TENANT_HEADER]: centralTenantResponse.centralTenantId,
+            [OKAPI_TENANT_HEADER]: defaultOkapiTenant,
           }),
         },
       );

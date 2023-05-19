@@ -35,12 +35,11 @@ export const fetchConsortium = ({ okapi }, tenant) => {
 };
 
 export const fetchConsortiumMembers = async ({ okapi, user }) => {
-  const centralTenant = user?.user?.consortium?.centralTenantId || await fetchConsortiaCentralTenant({ okapi });
-  const consortium = user?.user?.consortium || await fetchConsortium({ okapi }, centralTenant);
+  const consortium = user?.user?.consortium || await fetchConsortium({ okapi }, okapi.tenant);
 
   return fetch(`${okapi.url}/consortia/${consortium.id}/tenants?limit=${LIMIT_MAX}`, {
     headers: {
-      [OKAPI_TENANT_HEADER]: centralTenant,
+      [OKAPI_TENANT_HEADER]: okapi.tenant,
       [CONTENT_TYPE_HEADER]: 'application/json',
     },
   })
