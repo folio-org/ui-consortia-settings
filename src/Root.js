@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 
-import { ROOT_ROUTE } from './constants';
+import { MODULE_ROOT_ROUTE } from './constants';
 import { ConsortiumManager } from './routes';
 import ConsortiumSettings from './settings';
 
@@ -22,7 +22,7 @@ const Root = ({
   return (
     <Switch>
       <Route
-        path={ROOT_ROUTE}
+        path={MODULE_ROOT_ROUTE}
         component={ConsortiumManager}
       />
     </Switch>

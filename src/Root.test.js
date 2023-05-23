@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 
-import { ROOT_ROUTE } from './constants';
+import { MODULE_ROOT_ROUTE } from './constants';
 import Root from './Root';
 
 jest.mock('./settings', () => jest.fn(() => 'ConsortiumSettings'));
@@ -37,7 +37,7 @@ describe('Root', () => {
 
   describe('App', () => {
     it('should render Consortium manager page', () => {
-      history.push(ROOT_ROUTE);
+      history.push(MODULE_ROOT_ROUTE);
       renderRoot();
 
       expect(screen.getByText('ConsortiumManager')).toBeInTheDocument();
