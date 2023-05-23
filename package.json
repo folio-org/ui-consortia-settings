@@ -70,6 +70,7 @@
   },
   "stripes": {
     "actsAs": [
+      "app",
       "settings",
       "handler"
     ],
@@ -93,6 +94,11 @@
       ]
     },
     "permissionSets": [
+      {
+        "permissionName": "module.consortia-settings.enabled",
+        "displayName": "UI: Consortia settings module is enabled",
+        "visible": false
+      },
       {
         "permissionName": "settings.consortia-settings.enabled",
         "displayName": "Settings (Consortia): Can view settings",
