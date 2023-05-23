@@ -28,6 +28,9 @@
   "switchActiveAffiliation.modal.heading": "Select affiliation",
   "switchActiveAffiliation.modal.select.label": "Consortium members",
 
+  "permission.consortium-manager.view": "Consortium manager: Can view existing settings",
+  "permission.consortium-manager.crud": "Consortium manager: Can create, edit and remove settings",
+  "permission.consortium-manager.share": "Consortium manager: Can share settings to all members",
   "permission.settings.membership.view": "Settings (Consortia): Can view consortia membership",
   "permission.settings.membership.edit": "Settings (Consortia): Can view and edit consortia membership"
 }

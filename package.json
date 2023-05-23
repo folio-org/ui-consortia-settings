@@ -108,6 +108,28 @@
         "visible": false
       },
       {
+        "permissionName": "ui-consortia-settings.consortium-manager.view",
+        "displayName": "Consortium manager: Can view existing settings",
+        "subPermissions": [
+          "module.consortia-settings.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-consortia-settings.consortium-manager.crud",
+        "displayName": "Consortium manager: Can create, edit and remove settings",
+        "subPermissions": [
+          "ui-consortia-settings.consortium-manager.view"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-consortia-settings.consortium-manager.share",
+        "displayName": "Consortium manager: Can share settings to all members",
+        "subPermissions": [],
+        "visible": true
+      },
+      {
         "permissionName": "ui-consortia-settings.settings.membership.view",
         "displayName": "Settings (Consortia): Can view consortia membership",
         "subPermissions": [
