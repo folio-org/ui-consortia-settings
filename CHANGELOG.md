@@ -8,3 +8,5 @@
 * [UICONSET-4](https://issues.folio.org/browse/UICONSET-4) Integrate UI changes with BE contracts.
 * [UICONSET-6](https://issues.folio.org/browse/UICONSET-6) Add tenant code to tenant profile.
 * [UICONSET-18](https://issues.folio.org/browse/UICONSET-18) "Switch active affiliation" profile dropdown action.
+* [UICONSET-7](https://issues.folio.org/browse/UICONSET-7) Create "Consortium manager" interface.
+* [UICONSET-8](https://issues.folio.org/browse/UICONSET-8) Limit access to "Consortium manager" interface.
