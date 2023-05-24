@@ -36,6 +36,7 @@
     "eslint": "^7.32.0",
     "eslint-plugin-filenames": "^1.3.2",
     "eslint-plugin-jest": "^23.0.4",
+    "history": "^5.0.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.4.2",
     "jest-junit": "^11.1.0",
@@ -70,6 +71,7 @@
   },
   "stripes": {
     "actsAs": [
+      "app",
       "settings",
       "handler"
     ],
@@ -101,12 +103,39 @@
     },
     "permissionSets": [
       {
+        "permissionName": "module.consortia-settings.enabled",
+        "displayName": "UI: Consortia settings module is enabled",
+        "visible": false
+      },
+      {
         "permissionName": "settings.consortia-settings.enabled",
         "displayName": "Settings (Consortia): Can view settings",
         "subPermissions": [
           "settings.enabled"
         ],
         "visible": false
+      },
+      {
+        "permissionName": "ui-consortia-settings.consortium-manager.view",
+        "displayName": "Consortium manager: Can view existing settings",
+        "subPermissions": [
+          "module.consortia-settings.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-consortia-settings.consortium-manager.edit",
+        "displayName": "Consortium manager: Can create, edit and remove settings",
+        "subPermissions": [
+          "ui-consortia-settings.consortium-manager.view"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-consortia-settings.consortium-manager.share",
+        "displayName": "Consortium manager: Can share settings to all members",
+        "subPermissions": [],
+        "visible": true
       },
       {
         "permissionName": "ui-consortia-settings.settings.membership.view",
