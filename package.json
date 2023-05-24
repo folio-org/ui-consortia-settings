@@ -117,7 +117,7 @@
         "visible": true
       },
       {
-        "permissionName": "ui-consortia-settings.consortium-manager.crud",
+        "permissionName": "ui-consortia-settings.consortium-manager.edit",
         "displayName": "Consortium manager: Can create, edit and remove settings",
         "subPermissions": [
           "ui-consortia-settings.consortium-manager.view"
