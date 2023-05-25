@@ -1,13 +1,8 @@
 import { render, screen } from '@testing-library/react';
 
-import { tenants } from '../../test/jest/fixtures';
+import { affiliations, tenants } from '../../test/jest/fixtures';
 import { ConsortiumManagerContext } from '../contexts';
 import { ConsortiumManager } from './ConsortiumManager';
-
-const affiliations = tenants.map(({ id, name }) => ({
-  tenantId: id,
-  tenantName: name,
-}));
 
 const defaultProps = {};
 const context = {
