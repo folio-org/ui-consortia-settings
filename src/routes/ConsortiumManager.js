@@ -24,6 +24,7 @@ export const ConsortiumManager = () => {
   return (
     <Paneset>
       <Pane
+        defaultWidth="fill"
         paneTitle={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.header.title" />}
         paneSub={Boolean(selectedMembers) && (
           <FormattedMessage

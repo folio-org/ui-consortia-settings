@@ -145,7 +145,7 @@ export const FindConsortiumMemberModal = ({
       contentClass={css.modalContent}
       dismissible
       footer={footer}
-      label={<FormattedMessage id="ui-consortia-settings.consortiumManager.findMember.trigger.label" />}
+      label={<FormattedMessage id="ui-consortia-settings.consortiumManager.findMember.modal.title" />}
       onClose={onClose}
       size="large"
       showHeader
