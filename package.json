@@ -52,6 +52,7 @@
   "dependencies": {
     "@folio/stripes-acq-components": "~4.0.0",
     "@rehooks/local-storage": "^2.4.4",
+    "dom-helpers": "^3.4.0",
     "final-form": "^4.20.9",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.0",
