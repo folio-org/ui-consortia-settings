@@ -3,6 +3,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useMemo,
   useState,
 } from 'react';
 
@@ -39,16 +40,21 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
     { onSuccess: initSelectedMembers },
   );
 
-  const value = {
+  const contextValue = useMemo(() => ({
     affiliations,
     selectedMembers,
     selectMembers,
     selectMembersDisabled,
     setSelectMembersDisabled,
-  };
+  }), [
+    affiliations,
+    selectMembers,
+    selectMembersDisabled,
+    selectedMembers,
+  ]);
 
   return (
-    <ConsortiumManagerContext.Provider value={value}>
+    <ConsortiumManagerContext.Provider value={contextValue}>
       {children}
     </ConsortiumManagerContext.Provider>
   );
