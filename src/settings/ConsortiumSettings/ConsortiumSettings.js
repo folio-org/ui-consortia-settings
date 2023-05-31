@@ -7,7 +7,7 @@ import {
 } from '@folio/stripes/components';
 import { Settings } from '@folio/stripes/smart-components';
 
-import { ConsortiumContextProvider } from '../../ConsortiumContext';
+import { ConsortiumContextProvider } from '../../contexts';
 import { Membership } from '../Membership';
 
 const sections = [

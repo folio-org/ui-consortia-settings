@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ConsortiumContext } from './ConsortiumContext';
+import { ConsortiumContext } from './contexts';
 
 export const withConsortium = (WrappedComponent) => {
   return class extends React.Component {

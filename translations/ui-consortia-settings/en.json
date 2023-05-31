@@ -5,6 +5,18 @@
 
   "button.saveAndClose": "Save & close",
 
+  "consortiumManager.findMember.trigger.label": "Select members",
+  "consortiumManager.findMember.modal.aria.search": "Search members",
+  "consortiumManager.findMember.modal.aria.select": "Select member",
+  "consortiumManager.findMember.modal.aria.selectAll": "Select all members",
+  "consortiumManager.findMember.modal.results.subTitle": "{amount, plural, one {# member} other {# members}} found",
+  "consortiumManager.findMember.modal.results.title": "Members",
+  "consortiumManager.findMember.modal.results.totalSelected": "Total selected: {amount}",
+  "consortiumManager.findMember.modal.results.warning": "Settings for the following selected members can be modified at the same time.",
+  "consortiumManager.findMember.modal.title": "Select members",
+  "consortiumManager.members.header.subTitle": "{amount, plural, one {# member} other {# members}} selected",
+  "consortiumManager.members.header.title": "Settings for selected members can be modified at the same time",
+
   "settings.heading": "Network settings",
   "settings.section.general": "General",
 

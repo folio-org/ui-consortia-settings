@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { createContext, useMemo } from 'react';
 
-import { useCurrentConsortium } from './hooks';
+import { useCurrentConsortium } from '../hooks';
 
 export const ConsortiumContext = createContext();
 
