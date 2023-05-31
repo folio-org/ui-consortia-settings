@@ -3,6 +3,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import { MODULE_ROOT_ROUTE } from './constants';
+import { ConsortiumManagerContextProvider } from './contexts';
 import { eventHandler } from './eventHandler';
 import { ConsortiumManager } from './routes';
 import ConsortiumSettings from './settings';
@@ -32,12 +33,14 @@ class Root extends React.Component {
     }
 
     return (
-      <Switch>
-        <Route
-          path={MODULE_ROOT_ROUTE}
-          component={ConsortiumManager}
-        />
-      </Switch>
+      <ConsortiumManagerContextProvider>
+        <Switch>
+          <Route
+            path={MODULE_ROOT_ROUTE}
+            component={ConsortiumManager}
+          />
+        </Switch>
+      </ConsortiumManagerContextProvider>
     );
   }
 }

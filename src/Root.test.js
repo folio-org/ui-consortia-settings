@@ -1,14 +1,33 @@
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
+import { noop } from 'lodash';
 import { Router } from 'react-router-dom';
 
+import { useStripes } from '@folio/stripes/core';
+
+import { affiliations } from '../test/jest/fixtures';
 import { MODULE_ROOT_ROUTE } from './constants';
+import { useUserAffiliations } from './hooks';
 import Root from './Root';
 
+jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes/core'),
+  useStripes: jest.fn(),
+  updateUser: jest.fn(),
+}));
+jest.mock('./hooks', () => ({
+  useUserAffiliations: jest.fn(),
+}));
 jest.mock('./settings', () => jest.fn(() => 'ConsortiumSettings'));
 jest.mock('./routes', () => ({
   ConsortiumManager: jest.fn(() => 'ConsortiumManager'),
 }));
+
+const stripes = {
+  store: {},
+  okapi: {},
+  user: {},
+};
 
 const defaultProps = {
   showSettings: false,
@@ -31,6 +50,17 @@ const renderRoot = (props = {}) => render(
 );
 
 describe('Root', () => {
+  beforeEach(() => {
+    useStripes.mockClear().mockReturnValue(stripes);
+    useUserAffiliations.mockClear().mockImplementation((_params, options) => {
+      const onSuccess = options.onSuccess || noop;
+
+      onSuccess(affiliations);
+
+      return { affiliations };
+    });
+  });
+
   afterAll(() => {
     history.replace('/');
   });
