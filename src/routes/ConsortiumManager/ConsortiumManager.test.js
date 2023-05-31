@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
-import { affiliations, tenants } from '../../test/jest/fixtures';
-import { ConsortiumManagerContext } from '../contexts';
+import { affiliations, tenants } from '../../../test/jest/fixtures';
+import { ConsortiumManagerContext } from '../../contexts';
 import { ConsortiumManager } from './ConsortiumManager';
 
 const defaultProps = {};

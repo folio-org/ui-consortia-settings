@@ -6,8 +6,8 @@ import {
   Paneset,
 } from '@folio/stripes/components';
 
-import { FindConsortiumMember } from '../components';
-import { useConsortiumManagerContext } from '../contexts';
+import { FindConsortiumMember } from '../../components';
+import { useConsortiumManagerContext } from '../../contexts';
 
 export const ConsortiumManager = () => {
   const {
