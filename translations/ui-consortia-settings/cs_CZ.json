@@ -19,9 +19,9 @@
     "settings.membership.error.codeExceedsLength": "Kód musí obsahovat {count} alfanumerických znaků.",
     "settings.membership.error.duplicate.code": "Kód musí být jedinečný.",
     "settings.membership.list.tenantCode": "Kód",
-    "affiliation.primary.suffix": "(Primary)",
-    "button.saveAndClose": "Save & close",
-    "switchActiveAffiliation.userDropdown.label": "Switch active affiliation",
-    "switchActiveAffiliation.modal.heading": "Select affiliation",
-    "switchActiveAffiliation.modal.select.label": "Consortium members"
+    "affiliation.primary.suffix": "(Hlavní)",
+    "button.saveAndClose": "Uložit a zavřít",
+    "switchActiveAffiliation.userDropdown.label": "Přepnout aktivní příslušnost",
+    "switchActiveAffiliation.modal.heading": "Vybrat příslušnost",
+    "switchActiveAffiliation.modal.select.label": "Členové konsorcia"
 }
