@@ -16,12 +16,12 @@
     "settings.membership.error.nameExceedsLength": "租户名称不得超过{count}个字符",
     "permission.settings.membership.view": "Settings (Consortia)：可以查看联盟成员",
     "permission.settings.membership.edit": "设置（联盟）：可以查看和编辑联盟成员",
-    "settings.membership.error.codeExceedsLength": "The code must be {count} character alphanumeric.",
-    "settings.membership.error.duplicate.code": "The code must be unique.",
-    "settings.membership.list.tenantCode": "Code",
-    "affiliation.primary.suffix": "(Primary)",
-    "button.saveAndClose": "Save & close",
-    "switchActiveAffiliation.userDropdown.label": "Switch active affiliation",
-    "switchActiveAffiliation.modal.heading": "Select affiliation",
-    "switchActiveAffiliation.modal.select.label": "Consortium members"
+    "settings.membership.error.codeExceedsLength": "代码必须是{count}个字母数字字符。",
+    "settings.membership.error.duplicate.code": "代码必须唯一。",
+    "settings.membership.list.tenantCode": "代码",
+    "affiliation.primary.suffix": "（主要的）",
+    "button.saveAndClose": "保存并关闭",
+    "switchActiveAffiliation.userDropdown.label": "切换激活的隶属关系",
+    "switchActiveAffiliation.modal.heading": "选择隶属关系",
+    "switchActiveAffiliation.modal.select.label": "联盟成员"
 }
