@@ -1,15 +1,18 @@
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import {
-  Pane,
+  PaneHeader,
   Paneset,
 } from '@folio/stripes/components';
 
 import { useConsortiumManagerContext } from '../../contexts';
 import { FindConsortiumMember } from '../FindConsortiumMember';
 
+import css from './ConsortiumManagerHeader.css';
+
 export const ConsortiumManagerHeader = () => {
+  const paneTitleRef = useRef();
   const {
     affiliations,
     selectedMembers,
@@ -22,9 +25,11 @@ export const ConsortiumManagerHeader = () => {
   ), [affiliations]);
 
   return (
-    <Paneset isRoot static>
-      <Pane
-        defaultWidth="fill"
+    <Paneset nested>
+      <PaneHeader
+        id="consortium-manager-header"
+        className={css.managerHeader}
+        paneTitleRef={paneTitleRef}
         paneTitle={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.header.title" />}
         paneSub={Boolean(selectedMembers) && (
           <FormattedMessage
@@ -40,7 +45,6 @@ export const ConsortiumManagerHeader = () => {
             selectRecords={selectMembers}
           />
         )}
-        padContent={false}
       />
     </Paneset>
   );
