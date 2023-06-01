@@ -1,8 +1,17 @@
+import { MemoryRouter, withRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
+
+import { useModules } from '@folio/stripes/core';
 
 import { affiliations, tenants } from '../../../test/jest/fixtures';
 import { ConsortiumManagerContext } from '../../contexts';
 import { ConsortiumManager } from './ConsortiumManager';
+import { AVAILABLE_SETTINGS } from './constants';
+
+jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes/core'),
+  useModules: jest.fn(),
+}));
 
 const defaultProps = {};
 const context = {
@@ -12,14 +21,25 @@ const context = {
   selectMembersDisabled: false,
 };
 
+const modules = {
+  settings: AVAILABLE_SETTINGS.map((module) => ({
+    displayName: module.toLocaleUpperCase(),
+    module,
+    route: `/${module}`,
+  })),
+};
+
 const wrapper = ({ children }) => (
-  <ConsortiumManagerContext.Provider value={context}>
-    {children}
-  </ConsortiumManagerContext.Provider>
+  <MemoryRouter>
+    <ConsortiumManagerContext.Provider value={context}>
+      {children}
+    </ConsortiumManagerContext.Provider>
+  </MemoryRouter>
 );
 
+const TestComponent = withRouter(ConsortiumManager);
 const renderConsortiumManager = (props = {}) => render(
-  <ConsortiumManager
+  <TestComponent
     {...defaultProps}
     {...props}
   />,
@@ -27,9 +47,13 @@ const renderConsortiumManager = (props = {}) => render(
 );
 
 describe('ConsortiumManager', () => {
+  beforeEach(() => {
+    useModules.mockClear().mockReturnValue(modules);
+  });
+
   it('should render ConsortiumManager', () => {
     renderConsortiumManager();
 
-    expect(screen.getByText('Consortium Manager')).toBeInTheDocument();
+    expect(screen.getByText('ui-consortia-settings.consortiumManager.members.header.title')).toBeInTheDocument();
   });
 });
