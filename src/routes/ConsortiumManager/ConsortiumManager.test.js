@@ -1,5 +1,6 @@
-import { MemoryRouter, withRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter, withRouter } from 'react-router-dom';
 
 import { useModules } from '@folio/stripes/core';
 
@@ -23,7 +24,7 @@ const context = {
 
 const modules = {
   settings: AVAILABLE_SETTINGS.map((module) => ({
-    displayName: module.toLocaleUpperCase(),
+    displayName: module,
     module,
     route: `/${module}`,
   })),
@@ -46,6 +47,14 @@ const renderConsortiumManager = (props = {}) => render(
   { wrapper },
 );
 
+const settingsLabelsMap = {
+  circulation: 'ui-circulation.settings.index.paneTitle',
+  'data-export': 'ui-data-export.settings.index.paneTitle',
+  'data-import': 'ui-data-import.settings.index.paneTitle',
+  inventory: 'ui-inventory.inventory.label',
+  users: 'ui-users.settings.label',
+};
+
 describe('ConsortiumManager', () => {
   beforeEach(() => {
     useModules.mockClear().mockReturnValue(modules);
@@ -55,5 +64,21 @@ describe('ConsortiumManager', () => {
     renderConsortiumManager();
 
     expect(screen.getByText('ui-consortia-settings.consortiumManager.members.header.title')).toBeInTheDocument();
+  });
+
+  it('should render consortium manager settings nav links', () => {
+    renderConsortiumManager();
+
+    AVAILABLE_SETTINGS.forEach(module => {
+      expect(screen.getByText(module)).toBeInTheDocument();
+    });
+  });
+
+  it.each(AVAILABLE_SETTINGS.map(module => [module]))('should render \'%s\' settings pane', async (name) => {
+    renderConsortiumManager();
+
+    userEvent.click(screen.getByText(name));
+
+    expect(await screen.findByText(settingsLabelsMap[name])).toBeInTheDocument();
   });
 });
