@@ -182,6 +182,7 @@ export const FindConsortiumMemberModal = ({
           toggleFiltersPane={toggleFilters}
           filters={filters}
           isFiltersOpened={isFiltersVisible}
+          padContent
         >
           <MessageBanner type="warning">
             <FormattedMessage id="ui-consortia-settings.consortiumManager.findMember.modal.results.warning" />
