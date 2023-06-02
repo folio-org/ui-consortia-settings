@@ -11,3 +11,5 @@ export const CONSORTIA_TENANTS_API = 'tenants';
 export const CONSORTIA_USER_TENANTS_API = 'user-tenants';
 
 export const MODULE_ROOT_ROUTE = stripesConfig.route;
+
+export const PACKAGE_SCOPE_REGEX = /^@[a-z\d][\w-.]{0,214}\//;
