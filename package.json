@@ -77,6 +77,13 @@
     "displayName": "ui-consortia-settings.meta.title",
     "queryResource": "query",
     "route": "/consortia-settings",
+    "icons": [
+      {
+        "name": "app",
+        "alt": "Create, view and manage settings",
+        "title": "Consortium manager"
+      }
+    ],
     "okapiInterfaces": {
       "consortia": "1.0"
     },
