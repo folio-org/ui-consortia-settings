@@ -1,3 +1,4 @@
+import identity from 'lodash/identity';
 import mapValues from 'lodash/mapValues';
 import { FormattedMessage } from 'react-intl';
 
@@ -51,7 +52,7 @@ export const getImportJobLogsListColumnMapping = ({ intl }) => {
 
 export const getImportJobLogsListResultsFormatter = ({ intl }) => {
   return {
-    ...listTemplate({ entityKey: 'jobLogs' }),
+    ...listTemplate({ entityKey: 'jobLogs', formatNumber: identity }),
     [IMPORT_JOB_LOG_COLUMNS.status]: statusCellFormatter(intl.formatMessage),
   };
 };

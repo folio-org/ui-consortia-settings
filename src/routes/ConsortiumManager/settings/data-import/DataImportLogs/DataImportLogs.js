@@ -106,11 +106,9 @@ export const DataImportLogs = () => {
       appIcon={<AppIcon app="data-import" />}
       defaultWidth="fill"
       paneTitle={<FormattedMessage id="ui-data-import.meta.title" />}
-      paneSub={!isNil(totalRecords) && (
-        <FormattedMessage
-          id="ui-data-import.logsPaneSubtitle"
-          values={{ count: totalRecords }}
-        />
+      paneSub={!isNil(totalRecords) && intl.formatMessage(
+        { id: 'ui-data-import.logsPaneSubtitle' },
+        { count: totalRecords },
       )}
       noOverflow
     >

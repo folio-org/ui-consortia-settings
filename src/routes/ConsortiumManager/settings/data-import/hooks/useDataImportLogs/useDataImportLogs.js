@@ -35,7 +35,14 @@ export const useDataImportLogs = (params = {}, options = {}) => {
     isLoading,
     data,
   } = useQuery(
-    [namespace, tenantId, pagination.limit, pagination.offset, sorting.sortingField, sorting.sortingDirection],
+    [
+      namespace,
+      tenantId,
+      pagination.limit,
+      pagination.offset,
+      sorting.sortingField,
+      sorting.sortingDirection,
+    ],
     ({ signal }) => ky.get(`${METADATA_PROVIDER_API}/jobExecutions`, { searchParams, signal }).json(),
     {
       enabled: Boolean(tenantId),

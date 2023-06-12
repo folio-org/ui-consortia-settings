@@ -1,23 +1,19 @@
-import {
-  useOkapiKy,
-  useStripes,
-} from '@folio/stripes/core';
+import { useOkapiKy } from '@folio/stripes/core';
 
 import { OKAPI_TENANT_HEADER } from '../../constants';
 
-export const useTenantKy = ({ tenantId }) => {
-  const stripes = useStripes();
+export const useTenantKy = ({ tenantId } = {}) => {
   const ky = useOkapiKy();
 
-  const tenant = tenantId || stripes.okapi.tenant;
-
-  return ky.extend({
-    hooks: {
-      beforeRequest: [
-        request => {
-          request.headers.set(OKAPI_TENANT_HEADER, tenant);
-        },
-      ],
-    },
-  });
+  return tenantId
+    ? ky.extend({
+      hooks: {
+        beforeRequest: [
+          request => {
+            request.headers.set(OKAPI_TENANT_HEADER, tenantId);
+          },
+        ],
+      },
+    })
+    : ky;
 };
