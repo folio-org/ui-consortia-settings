@@ -10,6 +10,7 @@ export const CONFIGURATIONS_ENTRIES_API = `${CONFIGURATIONS_API}/entries`;
 export const CONSORTIA_API = 'consortia';
 export const CONSORTIA_TENANTS_API = 'tenants';
 export const CONSORTIA_USER_TENANTS_API = 'user-tenants';
+export const DATA_EXPORT_API = 'data-export';
 export const METADATA_PROVIDER_API = 'metadata-provider';
 /*  */
 

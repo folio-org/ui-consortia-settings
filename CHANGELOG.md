@@ -14,3 +14,4 @@
 * [UICONSET-10](https://issues.folio.org/browse/UICONSET-10) Select member institutions for consortia management.
 * [UICONSET-26](https://issues.folio.org/browse/UICONSET-26) Set consortium manager settings section.
 * [UICONSET-123](https://issues.folio.org/browse/UICONSET-123) View list of import jobs.
+* [UICONSET-124](https://issues.folio.org/browse/UICONSET-124) View list of Export jobs.
