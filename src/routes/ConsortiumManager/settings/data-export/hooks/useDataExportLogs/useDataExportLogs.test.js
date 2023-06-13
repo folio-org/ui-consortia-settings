@@ -1,5 +1,4 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { parse } from 'query-string';
 import {
   QueryClient,
   QueryClientProvider,
@@ -13,7 +12,9 @@ import {
 
 import { useTenantKy } from '../../../../../../hooks';
 import { useDataExportLogs } from './useDataExportLogs';
-import { METADATA_PROVIDER_API } from '../../../../../../constants';
+import { DATA_EXPORT_API } from '../../../../../../constants';
+import { EXPORT_JOB_LOG_COLUMNS } from '../../constants';
+import { getExportJobLogsSortMap } from '../../utils';
 
 jest.mock('../../../../../../hooks', () => ({
   ...jest.requireActual('../../../../../../hooks'),
@@ -56,13 +57,13 @@ describe('useDataExportLogs', () => {
     await waitFor(() => !result.current.isLoading);
 
     expect(result.current.jobExecutions).toEqual(jobExecutions);
-    expect(kyMock.get).toHaveBeenCalledWith(`${METADATA_PROVIDER_API}/jobExecutions`, expect.objectContaining({}));
+    expect(kyMock.get).toHaveBeenCalledWith(`${DATA_EXPORT_API}/job-executions`, expect.objectContaining({}));
   });
 
   it('should apply pagination and sorting in the request', async () => {
     const tenantId = 'university';
     const pagination = { [LIMIT_PARAMETER]: 200, [OFFSET_PARAMETER]: 300 };
-    const sorting = { sortingField: 'testField', sortingDirection: ASC_DIRECTION };
+    const sorting = { sortingField: EXPORT_JOB_LOG_COLUMNS.status, sortingDirection: ASC_DIRECTION };
     const { result, waitFor } = renderHook(() => useDataExportLogs({ tenantId, pagination, sorting }), { wrapper });
 
     await waitFor(() => !result.current.isLoading);
@@ -70,12 +71,16 @@ describe('useDataExportLogs', () => {
     const {
       limit,
       offset,
-      sortBy,
-    } = parse(kyMock.get.mock.calls[0][kyMock.get.mock.calls[0].length - 1].searchParams);
+      query,
+    } = kyMock.get.mock.calls[0][kyMock.get.mock.calls[0].length - 1].searchParams;
 
     expect(result.current.jobExecutions).toEqual(jobExecutions);
-    expect(Number(limit)).toBe(200);
-    expect(Number(offset)).toBe(300);
-    expect(sortBy).toBe('testField,asc');
+    expect(limit).toBe(200);
+    expect(offset).toBe(300);
+    expect(query).toEqual(
+      expect.stringMatching(
+        new RegExp(`sortby ${getExportJobLogsSortMap({ sortingDirection: sorting.sortingDirection })[sorting.sortingField]}/sort.${sorting.sortingDirection}`),
+      ),
+    );
   });
 });

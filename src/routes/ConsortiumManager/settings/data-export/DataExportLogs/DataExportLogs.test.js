@@ -1,10 +1,15 @@
 import { render, screen } from '@testing-library/react';
+import { identity } from 'lodash';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
 
 import { useShowCallout } from '@folio/stripes-acq-components';
+import {
+  listTemplate,
+  useJobLogsListFormatter,
+} from '@folio/stripes-data-transfer-components';
 
 import { jobExecutions } from '../../../../../../test/jest/fixtures';
 import { ConsortiumManagerContextProviderMock } from '../../../../../../test/jest/helpers';
@@ -14,6 +19,11 @@ import { DataExportLogs } from './DataExportLogs';
 jest.mock('@folio/stripes-acq-components', () => ({
   ...jest.requireActual('@folio/stripes-acq-components'),
   useShowCallout: jest.fn(),
+}));
+
+jest.mock('@folio/stripes-data-transfer-components', () => ({
+  ...jest.requireActual('@folio/stripes-data-transfer-components'),
+  useJobLogsListFormatter: jest.fn(),
 }));
 
 jest.mock('../hooks', () => ({
@@ -47,6 +57,10 @@ describe('DataExportLogs', () => {
   beforeEach(() => {
     showCalloutMock.mockClear();
     useShowCallout.mockClear().mockReturnValue(showCalloutMock);
+    useJobLogsListFormatter.mockClear().mockImplementation((customFormatters) => ({
+      ...listTemplate({ formatNumber: identity }),
+      ...customFormatters,
+    }));
     useDataExportLogs.mockClear().mockReturnValue({
       isFetching: false,
       isLoading: false,
@@ -58,10 +72,10 @@ describe('DataExportLogs', () => {
   it('should render data import logs pane', async () => {
     renderDataExportLogs();
 
-    expect(await screen.findByText('ui-data-import.meta.title')).toBeInTheDocument();
+    expect(await screen.findByText('ui-data-export.meta.title')).toBeInTheDocument();
     expect(await screen.findByText('ui-consortia-settings.consortiumManager.members.selection.label')).toBeInTheDocument();
-    jobExecutions.forEach(({ fileName }) => {
-      expect(screen.getByText(fileName)).toBeInTheDocument();
+    jobExecutions.forEach(({ completedDate }) => {
+      expect(screen.getByText(completedDate)).toBeInTheDocument();
     });
   });
 
