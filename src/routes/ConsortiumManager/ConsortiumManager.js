@@ -6,6 +6,7 @@ import { Route, Switch } from 'react-router-dom';
 import {
   AppIcon,
   useModules,
+  useStripes,
 } from '@folio/stripes/core';
 import {
   LoadingPane,
@@ -34,6 +35,7 @@ const PanePlaceholder = () => <div className={css.panePlaceholder} />;
 export const ConsortiumManager = ({ location }) => {
   const intl = useIntl();
   const modules = useModules();
+  const stripes = useStripes();
 
   const activeLink = `${MODULE_ROOT_ROUTE}/${location.pathname.split('/')[2]}`;
 
@@ -70,7 +72,7 @@ export const ConsortiumManager = ({ location }) => {
 
           return (
             <>
-              <Component {...props} />
+              <Component stripes={stripes} {...props} />
               {/* eslint-disable-next-line react/prop-types */}
               {props.match.isExact ? <PanePlaceholder /> : null}
             </>
@@ -78,7 +80,7 @@ export const ConsortiumManager = ({ location }) => {
         }}
       />
     ))
-  ), [settings]);
+  ), [settings, stripes]);
 
   return (
     <>

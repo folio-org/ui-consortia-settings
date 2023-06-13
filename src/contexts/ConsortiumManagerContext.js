@@ -14,6 +14,8 @@ import {
 
 import { useUserAffiliations } from '../hooks';
 
+const DEFAULT_SELECTED_MEMBERS = [];
+
 export const ConsortiumManagerContext = createContext();
 
 export const ConsortiumManagerContextProvider = ({ children }) => {
@@ -42,7 +44,7 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
 
   const contextValue = useMemo(() => ({
     affiliations,
-    selectedMembers,
+    selectedMembers: selectedMembers || DEFAULT_SELECTED_MEMBERS,
     selectMembers,
     selectMembersDisabled,
     setSelectMembersDisabled,
