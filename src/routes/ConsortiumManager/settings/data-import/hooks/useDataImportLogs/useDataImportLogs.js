@@ -27,7 +27,10 @@ export const useDataImportLogs = (params = {}, options = {}) => {
   const searchParams = queryString.stringify({
     limit: pagination.limit || DEFAULT_PAGINATION.limit,
     offset: pagination.offset || DEFAULT_PAGINATION.offset,
-    ...getSortingParams(sorting, IMPORT_JOB_LOG_SORT_MAP),
+    ...getSortingParams({
+      sortingField: sorting.sortingField || DEFAULT_SORTING.sortingField,
+      sortingDirection: sorting.sortingDirection || DEFAULT_SORTING.sortingDirection,
+    }, IMPORT_JOB_LOG_SORT_MAP),
   });
 
   const {
