@@ -3,7 +3,10 @@ import { useQuery } from 'react-query';
 import { useNamespace } from '@folio/stripes/core';
 import { buildSortingQuery } from '@folio/stripes-acq-components';
 
-import { DATA_EXPORT_API } from '../../../../../../constants';
+import {
+  DATA_EXPORT_API,
+  FILE_STATUSES,
+} from '../../../../../../constants';
 import { useTenantKy } from '../../../../../../hooks';
 import {
   DEFAULT_PAGINATION,
@@ -13,6 +16,11 @@ import {
 import { getExportJobLogsSortMap } from '../../utils';
 
 const DEFAULT_DATA = [];
+const JOB_LOGS_QUERY_VALUE = [
+  FILE_STATUSES.COMPLETED,
+  FILE_STATUSES.COMPLETED_WITH_ERRORS,
+  FILE_STATUSES.FAIL,
+].join(' or ');
 
 export const useDataExportLogs = (params = {}, options = {}) => {
   const {
@@ -33,7 +41,7 @@ export const useDataExportLogs = (params = {}, options = {}) => {
     limit: pagination.limit || DEFAULT_PAGINATION.limit,
     offset: pagination.offset || DEFAULT_PAGINATION.offset,
     query: [
-      'cql.allRecords=1',
+      `status=(${JOB_LOGS_QUERY_VALUE})`,
       sortingQuery,
       sorting.sortingField !== EXPORT_JOB_LOG_COLUMNS.totalRecords ? 'progress.total/number' : '',
     ].filter(Boolean).join(' '),

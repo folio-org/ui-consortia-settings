@@ -43,31 +43,12 @@ export const DataExportLogs = () => {
   const { selectedMembers } = useConsortiumManagerContext();
   const [activeMember, setActiveMember] = useState(selectedMembers[0]?.id);
 
-  const [pagination, changePage] = useState(DEFAULT_PAGINATION);
   const [
     sortingField,
     sortingDirection,
     changeSorting,
   ] = useSorting(noop, EXPORT_JOB_LOG_SORTABLE_COLUMNS);
-
-  useEffect(() => {
-    if (!selectedMembers.find(({ id }) => id === activeMember)) {
-      setActiveMember(selectedMembers[0]?.id);
-    }
-  }, [activeMember, selectedMembers]);
-
-  useEffect(() => {
-    changePage(DEFAULT_PAGINATION);
-  }, [activeMember, sortingField, sortingDirection]);
-
-  const dataOptions = useMemo(() => {
-    return selectedMembers.map(({ id, name }) => {
-      return {
-        value: id,
-        label: name,
-      };
-    });
-  }, [selectedMembers]);
+  const [pagination, changePage] = useState(DEFAULT_PAGINATION);
 
   const handleLogsLoadingError = useCallback(({ response }) => {
     const defaultMessage = intl.formatMessage({ id: 'ui-consortia-settings.errors.jobs.load.common' });
@@ -101,6 +82,16 @@ export const DataExportLogs = () => {
     },
   );
 
+  useEffect(() => {
+    if (!selectedMembers.find(({ id }) => id === activeMember)) {
+      setActiveMember(selectedMembers[0]?.id);
+    }
+  }, [activeMember, selectedMembers]);
+
+  useEffect(() => {
+    changePage(DEFAULT_PAGINATION);
+  }, [activeMember, sortingField, sortingDirection]);
+
   const jobLogsProperties = useJobLogsProperties({
     visibleColumns: EXPORT_JOB_LOG_VISIBLE_COLUMNS,
     columnWidths: EXPORT_JOB_LOG_COLUMNS_WIDTHS,
@@ -112,15 +103,26 @@ export const DataExportLogs = () => {
     formatter,
   }), [formatter, jobLogsProperties]);
 
+  const paneSub = !isNil(totalRecords) && intl.formatMessage(
+    { id: 'ui-data-export.searchResultsCountHeader' },
+    { count: totalRecords },
+  );
+
+  const dataOptions = useMemo(() => {
+    return selectedMembers.map(({ id, name }) => {
+      return {
+        value: id,
+        label: name,
+      };
+    });
+  }, [selectedMembers]);
+
   return (
     <Pane
       appIcon={<AppIcon app="data-export" />}
       defaultWidth="fill"
       paneTitle={<FormattedMessage id="ui-data-export.meta.title" />}
-      paneSub={!isNil(totalRecords) && intl.formatMessage(
-        { id: 'ui-data-export.searchResultsCountHeader' },
-        { count: totalRecords },
-      )}
+      paneSub={paneSub}
       noOverflow
     >
       <div className={css.paneContent}>
