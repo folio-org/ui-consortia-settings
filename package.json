@@ -91,6 +91,7 @@
     ],
     "okapiInterfaces": {
       "consortia": "1.0",
+      "data-export": "5.0",
       "source-manager-job-executions": "3.2"
     },
     "stripesDeps": [
