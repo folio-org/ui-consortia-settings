@@ -10,6 +10,7 @@ export const CONFIGURATIONS_ENTRIES_API = `${CONFIGURATIONS_API}/entries`;
 export const CONSORTIA_API = 'consortia';
 export const CONSORTIA_TENANTS_API = 'tenants';
 export const CONSORTIA_USER_TENANTS_API = 'user-tenants';
+export const DATA_EXPORT_API = 'data-export';
 export const METADATA_PROVIDER_API = 'metadata-provider';
 /*  */
 
@@ -19,6 +20,10 @@ export const PACKAGE_SCOPE_REGEX = /^@[a-z\d][\w-.]{0,214}\//;
 
 export const FILE_STATUSES = {
   NEW: 'NEW',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  COMPLETED_WITH_ERRORS: 'COMPLETED_WITH_ERRORS',
+  FAIL: 'FAIL',
   UPLOADING: 'UPLOADING',
   UPLOADED: 'UPLOADED',
   COMMITTED: 'COMMITTED',

@@ -13,6 +13,9 @@ jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
   useModules: jest.fn(),
 }));
+jest.mock('./settings/data-export/hooks', () => ({
+  useDataExportLogs: jest.fn(() => ({ jobExecutions: [], isLoading: false, isFetching: false })),
+}));
 jest.mock('./settings/data-import/hooks', () => ({
   useDataImportLogs: jest.fn(() => ({ jobExecutions: [], isLoading: false, isFetching: false })),
 }));
@@ -52,7 +55,7 @@ const renderConsortiumManager = (props = {}) => render(
 
 const settingsLabelsMap = {
   circulation: 'ui-circulation.settings.index.paneTitle',
-  'data-export': 'ui-data-export.settings.index.paneTitle',
+  'data-export': 'ui-data-export.meta.title',
   'data-import': 'ui-data-import.meta.title',
   inventory: 'ui-inventory.inventory.label',
   users: 'ui-users.settings.label',

@@ -1,20 +1,9 @@
-import { FormattedMessage } from 'react-intl';
+import { DataExportLogs } from './DataExportLogs';
 
-import { stripesShape } from '@folio/stripes/core';
-import { Settings } from '@folio/stripes/smart-components';
-
-const DataExportSettings = (props) => {
+const DataExportSettings = () => {
   return (
-    <Settings
-      {...props}
-      sections={[]}
-      paneTitle={<FormattedMessage id="ui-data-export.settings.index.paneTitle" />}
-    />
+    <DataExportLogs />
   );
-};
-
-DataExportSettings.propTypes = {
-  stripes: stripesShape.isRequired,
 };
 
 export default DataExportSettings;
