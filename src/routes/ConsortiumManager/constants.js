@@ -9,7 +9,7 @@ export const AVAILABLE_SETTINGS = [
 ];
 
 export const SETTINGS_ROUTES = AVAILABLE_SETTINGS.reduce((acc, curr) => {
-  acc[curr] = lazy(async () => import(`./settings/${curr}`));
+  acc[curr] = lazy(async () => import(`./settings/${curr}/index.js`));
 
   return acc;
 }, {});
