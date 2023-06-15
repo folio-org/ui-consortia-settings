@@ -1,0 +1,5 @@
+@import "@folio/stripes-components/lib/sharedStyles/focusWithinIndicator";
+
+.managerHeader {
+  composes: focusWithinIndicator;
+}

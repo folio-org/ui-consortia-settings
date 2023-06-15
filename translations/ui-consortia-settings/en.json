@@ -1,9 +1,26 @@
 {
-  "meta.title": "Consortium",
+  "meta.title": "Consortium manager",
 
   "affiliation.primary.suffix": "(Primary)",
 
   "button.saveAndClose": "Save & close",
+
+  "errors.jobs.load.common": "Could not load jobs data.",
+  "errors.permissionsRequired": "User does not have required permissions.",
+
+  "consortiumManager.findMember.trigger.label": "Select members",
+  "consortiumManager.findMember.modal.aria.search": "Search members",
+  "consortiumManager.findMember.modal.aria.select": "Select member",
+  "consortiumManager.findMember.modal.aria.selectAll": "Select all members",
+  "consortiumManager.findMember.modal.results.subTitle": "{amount, plural, one {# member} other {# members}} found",
+  "consortiumManager.findMember.modal.results.title": "Members",
+  "consortiumManager.findMember.modal.results.totalSelected": "Total selected: {amount}",
+  "consortiumManager.findMember.modal.results.warning": "Settings for the following selected members can be modified at the same time.",
+  "consortiumManager.findMember.modal.title": "Select members",
+  "consortiumManager.members.header.subTitle": "{amount, plural, one {# member} other {# members}} selected",
+  "consortiumManager.members.header.title": "Settings for selected members can be modified at the same time",
+  "consortiumManager.members.selection.label": "Member",
+
 
   "settings.heading": "Network settings",
   "settings.section.general": "General",
@@ -28,6 +45,9 @@
   "switchActiveAffiliation.modal.heading": "Select affiliation",
   "switchActiveAffiliation.modal.select.label": "Consortium members",
 
+  "permission.consortium-manager.view": "Consortium manager: Can view existing settings",
+  "permission.consortium-manager.edit": "Consortium manager: Can create, edit and remove settings",
+  "permission.consortium-manager.share": "Consortium manager: Can share settings to all members",
   "permission.settings.membership.view": "Settings (Consortia): Can view consortia membership",
   "permission.settings.membership.edit": "Settings (Consortia): Can view and edit consortia membership"
 }

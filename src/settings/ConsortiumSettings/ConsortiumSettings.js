@@ -7,9 +7,7 @@ import {
 } from '@folio/stripes/components';
 import { Settings } from '@folio/stripes/smart-components';
 
-import { ConsortiumContextProvider } from '../../ConsortiumContext';
-import { eventHandler } from '../../eventHandler';
-import { checkConsortiumAffiliations } from '../../utils';
+import { ConsortiumContextProvider } from '../../contexts';
 import { Membership } from '../Membership';
 
 const sections = [
@@ -27,12 +25,6 @@ const sections = [
 ];
 
 class ConsortiumSettings extends React.Component {
-  // Checks whether to show "Switch active affiliation" action item in the profile dropdown (package.json::stripes.links.userDropdown[0])
-  static checkConsortiumAffiliations = checkConsortiumAffiliations;
-
-  // Implementation of the handler specified in package.json ("stripes.handlerName")
-  static eventHandler = eventHandler;
-
   render() {
     return (
       <ConsortiumContextProvider>

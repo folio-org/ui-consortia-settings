@@ -1,0 +1,1 @@
+export { ConsortiumManagerHeader } from './ConsortiumManagerHeader';

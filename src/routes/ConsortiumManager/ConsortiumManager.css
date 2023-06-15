@@ -1,0 +1,22 @@
+@import "@folio/stripes-components/lib/variables";
+
+.managerContent {
+  position: relative;
+  height: calc(100vh - var(--control-min-size-touch) - 56px);
+}
+
+@media (--medium-down) {
+  .managerContent {
+    min-height: calc(100vh - var(--control-min-size-touch) - 48px);
+  }
+}
+
+.settingChoose {
+  padding: var(--gutter);
+  flex: auto;
+}
+
+.panePlaceholder {
+  background-color: var(--color-fill);
+  flex: auto;
+}

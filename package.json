@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
+    "@babel/plugin-proposal-private-methods": "^7.18.6",
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@folio/eslint-config-stripes": "^6.1.0",
     "@folio/stripes": "^8.0.0",
@@ -36,6 +37,7 @@
     "eslint": "^7.32.0",
     "eslint-plugin-filenames": "^1.3.2",
     "eslint-plugin-jest": "^23.0.4",
+    "history": "^5.0.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.4.2",
     "jest-junit": "^11.1.0",
@@ -50,7 +52,9 @@
   },
   "dependencies": {
     "@folio/stripes-acq-components": "~4.0.0",
+    "@folio/stripes-data-transfer-components": "^5.4.0",
     "@rehooks/local-storage": "^2.4.4",
+    "dom-helpers": "^3.4.0",
     "final-form": "^4.20.9",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.0",
@@ -70,6 +74,7 @@
   },
   "stripes": {
     "actsAs": [
+      "app",
       "settings",
       "handler"
     ],
@@ -85,10 +90,13 @@
       }
     ],
     "okapiInterfaces": {
-      "consortia": "1.0"
+      "consortia": "1.0",
+      "data-export": "5.0",
+      "source-manager-job-executions": "3.2"
     },
     "stripesDeps": [
-      "@folio/stripes-acq-components"
+      "@folio/stripes-acq-components",
+      "@folio/stripes-data-transfer-components"
     ],
     "links": {
       "userDropdown": [
@@ -101,12 +109,41 @@
     },
     "permissionSets": [
       {
+        "permissionName": "module.consortia-settings.enabled",
+        "displayName": "UI: Consortia settings module is enabled",
+        "visible": false
+      },
+      {
         "permissionName": "settings.consortia-settings.enabled",
         "displayName": "Settings (Consortia): Can view settings",
         "subPermissions": [
           "settings.enabled"
         ],
         "visible": false
+      },
+      {
+        "permissionName": "ui-consortia-settings.consortium-manager.view",
+        "displayName": "Consortium manager: Can view existing settings",
+        "subPermissions": [
+          "module.consortia-settings.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-consortia-settings.consortium-manager.edit",
+        "displayName": "Consortium manager: Can create, edit and remove settings",
+        "subPermissions": [
+          "ui-consortia-settings.consortium-manager.view"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-consortia-settings.consortium-manager.share",
+        "displayName": "Consortium manager: Can share settings to all members",
+        "subPermissions": [
+          "ui-consortia-settings.consortium-manager.view"
+        ],
+        "visible": true
       },
       {
         "permissionName": "ui-consortia-settings.settings.membership.view",
