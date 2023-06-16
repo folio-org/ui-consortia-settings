@@ -63,6 +63,7 @@
   },
   "peerDependencies": {
     "@folio/stripes": "^8.0.0",
+    "@folio/users": "^9.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-intl": "^5.8.0",
@@ -90,6 +91,7 @@
     "okapiInterfaces": {
       "consortia": "1.0",
       "data-export": "5.0",
+      "permissions": "5.6",
       "source-manager-job-executions": "3.2"
     },
     "stripesDeps": [

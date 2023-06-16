@@ -17,7 +17,7 @@ import {
   useSorting,
 } from '@folio/stripes-acq-components';
 
-import { useConsortiumManagerContext } from '../../../../../contexts';
+import { useMemberSelection } from '../../../hooks';
 import {
   DEFAULT_PAGINATION,
   DEFAULT_SORTING,
@@ -37,8 +37,11 @@ export const DataImportLogs = () => {
   const intl = useIntl();
   const showCallout = useShowCallout();
 
-  const { selectedMembers } = useConsortiumManagerContext();
-  const [activeMember, setActiveMember] = useState(selectedMembers[0]?.id);
+  const {
+    activeMember,
+    membersOptions,
+    setActiveMember,
+  } = useMemberSelection();
 
   const [pagination, changePage] = useState(DEFAULT_PAGINATION);
   const [
@@ -48,23 +51,8 @@ export const DataImportLogs = () => {
   ] = useSorting(noop, IMPORT_JOB_LOG_SORTABLE_COLUMNS);
 
   useEffect(() => {
-    if (!selectedMembers.find(({ id }) => id === activeMember)) {
-      setActiveMember(selectedMembers[0]?.id);
-    }
-  }, [activeMember, selectedMembers]);
-
-  useEffect(() => {
     changePage(DEFAULT_PAGINATION);
   }, [activeMember, sortingField, sortingDirection]);
-
-  const dataOptions = useMemo(() => {
-    return selectedMembers.map(({ id, name }) => {
-      return {
-        value: id,
-        label: name,
-      };
-    });
-  }, [selectedMembers]);
 
   const handleLogsLoadingError = useCallback(({ response }) => {
     const defaultMessage = intl.formatMessage({ id: 'ui-consortia-settings.errors.jobs.load.common' });
@@ -115,7 +103,7 @@ export const DataImportLogs = () => {
       <div className={css.paneContent}>
         <Selection
           autoFocus
-          dataOptions={dataOptions}
+          dataOptions={membersOptions}
           disabled={isFetching}
           id="consortium-member-select"
           label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.selection.label" />}
