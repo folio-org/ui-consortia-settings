@@ -1,5 +1,5 @@
 {
-    "meta.title": "Consórcio",
+    "meta.title": "Gerenciador de consórcio",
     "settings.heading": "Configurações de rede",
     "settings.section.general": "Geral",
     "settings.membership.heading": "Endereços",
@@ -23,5 +23,22 @@
     "button.saveAndClose": "Salvar e fechar",
     "switchActiveAffiliation.userDropdown.label": "Mudar a afiliação ativa",
     "switchActiveAffiliation.modal.heading": "Selecione a afiliação",
-    "switchActiveAffiliation.modal.select.label": "Membros do consórcio"
+    "switchActiveAffiliation.modal.select.label": "Membros do consórcio",
+    "errors.jobs.load.common": "Não foi possível carregar os dados dos trabalhos.",
+    "errors.permissionsRequired": "O usuário não tem as permissões necessárias.",
+    "consortiumManager.findMember.trigger.label": "Selecionar membros",
+    "consortiumManager.findMember.modal.aria.search": "Pesquisar membros",
+    "consortiumManager.findMember.modal.aria.select": "Selecione membro",
+    "consortiumManager.findMember.modal.aria.selectAll": "Selecione todos os membros",
+    "consortiumManager.findMember.modal.results.subTitle": "{amount, plural, one {# membro } other {# membros }} encontrados",
+    "consortiumManager.findMember.modal.results.title": "Membros",
+    "consortiumManager.findMember.modal.results.totalSelected": "Total selecionado: {amount}",
+    "consortiumManager.findMember.modal.results.warning": "As configurações para os seguintes membros selecionados podem ser modificadas ao mesmo tempo.",
+    "consortiumManager.findMember.modal.title": "Selecionar membros",
+    "consortiumManager.members.header.subTitle": "{amount, plural, one {# membro } other {# membros }} selecionados",
+    "consortiumManager.members.header.title": "As configurações dos membros selecionados podem ser modificadas ao mesmo tempo",
+    "consortiumManager.members.selection.label": "Membro",
+    "permission.consortium-manager.view": "Gerenciador de consórcios: Pode visualizar as configurações existentes",
+    "permission.consortium-manager.edit": "Gerenciador de consórcios: Pode criar, editar e remover configurações",
+    "permission.consortium-manager.share": "Gerenciador de consórcio: Pode compartilhar configurações com todos os membros"
 }
