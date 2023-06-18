@@ -1,5 +1,5 @@
 {
-    "meta.title": "Konsorcium",
+    "meta.title": "Manažer konsorcia",
     "settings.heading": "Nastavení sítě",
     "settings.section.general": "Obecné",
     "settings.membership.heading": "Adresy",
@@ -23,5 +23,22 @@
     "button.saveAndClose": "Uložit a zavřít",
     "switchActiveAffiliation.userDropdown.label": "Přepnout aktivní příslušnost",
     "switchActiveAffiliation.modal.heading": "Vybrat příslušnost",
-    "switchActiveAffiliation.modal.select.label": "Členové konsorcia"
+    "switchActiveAffiliation.modal.select.label": "Členové konsorcia",
+    "errors.jobs.load.common": "Nelze načíst data úloh.",
+    "errors.permissionsRequired": "Uživatel nemá požadovaná oprávnění.",
+    "consortiumManager.findMember.trigger.label": "Vybrat členy",
+    "consortiumManager.findMember.modal.aria.search": "Vyhledat členy",
+    "consortiumManager.findMember.modal.aria.select": "Vybrat člena",
+    "consortiumManager.findMember.modal.aria.selectAll": "Vybrat všechny členy",
+    "consortiumManager.findMember.modal.results.subTitle": "{amount, plural, one {# člen} other {# členů}} nalezeno",
+    "consortiumManager.findMember.modal.results.title": "Členové",
+    "consortiumManager.findMember.modal.results.totalSelected": "Celkem vybráno: {amount}",
+    "consortiumManager.findMember.modal.results.warning": "Nastavení pro následující vybrané členy lze upravovat současně.",
+    "consortiumManager.findMember.modal.title": "Vybrat členy",
+    "consortiumManager.members.header.subTitle": "{amount, plural, one {# člen} other {# členů}} vybráno",
+    "consortiumManager.members.header.title": "Settings for selected members can be modified at the same time",
+    "consortiumManager.members.selection.label": "Member",
+    "permission.consortium-manager.view": "Consortium manager: Can view existing settings",
+    "permission.consortium-manager.edit": "Consortium manager: Can create, edit and remove settings",
+    "permission.consortium-manager.share": "Consortium manager: Can share settings to all members"
 }
