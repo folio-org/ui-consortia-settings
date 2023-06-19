@@ -3,7 +3,10 @@ import { useQuery } from 'react-query';
 
 import { useNamespace } from '@folio/stripes/core';
 
-import { FILE_STATUSES, METADATA_PROVIDER_API } from '../../../../../../constants';
+import {
+  FILE_STATUSES,
+  METADATA_PROVIDER_API,
+} from '../../../../../../constants';
 import { useTenantKy } from '../../../../../../hooks';
 import {
   DEFAULT_PAGINATION,
