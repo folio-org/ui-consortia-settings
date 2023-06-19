@@ -6,6 +6,7 @@
   "button.saveAndClose": "Save & close",
 
   "errors.jobs.load.common": "Could not load jobs data.",
+  "errors.permissionSets.load.common": "Could not load permission sets.",
   "errors.permissionsRequired": "User does not have required permissions.",
 
   "consortiumManager.findMember.trigger.label": "Select members",
