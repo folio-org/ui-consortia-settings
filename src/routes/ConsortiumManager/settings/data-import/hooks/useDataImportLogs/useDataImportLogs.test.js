@@ -11,9 +11,12 @@ import {
   OFFSET_PARAMETER,
 } from '@folio/stripes-acq-components';
 
+import {
+  FILE_STATUSES,
+  METADATA_PROVIDER_API,
+} from '../../../../../../constants';
 import { useTenantKy } from '../../../../../../hooks';
 import { useDataImportLogs } from './useDataImportLogs';
-import { METADATA_PROVIDER_API } from '../../../../../../constants';
 
 jest.mock('../../../../../../hooks', () => ({
   ...jest.requireActual('../../../../../../hooks'),
@@ -71,11 +74,17 @@ describe('useDataImportLogs', () => {
       limit,
       offset,
       sortBy,
+      statusAny,
     } = parse(kyMock.get.mock.calls[0][kyMock.get.mock.calls[0].length - 1].searchParams);
 
     expect(result.current.jobExecutions).toEqual(jobExecutions);
     expect(Number(limit)).toBe(200);
     expect(Number(offset)).toBe(300);
     expect(sortBy).toBe('testField,asc');
+    expect(statusAny).toEqual([
+      FILE_STATUSES.COMMITTED,
+      FILE_STATUSES.ERROR,
+      FILE_STATUSES.CANCELLED,
+    ]);
   });
 });

@@ -3,7 +3,10 @@ import { useQuery } from 'react-query';
 
 import { useNamespace } from '@folio/stripes/core';
 
-import { METADATA_PROVIDER_API } from '../../../../../../constants';
+import {
+  FILE_STATUSES,
+  METADATA_PROVIDER_API,
+} from '../../../../../../constants';
 import { useTenantKy } from '../../../../../../hooks';
 import {
   DEFAULT_PAGINATION,
@@ -27,6 +30,11 @@ export const useDataImportLogs = (params = {}, options = {}) => {
   const searchParams = queryString.stringify({
     limit: pagination.limit || DEFAULT_PAGINATION.limit,
     offset: pagination.offset || DEFAULT_PAGINATION.offset,
+    statusAny: [
+      FILE_STATUSES.COMMITTED,
+      FILE_STATUSES.ERROR,
+      FILE_STATUSES.CANCELLED,
+    ],
     ...getSortingParams({
       sortingField: sorting.sortingField || DEFAULT_SORTING.sortingField,
       sortingDirection: sorting.sortingDirection || DEFAULT_SORTING.sortingDirection,
