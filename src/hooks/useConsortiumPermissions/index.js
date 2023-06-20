@@ -1,0 +1,1 @@
+export { useConsortiumPermissions } from './useConsortiumPermissions';
