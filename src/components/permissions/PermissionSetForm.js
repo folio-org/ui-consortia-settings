@@ -246,7 +246,7 @@ class PermissionSetForm extends React.Component {
               onToggle={this.handleSectionToggle}
               label={accordionLabel}
             >
-              {selectedSet.metadata && selectedSet.metadata.createdDate &&
+              {selectedSet.metadata?.createdDate &&
                 <Row>
                   <Col xs={12}>
                     <this.cViewMetaData metadata={selectedSet.metadata} />

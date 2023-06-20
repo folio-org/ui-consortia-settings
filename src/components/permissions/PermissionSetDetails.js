@@ -86,7 +86,7 @@ class PermissionSetDetails extends React.Component {
             </Headline>
           )}
         >
-          {selectedSet.metadata && selectedSet.metadata.createdDate &&
+          {selectedSet.metadata?.createdDate &&
             <Row>
               <Col xs={12}>
                 <this.cViewMetaData metadata={selectedSet.metadata} />

@@ -119,13 +119,6 @@ const PermissionsAccordion = (props) => {
     e.stopPropagation();
 
     setPermissionModalOpen(true);
-
-    // const isHiddenAssigned = !!getAssignedPermissions().find((p) => p.visible === false);
-    // if (isHiddenAssigned) {
-    //   setConfirmEditModalOpen(true);
-    // } else {
-    //   setPermissionModalOpen(true);
-    // }
   };
 
   const closePermissionModal = () => {
