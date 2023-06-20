@@ -3,7 +3,6 @@ import { screen } from '@folio/jest-config-stripes/testing-library/react';
 import { renderWithRouter } from 'helpers/renderWithRouter';
 import PermissionLabel from './PermissionLabel';
 
-
 jest.unmock('@folio/stripes/components');
 
 const renderPermissionLabel = (props) => renderWithRouter(<PermissionLabel {...props} />);
@@ -18,8 +17,9 @@ describe('PermissionLabel component', () => {
         dummy: false,
       },
       formatMessage: jest.fn(),
-      showRaw: true
+      showRaw: true,
     };
+
     renderPermissionLabel(props);
     expect(screen.getByText('circ-observer (circ-observer.permission.)')).toBeTruthy();
   });
@@ -32,8 +32,9 @@ describe('PermissionLabel component', () => {
         dummy: false,
       },
       formatMessage: jest.fn(),
-      showRaw: false
+      showRaw: false,
     };
+
     renderPermissionLabel(props);
     expect(screen.getByText('circ-observer.permission.')).toBeTruthy();
   });

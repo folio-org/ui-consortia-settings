@@ -27,7 +27,7 @@ describe('AffiliationSelection', () => {
 
     expect(
       within(document.getElementById('test-affiliations-select'))
-        .getByText(affiliations[2].tenantName)
+        .getByText(affiliations[2].tenantName),
     ).toBeInTheDocument();
     affiliations.forEach(({ tenantName, isPrimary }) => {
       expect(

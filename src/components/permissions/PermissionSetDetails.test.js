@@ -62,7 +62,7 @@ const props = {
       createdDate: '2021-11-22T03:38:19.279+00:00',
       updatedByUserId: '61e6d812-8763-5467-b797-ce20c303badb',
       updatedDate: '2021-11-22T03:38:19.279+00:00',
-    }
+    },
   },
   intl: {},
   stripes: STRIPES,
