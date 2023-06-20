@@ -50,11 +50,12 @@ describe('render RenderPermissions component', () => {
           subPermissions: ['ui-agreements.agreements.view', 'erm.agreements.item.delete'],
           tags: [],
           visible: true,
-        }
+        },
       ],
       intl: {},
       stripes: STRIPES,
     };
+
     renderRenderPermissions(props);
     expect(renderRenderPermissions(props)).toBeTruthy();
   });
@@ -69,6 +70,7 @@ describe('render RenderPermissions component', () => {
       intl: {},
       stripes: STRIPESWITHOUTPERMISSION,
     };
+
     renderRenderPermissions(props);
     expect(renderRenderPermissions(props)).toBeTruthy();
   });
@@ -83,6 +85,7 @@ describe('render RenderPermissions component', () => {
       intl: {},
       stripes: STRIPES,
     };
+
     renderRenderPermissions(props);
     expect(renderRenderPermissions(props)).toBeTruthy();
   });

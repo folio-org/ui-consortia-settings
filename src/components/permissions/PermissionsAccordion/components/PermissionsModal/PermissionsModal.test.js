@@ -6,50 +6,50 @@ jest.unmock('@folio/stripes/components');
 
 const record = [
   {
-    'permissionName' : 'ui-agreements.resources.edit',
-    'displayName' : 'Agreements: Edit e-resources',
-    'id' : 'e103449a-952d-42a1-938b-52f49db7bda1',
-    'description' : 'Grants all permissions included in Agreements: Search & view e-resources plus the ability to edit the e-resources',
-    'tags' : [],
-    'subPermissions' : ['erm.pci.edit', 'erm.pti.edit', 'erm.titles.edit', 'ui-agreements.resources.view'],
-    'childOf' : [],
-    'grantedTo' : ['fb1ea30c-e94e-41f0-84f4-2e7ddf65c77a'],
-    'mutable' : false,
-    'visible' : true,
-    'dummy' : false,
-    'deprecated' : false,
-    'moduleName' : 'folio_agreements',
-    'moduleVersion' : '8.0.1000774'
+    'permissionName': 'ui-agreements.resources.edit',
+    'displayName': 'Agreements: Edit e-resources',
+    'id': 'e103449a-952d-42a1-938b-52f49db7bda1',
+    'description': 'Grants all permissions included in Agreements: Search & view e-resources plus the ability to edit the e-resources',
+    'tags': [],
+    'subPermissions': ['erm.pci.edit', 'erm.pti.edit', 'erm.titles.edit', 'ui-agreements.resources.view'],
+    'childOf': [],
+    'grantedTo': ['fb1ea30c-e94e-41f0-84f4-2e7ddf65c77a'],
+    'mutable': false,
+    'visible': true,
+    'dummy': false,
+    'deprecated': false,
+    'moduleName': 'folio_agreements',
+    'moduleVersion': '8.0.1000774',
   }, {
-    'permissionName' : 'ui-checkout.viewFeeFines',
-    'displayName' : 'Check out: View fees/fines',
-    'id' : '87a3f1b3-1e0a-4a4e-84de-31d417398257',
-    'description' : 'Entire set of permissions needed to view fees/fines',
-    'tags' : [],
-    'subPermissions' : [],
-    'childOf' : [],
-    'grantedTo' : ['fb1ea30c-e94e-41f0-84f4-2e7ddf65c77a'],
-    'mutable' : false,
-    'visible' : true,
-    'dummy' : false,
-    'deprecated' : false,
-    'moduleName' : 'folio_checkout',
-    'moduleVersion' : '7.0.1000575'
+    'permissionName': 'ui-checkout.viewFeeFines',
+    'displayName': 'Check out: View fees/fines',
+    'id': '87a3f1b3-1e0a-4a4e-84de-31d417398257',
+    'description': 'Entire set of permissions needed to view fees/fines',
+    'tags': [],
+    'subPermissions': [],
+    'childOf': [],
+    'grantedTo': ['fb1ea30c-e94e-41f0-84f4-2e7ddf65c77a'],
+    'mutable': false,
+    'visible': true,
+    'dummy': false,
+    'deprecated': false,
+    'moduleName': 'folio_checkout',
+    'moduleVersion': '7.0.1000575',
   }, {
-    'permissionName' : 'ui-checkout.viewRequests',
-    'displayName' : '',
-    'id' : '607d641c-b67f-42a9-aee3-c440616133fa',
-    'description' : 'Entire set of permissions needed to view requests',
-    'tags' : [],
-    'subPermissions' : [],
-    'childOf' : [],
-    'grantedTo' : ['fb1ea30c-e94e-41f0-84f4-2e7ddf65c77a'],
-    'mutable' : false,
-    'visible' : true,
-    'dummy' : false,
-    'deprecated' : false,
-    'moduleName' : 'folio_checkout',
-    'moduleVersion' : '7.0.1000575'
+    'permissionName': 'ui-checkout.viewRequests',
+    'displayName': '',
+    'id': '607d641c-b67f-42a9-aee3-c440616133fa',
+    'description': 'Entire set of permissions needed to view requests',
+    'tags': [],
+    'subPermissions': [],
+    'childOf': [],
+    'grantedTo': ['fb1ea30c-e94e-41f0-84f4-2e7ddf65c77a'],
+    'mutable': false,
+    'visible': true,
+    'dummy': false,
+    'deprecated': false,
+    'moduleName': 'folio_checkout',
+    'moduleVersion': '7.0.1000575',
   },
 ];
 
@@ -93,8 +93,9 @@ const mutator = {
     DELETE: jest.fn(),
     cancel: jest.fn(),
     reset: jest.fn(),
-    GET:  () => new Promise((resolve, _) => {
+    GET: () => new Promise((resolve, _) => {
       const response = record;
+
       resolve(response);
     }),
   },
@@ -149,21 +150,21 @@ const filtersConfig = [
 
 const assignedPermissionsData = [
   {
-    'permissionName' : 'acq-admin',
-    'displayName' : 'acq-admin',
-    'id' : '822d0819-454c-4310-a341-9bd1d404a95f',
-    'description' : 'Entire set of permissions needed to view requests',
-    'tags' : [],
-    'subPermissions' : [],
-    'childOf' : [],
-    'grantedTo' : ['2566b238-e0e6-48b0-a21c-5be03500d726', 'fb1ea30c-e94e-41f0-84f4-2e7ddf65c77a'],
-    'mutable' : false,
-    'visible' : true,
-    'dummy' : false,
-    'deprecated' : false,
-    'moduleName' : 'folio_checkout',
-    'moduleVersion' : '7.0.1000575',
-  }
+    'permissionName': 'acq-admin',
+    'displayName': 'acq-admin',
+    'id': '822d0819-454c-4310-a341-9bd1d404a95f',
+    'description': 'Entire set of permissions needed to view requests',
+    'tags': [],
+    'subPermissions': [],
+    'childOf': [],
+    'grantedTo': ['2566b238-e0e6-48b0-a21c-5be03500d726', 'fb1ea30c-e94e-41f0-84f4-2e7ddf65c77a'],
+    'mutable': false,
+    'visible': true,
+    'dummy': false,
+    'deprecated': false,
+    'moduleName': 'folio_checkout',
+    'moduleVersion': '7.0.1000575',
+  },
 ];
 
 const renderPermissionsModal = (props) => render(<PermissionsModal {...props} />);
@@ -188,6 +189,7 @@ describe('PermissionsModal', () => {
       },
       open: true,
     };
+
     await expect(renderPermissionsModal(props)).toBeDefined();
     expect.assertions(2);
     expect(screen.getAllByText('ui-users.permissions.modal.list.pane.header')).toBeDefined();
@@ -213,8 +215,9 @@ describe('PermissionsModal', () => {
       },
       open: true,
     };
+
     await expect(renderPermissionsModal(props)).toBeDefined();
-    fireEvent.change(document.querySelector('[data-test-search-field="true"]'), { target : { value: 'Permissions' } });
+    fireEvent.change(document.querySelector('[data-test-search-field="true"]'), { target: { value: 'Permissions' } });
     fireEvent.click(screen.getByText('ui-users.search'));
     expect(screen.getAllByText('stripes-components.tableEmpty')).toBeDefined();
   });
@@ -238,6 +241,7 @@ describe('PermissionsModal', () => {
       },
       open: true,
     };
+
     await expect(renderPermissionsModal(props)).toBeDefined();
     fireEvent.click(document.querySelector('[aria-labelledby="collapse-filter-pane-button-tooltip-text"]'));
     expect(document.querySelector('[aria-label="caret-right"]')).toBeDefined();
@@ -262,6 +266,7 @@ describe('PermissionsModal', () => {
       },
       open: true,
     };
+
     await expect(renderPermissionsModal(props)).toBeDefined();
 
     // screen.debug(document.querySelector('[data-test-filter-groups="true"]'));
@@ -302,6 +307,7 @@ describe('PermissionsModal', () => {
       },
       open: true,
     };
+
     expect.assertions(1);
     await waitFor(() => expect(renderPermissionsModal(props)).toBeDefined());
     // add permission
@@ -336,24 +342,25 @@ describe('PermissionsModal', () => {
       },
       open: true,
     };
+
     expect.assertions(1);
     await waitFor(() => expect(renderPermissionsModal(props)).toBeDefined());
-    fireEvent.change(document.querySelector('[data-test-search-field="true"]'), { target : { value: 'Search' } });
+    fireEvent.change(document.querySelector('[data-test-search-field="true"]'), { target: { value: 'Search' } });
     fireEvent.click(screen.getByText('ui-users.search'));
   });
 
   it('Saves invisible permissions', async () => {
     const initialPerms = [
       {
-        'permissionName' : 'ui-mystery.invisible',
-        'displayName' : '',
-        'id' : '607d641c-b67f-42a9-aee3-c44061613300',
-        'description' : 'Hi, this is an invisible permission!',
-        'visible' : false,
-        'subPermissions' : [],
-        'dummy' : false,
-        'mutable' : false,
-      }
+        'permissionName': 'ui-mystery.invisible',
+        'displayName': '',
+        'id': '607d641c-b67f-42a9-aee3-c44061613300',
+        'description': 'Hi, this is an invisible permission!',
+        'visible': false,
+        'subPermissions': [],
+        'dummy': false,
+        'mutable': false,
+      },
     ];
     const props = {
       resources: resourcesNull,

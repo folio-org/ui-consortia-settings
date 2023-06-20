@@ -40,13 +40,13 @@ const props = {
       'dummy': false,
       'deprecated': false,
       'moduleName': 'folio_checkout',
-      'moduleVersion': '7.0.1000575'
-    }
+      'moduleVersion': '7.0.1000575',
+    },
   ],
   intl: {},
   setAssignedPermissionIds: jest.fn(),
   togglePermission: jest.fn(),
-  visibleColumns: ['selected', 'permissionName', 'type', 'status']
+  visibleColumns: ['selected', 'permissionName', 'type', 'status'],
 };
 
 describe('PermissionsList component', () => {

@@ -85,10 +85,12 @@ const filterss = [
 describe('getInitialFiltersState component', () => {
   it('for assigned value', () => {
     const data = getInitialFiltersState(filters);
+
     expect(data).toStrictEqual({ 'permissionType.permissionSets': true, 'status.assigned': true });
   });
   it('for unassigned value', () => {
     const data = getInitialFiltersState(filterss);
+
     expect(data).toStrictEqual({ 'permissionType.permissions': true, 'status.unassigned': true });
   });
 });

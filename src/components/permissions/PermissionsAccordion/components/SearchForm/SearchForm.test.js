@@ -19,22 +19,23 @@ const arrayMutators = {
   shift: jest.fn(),
   swap: jest.fn(),
   unshift: jest.fn(),
-  update: jest.fn()
+  update: jest.fn(),
 };
 
 const renderSearchForm = (props) => {
   const component = () => (
     <SearchForm {...props} />
   );
+
   renderWithRouter(
     <Form
       id="form-user"
       mutators={{
-        ...arrayMutators
+        ...arrayMutators,
       }}
       onSubmit={onSubmit}
       render={component}
-    />
+    />,
   );
 };
 
@@ -99,9 +100,8 @@ const propData = {
         value: true,
       },
     ],
-  }
+  },
 };
-
 
 describe('Search Form Component', () => {
   beforeEach(() => {
