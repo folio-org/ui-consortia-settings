@@ -63,6 +63,9 @@ class PermissionSetDetails extends React.Component {
     const { sections } = this.state;
     const untitledPermissionSetMessage = <FormattedMessage id="ui-users.permissions.untitledPermissionSet" />;
 
+    const ConnectedRenderPermissions = this.renderPermissions;
+    const ConnectedViewMetaData = this.cViewMetaData;
+
     return (
       <div>
         <Row end="xs">
@@ -89,7 +92,7 @@ class PermissionSetDetails extends React.Component {
           {selectedSet.metadata?.createdDate &&
             <Row>
               <Col xs={12}>
-                <this.cViewMetaData metadata={selectedSet.metadata} />
+                <ConnectedViewMetaData metadata={selectedSet.metadata} />
               </Col>
             </Row>
           }
@@ -109,7 +112,7 @@ class PermissionSetDetails extends React.Component {
           </Row>
         </Accordion>
 
-        <this.renderPermissions
+        <ConnectedRenderPermissions
           expanded={sections.assignedPermissions}
           onToggle={this.handleSectionToggle}
           accordionId="assignedPermissions"

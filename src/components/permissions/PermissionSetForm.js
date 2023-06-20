@@ -196,6 +196,8 @@ class PermissionSetForm extends React.Component {
       form,
     } = this.props;
 
+    const ConnectedViewMetaData = this.cViewMetaData;
+
     const selectedSet = initialValues || {};
     const { confirmDelete, sections } = this.state;
     const disabled = !stripes.hasPerm('perms.permissions.item.put');
@@ -249,7 +251,7 @@ class PermissionSetForm extends React.Component {
               {selectedSet.metadata?.createdDate &&
                 <Row>
                   <Col xs={12}>
-                    <this.cViewMetaData metadata={selectedSet.metadata} />
+                    <ConnectedViewMetaData metadata={selectedSet.metadata} />
                   </Col>
                 </Row>
               }
