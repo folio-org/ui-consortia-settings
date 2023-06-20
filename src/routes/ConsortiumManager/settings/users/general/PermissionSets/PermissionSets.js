@@ -1,17 +1,17 @@
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { noop } from 'lodash';
+import { identity, noop } from 'lodash';
 import { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Selection } from '@folio/stripes/components';
 import { EntrySelector } from '@folio/stripes/smart-components';
 import { useShowCallout } from '@folio/stripes-acq-components';
-import { PermissionSetDetails } from '@folio/users';
 
-import { useTenantPermissions } from '../../../../../../hooks';
 import { UUID_REGEX } from '../../../../../../constants';
-import { PermissionSetsActionsMenu } from './PermissionSetsActionsMenu';
+import { useTenantPermissions } from '../../../../../../hooks';
+import { PermissionSetDetails } from '../../../../../../temp';
 import { useMemberSelection } from '../../../../hooks';
+import { PermissionSetsActionsMenu } from './PermissionSetsActionsMenu';
 
 const entryLabel = <FormattedMessage id="ui-users.permissionSet" />;
 const paneTitle = <FormattedMessage id="ui-users.settings.permissionSet" />;
@@ -111,6 +111,7 @@ export const PermissionSets = (props) => {
       contentData={contentData}
       detailComponent={PermissionSetDetails}
       detailPaneTitle={selectedItem ? selectedItem[nameKey] : entryLabel}
+      parseInitialValues={identity}
       paneTitle={paneTitle}
       paneWidth="70%"
       rowFilter={rowFilter}
