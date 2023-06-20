@@ -18,6 +18,7 @@ const renderEnableUnassignAll = ({ name }) => {
       <EnableUnassignAll {...enableUnassignAllProps} />
     </>
   );
+
   render(<Form onSubmit={jest.fn()} render={component} />);
 };
 
@@ -26,6 +27,7 @@ describe('EnableUnassignAll', () => {
     renderEnableUnassignAll({ name: 'permissions' });
 
     const element = screen.getByRole('textbox');
+
     fireEvent.change(element, { target: { value: 'test' } });
 
     expect(onChangeMock).toHaveBeenCalled();

@@ -43,7 +43,6 @@ describe('PermissionsAccordionList', () => {
     });
   });
 
-
   test('sorts permissions', async () => {
     const shuffled = [...perms].sort(() => Math.random() - 0.5);
     const palProps = {
@@ -59,6 +58,7 @@ describe('PermissionsAccordionList', () => {
     render(<PermissionsAccordionList {...palProps} />);
 
     const sorted = screen.getAllByRole('menuitem');
+
     sorted.forEach((p, i) => {
       expect(within(p).getByText(perms[i].permissionName)).toBeTruthy();
     });
