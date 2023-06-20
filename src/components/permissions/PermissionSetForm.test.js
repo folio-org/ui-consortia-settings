@@ -4,6 +4,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import PermissionSetForm from './PermissionSetForm';
 
 jest.unmock('@folio/stripes/components');
+jest.unmock('@folio/stripes/smart-components', () => ({
+  ...jest.requireActual('@folio/stripes/smart-components'),
+  ViewMetaData: jest.fn(() => 'ViewMetaData'),
+}));
+jest.mock('./PermissionsAccordion/PermissionsAccordion', () => jest.fn(() => 'PermissionsAccordion'));
 
 const handleSubmit = () => ({});
 const onRemove = () => ({});
@@ -16,7 +21,10 @@ const initialValData = {
     createdDate: '',
   },
 };
-const stripes = {};
+const stripes = {
+  connect: jest.fn(c => c),
+  hasPerm: jest.fn(() => true),
+};
 
 const renderPermissionSetForm = initialValues => {
   const component = (

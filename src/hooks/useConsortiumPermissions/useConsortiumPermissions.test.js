@@ -9,11 +9,11 @@ import {
   useStripes,
 } from '@folio/stripes/core';
 
-import consortia from '../../../test/jest/fixtures/consortia';
-import {
-  MAX_RECORDS,
-} from '../../constants';
-import useConsortiumPermissions from './useConsortiumPermissions';
+import { consortium as consortiumMock } from 'fixtures';
+
+import { useConsortiumPermissions } from './useConsortiumPermissions';
+
+const MAX_RECORDS = 10_000;
 
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
@@ -33,7 +33,7 @@ const wrapper = ({ children }) => (
 
 const user = { id: 'userId' };
 const consortium = {
-  ...consortia[0],
+  ...consortiumMock,
   centralTenantId: 'mobius',
 };
 
@@ -66,7 +66,7 @@ describe('useConsortiumPermissions', () => {
     useStripes.mockClear().mockReturnValue({
       user: {
         user: { ...user, consortium },
-      }
+      },
     });
   });
 

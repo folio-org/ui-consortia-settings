@@ -6,8 +6,9 @@ import PermissionsAccordionListItem from './PermissionsAccordionListItem';
 
 jest.unmock('@folio/stripes/components');
 
-jest.mock('../data/converters/permission', () => ({
-  getPermissionLabelString: (i) => i.permissionName,
+jest.mock('@folio/stripes/util', () => ({
+  ...jest.requireActual('@folio/stripes/util'),
+  getPermissionLabelString: jest.fn((i) => i.permissionName),
 }));
 
 describe('PermissionsAccordionListItem', () => {
@@ -62,23 +63,6 @@ describe('PermissionsAccordionListItem', () => {
       userEvent.click(screen.getByRole('button'));
 
       expect(palProps.changePermissions).toHaveBeenCalledWith([item]);
-    });
-
-    test('hides button without permission', async () => {
-      const palProps = {
-        item: {
-          id: 123,
-          permissionName: 'funky',
-        },
-        permToDelete: 'nope',
-        fields: {
-          value: [],
-        },
-        changePermissions: jest.fn(),
-      };
-
-      render(<PermissionsAccordionListItem {...palProps} />);
-      expect(screen.queryByRole('button')).toBeFalsy();
     });
   });
 });

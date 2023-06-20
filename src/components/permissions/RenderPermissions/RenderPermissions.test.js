@@ -1,6 +1,5 @@
-import { renderWithRouter } from 'helpers/renderWithRouter';
+import { renderWithRouter } from 'helpers';
 import RenderPermissions from './RenderPermissions';
-
 
 jest.unmock('@folio/stripes/components');
 

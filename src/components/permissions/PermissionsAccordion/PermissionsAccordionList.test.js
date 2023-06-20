@@ -6,8 +6,9 @@ import PermissionsAccordionList from './PermissionsAccordionList';
 
 jest.unmock('@folio/stripes/components');
 
-jest.mock('../data/converters/permission', () => ({
-  getPermissionLabelString: (i) => i.permissionName,
+jest.mock('@folio/stripes/util', () => ({
+  ...jest.requireActual('@folio/stripes/util'),
+  getPermissionLabelString: jest.fn((i) => i.permissionName),
 }));
 
 jest.mock('./PermissionsAccordionListItem', () => (

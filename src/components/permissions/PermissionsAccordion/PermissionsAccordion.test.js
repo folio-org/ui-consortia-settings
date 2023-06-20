@@ -7,6 +7,10 @@ import { IfPermission } from '@folio/stripes/core';
 import PermissionsAccordion from './PermissionsAccordion';
 
 jest.unmock('@folio/stripes/components');
+jest.mock('@folio/stripes/core', () => ({
+  IfPermission: jest.fn(({ children }) => <>{children}</>),
+  stripesConnect: jest.fn(c => c),
+}));
 
 const changeFormMock = jest.fn();
 const paProps = {
@@ -17,7 +21,7 @@ const paProps = {
     getFieldState: () => ({
       value: [
         { 'name': 'foo' },
-      ]
+      ],
     }),
   },
   formName: 'userForm',
@@ -28,6 +32,9 @@ const paProps = {
   permToModify: 'perms.users.item.put',
   permissionsField: 'permissions',
   visibleColumns: [],
+  stripes: {
+    hasPerm: jest.fn(() => true),
+  },
 };
 
 jest.mock('./components/PermissionsModal', () => {
@@ -41,13 +48,12 @@ describe('PermissionsAccordion', () => {
   test('lists permissions', async () => {
     renderPermissionsAccordion({
       stripes: {
-        hasPerm: (p) => p === paProps.permToRead
+        hasPerm: (p) => p === paProps.permToRead,
       },
     });
 
     expect(screen.getByTestId(paProps.accordionId)).toBeTruthy();
   });
-
 
   test('lists permissions', async () => {
     renderPermissionsAccordion({
@@ -56,7 +62,7 @@ describe('PermissionsAccordion', () => {
           value: [
             { name: 'foo', visible: true },
             { name: 'bar', visible: false },
-          ]
+          ],
         }),
       },
     });
@@ -68,7 +74,7 @@ describe('PermissionsAccordion', () => {
     renderPermissionsAccordion({
       permToRead: 'funky-chicken',
       stripes: {
-        hasPerm: (p) => p === paProps.permToRead
+        hasPerm: (p) => p === paProps.permToRead,
       },
     });
 
@@ -81,7 +87,7 @@ describe('PermissionsAccordion', () => {
     });
 
     renderPermissionsAccordion({
-      permToModify: 'funky-chicken'
+      permToModify: 'funky-chicken',
     });
 
     expect(screen.queryByText('ui-users.permissions.addPermission')).not.toBeInTheDocument();
@@ -119,7 +125,7 @@ describe('PermissionsAccordion', () => {
               value: [
                 { name: 'foo', visible: true },
                 { name: 'bar', visible: false },
-              ]
+              ],
             }),
           },
         });
@@ -135,13 +141,14 @@ describe('PermissionsAccordion', () => {
               value: [
                 { name: 'foo', visible: true },
                 { name: 'bar', visible: false },
-              ]
+              ],
             }),
           },
         });
 
         userEvent.click(screen.getByText('ui-users.permissions.addPermission'));
         const cancelButton = await screen.findByRole('button', { name: 'stripes-components.cancel' });
+
         userEvent.click(cancelButton);
 
         await waitForElementToBeRemoved(() => screen.getByText('ui-users.permissions-accordion.confirm-heading'));
@@ -154,7 +161,7 @@ describe('PermissionsAccordion', () => {
               value: [
                 { name: 'foo', visible: true },
                 { name: 'bar', visible: false },
-              ]
+              ],
             }),
           },
         });
@@ -164,6 +171,7 @@ describe('PermissionsAccordion', () => {
 
         userEvent.click(screen.getByText('ui-users.permissions.addPermission'));
         const cancelButton = await screen.findByRole('button', { name: 'ui-users.permissions-accordion.confirm-continue' });
+
         userEvent.click(cancelButton);
 
         // closes the ConfirmModal
@@ -179,6 +187,7 @@ describe('PermissionsAccordion', () => {
         renderPermissionsAccordion();
 
         const unassignAllButton = await screen.findByRole('button', { name: 'ui-users.permissions.unassignAllPermissions' });
+
         userEvent.click(unassignAllButton);
 
         expect(await screen.findByText('ui-users.permissions.modal.unassignAll.header')).toBeInTheDocument();
@@ -192,16 +201,18 @@ describe('PermissionsAccordion', () => {
                 value: [
                   { name: 'foo', visible: true },
                   { name: 'bar', visible: false },
-                ]
+                ],
               }),
               change: changeFormMock,
             },
           });
 
           const unassignAllButton = await screen.findByRole('button', { name: 'ui-users.permissions.unassignAllPermissions' });
+
           userEvent.click(unassignAllButton);
 
           const confirmButton = await screen.findByRole('button', { name: 'ui-users.yes' });
+
           userEvent.click(confirmButton);
 
           expect(changeFormMock).toHaveBeenCalled();
@@ -213,9 +224,11 @@ describe('PermissionsAccordion', () => {
           renderPermissionsAccordion();
 
           const unassignAllButton = await screen.findByRole('button', { name: 'ui-users.permissions.unassignAllPermissions' });
+
           userEvent.click(unassignAllButton);
 
           const cancelButton = await screen.findByRole('button', { name: 'ui-users.no' });
+
           userEvent.click(cancelButton);
 
           await waitForElementToBeRemoved(() => screen.getByText('ui-users.permissions.modal.unassignAll.header'));

@@ -1,8 +1,7 @@
 import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
-import { renderWithRouter } from 'helpers/renderWithRouter';
+import { renderWithRouter } from 'helpers';
 import PermissionSetDetails from './PermissionSetDetails';
-
 
 jest.unmock('@folio/stripes/components');
 

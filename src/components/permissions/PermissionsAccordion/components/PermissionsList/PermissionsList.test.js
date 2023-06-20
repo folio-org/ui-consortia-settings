@@ -1,6 +1,6 @@
 import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
-import renderWithRouter from 'helpers/renderWithRouter';
+import { renderWithRouter } from 'helpers';
 import PermissionsList from './PermissionsList';
 
 

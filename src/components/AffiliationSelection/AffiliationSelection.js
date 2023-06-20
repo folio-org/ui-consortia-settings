@@ -53,11 +53,11 @@ export const AffiliationSelection = ({
   );
 };
 
-AffiliationsSelect.defaultProps = {
+AffiliationSelection.defaultProps = {
   id: 'user-assigned',
 };
 
-AffiliationsSelect.propTypes = {
+AffiliationSelection.propTypes = {
   affiliations: affiliationsShape,
   onChange: PropTypes.func.isRequired,
   id: PropTypes.string,

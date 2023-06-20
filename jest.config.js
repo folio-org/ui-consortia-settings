@@ -1,6 +1,6 @@
 const path = require('path');
-const stripesConfig = module.exports = require('@folio/jest-config-stripes');
-const acqConfig = module.exports = require('@folio/stripes-acq-components/jest.config');
+const stripesConfig = require('@folio/jest-config-stripes');
+const acqConfig = require('@folio/stripes-acq-components/jest.config');
 
 module.exports = {
   ...stripesConfig,

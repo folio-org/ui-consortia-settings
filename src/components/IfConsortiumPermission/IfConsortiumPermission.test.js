@@ -1,6 +1,6 @@
 import { useConsortiumPermissions } from '../../hooks';
 
-import IfConsortiumPermission from './IfConsortiumPermission';
+import { IfConsortiumPermission } from './IfConsortiumPermission';
 
 jest.mock('../../hooks', () => ({
   useConsortiumPermissions: jest.fn(),
