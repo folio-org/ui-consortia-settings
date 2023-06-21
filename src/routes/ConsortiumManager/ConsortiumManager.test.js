@@ -2,9 +2,16 @@ import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, withRouter } from 'react-router-dom';
 
-import { useModules } from '@folio/stripes/core';
+import {
+  useModules,
+  useStripes,
+} from '@folio/stripes/core';
 
-import { affiliations, tenants } from '../../../test/jest/fixtures';
+import {
+  affiliations,
+  tenants,
+} from 'fixtures';
+import { buildStripesObject } from 'helpers';
 import { ConsortiumManagerContext } from '../../contexts';
 import { ConsortiumManager } from './ConsortiumManager';
 import { AVAILABLE_SETTINGS } from './constants';
@@ -12,12 +19,19 @@ import { AVAILABLE_SETTINGS } from './constants';
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
   useModules: jest.fn(),
+  useStripes: jest.fn(),
+}));
+jest.mock('../../hooks', () => ({
+  useTenantPermissions: jest.fn(() => ({ permissions: [], isLoading: false, isFetching: false })),
 }));
 jest.mock('./settings/data-export/hooks', () => ({
   useDataExportLogs: jest.fn(() => ({ jobExecutions: [], isLoading: false, isFetching: false })),
 }));
 jest.mock('./settings/data-import/hooks', () => ({
   useDataImportLogs: jest.fn(() => ({ jobExecutions: [], isLoading: false, isFetching: false })),
+}));
+jest.mock('./settings/users/general', () => ({
+  PermissionSets: jest.fn(() => 'PermissionSets'),
 }));
 
 const defaultProps = {};
@@ -64,6 +78,7 @@ const settingsLabelsMap = {
 describe('ConsortiumManager', () => {
   beforeEach(() => {
     useModules.mockClear().mockReturnValue(modules);
+    useStripes.mockClear().mockReturnValue(buildStripesObject());
   });
 
   it('should render ConsortiumManager', () => {
