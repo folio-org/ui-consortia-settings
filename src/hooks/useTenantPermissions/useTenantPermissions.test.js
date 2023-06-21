@@ -38,7 +38,7 @@ describe('useTenantPermissions', () => {
       .mockReturnValue(kyMock);
   });
 
-  it('should ', async () => {
+  it('should fetch tenant-related permissions', async () => {
     const tenantId = 'diku';
     const { result, waitFor } = renderHook(() => useTenantPermissions({ tenantId }), { wrapper });
 
