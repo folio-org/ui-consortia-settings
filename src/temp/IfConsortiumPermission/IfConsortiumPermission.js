@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { useConsortiumPermissions } from '../../hooks';
+import { useConsortiumPermissions } from '../hooks';
 
 export const IfConsortiumPermission = ({ perm, children }) => {
   const { permissions } = useConsortiumPermissions();

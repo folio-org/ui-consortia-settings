@@ -2,6 +2,9 @@ import { renderWithRouter } from 'helpers';
 import RenderPermissions from './RenderPermissions';
 
 jest.unmock('@folio/stripes/components');
+jest.mock('../IfConsortiumPermission', () => ({
+  IfConsortiumPermission: jest.fn(({ children }) => <>{children}</>),
+}));
 
 const renderRenderPermissions = (props) => renderWithRouter(<RenderPermissions {...props} />);
 const STRIPES = {

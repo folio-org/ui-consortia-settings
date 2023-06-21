@@ -1,9 +1,9 @@
-import React from 'react';
-import { IntlProvider } from 'react-intl';
-import { CalloutContext } from '@folio/stripes/core';
-import { Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
+import { IntlProvider } from 'react-intl';
+import { Router } from 'react-router-dom';
+
+import { CalloutContext } from '@folio/stripes/core';
 
 let rtlApi;
 

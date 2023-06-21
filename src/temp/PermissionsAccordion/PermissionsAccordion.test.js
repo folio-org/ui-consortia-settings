@@ -11,6 +11,9 @@ jest.mock('@folio/stripes/core', () => ({
   IfPermission: jest.fn(({ children }) => <>{children}</>),
   stripesConnect: jest.fn(c => c),
 }));
+jest.mock('../IfConsortiumPermission', () => ({
+  IfConsortiumPermission: jest.fn(({ children }) => <>{children}</>),
+}));
 
 const changeFormMock = jest.fn();
 const paProps = {

@@ -23,7 +23,7 @@ import {
 import {
   OKAPI_TENANT_HEADER,
   OKAPI_TOKEN_HEADER,
-} from '../../../../../constants';
+} from '../../../../constants';
 import SearchForm from '../SearchForm';
 import PermissionsList from '../PermissionsList';
 import { getInitialFiltersState } from '../../helpers';

@@ -5,7 +5,7 @@ import {
   useStripes,
 } from '@folio/stripes/core';
 
-import { useTenantKy } from '../useTenantKy';
+import { useTenantKy } from '../../../hooks';
 
 const MAX_RECORDS = 10_000;
 

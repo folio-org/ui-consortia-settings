@@ -11,9 +11,9 @@ import {
 } from '@folio/stripes/components';
 import { getPermissionLabelString } from '@folio/stripes/util';
 
-import { affiliationsShape } from '../../../shapes';
-import { AffiliationSelection } from '../../AffiliationSelection';
-import { IfConsortiumPermission } from '../../IfConsortiumPermission';
+import { affiliationsShape } from '../../shapes';
+import { AffiliationSelection } from '../AffiliationSelection';
+import { IfConsortiumPermission } from '../IfConsortiumPermission';
 import PermissionLabel from '../PermissionLabel';
 
 class RenderPermissions extends React.Component {

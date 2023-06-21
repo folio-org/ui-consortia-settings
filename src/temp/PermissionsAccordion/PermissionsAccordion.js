@@ -20,9 +20,9 @@ import {
   stripesConnect,
 } from '@folio/stripes/core';
 
-import { affiliationsShape } from '../../../shapes';
-import { AffiliationSelection } from '../../AffiliationSelection';
-import { IfConsortiumPermission } from '../../IfConsortiumPermission';
+import { affiliationsShape } from '../../shapes';
+import { AffiliationSelection } from '../AffiliationSelection';
+import { IfConsortiumPermission } from '../IfConsortiumPermission';
 import PermissionModal from './components/PermissionsModal';
 import EnableUnassignAll from './EnableUnassignAll';
 import PermissionsAccordionList from './PermissionsAccordionList';
