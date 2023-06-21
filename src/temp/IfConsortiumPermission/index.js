@@ -1,0 +1,1 @@
+export { IfConsortiumPermission } from './IfConsortiumPermission';
