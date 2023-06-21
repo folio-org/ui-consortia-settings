@@ -144,6 +144,28 @@
         "visible": true
       },
       {
+        "permissionName": "ui-consortia-settings.consortia.affiliations.view",
+        "displayName": "Consortia: View affiliations",
+        "description": "View a list of affiliations assigned to an user",
+        "subPermissions": [
+          "consortia.consortium.collection.get",
+          "consortia.user-tenants.collection.get"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-consortia-settings.consortia.affiliations.edit",
+        "displayName": "Consortia: Assign and unassign affiliations",
+        "description": "Assign and unassign affiliations",
+        "subPermissions": [
+          "ui-consortia-settings.consortia.affiliations.view",
+          "consortia.tenants.collection.get",
+          "consortia.user-tenants.item.post",
+          "consortia.user-tenants.item.delete"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-consortia-settings.settings.membership.view",
         "displayName": "Settings (Consortia): Can view consortia membership",
         "subPermissions": [
