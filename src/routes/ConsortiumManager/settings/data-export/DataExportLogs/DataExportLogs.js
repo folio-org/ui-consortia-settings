@@ -21,7 +21,7 @@ import {
   useJobLogsProperties,
 } from '@folio/stripes-data-transfer-components';
 
-import { useConsortiumManagerContext } from '../../../../../contexts';
+import { useMemberSelection } from '../../../hooks';
 import {
   DEFAULT_PAGINATION,
   DEFAULT_SORTING,
@@ -40,8 +40,11 @@ export const DataExportLogs = () => {
   const intl = useIntl();
   const showCallout = useShowCallout();
 
-  const { selectedMembers } = useConsortiumManagerContext();
-  const [activeMember, setActiveMember] = useState(selectedMembers[0]?.id);
+  const {
+    activeMember,
+    membersOptions,
+    setActiveMember,
+  } = useMemberSelection();
 
   const [
     sortingField,
@@ -83,12 +86,6 @@ export const DataExportLogs = () => {
   );
 
   useEffect(() => {
-    if (!selectedMembers.find(({ id }) => id === activeMember)) {
-      setActiveMember(selectedMembers[0]?.id);
-    }
-  }, [activeMember, selectedMembers]);
-
-  useEffect(() => {
     changePage(DEFAULT_PAGINATION);
   }, [activeMember, sortingField, sortingDirection]);
 
@@ -108,15 +105,6 @@ export const DataExportLogs = () => {
     { count: totalRecords },
   );
 
-  const dataOptions = useMemo(() => {
-    return selectedMembers.map(({ id, name }) => {
-      return {
-        value: id,
-        label: name,
-      };
-    });
-  }, [selectedMembers]);
-
   return (
     <Pane
       appIcon={<AppIcon app="data-export" />}
@@ -128,7 +116,7 @@ export const DataExportLogs = () => {
       <div className={css.paneContent}>
         <Selection
           autoFocus
-          dataOptions={dataOptions}
+          dataOptions={membersOptions}
           disabled={isFetching}
           id="consortium-member-select"
           label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.selection.label" />}
