@@ -1,0 +1,1 @@
+export { ConsortiaControlledVolabulary } from './ConsortiaControlledVolabulary';

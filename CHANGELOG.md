@@ -18,3 +18,4 @@
 * [UICONSET-58](https://issues.folio.org/browse/UICONSET-58) View list of permissions set.
 * [UICONSET-128](https://issues.folio.org/browse/UICONSET-128) Move view/assign affiliation permissions from `ui-users` to `ui-consortia-settings`.
 * [UICONSET-60](https://issues.folio.org/browse/UICONSET-60) Consortia manager - Compare permission sets.
+* [UICONSET-127](https://issues.folio.org/browse/UICONSET-127) Implement `<ConsortiaControlledVolabulary>` component for consortium manager.

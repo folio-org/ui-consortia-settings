@@ -12,6 +12,7 @@ export const CONSORTIA_TENANTS_API = 'tenants';
 export const CONSORTIA_USER_TENANTS_API = 'user-tenants';
 export const DATA_EXPORT_API = 'data-export';
 export const METADATA_PROVIDER_API = 'metadata-provider';
+export const PATRON_GROUPS_API = 'groups';
 /*  */
 
 export const MODULE_ROOT_ROUTE = stripesConfig.route;
@@ -34,3 +35,11 @@ export const FILE_STATUSES = {
   DISCARDED: 'DISCARDED',
   CANCELLED: 'CANCELLED',
 };
+
+export const PUBLISH_COORDINATOR_STATUSES = {
+  ERROR: 'IN_PROGRESS',
+  IN_PROGRESS: 'IN_PROGRESS',
+  SUCCESS: 'SUCCESS',
+};
+
+export const CONTROLLED_VOCAB_LIMIT = 2000;
