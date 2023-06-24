@@ -21,6 +21,14 @@
   "consortiumManager.members.header.subTitle": "{amount, plural, one {# member} other {# members}} selected",
   "consortiumManager.members.header.title": "Settings for selected members can be modified at the same time",
   "consortiumManager.members.selection.label": "Member",
+  "consortiumManager.members.action.compare": "Compare",
+  "consortiumManager.members.permissionSets.compare": "Compare",
+  "consortiumManager.members.permissionSets.compare.memberLibrary": "Media library",
+  "consortiumManager.members.permissionSets.compare.assignedPermissions": "Assigned permissions",
+  "consortiumManager.members.permissionSets.compare.memberLibrary.placeholder": "Select media library",
+  "consortiumManager.members.permissionSets.compare.permissionSet": "Permission set",
+  "consortiumManager.members.permissionSets.compare.permissionSet.placeholder": "Select Permission set",
+  "consortiumManager.members.permissionSets.compare.permissionSet.empty": "No items to show",
 
 
   "settings.heading": "Network settings",

@@ -12,6 +12,7 @@ import { IfPermission } from '@folio/stripes/core';
 
 export const PermissionSetsActionsMenu = ({
   onCreate,
+  onCompare,
 }) => {
   return (
     <Dropdown
@@ -42,6 +43,20 @@ export const PermissionSetsActionsMenu = ({
             </Button>
           </PaneMenu>
         </IfPermission>
+        <IfPermission perm="perms.permissions.item.post">
+          <PaneMenu>
+            <Button
+              id="clickable-create-entry"
+              onClick={onCompare}
+              buttonStyle="dropdownItem"
+              marginBottom0
+            >
+              <Icon size="small" icon="transfer">
+                <FormattedMessage id="ui-consortia-settings.consortiumManager.members.action.compare" />
+              </Icon>
+            </Button>
+          </PaneMenu>
+        </IfPermission>
       </DropdownMenu>
     </Dropdown>
   );
@@ -49,4 +64,5 @@ export const PermissionSetsActionsMenu = ({
 
 PermissionSetsActionsMenu.propTypes = {
   onCreate: PropTypes.func.isRequired,
+  onCompare: PropTypes.func.isRequired,
 };

@@ -1,6 +1,6 @@
+import React, { useCallback, useMemo, useState } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { identity, noop } from 'lodash';
-import { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Selection } from '@folio/stripes/components';
@@ -19,7 +19,6 @@ const nameKey = 'displayName';
 
 export const PermissionSets = (props) => {
   const { history, location, match } = props;
-
   const intl = useIntl();
   const showCallout = useShowCallout();
 
@@ -92,6 +91,12 @@ export const PermissionSets = (props) => {
     // TODO: UICONSET-59
       onCreate={noop}
     // ^^^^^^^^^^^^^^^^^
+      onCompare={() => {
+        history.push({
+          pathname: `${match.path}/compare`,
+          search: location.search,
+        });
+      }}
     />
   );
 
@@ -99,13 +104,13 @@ export const PermissionSets = (props) => {
     <EntrySelector
       {...props}
       nameKey={nameKey}
-      // TODO: UICONSET-59
+        // TODO: UICONSET-59
       editable={false}
       onAdd={noop}
       onEdit={noop}
       onClone={noop}
       onRemove={noop}
-      // ^^^^^^^^^^^^^^^^^
+        // ^^^^^^^^^^^^^^^^^
       onClick={onItemClick}
       addMenu={addMenu}
       contentData={contentData}
