@@ -40,5 +40,8 @@
     "consortiumManager.members.selection.label": "Membro",
     "permission.consortium-manager.view": "Gerenciador de consórcios: Pode visualizar as configurações existentes",
     "permission.consortium-manager.edit": "Gerenciador de consórcios: Pode criar, editar e remover configurações",
-    "permission.consortium-manager.share": "Gerenciador de consórcio: Pode compartilhar configurações com todos os membros"
+    "permission.consortium-manager.share": "Gerenciador de consórcio: Pode compartilhar configurações com todos os membros",
+    "permission.consortia.affiliations.view": "Consórcios: Ver afiliações",
+    "permission.consortia.affiliations.edit": "Consórcios: atribuir e cancelar a atribuição de afiliações",
+    "errors.permissionSets.load.common": "Could not load permission sets."
 }
