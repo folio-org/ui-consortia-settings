@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types';
 import {
   noop,
+  uniq,
   uniqueId,
 } from 'lodash';
 import {
+  memo,
   useCallback,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -17,8 +20,10 @@ import {
   Paneset,
 } from '@folio/stripes/components';
 import { EditableList } from '@folio/stripes/smart-components';
+import { useUsersBatch } from '@folio/stripes-acq-components';
 
 import { translationsShape } from '../../shapes';
+import { FieldSharedEntry } from './FieldSharedEntry';
 import {
   useEntries,
   useEntryMutation,
@@ -27,6 +32,7 @@ import {
   ConfirmDeleteEntryModal,
   ItemInUseModal,
 } from './modals';
+import { renderLastUpdated } from './renderLastUpdated';
 
 const PANESET_PREFIX = 'consortia-controlled-vocabulary-paneset-';
 
@@ -63,25 +69,29 @@ const DIALOGS_MAP = {
   ),
 };
 
-export const ConsortiaControlledVolabulary = ({
-  columnMapping,
+const EditableListMemoized = memo(EditableList);
+
+export const ConsortiaControlledVocabulary = ({
+  columnMapping: columnMappingProp,
+  formatter: formatterProp,
   id,
   label,
-  translations,
   path,
   primaryField: primaryFieldProp,
+  readOnlyFields: readOnlyFieldsProp,
   records,
   sortby: sortbyProp,
+  translations,
   uniqueField,
   validate,
-  visibleFields,
+  visibleFields: visibleFieldsProp,
   ...props
 }) => {
   const paneTitleRef = useRef();
   const [activeDialog, setActiveDialog] = useState(null);
 
   const panesetId = `${PANESET_PREFIX}${id}`;
-  const primaryField = primaryFieldProp || visibleFields[0];
+  const primaryField = primaryFieldProp || visibleFieldsProp[0];
   const sortby = sortbyProp || primaryField;
 
   const {
@@ -90,12 +100,23 @@ export const ConsortiaControlledVolabulary = ({
     isFetching: isEntriesFetching,
     refetch,
   } = useEntries({ path, records, sortby });
+
   const {
     createEntry,
     deleteEntry,
     updateEntry,
-    isLoading: isEntryMutating,
   } = useEntryMutation({ path });
+
+  const userIds = useMemo(() => uniq(
+    entries
+      .map(({ metadata }) => metadata?.updatedByUserId)
+      .filter(Boolean),
+  ), [entries]);
+
+  const {
+    users,
+    isLoading: isUsersLoading,
+  } = useUsersBatch(userIds);
 
   useLayoutEffect(() => {
     if (paneTitleRef.current?.focus) paneTitleRef.current.focus();
@@ -110,8 +131,7 @@ export const ConsortiaControlledVolabulary = ({
 
         // Check if the primary field has had data entered into it.
         if (!item[primaryField]) {
-          itemErrors[primaryField] =
-            <FormattedMessage id="stripes-core.label.missingRequiredField" />;
+          itemErrors[primaryField] = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
         }
 
         // Add the errors if we found any for this record.
@@ -143,14 +163,14 @@ export const ConsortiaControlledVolabulary = ({
     }).finally(setActiveDialog);
   }, [translations]);
 
-  const onCreate = useCallback(async (entry) => {
-    // async validation here
+  const onCreate = useCallback(async ({ shared, ...entry }) => {
+    console.log('shared', shared);
 
     return createEntry({ entry }).then(refetch);
   }, [createEntry, refetch]);
 
-  const onUpdate = useCallback(async (entry) => {
-    // async validation here
+  const onUpdate = useCallback(async ({ shared, ...entry }) => {
+    console.log('shared', shared);
 
     return updateEntry({ entry }).then(refetch);
   }, [refetch, updateEntry]);
@@ -172,6 +192,37 @@ export const ConsortiaControlledVolabulary = ({
       .catch(safeReject);
   }, [buildDialog, entries, handleDeleteEntry, primaryField, uniqueField]);
 
+  const fieldComponents = useMemo(() => ({
+    shared: FieldSharedEntry,
+  }), []);
+
+  const formatter = useMemo(() => ({
+    lastUpdated: ({ metadata }) => renderLastUpdated(metadata, users),
+    shared: () => {
+      // TODO: display 'All' or list of members
+      return <>Members</>;
+    },
+    ...formatterProp,
+  }), [formatterProp, users]);
+
+  const columnMapping = useMemo(() => ({
+    shared: <FormattedMessage id="ui-consortia-settings.consortiumManager.controlledVocab.column.memberLibraries" />,
+    ...columnMappingProp,
+  }), [columnMappingProp]);
+
+  const readOnlyFields = useMemo(() => [
+    ...readOnlyFieldsProp,
+    'lastUpdated',
+    'numberOfObjects',
+  ], [readOnlyFieldsProp]);
+
+  const visibleFields = useMemo(() => [
+    ...visibleFieldsProp,
+    'shared',
+  ], [visibleFieldsProp]);
+
+  const isLoading = isEntriesFetching || isUsersLoading;
+
   return (
     <Paneset id={panesetId}>
       <Pane
@@ -181,15 +232,17 @@ export const ConsortiaControlledVolabulary = ({
         paneTitleRef={paneTitleRef}
         id="consortia-controlled-vocabulary-pane"
       >
-        {isEntriesFetching ? <Loading /> : (
-          <EditableList
+        {isLoading ? <Loading /> : (
+          <EditableListMemoized
             formType="final-form"
-            loading={isEntryMutating}
             label={label}
             contentData={entries}
             totalCount={totalRecords}
-            visibleFields={visibleFields}
+            fieldComponents={fieldComponents}
+            formatter={formatter}
             columnMapping={columnMapping}
+            readOnlyFields={readOnlyFields}
+            visibleFields={visibleFields}
             onCreate={onCreate}
             onUpdate={onUpdate}
             onDelete={onDelete}
@@ -204,18 +257,24 @@ export const ConsortiaControlledVolabulary = ({
   );
 };
 
-ConsortiaControlledVolabulary.defaultProps = {
+ConsortiaControlledVocabulary.defaultProps = {
+  columnMapping: {},
+  formatter: {},
   id: uniqueId(),
+  readOnlyFields: [],
   uniqueField: 'id',
   validate: noop,
+  visibleFields: [],
 };
 
-ConsortiaControlledVolabulary.propTypes = {
+ConsortiaControlledVocabulary.propTypes = {
   columnMapping: PropTypes.object,
+  formatter: PropTypes.object,
   id: PropTypes.string,
   label: PropTypes.string,
   path: PropTypes.string.isRequired,
   primaryField: PropTypes.string,
+  readOnlyFields: PropTypes.arrayOf(PropTypes.string),
   records: PropTypes.string.isRequired,
   sortby: PropTypes.string,
   translations: translationsShape.isRequired,

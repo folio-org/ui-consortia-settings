@@ -41,6 +41,7 @@ export const useEntries = (params = {}, options = {}) => {
     async () => ky.get(path, { searchParams }).json().catch(throwErrorResponse),
     {
       enabled: Boolean(path && records),
+      keepPreviousData: true,
       ...options,
     },
   );

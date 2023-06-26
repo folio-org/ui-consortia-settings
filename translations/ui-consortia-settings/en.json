@@ -9,6 +9,7 @@
   "errors.permissionSets.load.common": "Could not load permission sets.",
   "errors.permissionsRequired": "User does not have required permissions.",
 
+  "consortiumManager.controlledVocab.column.memberLibraries": "Member libraries",
   "consortiumManager.controlledVocab.patronGroups.cannotDeleteTermHeader": "Cannot delete the patron group",
   "consortiumManager.controlledVocab.patronGroups.cannotDeleteTermMessage": "This patron group cannot be deleted, as it is in use by one or more records.",
   "consortiumManager.controlledVocab.patronGroups.deleteEntry": "Delete patron group",
@@ -54,6 +55,8 @@
   "settings.membership.list.termDeleted": "The member <b>{term}</b> was successfully <b>deleted</b>",
   "settings.membership.list.termWillBeDeleted": "The member <b>{term}</b> will be <b>deleted.</b>",
   "settings.membership.objectLabel": "Address",
+
+  "share": "Share",
 
   "switchActiveAffiliation.userDropdown.label": "Switch active affiliation",
   "switchActiveAffiliation.modal.heading": "Select affiliation",
