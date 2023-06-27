@@ -105,6 +105,20 @@ describe('PermissionsSets', () => {
     expect(defaultProps.history.push).toHaveBeenCalled();
   });
 
+  it('should redirect to compare page on click compare action menu button', async () => {
+    const { container } = renderPermissionsSet();
+
+    const actionMenu = screen.getByTestId('permission-sets-actions-dropdown');
+
+    expect(actionMenu).toBeInTheDocument();
+    userEvent.click(actionMenu);
+    const compareButton = container.querySelector('#clickable-compare-permissions');
+
+    expect(compareButton).toBeInTheDocument();
+    userEvent.click(compareButton);
+    expect(defaultProps.history.push).toHaveBeenCalledWith({ pathname: '/perms/compare' });
+  });
+
   describe('Error handling', () => {
     it('should handle 403 error', async () => {
       renderPermissionsSet();

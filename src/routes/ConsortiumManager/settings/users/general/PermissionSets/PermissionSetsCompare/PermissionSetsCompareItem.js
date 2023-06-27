@@ -1,39 +1,105 @@
-import React from 'react';
-import { Selection, AccordionSet, Accordion, List } from '@folio/stripes/components';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import {
+  Selection,
+  AccordionSet,
+  Accordion,
+  List,
+} from '@folio/stripes/components';
+import { useShowCallout } from '@folio/stripes-acq-components';
 import { FormattedMessage, useIntl } from 'react-intl';
+import xor from 'lodash/xor';
+import PropTypes from 'prop-types';
+import { useTenantPermissions } from '../../../../../../../hooks';
 
-const defaultOptions = [
-  { value: 'AU', label: 'Australia' },
-  { value: 'CN', label: 'China' },
-  { value: 'DK', label: 'Denmark' },
-  { value: 'MX', label: 'Mexico' },
-  { value: 'SE', label: 'Sweden' },
-  { value: 'US', label: 'United States' },
-  { value: 'UK', label: 'United Kingdom' },
-];
-
-export default function PermissionSetsCompareItem() {
+export default function PermissionSetsCompareItem({
+  columnName,
+  permissionsToCompare,
+  selectedMemberOptions,
+  setPermissionsToCompare,
+}) {
   const intl = useIntl();
+  const isMounted = useRef(false);
+  const [selectedMemberId, setSelectedMemberId] = useState('');
+  const [selectedPermissionId, setSelectedPermissionId] = useState('');
+  const showCallout = useShowCallout();
 
-  const items = ['Apples', 'Bananas', 'Strawberries', 'Oranges'];
-  const itemFormatter = (item) => (<li>{item}</li>);
-  const isEmptyMessage = <FormattedMessage id="ui-consortia-settings.consortiumManager.members.permissionSets.compare.empty" />;
+  const handlePermissionsLoadingError = useCallback(({ response }) => {
+    const defaultMessage = intl.formatMessage({ id: 'ui-consortia-settings.errors.permissionSets.load.common' });
+
+    if (response?.status === 403) {
+      return showCallout({
+        message: `${defaultMessage} ${intl.formatMessage({ id: 'ui-consortia-settings.errors.permissionsRequired' })}`,
+        type: 'error',
+      });
+    }
+
+    return showCallout({
+      message: defaultMessage,
+      type: 'error',
+    });
+  }, [intl, showCallout]);
+
+  const {
+    isFetching,
+    permissions,
+  } = useTenantPermissions(
+    {
+      tenantId: selectedMemberId,
+      searchParams: {
+        query: 'mutable==true',
+        expandSubs: true,
+      },
+    },
+    { onError: handlePermissionsLoadingError },
+  );
+
+  const permissionOptions = useMemo(() => {
+    return permissions.map(({ id, displayName }) => ({ value: id, label: displayName }));
+  }, [permissions]);
+
+  const assignedPermissionsList = useMemo(() => {
+    const selectedPermission = permissions.find(({ id }) => id === selectedPermissionId);
+
+    return selectedPermission?.subPermissions?.map(({ displayName }) => displayName) || [];
+  }, [selectedPermissionId, permissions]);
+
+  const uniqueItems = xor(assignedPermissionsList, permissionsToCompare);
+  const itemFormatter = (item) => (<li>{uniqueItems.includes(item) ? <mark>{item}</mark> : item}</li>);
+  const isEmptyMessage = <FormattedMessage id="ui-consortia-settings.consortiumManager.members.permissionSets.compare.permissionSet.empty" />;
+
+  useEffect(() => {
+    if (isMounted.current) {
+      setPermissionsToCompare(assignedPermissionsList, columnName);
+    } else {
+      isMounted.current = true;
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [assignedPermissionsList]);
 
   return (
     <div>
       <Selection
-        name="member-library"
-        label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.permissionSets.compare.memberLibrary" />}
+        name="members"
+        label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.permissionSets.compare.member" />}
         id="countrySelect"
-        placeholder={intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.members.permissionSets.compare.memberLibrary.placeholder' })}
-        dataOptions={defaultOptions}
+        placeholder={intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.members.permissionSets.compare.member.placeholder' })}
+        dataOptions={selectedMemberOptions}
+        onChange={(value) => setSelectedMemberId(value)}
       />
       <Selection
         name="permission-set"
         label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.permissionSets.compare.permissionSet" />}
         id="permissionSet"
         placeholder={intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.members.permissionSets.compare.permissionSet.placeholder' })}
-        dataOptions={defaultOptions}
+        dataOptions={permissionOptions}
+        onChange={(value) => setSelectedPermissionId(value)}
+        isLoading={isFetching}
       />
       <AccordionSet>
         <Accordion
@@ -41,7 +107,7 @@ export default function PermissionSetsCompareItem() {
           label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.permissionSets.compare.assignedPermissions" />}
         >
           <List
-            items={items}
+            items={assignedPermissionsList}
             itemFormatter={itemFormatter}
             isEmptyMessage={isEmptyMessage}
           />
@@ -50,3 +116,18 @@ export default function PermissionSetsCompareItem() {
     </div>
   );
 }
+
+PermissionSetsCompareItem.propTypes = {
+  permissionsToCompare: PropTypes.arrayOf(PropTypes.string),
+  setPermissionsToCompare: PropTypes.func,
+  columnName: PropTypes.string.isRequired,
+  selectedMemberOptions: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+  })),
+};
+
+PermissionSetsCompareItem.defaultProps = {
+  selectedMemberOptions: [],
+  permissionsToCompare: [],
+};

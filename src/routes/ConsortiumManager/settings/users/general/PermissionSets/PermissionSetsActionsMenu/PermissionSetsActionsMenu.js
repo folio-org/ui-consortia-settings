@@ -16,6 +16,7 @@ export const PermissionSetsActionsMenu = ({
 }) => {
   return (
     <Dropdown
+      data-testid="permission-sets-actions-dropdown"
       label={<FormattedMessage id="stripes-components.paneMenuActionsToggleLabel" />}
       buttonProps={{
         buttonStyle: 'primary',
@@ -46,7 +47,7 @@ export const PermissionSetsActionsMenu = ({
         <IfPermission perm="perms.permissions.item.post">
           <PaneMenu>
             <Button
-              id="clickable-create-entry"
+              id="clickable-compare-permissions"
               onClick={onCompare}
               buttonStyle="dropdownItem"
               marginBottom0
