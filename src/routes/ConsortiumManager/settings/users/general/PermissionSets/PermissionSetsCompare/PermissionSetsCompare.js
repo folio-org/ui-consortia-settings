@@ -23,10 +23,12 @@ export const PermissionSetsCompare = () => {
     [COMPARE_ITEM_NAME.LEFT_COLUMN]: [],
     [COMPARE_ITEM_NAME.RIGHT_COLUMN]: [],
   });
-  const members = useMemo(() => selectedMembers.map(({ id, name }) => ({ value: id, label: name })), [selectedMembers]);
+  const members = useMemo(() => {
+    return selectedMembers.map(({ id, name }) => ({ value: id, label: name }));
+  }, [selectedMembers]);
 
   const handleCancel = () => {
-    history.push('/consortia-settings/users/perms');
+    history.push(PERMISSION_SET_ROUTES.PERMISSION_SETS);
   };
 
   const handlePermissionsToCompare = useCallback((permissions, columnName) => {

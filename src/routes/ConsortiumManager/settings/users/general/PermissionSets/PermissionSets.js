@@ -7,7 +7,7 @@ import { Selection } from '@folio/stripes/components';
 import { EntrySelector } from '@folio/stripes/smart-components';
 import { useShowCallout } from '@folio/stripes-acq-components';
 
-import { UUID_REGEX } from '../../../../../../constants';
+import { PERMISSION_SET_ROUTES, UUID_REGEX } from '../../../../../../constants';
 import { useTenantPermissions } from '../../../../../../hooks';
 import { PermissionSetDetails } from '../../../../../../temp';
 import { useMemberSelection } from '../../../../hooks';
@@ -92,10 +92,7 @@ export const PermissionSets = (props) => {
       onCreate={noop}
     // ^^^^^^^^^^^^^^^^^
       onCompare={() => {
-        history.push({
-          pathname: `${match.path}/compare`,
-          search: location.search,
-        });
+        history.push(PERMISSION_SET_ROUTES.COMPARE);
       }}
     />
   );

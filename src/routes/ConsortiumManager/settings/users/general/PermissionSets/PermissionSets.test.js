@@ -11,6 +11,7 @@ import {
 } from 'helpers';
 import { useTenantPermissions } from '../../../../../../hooks';
 import { PermissionSets } from './PermissionSets';
+import { PERMISSION_SET_ROUTES } from '../../../../../../constants';
 
 jest.mock('@folio/stripes-acq-components', () => ({
   ...jest.requireActual('@folio/stripes-acq-components'),
@@ -116,7 +117,7 @@ describe('PermissionsSets', () => {
 
     expect(compareButton).toBeInTheDocument();
     userEvent.click(compareButton);
-    expect(defaultProps.history.push).toHaveBeenCalledWith({ pathname: '/perms/compare' });
+    expect(defaultProps.history.push).toHaveBeenCalledWith(PERMISSION_SET_ROUTES.COMPARE);
   });
 
   describe('Error handling', () => {
