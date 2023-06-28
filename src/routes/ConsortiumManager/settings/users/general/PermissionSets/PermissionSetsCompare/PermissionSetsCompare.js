@@ -1,5 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { useHistory } from 'react-router-dom';
+
 import {
   HasCommand,
   Paneset,
@@ -9,7 +11,7 @@ import {
   PaneCloseLink,
   Layer,
 } from '@folio/stripes/components';
-import { useHistory } from 'react-router-dom';
+
 import { PermissionSetsCompareItem } from './PermissionSetsCompareItem';
 import { useConsortiumManagerContext } from '../../../../../../../contexts/ConsortiumManagerContext';
 import { COMPARE_ITEM_NAME } from './constants';

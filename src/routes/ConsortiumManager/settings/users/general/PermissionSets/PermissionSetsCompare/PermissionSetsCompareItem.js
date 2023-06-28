@@ -1,4 +1,4 @@
-import React, {
+import {
   useCallback,
   useEffect,
   useMemo,
@@ -6,15 +6,20 @@ import React, {
   useState,
 } from 'react';
 import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
+import xor from 'lodash/xor';
+import PropTypes from 'prop-types';
+
+import {
   Selection,
   AccordionSet,
   Accordion,
   List,
 } from '@folio/stripes/components';
 import { useShowCallout } from '@folio/stripes-acq-components';
-import { FormattedMessage, useIntl } from 'react-intl';
-import xor from 'lodash/xor';
-import PropTypes from 'prop-types';
+
 import { useTenantPermissions } from '../../../../../../../hooks';
 
 export function PermissionSetsCompareItem({
