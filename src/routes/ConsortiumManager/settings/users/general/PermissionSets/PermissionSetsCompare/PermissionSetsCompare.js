@@ -11,7 +11,7 @@ import {
 } from '@folio/stripes/components';
 import { useHistory } from 'react-router-dom';
 import { PERMISSION_SET_ROUTES } from '../../../../../../../constants';
-import PermissionSetsCompareItem from './PermissionSetsCompareItem';
+import { PermissionSetsCompareItem } from './PermissionSetsCompareItem';
 import { useConsortiumManagerContext } from '../../../../../../../contexts/ConsortiumManagerContext';
 import { COMPARE_ITEM_NAME } from './constants';
 

@@ -17,7 +17,7 @@ import xor from 'lodash/xor';
 import PropTypes from 'prop-types';
 import { useTenantPermissions } from '../../../../../../../hooks';
 
-export default function PermissionSetsCompareItem({
+export function PermissionSetsCompareItem({
   columnName,
   permissionsToCompare,
   selectedMemberOptions,
@@ -70,7 +70,7 @@ export default function PermissionSetsCompareItem({
   }, [selectedPermissionId, permissions]);
 
   const uniqueItems = xor(assignedPermissionsList, permissionsToCompare);
-  const itemFormatter = (item) => (<li>{uniqueItems.includes(item) ? <mark>{item}</mark> : item}</li>);
+  const itemFormatter = (item) => (<li key={item}>{uniqueItems.includes(item) ? <mark>{item}</mark> : item}</li>);
   const isEmptyMessage = <FormattedMessage id="ui-consortia-settings.consortiumManager.members.permissionSets.compare.permissionSet.empty" />;
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export default function PermissionSetsCompareItem({
       <Selection
         name="members"
         label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.permissionSets.compare.member" />}
-        id="countrySelect"
+        id="memberSelect"
         placeholder={intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.members.permissionSets.compare.member.placeholder' })}
         dataOptions={selectedMemberOptions}
         onChange={(value) => setSelectedMemberId(value)}
@@ -103,7 +103,7 @@ export default function PermissionSetsCompareItem({
       />
       <AccordionSet>
         <Accordion
-          id="accordion1"
+          id="assigned-permissions"
           label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.permissionSets.compare.assignedPermissions" />}
         >
           <List
