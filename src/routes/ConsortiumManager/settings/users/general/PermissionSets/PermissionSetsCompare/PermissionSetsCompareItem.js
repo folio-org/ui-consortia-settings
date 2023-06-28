@@ -80,7 +80,8 @@ export function PermissionSetsCompareItem({
       isMounted.current = true;
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [assignedPermissionsList]);
+  // adding `setPermissionsToCompare` as dependency will cause to infinite update loop
+  }, [assignedPermissionsList, columnName]);
 
   return (
     <div>
