@@ -61,7 +61,7 @@ export const PermissionSetsCompare = () => {
         <Pane
           defaultWidth="100%"
           noOverflow
-          renderHeader={renderProps => (
+          renderHeader={() => (
             <PaneHeader
               firstMenu={firstMenu}
               paneTitle={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.permissionSets.compare" />}

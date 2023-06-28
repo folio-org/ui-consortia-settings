@@ -2,12 +2,11 @@ import { useCallback, useMemo, useState } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { identity, noop } from 'lodash';
 import { FormattedMessage, useIntl } from 'react-intl';
-
+import { Route, Switch } from 'react-router-dom';
 import { Selection } from '@folio/stripes/components';
 import { EntrySelector } from '@folio/stripes/smart-components';
 import { useShowCallout } from '@folio/stripes-acq-components';
 
-import { Route, Switch } from 'react-router-dom';
 import { UUID_REGEX } from '../../../../../../constants';
 import { useTenantPermissions } from '../../../../../../hooks';
 import { PermissionSetDetails } from '../../../../../../temp';
