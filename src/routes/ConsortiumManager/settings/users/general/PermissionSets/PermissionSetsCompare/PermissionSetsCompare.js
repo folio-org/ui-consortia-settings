@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import {
   HasCommand,
@@ -10,10 +10,10 @@ import {
   Layer,
 } from '@folio/stripes/components';
 import { useHistory } from 'react-router-dom';
-import { PERMISSION_SET_ROUTES } from '../../../../../../../constants';
 import { PermissionSetsCompareItem } from './PermissionSetsCompareItem';
 import { useConsortiumManagerContext } from '../../../../../../../contexts/ConsortiumManagerContext';
 import { COMPARE_ITEM_NAME } from './constants';
+import { PERMISSION_SET_ROUTES } from '../constants';
 
 export const PermissionSetsCompare = () => {
   const history = useHistory();
@@ -57,46 +57,44 @@ export const PermissionSetsCompare = () => {
       commands={keyboardCommands}
       scope={document.body}
     >
-      <Paneset>
-        <Layer isOpen>
-          <Pane
-            defaultWidth="100%"
-            onOverflow
-            renderHeader={renderProps => (
-              <PaneHeader
-                firstMenu={firstMenu}
-                paneTitle={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.permissionSets.compare" />}
+      <Layer isOpen inRootSet>
+        <Pane
+          defaultWidth="100%"
+          noOverflow
+          renderHeader={renderProps => (
+            <PaneHeader
+              firstMenu={firstMenu}
+              paneTitle={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.permissionSets.compare" />}
+            />
+          )}
+          padContent={false}
+        >
+          <Paneset>
+            <Pane
+              defaultWidth="50%"
+              renderHeader={null}
+            >
+              <PermissionSetsCompareItem
+                selectedMemberOptions={members}
+                columnName={COMPARE_ITEM_NAME.LEFT_COLUMN}
+                setPermissionsToCompare={handlePermissionsToCompare}
+                permissionsToCompare={permissionsToCompare[COMPARE_ITEM_NAME.RIGHT_COLUMN]}
               />
-            )}
-            padContent={false}
-          >
-            <Paneset>
-              <Pane
-                defaultWidth="50%"
-                renderHeader={null}
-              >
-                <PermissionSetsCompareItem
-                  selectedMemberOptions={members}
-                  columnName={COMPARE_ITEM_NAME.LEFT_COLUMN}
-                  setPermissionsToCompare={handlePermissionsToCompare}
-                  permissionsToCompare={permissionsToCompare[COMPARE_ITEM_NAME.RIGHT_COLUMN]}
-                />
-              </Pane>
-              <Pane
-                defaultWidth="50%"
-                renderHeader={null}
-              >
-                <PermissionSetsCompareItem
-                  selectedMemberOptions={members}
-                  columnName={COMPARE_ITEM_NAME.RIGHT_COLUMN}
-                  setPermissionsToCompare={handlePermissionsToCompare}
-                  permissionsToCompare={permissionsToCompare[COMPARE_ITEM_NAME.LEFT_COLUMN]}
-                />
-              </Pane>
-            </Paneset>
-          </Pane>
-        </Layer>
-      </Paneset>
+            </Pane>
+            <Pane
+              defaultWidth="50%"
+              renderHeader={null}
+            >
+              <PermissionSetsCompareItem
+                selectedMemberOptions={members}
+                columnName={COMPARE_ITEM_NAME.RIGHT_COLUMN}
+                setPermissionsToCompare={handlePermissionsToCompare}
+                permissionsToCompare={permissionsToCompare[COMPARE_ITEM_NAME.LEFT_COLUMN]}
+              />
+            </Pane>
+          </Paneset>
+        </Pane>
+      </Layer>
     </HasCommand>
   );
 };

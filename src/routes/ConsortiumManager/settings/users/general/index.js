@@ -1,1 +1,1 @@
-export { PermissionSets, PermissionSetsCompare } from './PermissionSets';
+export { PermissionSets } from './PermissionSets';

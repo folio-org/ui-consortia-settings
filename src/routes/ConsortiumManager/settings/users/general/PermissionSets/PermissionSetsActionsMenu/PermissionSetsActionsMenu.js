@@ -44,20 +44,18 @@ export const PermissionSetsActionsMenu = ({
             </Button>
           </PaneMenu>
         </IfPermission>
-        <IfPermission perm="perms.permissions.item.post">
-          <PaneMenu>
-            <Button
-              id="clickable-compare-permissions"
-              onClick={onCompare}
-              buttonStyle="dropdownItem"
-              marginBottom0
-            >
-              <Icon size="small" icon="transfer">
-                <FormattedMessage id="ui-consortia-settings.consortiumManager.members.action.compare" />
-              </Icon>
-            </Button>
-          </PaneMenu>
-        </IfPermission>
+        <PaneMenu>
+          <Button
+            id="clickable-compare-permissions"
+            onClick={onCompare}
+            buttonStyle="dropdownItem"
+            marginBottom0
+          >
+            <Icon size="small" icon="transfer">
+              <FormattedMessage id="ui-consortia-settings.consortiumManager.members.action.compare" />
+            </Icon>
+          </Button>
+        </PaneMenu>
       </DropdownMenu>
     </Dropdown>
   );

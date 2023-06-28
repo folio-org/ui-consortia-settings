@@ -11,7 +11,7 @@ import {
 } from 'helpers';
 import { useTenantPermissions } from '../../../../../../hooks';
 import { PermissionSets } from './PermissionSets';
-import { PERMISSION_SET_ROUTES } from '../../../../../../constants';
+import { PERMISSION_SET_ROUTES } from './constants';
 
 jest.mock('@folio/stripes-acq-components', () => ({
   ...jest.requireActual('@folio/stripes-acq-components'),

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { identity, noop } from 'lodash';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -7,11 +7,14 @@ import { Selection } from '@folio/stripes/components';
 import { EntrySelector } from '@folio/stripes/smart-components';
 import { useShowCallout } from '@folio/stripes-acq-components';
 
-import { PERMISSION_SET_ROUTES, UUID_REGEX } from '../../../../../../constants';
+import { Route, Switch } from 'react-router-dom';
+import { UUID_REGEX } from '../../../../../../constants';
 import { useTenantPermissions } from '../../../../../../hooks';
 import { PermissionSetDetails } from '../../../../../../temp';
 import { useMemberSelection } from '../../../../hooks';
 import { PermissionSetsActionsMenu } from './PermissionSetsActionsMenu';
+import { PermissionSetsCompare } from './PermissionSetsCompare';
+import { PERMISSION_SET_ROUTES } from './constants';
 
 const entryLabel = <FormattedMessage id="ui-users.permissionSet" />;
 const paneTitle = <FormattedMessage id="ui-users.settings.permissionSet" />;
@@ -101,13 +104,13 @@ export const PermissionSets = (props) => {
     <EntrySelector
       {...props}
       nameKey={nameKey}
-        // TODO: UICONSET-59
+            // TODO: UICONSET-59
       editable={false}
       onAdd={noop}
       onEdit={noop}
       onClone={noop}
       onRemove={noop}
-        // ^^^^^^^^^^^^^^^^^
+            // ^^^^^^^^^^^^^^^^^
       onClick={onItemClick}
       addMenu={addMenu}
       contentData={contentData}
@@ -117,7 +120,11 @@ export const PermissionSets = (props) => {
       paneTitle={paneTitle}
       paneWidth="70%"
       rowFilter={rowFilter}
-    />
+    >
+      <Switch>
+        <Route exact path={PERMISSION_SET_ROUTES.COMPARE} component={PermissionSetsCompare} />
+      </Switch>
+    </EntrySelector>
   );
 };
 

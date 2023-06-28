@@ -90,7 +90,7 @@ export function PermissionSetsCompareItem({
         id="memberSelect"
         placeholder={intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.members.permissionSets.compare.member.placeholder' })}
         dataOptions={selectedMemberOptions}
-        onChange={(value) => setSelectedMemberId(value)}
+        onChange={setSelectedMemberId}
       />
       <Selection
         name="permission-set"
@@ -98,8 +98,9 @@ export function PermissionSetsCompareItem({
         id="permissionSet"
         placeholder={intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.members.permissionSets.compare.permissionSet.placeholder' })}
         dataOptions={permissionOptions}
-        onChange={(value) => setSelectedPermissionId(value)}
-        isLoading={isFetching}
+        onChange={setSelectedPermissionId}
+        loading={isFetching}
+        disabled={!selectedMemberId}
       />
       <AccordionSet>
         <Accordion

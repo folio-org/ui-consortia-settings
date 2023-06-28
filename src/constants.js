@@ -15,10 +15,6 @@ export const METADATA_PROVIDER_API = 'metadata-provider';
 /*  */
 
 export const MODULE_ROOT_ROUTE = stripesConfig.route;
-export const PERMISSION_SET_ROUTES = {
-  COMPARE: '/consortia-settings/users/perms/compare',
-  PERMISSION_SETS: '/consortia-settings/users/perms',
-};
 
 export const PACKAGE_SCOPE_REGEX = /^@[a-z\d][\w-.]{0,214}\//;
 export const UUID_REGEX = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;
