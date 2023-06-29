@@ -10,6 +10,7 @@ export const FieldSharedEntry = ({ fieldProps, field, rowIndex }) => {
   const entryValues = get(values, [field, rowIndex]);
 
   const isEditing = Boolean(entryValues?.id);
+  // TODO: check if the entry is a shared setting
   const isShared = false;
 
   return (
@@ -17,6 +18,7 @@ export const FieldSharedEntry = ({ fieldProps, field, rowIndex }) => {
       component={Checkbox}
       disabled={isEditing && isShared}
       label={<FormattedMessage id="ui-consortia-settings.share" />}
+      type="checkbox"
       {...fieldProps}
     />
   );

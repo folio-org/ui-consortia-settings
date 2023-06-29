@@ -73,6 +73,7 @@ const EditableListMemoized = memo(EditableList);
 
 export const ConsortiaControlledVocabulary = ({
   columnMapping: columnMappingProp,
+  fieldComponents: fieldComponentsProp,
   formatter: formatterProp,
   id,
   label,
@@ -164,18 +165,24 @@ export const ConsortiaControlledVocabulary = ({
   }, [translations]);
 
   const onCreate = useCallback(async ({ shared, ...entry }) => {
+    // TODO: use the publish coordinator for the action handling
+
     console.log('shared', shared);
 
     return createEntry({ entry }).then(refetch);
   }, [createEntry, refetch]);
 
   const onUpdate = useCallback(async ({ shared, ...entry }) => {
+    // TODO: use publish coordinator for the action handling
+
     console.log('shared', shared);
 
     return updateEntry({ entry }).then(refetch);
   }, [refetch, updateEntry]);
 
   const handleDeleteEntry = useCallback((entry) => {
+    // TODO: use publish coordinator for the action handling
+
     return deleteEntry({ entry })
       .then(refetch)
       .catch(() => (
@@ -193,15 +200,13 @@ export const ConsortiaControlledVocabulary = ({
   }, [buildDialog, entries, handleDeleteEntry, primaryField, uniqueField]);
 
   const fieldComponents = useMemo(() => ({
+    ...fieldComponentsProp,
     shared: FieldSharedEntry,
-  }), []);
+  }), [fieldComponentsProp]);
 
   const formatter = useMemo(() => ({
     lastUpdated: ({ metadata }) => renderLastUpdated(metadata, users),
-    shared: () => {
-      // TODO: display 'All' or list of members
-      return <>Members</>;
-    },
+    shared: () => 'TODO: "All" or members list',
     ...formatterProp,
   }), [formatterProp, users]);
 
@@ -259,6 +264,7 @@ export const ConsortiaControlledVocabulary = ({
 
 ConsortiaControlledVocabulary.defaultProps = {
   columnMapping: {},
+  fieldComponents: {},
   formatter: {},
   id: uniqueId(),
   readOnlyFields: [],
@@ -269,6 +275,7 @@ ConsortiaControlledVocabulary.defaultProps = {
 
 ConsortiaControlledVocabulary.propTypes = {
   columnMapping: PropTypes.object,
+  fieldComponents: PropTypes.object,
   formatter: PropTypes.object,
   id: PropTypes.string,
   label: PropTypes.string,
