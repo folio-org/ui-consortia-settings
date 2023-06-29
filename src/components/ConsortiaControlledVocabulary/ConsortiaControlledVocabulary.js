@@ -20,26 +20,25 @@ import {
   Paneset,
 } from '@folio/stripes/components';
 import { EditableList } from '@folio/stripes/smart-components';
-import { useUsersBatch } from '@folio/stripes-acq-components';
+import {
+  useShowCallout,
+  useUsersBatch,
+} from '@folio/stripes-acq-components';
 
 import { translationsShape } from '../../shapes';
+import {
+  ACTION_TYPES,
+  DIALOG_TYPES,
+  DIALOGS_MAP,
+  PANESET_PREFIX,
+  TRANSLATION_KEYS_MAP,
+} from './constants';
 import { FieldSharedEntry } from './FieldSharedEntry';
 import {
   useEntries,
   useEntryMutation,
 } from './hooks';
-import {
-  ConfirmDeleteEntryModal,
-  ItemInUseModal,
-} from './modals';
 import { renderLastUpdated } from './renderLastUpdated';
-
-const PANESET_PREFIX = 'consortia-controlled-vocabulary-paneset-';
-
-const DIALOG_TYPES = {
-  confirmDelete: 'confirmDelete',
-  itemInUse: 'itemInUse',
-};
 
 /**
  * Rejects with empty object.
@@ -47,27 +46,6 @@ const DIALOG_TYPES = {
 */
 // eslint-disable-next-line prefer-promise-reject-errors
 const safeReject = () => Promise.reject({});
-
-const DIALOGS_MAP = {
-  // eslint-disable-next-line react/prop-types
-  [DIALOG_TYPES.confirmDelete]: ({ resolve, reject, term, translations }) => (
-    <ConfirmDeleteEntryModal
-      open
-      translations={translations}
-      term={term}
-      onConfirm={resolve}
-      onCancel={reject}
-    />
-  ),
-  // eslint-disable-next-line react/prop-types
-  [DIALOG_TYPES.itemInUse]: ({ resolve, translations }) => (
-    <ItemInUseModal
-      open
-      translations={translations}
-      onConfirm={resolve}
-    />
-  ),
-};
 
 const EditableListMemoized = memo(EditableList);
 
@@ -89,6 +67,7 @@ export const ConsortiaControlledVocabulary = ({
   ...props
 }) => {
   const paneTitleRef = useRef();
+  const showCallout = useShowCallout();
   const [activeDialog, setActiveDialog] = useState(null);
 
   const panesetId = `${PANESET_PREFIX}${id}`;
@@ -164,32 +143,72 @@ export const ConsortiaControlledVocabulary = ({
     }).finally(setActiveDialog);
   }, [translations]);
 
+  const showSuccessCallout = useCallback(({ actionType, entry, members }) => {
+    const translationKey = TRANSLATION_KEYS_MAP[actionType];
+
+    return showCallout({
+      messageId: translations[translationKey] || `ui-consortia-settings.consortiumManager.controlledVocab.common.${translationKey}`,
+      values: {
+        count: members.length,
+        members: members.join(', '),
+        term: entry[primaryField],
+      },
+    });
+  }, [primaryField, showCallout, translations]);
+
   const onCreate = useCallback(async ({ shared, ...entry }) => {
     // TODO: use the publish coordinator for the action handling
 
     console.log('shared', shared);
+    const members = ['tenant-1'];
 
-    return createEntry({ entry }).then(refetch);
-  }, [createEntry, refetch]);
+    return createEntry({ entry })
+      .then(() => {
+        showSuccessCallout({
+          actionType: ACTION_TYPES.create,
+          entry,
+          members,
+        });
+      })
+      .then(refetch);
+  }, [createEntry, refetch, showSuccessCallout]);
 
   const onUpdate = useCallback(async ({ shared, ...entry }) => {
     // TODO: use publish coordinator for the action handling
 
     console.log('shared', shared);
+    const members = ['tenant-1', 'tenant-2'];
 
-    return updateEntry({ entry }).then(refetch);
-  }, [refetch, updateEntry]);
+    return updateEntry({ entry })
+      .then(() => {
+        showSuccessCallout({
+          actionType: ACTION_TYPES.update,
+          entry,
+          members,
+        });
+      })
+      .then(refetch);
+  }, [refetch, showSuccessCallout, updateEntry]);
 
   const handleDeleteEntry = useCallback((entry) => {
     // TODO: use publish coordinator for the action handling
 
+    const members = ['tenant-1', 'tenant-2'];
+
     return deleteEntry({ entry })
+      .then(() => {
+        showSuccessCallout({
+          actionType: ACTION_TYPES.delete,
+          entry,
+          members,
+        });
+      })
       .then(refetch)
       .catch(() => (
         buildDialog({ type: DIALOG_TYPES.itemInUse })
           .then(safeReject)
       ));
-  }, [buildDialog, deleteEntry, refetch]);
+  }, [buildDialog, deleteEntry, refetch, showSuccessCallout]);
 
   const onDelete = useCallback((uniqueFieldValue) => {
     const entryToDelete = entries.find(entry => entry[uniqueField] === uniqueFieldValue);

@@ -9,7 +9,11 @@
   "errors.permissionSets.load.common": "Could not load permission sets.",
   "errors.permissionsRequired": "User does not have required permissions.",
 
+  "consortiumManager.all": "All",
   "consortiumManager.controlledVocab.column.memberLibraries": "Member libraries",
+  "consortiumManager.controlledVocab.common.termCreated": "<b>{term}</b> was successfully <b>created</b> for <b>{members}</b> {count, select, 1 {library} other {libraries}}",
+  "consortiumManager.controlledVocab.common.termDeleted": "<b>{term}</b> was successfully <b>deleted</b> for <b>{members}</b> {count, select, 1 {library} other {libraries}}",
+  "consortiumManager.controlledVocab.common.termUpdated": "<b>{term}</b> was successfully <b>updated</b> for <b>{members}</b> {count, select, 1 {library} other {libraries}}",
   "consortiumManager.controlledVocab.patronGroups.cannotDeleteTermHeader": "Cannot delete the patron group",
   "consortiumManager.controlledVocab.patronGroups.cannotDeleteTermMessage": "This patron group cannot be deleted, as it is in use by one or more records.",
   "consortiumManager.controlledVocab.patronGroups.deleteEntry": "Delete patron group",

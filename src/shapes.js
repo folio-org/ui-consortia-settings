@@ -21,6 +21,8 @@ export const translationsShape = PropTypes.shape({
   cannotDeleteTermHeader: PropTypes.string,
   cannotDeleteTermMessage: PropTypes.string,
   deleteEntry: PropTypes.string,
+  termCreated: PropTypes.string,
   termDeleted: PropTypes.string,
+  termUpdated: PropTypes.string,
   termWillBeDeleted: PropTypes.string,
 });
