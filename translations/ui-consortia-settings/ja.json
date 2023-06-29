@@ -40,5 +40,8 @@
     "consortiumManager.members.selection.label": "Member",
     "permission.consortium-manager.view": "Consortium manager: Can view existing settings",
     "permission.consortium-manager.edit": "Consortium manager: Can create, edit and remove settings",
-    "permission.consortium-manager.share": "Consortium manager: Can share settings to all members"
+    "permission.consortium-manager.share": "Consortium manager: Can share settings to all members",
+    "permission.consortia.affiliations.view": "Consortia: View affiliations",
+    "permission.consortia.affiliations.edit": "Consortia: Assign and unassign affiliations",
+    "errors.permissionSets.load.common": "Could not load permission sets."
 }
