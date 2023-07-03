@@ -117,7 +117,7 @@ describe('PermissionsSets', () => {
 
     expect(compareButton).toBeInTheDocument();
     userEvent.click(compareButton);
-    expect(defaultProps.history.push).toHaveBeenCalledWith(PERMISSION_SET_ROUTES.COMPARE);
+    expect(defaultProps.history.push).toHaveBeenCalledWith(`${PERMISSION_SET_ROUTES.COMPARE}?active_member=${tenants[3].id}`);
   });
 
   describe('Error handling', () => {

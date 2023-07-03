@@ -21,6 +21,7 @@ import {
 import { useShowCallout } from '@folio/stripes-acq-components';
 
 import { useTenantPermissions } from '../../../../../../../hooks';
+import ItemFormatter from './ItemFormatter';
 
 export function PermissionSetsCompareItem({
   columnName,
@@ -76,7 +77,7 @@ export function PermissionSetsCompareItem({
   }, [selectedPermissionId, permissions]);
 
   const uniqueItems = xor(assignedPermissionsList, permissionsToCompare);
-  const itemFormatter = (item) => (<li key={item}>{uniqueItems.includes(item) ? <mark>{item}</mark> : item}</li>);
+  const itemFormatter = (item) => <ItemFormatter item={item} uniqueItems={uniqueItems} />;
   const isEmptyMessage = <FormattedMessage id="ui-consortia-settings.consortiumManager.members.permissionSets.compare.permissionSet.empty" />;
 
   useEffect(() => {
