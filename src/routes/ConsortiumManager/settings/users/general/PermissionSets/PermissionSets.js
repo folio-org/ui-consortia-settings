@@ -1,7 +1,8 @@
+import { useCallback, useMemo, useState } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { identity, noop } from 'lodash';
-import { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { Route, Switch } from 'react-router-dom';
 
 import { Selection } from '@folio/stripes/components';
 import { EntrySelector } from '@folio/stripes/smart-components';
@@ -12,6 +13,8 @@ import { useTenantPermissions } from '../../../../../../hooks';
 import { PermissionSetDetails } from '../../../../../../temp';
 import { useMemberSelection } from '../../../../hooks';
 import { PermissionSetsActionsMenu } from './PermissionSetsActionsMenu';
+import { PermissionSetsCompare } from './PermissionSetsCompare';
+import { ACTIVE_MEMBER_SEARCH_PARAMS, PERMISSION_SET_ROUTES } from './constants';
 
 const entryLabel = <FormattedMessage id="ui-users.permissionSet" />;
 const paneTitle = <FormattedMessage id="ui-users.settings.permissionSet" />;
@@ -19,7 +22,6 @@ const nameKey = 'displayName';
 
 export const PermissionSets = (props) => {
   const { history, location, match } = props;
-
   const intl = useIntl();
   const showCallout = useShowCallout();
 
@@ -92,6 +94,11 @@ export const PermissionSets = (props) => {
     // TODO: UICONSET-59
       onCreate={noop}
     // ^^^^^^^^^^^^^^^^^
+      onCompare={() => {
+        const searchParams = activeMember ? `?${ACTIVE_MEMBER_SEARCH_PARAMS}=${activeMember}` : '';
+
+        history.push(`${PERMISSION_SET_ROUTES.COMPARE}${searchParams}`);
+      }}
     />
   );
 
@@ -99,13 +106,13 @@ export const PermissionSets = (props) => {
     <EntrySelector
       {...props}
       nameKey={nameKey}
-      // TODO: UICONSET-59
+            // TODO: UICONSET-59
       editable={false}
       onAdd={noop}
       onEdit={noop}
       onClone={noop}
       onRemove={noop}
-      // ^^^^^^^^^^^^^^^^^
+            // ^^^^^^^^^^^^^^^^^
       onClick={onItemClick}
       addMenu={addMenu}
       contentData={contentData}
@@ -115,7 +122,11 @@ export const PermissionSets = (props) => {
       paneTitle={paneTitle}
       paneWidth="70%"
       rowFilter={rowFilter}
-    />
+    >
+      <Switch>
+        <Route exact path={PERMISSION_SET_ROUTES.COMPARE} component={PermissionSetsCompare} />
+      </Switch>
+    </EntrySelector>
   );
 };
 

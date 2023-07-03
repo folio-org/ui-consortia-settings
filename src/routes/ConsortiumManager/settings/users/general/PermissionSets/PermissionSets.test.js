@@ -11,6 +11,7 @@ import {
 } from 'helpers';
 import { useTenantPermissions } from '../../../../../../hooks';
 import { PermissionSets } from './PermissionSets';
+import { PERMISSION_SET_ROUTES } from './constants';
 
 jest.mock('@folio/stripes-acq-components', () => ({
   ...jest.requireActual('@folio/stripes-acq-components'),
@@ -103,6 +104,20 @@ describe('PermissionsSets', () => {
     userEvent.click(screen.getByText(tenants[4].name));
 
     expect(defaultProps.history.push).toHaveBeenCalled();
+  });
+
+  it('should redirect to compare page on click compare action menu button', async () => {
+    const { container } = renderPermissionsSet();
+
+    const actionMenu = screen.getByTestId('permission-sets-actions-dropdown');
+
+    expect(actionMenu).toBeInTheDocument();
+    userEvent.click(actionMenu);
+    const compareButton = container.querySelector('#clickable-compare-permissions');
+
+    expect(compareButton).toBeInTheDocument();
+    userEvent.click(compareButton);
+    expect(defaultProps.history.push).toHaveBeenCalledWith(`${PERMISSION_SET_ROUTES.COMPARE}?active_member=${tenants[3].id}`);
   });
 
   describe('Error handling', () => {
