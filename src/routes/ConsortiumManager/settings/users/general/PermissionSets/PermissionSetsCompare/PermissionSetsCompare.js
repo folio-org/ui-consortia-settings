@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import {
   HasCommand,
@@ -15,10 +15,13 @@ import {
 import { PermissionSetsCompareItem } from './PermissionSetsCompareItem';
 import { useConsortiumManagerContext } from '../../../../../../../contexts/ConsortiumManagerContext';
 import { COMPARE_ITEM_NAME } from './constants';
-import { PERMISSION_SET_ROUTES } from '../constants';
+import { ACTIVE_MEMBER_SEARCH_PARAMS, PERMISSION_SET_ROUTES } from '../constants';
 
 export const PermissionSetsCompare = () => {
   const history = useHistory();
+  const { search } = useLocation();
+  const initialSelectedMemberId = useMemo(() => new URLSearchParams(search).get(ACTIVE_MEMBER_SEARCH_PARAMS), [search]);
+
   const { selectedMembers } = useConsortiumManagerContext();
 
   const [permissionsToCompare, setPermissionsToCompare] = useState({
@@ -80,6 +83,7 @@ export const PermissionSetsCompare = () => {
                 selectedMemberOptions={members}
                 columnName={COMPARE_ITEM_NAME.LEFT_COLUMN}
                 setPermissionsToCompare={handlePermissionsToCompare}
+                initialSelectedMemberId={initialSelectedMemberId}
                 permissionsToCompare={permissionsToCompare[COMPARE_ITEM_NAME.RIGHT_COLUMN]}
               />
             </Pane>

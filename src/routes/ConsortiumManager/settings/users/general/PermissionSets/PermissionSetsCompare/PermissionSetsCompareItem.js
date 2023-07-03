@@ -27,10 +27,11 @@ export function PermissionSetsCompareItem({
   permissionsToCompare,
   selectedMemberOptions,
   setPermissionsToCompare,
+  initialSelectedMemberId,
 }) {
   const intl = useIntl();
   const isMounted = useRef(false);
-  const [selectedMemberId, setSelectedMemberId] = useState('');
+  const [selectedMemberId, setSelectedMemberId] = useState(initialSelectedMemberId);
   const [selectedPermissionId, setSelectedPermissionId] = useState('');
   const showCallout = useShowCallout();
 
@@ -97,6 +98,7 @@ export function PermissionSetsCompareItem({
         placeholder={intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.members.permissionSets.compare.member.placeholder' })}
         dataOptions={selectedMemberOptions}
         onChange={setSelectedMemberId}
+        value={selectedMemberId}
       />
       <Selection
         name="permission-set"
@@ -128,6 +130,7 @@ PermissionSetsCompareItem.propTypes = {
   permissionsToCompare: PropTypes.arrayOf(PropTypes.string),
   setPermissionsToCompare: PropTypes.func,
   columnName: PropTypes.string.isRequired,
+  initialSelectedMemberId: PropTypes.string,
   selectedMemberOptions: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
@@ -137,4 +140,5 @@ PermissionSetsCompareItem.propTypes = {
 PermissionSetsCompareItem.defaultProps = {
   selectedMemberOptions: [],
   permissionsToCompare: [],
+  initialSelectedMemberId: '',
 };

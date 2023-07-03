@@ -14,7 +14,7 @@ import { PermissionSetDetails } from '../../../../../../temp';
 import { useMemberSelection } from '../../../../hooks';
 import { PermissionSetsActionsMenu } from './PermissionSetsActionsMenu';
 import { PermissionSetsCompare } from './PermissionSetsCompare';
-import { PERMISSION_SET_ROUTES } from './constants';
+import { ACTIVE_MEMBER_SEARCH_PARAMS, PERMISSION_SET_ROUTES } from './constants';
 
 const entryLabel = <FormattedMessage id="ui-users.permissionSet" />;
 const paneTitle = <FormattedMessage id="ui-users.settings.permissionSet" />;
@@ -95,7 +95,9 @@ export const PermissionSets = (props) => {
       onCreate={noop}
     // ^^^^^^^^^^^^^^^^^
       onCompare={() => {
-        history.push(PERMISSION_SET_ROUTES.COMPARE);
+        const searchParams = activeMember ? `?${ACTIVE_MEMBER_SEARCH_PARAMS}=${activeMember}` : '';
+
+        history.push(`${PERMISSION_SET_ROUTES.COMPARE}${searchParams}`);
       }}
     />
   );

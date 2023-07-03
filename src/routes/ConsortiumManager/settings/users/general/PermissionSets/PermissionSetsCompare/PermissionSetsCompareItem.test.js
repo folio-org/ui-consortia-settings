@@ -80,7 +80,7 @@ describe('PermissionSetsCompareItem', () => {
   });
 
   it('should render component', () => {
-    renderComponent();
+    renderComponent({ initialSelectedMemberId: selectedMemberOptions[0].value });
     expect(screen.getByText('ui-consortia-settings.consortiumManager.members.permissionSets.compare.member')).toBeInTheDocument();
   });
 
