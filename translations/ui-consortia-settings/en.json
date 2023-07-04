@@ -71,6 +71,10 @@
   "switchActiveAffiliation.modal.heading": "Select affiliation",
   "switchActiveAffiliation.modal.select.label": "Consortium members",
 
+  "validation.error.maxLength": "Length should not be more than {length} characters.",
+  "validation.error.minLength": "Length should not be less than {length} characters.",
+  "validation.error.mismatchLength": "Length should be {length, plural, one {# character} other {# characters}}.",
+
   "permission.consortia.affiliations.view": "Consortia: View affiliations",
   "permission.consortia.affiliations.edit": "Consortia: Assign and unassign affiliations",
   "permission.consortium-manager.view": "Consortium manager: Can view existing settings",
