@@ -5,6 +5,8 @@ export const OKAPI_TENANT_HEADER = 'X-Okapi-Tenant';
 export const OKAPI_TOKEN_HEADER = 'X-Okapi-Token';
 
 /* APIs */
+export const ALTERNATIVE_TITLE_TYPES_API = 'alternative-title-types';
+export const CANCELLATION_REASONS_API = 'cancellation-reason-storage/cancellation-reasons';
 export const CONFIGURATIONS_API = 'configurations';
 export const CONFIGURATIONS_ENTRIES_API = `${CONFIGURATIONS_API}/entries`;
 export const CONSORTIA_API = 'consortia';
@@ -44,3 +46,8 @@ export const PUBLISH_COORDINATOR_STATUSES = {
 };
 
 export const CONTROLLED_VOCAB_LIMIT = 2000;
+
+export const RECORD_SOURCE = {
+  CONSORTIUM: 'consortium',
+  LOCAL: 'local',
+};
