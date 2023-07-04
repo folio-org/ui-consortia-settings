@@ -62,7 +62,7 @@ wrapConsortiaControlledVocabularyDescribe({ entries })('Departments', () => {
     ])('should validate a department %s uniqueness', (fieldName) => {
       renderDepartments();
 
-      userEvent.click(screen.getByText('+ Add new'));
+      userEvent.click(screen.getByText('stripes-core.button.new'));
       userEvent.type(screen.getByPlaceholderText(fieldName), entries[0][fieldName]);
       userEvent.click(screen.getByText('stripes-core.button.save'));
 
@@ -72,7 +72,7 @@ wrapConsortiaControlledVocabularyDescribe({ entries })('Departments', () => {
     it('should validate if a department code field is filled in', () => {
       renderDepartments();
 
-      userEvent.click(screen.getByText('+ Add new'));
+      userEvent.click(screen.getByText('stripes-core.button.new'));
       userEvent.click(screen.getByText('stripes-core.button.save'));
 
       expect(screen.getByText('ui-users.settings.departments.code.required')).toBeInTheDocument();

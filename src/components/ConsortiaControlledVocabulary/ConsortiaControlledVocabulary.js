@@ -261,6 +261,7 @@ export const ConsortiaControlledVocabulary = ({
           <EditableListMemoized
             formType="final-form"
             label={label}
+            createButtonLabel={<FormattedMessage id="stripes-core.button.new" />}
             contentData={entries}
             totalCount={totalRecords}
             fieldComponents={fieldComponents}

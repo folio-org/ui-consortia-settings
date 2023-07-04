@@ -76,7 +76,7 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
     it('should handle new record creation', async () => {
       renderConsortiaControlledVocabulary();
 
-      userEvent.click(await screen.findByText('+ Add new'));
+      userEvent.click(await screen.findByText('stripes-core.button.new'));
       userEvent.type(await screen.findByPlaceholderText('foo'), 'New');
       userEvent.type(await screen.findByPlaceholderText('bar'), 'Record');
       userEvent.click(await screen.findByText('stripes-core.button.save'));
@@ -129,7 +129,7 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
     it('should handle the absence of a primary field value', async () => {
       renderConsortiaControlledVocabulary();
 
-      userEvent.click(await screen.findByText('+ Add new'));
+      userEvent.click(await screen.findByText('stripes-core.button.new'));
       userEvent.click(await screen.findByText('stripes-core.button.save'));
 
       expect(screen.getByText('stripes-core.label.missingRequiredField')).toBeInTheDocument();

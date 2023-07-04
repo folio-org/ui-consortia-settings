@@ -61,7 +61,7 @@ wrapConsortiaControlledVocabularyDescribe({ entries })('PatronGroups', ({ mutati
   it('should validate row inputs', async () => {
     renderPatronGroups();
 
-    userEvent.click(screen.getByText('+ Add new'));
+    userEvent.click(screen.getByText('stripes-core.button.new'));
     userEvent.type(screen.getByPlaceholderText('expirationOffsetInDays'), '-1');
     userEvent.click(screen.getByText('stripes-core.button.save'));
 
