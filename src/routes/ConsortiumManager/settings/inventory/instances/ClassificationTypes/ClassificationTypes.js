@@ -1,10 +1,11 @@
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import { getSourceSuppressor } from '@folio/stripes/util';
 import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 
 import { ConsortiaControlledVocabulary } from '../../../../../../components';
 import {
-  ALTERNATIVE_TITLE_TYPES_API,
+  CLASSIFICATION_TYPES_API,
   RECORD_SOURCE,
 } from '../../../../../../constants';
 
@@ -20,18 +21,22 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
 
-export const AlternativeTitleTypes = () => {
+const suppress = getSourceSuppressor(RECORD_SOURCE.FOLIO);
+const actionSuppression = { edit: suppress, delete: suppress };
+
+export const ClassificationTypes = () => {
   const intl = useIntl();
 
   return (
     <ConsortiaControlledVocabulary
-      id="alternative-title-types"
+      id="classification-types"
       columnMapping={COLUMN_MAPPING}
-      label={intl.formatMessage({ id: 'ui-inventory.alternativeTitleTypes' })}
-      path={ALTERNATIVE_TITLE_TYPES_API}
-      records="alternativeTitleTypes"
-      translations={getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.alternativeTitleTypes')}
+      label={intl.formatMessage({ id: 'ui-inventory.classificationIdentifierTypes' })}
+      path={CLASSIFICATION_TYPES_API}
+      records="classificationTypes"
+      translations={getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.classificationTypes')}
       itemTemplate={{ source: RECORD_SOURCE.LOCAL }}
+      actionSuppression={actionSuppression}
       readOnlyFields={READONLY_FIELDS}
       visibleFields={VISIBLE_FIELDS}
     />

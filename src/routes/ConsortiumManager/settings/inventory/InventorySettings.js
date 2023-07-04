@@ -3,7 +3,10 @@ import { FormattedMessage } from 'react-intl';
 import { stripesShape } from '@folio/stripes/core';
 import { Settings } from '@folio/stripes/smart-components';
 
-import { AlternativeTitleTypes } from './instances';
+import {
+  AlternativeTitleTypes,
+  ClassificationTypes,
+} from './instances';
 
 const sections = [
   {
@@ -14,6 +17,12 @@ const sections = [
         label: <FormattedMessage id="ui-inventory.alternativeTitleTypes" />,
         component: AlternativeTitleTypes,
         perm: 'ui-inventory.settings.alternative-title-types',
+      },
+      {
+        route: 'classificationTypes',
+        label: <FormattedMessage id="ui-inventory.classificationIdentifierTypes" />,
+        component: ClassificationTypes,
+        perm: 'ui-inventory.settings.classification-types',
       },
     ],
   },
