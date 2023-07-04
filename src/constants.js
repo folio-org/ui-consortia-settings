@@ -11,6 +11,7 @@ export const CONSORTIA_API = 'consortia';
 export const CONSORTIA_TENANTS_API = 'tenants';
 export const CONSORTIA_USER_TENANTS_API = 'user-tenants';
 export const DATA_EXPORT_API = 'data-export';
+export const DEPARTMENTS_API = 'departments';
 export const METADATA_PROVIDER_API = 'metadata-provider';
 export const PATRON_GROUPS_API = 'groups';
 /*  */

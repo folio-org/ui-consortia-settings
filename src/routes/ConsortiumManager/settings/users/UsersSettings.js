@@ -5,6 +5,7 @@ import { stripesShape } from '@folio/stripes/core';
 import { Settings } from '@folio/stripes/smart-components';
 
 import {
+  Departments,
   PatronGroups,
   PermissionSets,
 } from './general';
@@ -24,6 +25,12 @@ const sections = [
         label: <FormattedMessage id="ui-users.settings.patronGroups" />,
         component: PatronGroups,
         perm: 'ui-users.settings.usergroups.view',
+      },
+      {
+        route: 'departments',
+        label: <FormattedMessage id="ui-users.settings.departments" />,
+        component: Departments,
+        perm: 'ui-users.settings.departments.view',
       },
     ], ['label']),
   },

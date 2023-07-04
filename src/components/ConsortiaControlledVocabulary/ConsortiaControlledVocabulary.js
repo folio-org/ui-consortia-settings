@@ -231,6 +231,7 @@ export const ConsortiaControlledVocabulary = ({
 
   const columnMapping = useMemo(() => ({
     shared: <FormattedMessage id="ui-consortia-settings.consortiumManager.controlledVocab.column.memberLibraries" />,
+    lastUpdated: <FormattedMessage id="stripes-smart-components.cv.lastUpdated" />,
     ...columnMappingProp,
   }), [columnMappingProp]);
 

@@ -36,6 +36,7 @@ export const PatronGroups = () => {
 
   return (
     <ConsortiaControlledVocabulary
+      id="patrongroups"
       columnMapping={COLUMN_MAPPING}
       label={intl.formatMessage({ id: 'ui-users.information.patronGroups' })}
       path={PATRON_GROUPS_API}
