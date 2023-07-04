@@ -13,6 +13,7 @@ export const CONFIGURATIONS_ENTRIES_API = `${CONFIGURATIONS_API}/entries`;
 export const CONSORTIA_API = 'consortia';
 export const CONSORTIA_TENANTS_API = 'tenants';
 export const CONSORTIA_USER_TENANTS_API = 'user-tenants';
+export const CONTRIBUTOR_TYPES_API = 'contributor-types';
 export const DATA_EXPORT_API = 'data-export';
 export const DEPARTMENTS_API = 'departments';
 export const METADATA_PROVIDER_API = 'metadata-provider';
@@ -51,5 +52,11 @@ export const CONTROLLED_VOCAB_LIMIT = 2000;
 export const RECORD_SOURCE = {
   CONSORTIUM: 'consortium',
   FOLIO: 'folio',
+  INN_REACH: 'inn-reach',
   LOCAL: 'local',
+  MARC_RELATOR: 'marcrelator',
+  RDA_CARRIER: 'rdacarrier',
+  RDA_CONTENT: 'rdacontent',
+  RDA_MODE_ISSUE: 'rdamodeissue',
+  UC: 'UC',
 };

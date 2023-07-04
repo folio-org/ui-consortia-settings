@@ -6,6 +6,7 @@ import { Settings } from '@folio/stripes/smart-components';
 import {
   AlternativeTitleTypes,
   ClassificationTypes,
+  ContributorTypes,
 } from './instances';
 
 const sections = [
@@ -23,6 +24,12 @@ const sections = [
         label: <FormattedMessage id="ui-inventory.classificationIdentifierTypes" />,
         component: ClassificationTypes,
         perm: 'ui-inventory.settings.classification-types',
+      },
+      {
+        route: 'contributortypes',
+        label: <FormattedMessage id="ui-inventory.contributorTypes" />,
+        component: ContributorTypes,
+        perm: 'ui-inventory.settings.contributor-types',
       },
     ],
   },
