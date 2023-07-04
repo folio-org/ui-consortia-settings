@@ -1,23 +1,31 @@
 import { FormattedMessage } from 'react-intl';
 
+import {
+  validateRequired,
+  validateUniqueness,
+} from '../../../../../../components/ConsortiaControlledVocabulary/validators';
+
 export const validate = (item, index, items) => {
-  const filteredDepartments = items.filter((department, i) => i !== index);
-  const errors = {};
+  const validateFieldUniqueness = (field, message) => validateUniqueness({
+    index,
+    item,
+    items,
+    field,
+    message,
+  });
 
-  // existing departent matches name
-  if (filteredDepartments.find(department => department.name === item.name)) {
-    errors.name = <FormattedMessage id="ui-users.settings.departments.name.error" />;
-  }
+  const nameError = validateFieldUniqueness('name', <FormattedMessage id="ui-users.settings.departments.name.error" />);
 
-  // existing departent matches name
-  if (filteredDepartments.find(department => department.code === item.code)) {
-    errors.code = <FormattedMessage id="ui-users.settings.departments.code.error" />;
-  }
+  const codeError = (
+    validateRequired({
+      value: item.code,
+      message: <FormattedMessage id="ui-users.settings.departments.code.required" />,
+    })
+    || validateFieldUniqueness('code', <FormattedMessage id="ui-users.settings.departments.code.error" />)
+  );
 
-  // code is missing
-  if (!item.code) {
-    errors.code = <FormattedMessage id="ui-users.settings.departments.code.required" />;
-  }
-
-  return errors;
+  return {
+    name: nameError,
+    code: codeError,
+  };
 };

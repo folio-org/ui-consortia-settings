@@ -21,8 +21,8 @@ const FORMATTER = {
 };
 
 const getColumnMapping = ({ intl }) => ({
-  [FIELDS_MAP.name]: <FormattedMessage id="ui-users.information.patronGroup" />,
-  [FIELDS_MAP.code]: <FormattedMessage id="ui-users.description" />,
+  [FIELDS_MAP.name]: <FormattedMessage id="ui-users.settings.departments.name" />,
+  [FIELDS_MAP.code]: <FormattedMessage id="ui-users.settings.departments.code" />,
   [FIELDS_MAP.numberOfObjects]: (
     <FormattedMessage
       id="stripes-smart-components.cv.numberOfObjects"

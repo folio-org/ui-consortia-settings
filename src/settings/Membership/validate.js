@@ -1,49 +1,73 @@
 import { FormattedMessage } from 'react-intl';
+
+import {
+  validateLength,
+  validateMaxLength,
+  validateUniqueness,
+} from '../../components/ConsortiaControlledVocabulary/validators';
 import {
   MAX_NAME_LENGTH,
   MAX_CODE_LENGTH,
 } from './constants';
 
-const validateMaxNameLength = (name = '') => (
-  name.length > MAX_NAME_LENGTH && (
-    <FormattedMessage
-      id="ui-consortia-settings.settings.membership.error.nameExceedsLength"
-      values={{ count: MAX_NAME_LENGTH }}
-    />
-  )
+const validateMaxNameLength = (value = '') => (
+  validateMaxLength({
+    value,
+    length: MAX_NAME_LENGTH,
+    message: (
+      <FormattedMessage
+        id="ui-consortia-settings.settings.membership.error.nameExceedsLength"
+        values={{ count: MAX_NAME_LENGTH }}
+      />
+    ),
+  })
 );
 
-const validateMaxCodeLength = (code = '') => (
-  code.length !== MAX_CODE_LENGTH && (
-    <FormattedMessage
-      id="ui-consortia-settings.settings.membership.error.codeExceedsLength"
-      values={{ count: MAX_CODE_LENGTH }}
-    />
-  )
+const validateCodeLength = (value = '') => (
+  validateLength({
+    value,
+    length: MAX_CODE_LENGTH,
+    message: (
+      <FormattedMessage
+        id="ui-consortia-settings.settings.membership.error.codeExceedsLength"
+        values={{ count: MAX_CODE_LENGTH }}
+      />
+    ),
+  })
 );
 
-const validateNameUniqueness = (name, i, items = []) => (
-  items.some(({ name: _name }, _i) => (name === _name && i !== _i)) && (
-    <FormattedMessage id="ui-consortia-settings.settings.membership.error.duplicate" />
-  )
+const validateNameUniqueness = (item, index, items = []) => (
+  validateUniqueness({
+    index,
+    item,
+    items,
+    field: 'name',
+    message: <FormattedMessage id="ui-consortia-settings.settings.membership.error.duplicate" />,
+  })
 );
 
-const validateCodeUniqueness = (code, i, items = []) => (
-  items.some(({ code: _code }, _i) => (code.toLowerCase() === _code.toLowerCase() && i !== _i)) && (
-    <FormattedMessage id="ui-consortia-settings.settings.membership.error.duplicate.code" />
-  )
+const validateCodeUniqueness = (item, index, items = []) => (
+  validateUniqueness({
+    index,
+    item,
+    items,
+    field: 'code',
+    message: <FormattedMessage id="ui-consortia-settings.settings.membership.error.duplicate.code" />,
+  })
 );
 
-export const validate = ({ name, code }, i, items) => {
+export const validate = (item, index, items) => {
+  const { name, code } = item;
+
   const nameError = (
     validateMaxNameLength(name)
-    || validateNameUniqueness(name, i, items)
+    || validateNameUniqueness(item, index, items)
     || undefined
   );
 
   const codeError = (
-    validateMaxCodeLength(code)
-    || validateCodeUniqueness(code, i, items)
+    validateCodeLength(code)
+    || validateCodeUniqueness(item, index, items)
     || undefined
   );
 
