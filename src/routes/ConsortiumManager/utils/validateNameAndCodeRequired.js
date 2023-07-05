@@ -1,6 +1,6 @@
-import { validateRequired } from '../../../../../../components/ConsortiaControlledVocabulary/validators';
+import { validateRequired } from '../../../components/ConsortiaControlledVocabulary/validators';
 
-export const validate = (item, _index, _items) => {
+export const validateNameAndCodeRequired = (item) => {
   const nameError = validateRequired({ value: item.name });
   const codeError = validateRequired({ value: item.code });
 

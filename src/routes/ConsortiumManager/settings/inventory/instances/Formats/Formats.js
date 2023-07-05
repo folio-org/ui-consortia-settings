@@ -5,7 +5,7 @@ import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 
 import { ConsortiaControlledVocabulary } from '../../../../../../components';
 import {
-  CONTRIBUTOR_TYPES_API,
+  INSTANCE_FORMATS_API,
   RECORD_SOURCE,
 } from '../../../../../../constants';
 import { validateNameAndCodeRequired } from '../../../../utils';
@@ -24,20 +24,20 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
 
-const suppress = getSourceSuppressor(RECORD_SOURCE.MARC_RELATOR);
+const suppress = getSourceSuppressor(RECORD_SOURCE.RDA_CARRIER);
 const actionSuppression = { edit: suppress, delete: suppress };
 
-export const ContributorTypes = () => {
+export const Formats = () => {
   const intl = useIntl();
 
   return (
     <ConsortiaControlledVocabulary
-      id="contributor-types"
+      id="formats"
       columnMapping={COLUMN_MAPPING}
-      label={intl.formatMessage({ id: 'ui-inventory.contributorTypes' })}
-      path={CONTRIBUTOR_TYPES_API}
-      records="contributorTypes"
-      translations={getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.contributorTypes')}
+      label={intl.formatMessage({ id: 'ui-inventory.formats' })}
+      path={INSTANCE_FORMATS_API}
+      records="instanceFormats"
+      translations={getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.formats')}
       itemTemplate={{ source: RECORD_SOURCE.LOCAL }}
       actionSuppression={actionSuppression}
       readOnlyFields={READONLY_FIELDS}

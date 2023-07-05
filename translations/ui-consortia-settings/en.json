@@ -37,6 +37,13 @@
   "consortiumManager.controlledVocab.departments.deleteEntry": "Delete departament",
   "consortiumManager.controlledVocab.departments.termDeleted": "The departament <b>{term}</b> was successfully <b>deleted</b>.",
   "consortiumManager.controlledVocab.departments.termWillBeDeleted": "The departament <b>{term}</b> will be <b>deleted</b>.",
+
+  "consortiumManager.controlledVocab.formats.cannotDeleteTermHeader": "Cannot delete the format",
+  "consortiumManager.controlledVocab.formats.cannotDeleteTermMessage": "This format cannot be deleted, as it is in use by one or more records.",
+  "consortiumManager.controlledVocab.formats.deleteEntry": "Delete format",
+  "consortiumManager.controlledVocab.formats.termDeleted": "The format <b>{term}</b> was successfully <b>deleted</b>.",
+  "consortiumManager.controlledVocab.formats.termWillBeDeleted": "The format <b>{term}</b> will be <b>deleted</b>.",
+
   "consortiumManager.controlledVocab.patronGroups.cannotDeleteTermHeader": "Cannot delete the patron group",
   "consortiumManager.controlledVocab.patronGroups.cannotDeleteTermMessage": "This patron group cannot be deleted, as it is in use by one or more records.",
   "consortiumManager.controlledVocab.patronGroups.deleteEntry": "Delete patron group",

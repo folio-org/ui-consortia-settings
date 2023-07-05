@@ -7,6 +7,7 @@ import {
   AlternativeTitleTypes,
   ClassificationTypes,
   ContributorTypes,
+  Formats,
 } from './instances';
 
 const sections = [
@@ -30,6 +31,12 @@ const sections = [
         label: <FormattedMessage id="ui-inventory.contributorTypes" />,
         component: ContributorTypes,
         perm: 'ui-inventory.settings.contributor-types',
+      },
+      {
+        route: 'formats',
+        label: <FormattedMessage id="ui-inventory.formats" />,
+        component: Formats,
+        perm: 'ui-inventory.settings.instance-formats',
       },
     ],
   },
