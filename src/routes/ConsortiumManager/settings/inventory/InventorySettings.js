@@ -5,6 +5,7 @@ import { Settings } from '@folio/stripes/smart-components';
 
 import {
   HoldingsNoteTypes,
+  HoldingsTypes,
 } from './holdings';
 import {
   AlternativeTitleTypes,
@@ -51,6 +52,12 @@ const sections = [
         label: <FormattedMessage id="ui-inventory.holdingsNoteTypes" />,
         component: HoldingsNoteTypes,
         perm: 'ui-inventory.settings.holdings-note-types',
+      },
+      {
+        route: 'holdingsTypes',
+        label: <FormattedMessage id="ui-inventory.holdingsTypes" />,
+        component: HoldingsTypes,
+        perm: 'ui-inventory.settings.holdings-types',
       },
     ],
   },

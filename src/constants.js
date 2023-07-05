@@ -17,6 +17,7 @@ export const CONTRIBUTOR_TYPES_API = 'contributor-types';
 export const DATA_EXPORT_API = 'data-export';
 export const DEPARTMENTS_API = 'departments';
 export const HOLDINGS_NOTE_TYPES_API = 'holdings-note-types';
+export const HOLDINGS_TYPES_API = 'holdings-types';
 export const INSTANCE_FORMATS_API = 'instance-formats';
 export const METADATA_PROVIDER_API = 'metadata-provider';
 export const PATRON_GROUPS_API = 'groups';
