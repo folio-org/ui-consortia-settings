@@ -4,6 +4,9 @@ import { stripesShape } from '@folio/stripes/core';
 import { Settings } from '@folio/stripes/smart-components';
 
 import {
+  HoldingsNoteTypes,
+} from './holdings';
+import {
   AlternativeTitleTypes,
   ClassificationTypes,
   ContributorTypes,
@@ -39,6 +42,25 @@ const sections = [
         perm: 'ui-inventory.settings.instance-formats',
       },
     ],
+  },
+  {
+    label: <FormattedMessage id="ui-inventory.holdings" />,
+    pages: [
+      {
+        route: 'holdingsNoteTypes',
+        label: <FormattedMessage id="ui-inventory.holdingsNoteTypes" />,
+        component: HoldingsNoteTypes,
+        perm: 'ui-inventory.settings.holdings-note-types',
+      },
+    ],
+  },
+  {
+    label: <FormattedMessage id="ui-inventory.items" />,
+    pages: [],
+  },
+  {
+    label: <FormattedMessage id="ui-inventory.instanceHoldingsItem" />,
+    pages: [],
   },
 ];
 
