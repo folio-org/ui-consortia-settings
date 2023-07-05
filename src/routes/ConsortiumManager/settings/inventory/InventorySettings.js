@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { stripesShape } from '@folio/stripes/core';
 import { Settings } from '@folio/stripes/smart-components';
 
+import { MODULE_ROOT_ROUTE } from '../../../../constants';
 import {
   HoldingsNoteTypes,
   HoldingsTypes,
@@ -101,6 +102,7 @@ const InventorySettings = (props) => {
       {...props}
       sections={sections}
       paneTitle={<FormattedMessage id="ui-inventory.inventory.label" />}
+      paneBackLink={MODULE_ROOT_ROUTE}
     />
   );
 };

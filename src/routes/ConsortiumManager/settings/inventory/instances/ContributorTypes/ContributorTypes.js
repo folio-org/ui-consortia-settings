@@ -8,6 +8,10 @@ import {
   CONTRIBUTOR_TYPES_API,
   RECORD_SOURCE,
 } from '../../../../../../constants';
+import {
+  SETTINGS,
+  SETTINGS_BACK_LINKS,
+} from '../../../../constants';
 import { validateNameAndCodeRequired } from '../../../../utils';
 
 const ITEM_TEMPLATE = { source: RECORD_SOURCE.LOCAL };
@@ -35,6 +39,7 @@ export const ContributorTypes = () => {
   return (
     <ConsortiaControlledVocabulary
       id="contributor-types"
+      firstMenu={SETTINGS_BACK_LINKS[SETTINGS.inventory]}
       columnMapping={COLUMN_MAPPING}
       label={intl.formatMessage({ id: 'ui-inventory.contributorTypes' })}
       path={CONTRIBUTOR_TYPES_API}

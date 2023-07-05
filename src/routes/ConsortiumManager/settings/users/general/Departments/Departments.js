@@ -7,6 +7,10 @@ import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 
 import { ConsortiaControlledVocabulary } from '../../../../../../components';
 import { DEPARTMENTS_API } from '../../../../../../constants';
+import {
+  SETTINGS,
+  SETTINGS_BACK_LINKS,
+} from '../../../../constants';
 import { validate } from './validate';
 
 const FIELDS_MAP = {
@@ -49,6 +53,7 @@ export const Departments = ({ stripes }) => {
     <ConsortiaControlledVocabulary
       id="departments"
       canCreate={hasCreatePerm}
+      firstMenu={SETTINGS_BACK_LINKS[SETTINGS.users]}
       actionSuppression={actionSuppression}
       columnMapping={columnMapping}
       formatter={FORMATTER}

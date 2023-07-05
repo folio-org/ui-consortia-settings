@@ -54,6 +54,7 @@ const EditableListMemoized = memo(EditableList);
 export const ConsortiaControlledVocabulary = ({
   columnMapping: columnMappingProp,
   fieldComponents: fieldComponentsProp,
+  firstMenu,
   formatter: formatterProp,
   id,
   label,
@@ -255,6 +256,7 @@ export const ConsortiaControlledVocabulary = ({
       <Pane
         defaultWidth="fill"
         fluidContentWidth
+        firstMenu={firstMenu}
         paneTitle={label}
         paneTitleRef={paneTitleRef}
         id="consortia-controlled-vocabulary-pane"
@@ -299,6 +301,7 @@ ConsortiaControlledVocabulary.defaultProps = {
 ConsortiaControlledVocabulary.propTypes = {
   columnMapping: PropTypes.object,
   fieldComponents: PropTypes.object,
+  firstMenu: PropTypes.element,
   formatter: PropTypes.object,
   id: PropTypes.string,
   label: PropTypes.string,

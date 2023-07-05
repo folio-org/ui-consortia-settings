@@ -7,6 +7,10 @@ import {
   HOLDINGS_NOTE_TYPES_API,
   RECORD_SOURCE,
 } from '../../../../../../constants';
+import {
+  SETTINGS,
+  SETTINGS_BACK_LINKS,
+} from '../../../../constants';
 
 const ITEM_TEMPLATE = { source: RECORD_SOURCE.LOCAL };
 const FIELDS_MAP = {
@@ -28,6 +32,7 @@ export const HoldingsNoteTypes = () => {
   return (
     <ConsortiaControlledVocabulary
       id="holdings-note-types"
+      firstMenu={SETTINGS_BACK_LINKS[SETTINGS.inventory]}
       columnMapping={COLUMN_MAPPING}
       label={intl.formatMessage({ id: 'ui-inventory.holdingsNoteTypes' })}
       path={HOLDINGS_NOTE_TYPES_API}

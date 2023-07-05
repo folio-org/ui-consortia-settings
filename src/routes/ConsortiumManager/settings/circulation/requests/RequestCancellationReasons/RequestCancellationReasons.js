@@ -5,6 +5,10 @@ import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 
 import { ConsortiaControlledVocabulary } from '../../../../../../components';
 import { CANCELLATION_REASONS_API } from '../../../../../../constants';
+import {
+  SETTINGS,
+  SETTINGS_BACK_LINKS,
+} from '../../../../constants';
 
 const FIELDS_MAP = {
   name: 'name',
@@ -35,6 +39,7 @@ export const RequestCancellationReasons = () => {
     <ConsortiaControlledVocabulary
       id="request-cancellation-reasons"
       columnMapping={COLUMN_MAPPING}
+      firstMenu={SETTINGS_BACK_LINKS[SETTINGS.circulation]}
       label={intl.formatMessage({ id: 'ui-circulation.settings.cancelReasons.label' })}
       path={CANCELLATION_REASONS_API}
       records="cancellationReasons"

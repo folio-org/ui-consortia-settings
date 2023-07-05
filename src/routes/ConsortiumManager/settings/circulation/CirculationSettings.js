@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { stripesShape } from '@folio/stripes/core';
 import { Settings } from '@folio/stripes/smart-components';
 
+import { MODULE_ROOT_ROUTE } from '../../../../constants';
 import { RequestCancellationReasons } from './requests';
 
 const sections = [
@@ -25,6 +26,7 @@ const CirculationSettings = (props) => {
       {...props}
       sections={sections}
       paneTitle={<FormattedMessage id="ui-circulation.settings.index.paneTitle" />}
+      paneBackLink={MODULE_ROOT_ROUTE}
     />
   );
 };

@@ -7,6 +7,10 @@ import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 
 import { ConsortiaControlledVocabulary } from '../../../../../../components';
 import { PATRON_GROUPS_API } from '../../../../../../constants';
+import {
+  SETTINGS,
+  SETTINGS_BACK_LINKS,
+} from '../../../../constants';
 
 const FIELDS_MAP = {
   group: 'group',
@@ -38,6 +42,7 @@ export const PatronGroups = () => {
   return (
     <ConsortiaControlledVocabulary
       id="patrongroups"
+      firstMenu={SETTINGS_BACK_LINKS[SETTINGS.users]}
       columnMapping={COLUMN_MAPPING}
       label={intl.formatMessage({ id: 'ui-users.information.patronGroups' })}
       path={PATRON_GROUPS_API}

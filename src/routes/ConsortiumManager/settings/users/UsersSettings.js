@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { stripesShape } from '@folio/stripes/core';
 import { Settings } from '@folio/stripes/smart-components';
 
+import { MODULE_ROOT_ROUTE } from '../../../../constants';
 import {
   Departments,
   PatronGroups,
@@ -42,6 +43,7 @@ const UsersSettings = (props) => {
       {...props}
       sections={sections}
       paneTitle={<FormattedMessage id="ui-users.settings.label" />}
+      paneBackLink={MODULE_ROOT_ROUTE}
     />
   );
 };
