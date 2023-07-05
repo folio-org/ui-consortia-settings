@@ -4,7 +4,10 @@ import { FormattedMessage } from 'react-intl';
 import { stripesShape } from '@folio/stripes/core';
 import { Settings } from '@folio/stripes/smart-components';
 
-import { PermissionSets } from './general';
+import {
+  PatronGroups,
+  PermissionSets,
+} from './general';
 
 const sections = [
   {
@@ -15,6 +18,12 @@ const sections = [
         label: <FormattedMessage id="ui-users.settings.permissionSet" />,
         component: PermissionSets,
         perm: 'ui-users.settings.permsets.view',
+      },
+      {
+        route: 'groups',
+        label: <FormattedMessage id="ui-users.settings.patronGroups" />,
+        component: PatronGroups,
+        perm: 'ui-users.settings.usergroups.view',
       },
     ], ['label']),
   },

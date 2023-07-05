@@ -9,6 +9,16 @@
   "errors.permissionSets.load.common": "Could not load permission sets.",
   "errors.permissionsRequired": "User does not have required permissions.",
 
+  "consortiumManager.all": "All",
+  "consortiumManager.controlledVocab.column.memberLibraries": "Member libraries",
+  "consortiumManager.controlledVocab.common.termCreated": "<b>{term}</b> was successfully <b>created</b> for <b>{members}</b> {count, select, 1 {library} other {libraries}}",
+  "consortiumManager.controlledVocab.common.termDeleted": "<b>{term}</b> was successfully <b>deleted</b> for <b>{members}</b> {count, select, 1 {library} other {libraries}}",
+  "consortiumManager.controlledVocab.common.termUpdated": "<b>{term}</b> was successfully <b>updated</b> for <b>{members}</b> {count, select, 1 {library} other {libraries}}",
+  "consortiumManager.controlledVocab.patronGroups.cannotDeleteTermHeader": "Cannot delete the patron group",
+  "consortiumManager.controlledVocab.patronGroups.cannotDeleteTermMessage": "This patron group cannot be deleted, as it is in use by one or more records.",
+  "consortiumManager.controlledVocab.patronGroups.deleteEntry": "Delete patron group",
+  "consortiumManager.controlledVocab.patronGroups.termDeleted": "The patron group <b>{term}</b> was successfully <b>deleted</b>",
+  "consortiumManager.controlledVocab.patronGroups.termWillBeDeleted": "The patron group <b>{term}</b> will be <b>deleted.</b>",
   "consortiumManager.findMember.trigger.label": "Select members",
   "consortiumManager.findMember.modal.aria.search": "Search members",
   "consortiumManager.findMember.modal.aria.select": "Select member",
@@ -49,6 +59,8 @@
   "settings.membership.list.termDeleted": "The member <b>{term}</b> was successfully <b>deleted</b>",
   "settings.membership.list.termWillBeDeleted": "The member <b>{term}</b> will be <b>deleted.</b>",
   "settings.membership.objectLabel": "Address",
+
+  "share": "Share",
 
   "switchActiveAffiliation.userDropdown.label": "Switch active affiliation",
   "switchActiveAffiliation.modal.heading": "Select affiliation",
