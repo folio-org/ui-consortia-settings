@@ -13,6 +13,7 @@ import {
   ContributorTypes,
   Formats,
   InstanceNoteTypes,
+  InstanceStatusTypes,
 } from './instances';
 
 const sections = [
@@ -48,6 +49,12 @@ const sections = [
         label: <FormattedMessage id="ui-inventory.instanceNoteTypes" />,
         component: InstanceNoteTypes,
         perm: 'ui-inventory.settings.instance-note-types',
+      },
+      {
+        route: 'instanceStatusTypes',
+        label: <FormattedMessage id="ui-inventory.instanceStatusTypes" />,
+        component: InstanceStatusTypes,
+        perm: 'ui-inventory.settings.instance-statuses',
       },
     ],
   },
