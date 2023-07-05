@@ -15,6 +15,9 @@ import {
   InstanceNoteTypes,
   InstanceStatusTypes,
 } from './instances';
+import {
+  ItemNoteTypes,
+} from './items';
 
 const sections = [
   {
@@ -77,7 +80,14 @@ const sections = [
   },
   {
     label: <FormattedMessage id="ui-inventory.items" />,
-    pages: [],
+    pages: [
+      {
+        route: 'itemNoteTypes',
+        label: <FormattedMessage id="ui-inventory.itemNoteTypes" />,
+        component: ItemNoteTypes,
+        perm: 'ui-inventory.settings.item-note-types',
+      },
+    ],
   },
   {
     label: <FormattedMessage id="ui-inventory.instanceHoldingsItem" />,
