@@ -12,6 +12,7 @@ import {
   ClassificationTypes,
   ContributorTypes,
   Formats,
+  InstanceNoteTypes,
 } from './instances';
 
 const sections = [
@@ -41,6 +42,12 @@ const sections = [
         label: <FormattedMessage id="ui-inventory.formats" />,
         component: Formats,
         perm: 'ui-inventory.settings.instance-formats',
+      },
+      {
+        route: 'instanceNoteTypes',
+        label: <FormattedMessage id="ui-inventory.instanceNoteTypes" />,
+        component: InstanceNoteTypes,
+        perm: 'ui-inventory.settings.instance-note-types',
       },
     ],
   },
