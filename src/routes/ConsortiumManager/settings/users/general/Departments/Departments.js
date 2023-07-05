@@ -19,6 +19,7 @@ const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
 const FORMATTER = {
   numberOfObjects: item => item.usageNumber || <NoValue />,
 };
+const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.departments');
 
 const getColumnMapping = ({ intl }) => ({
   [FIELDS_MAP.name]: <FormattedMessage id="ui-users.settings.departments.name" />,
@@ -54,7 +55,7 @@ export const Departments = ({ stripes }) => {
       label={intl.formatMessage({ id: 'ui-users.information.patronGroups' })}
       path={DEPARTMENTS_API}
       records="departments"
-      translations={getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.departments')}
+      translations={TRANSLATIONS}
       validate={validate}
       visibleFields={VISIBLE_FIELDS}
     />

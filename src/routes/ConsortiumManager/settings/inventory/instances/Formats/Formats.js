@@ -10,6 +10,7 @@ import {
 } from '../../../../../../constants';
 import { validateNameAndCodeRequired } from '../../../../utils';
 
+const ITEM_TEMPLATE = { source: RECORD_SOURCE.LOCAL };
 const FIELDS_MAP = {
   name: 'name',
   code: 'code',
@@ -23,6 +24,7 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.code]: <FormattedMessage id="ui-consortia-settings.code" />,
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
+const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.formats');
 
 const suppress = getSourceSuppressor(RECORD_SOURCE.RDA_CARRIER);
 const actionSuppression = { edit: suppress, delete: suppress };
@@ -37,8 +39,8 @@ export const Formats = () => {
       label={intl.formatMessage({ id: 'ui-inventory.formats' })}
       path={INSTANCE_FORMATS_API}
       records="instanceFormats"
-      translations={getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.formats')}
-      itemTemplate={{ source: RECORD_SOURCE.LOCAL }}
+      translations={TRANSLATIONS}
+      itemTemplate={ITEM_TEMPLATE}
       actionSuppression={actionSuppression}
       readOnlyFields={READONLY_FIELDS}
       validate={validateNameAndCodeRequired}

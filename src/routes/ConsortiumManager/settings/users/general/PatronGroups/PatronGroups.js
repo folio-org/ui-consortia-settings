@@ -21,6 +21,7 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.expirationOffsetInDays]: <FormattedMessage id="ui-users.information.patronGroup.expirationOffset" />,
   [FIELDS_MAP.lastUpdated]: <FormattedMessage id="stripes-smart-components.cv.lastUpdated" />,
 };
+const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.patronGroups');
 
 const isPositiveInteger = (n) => Number.isInteger(Number(n)) && Number.parseInt(n, 10) >= 1;
 const isValidExpirationOffset = (n) => (n ? isPositiveInteger(n) : true);
@@ -41,7 +42,7 @@ export const PatronGroups = () => {
       label={intl.formatMessage({ id: 'ui-users.information.patronGroups' })}
       path={PATRON_GROUPS_API}
       records="usergroups"
-      translations={getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.patronGroups')}
+      translations={TRANSLATIONS}
       validate={validateFields}
       visibleFields={VISIBLE_FIELDS}
     />

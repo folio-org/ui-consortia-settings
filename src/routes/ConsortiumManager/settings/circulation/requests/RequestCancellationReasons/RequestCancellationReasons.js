@@ -6,11 +6,6 @@ import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 import { ConsortiaControlledVocabulary } from '../../../../../../components';
 import { CANCELLATION_REASONS_API } from '../../../../../../constants';
 
-const actionSuppression = {
-  edit: () => false,
-  delete: reason => reason.requiresAdditionalInformation,
-};
-
 const FIELDS_MAP = {
   name: 'name',
   description: 'description',
@@ -26,6 +21,12 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.description]: <FormattedMessage id="ui-circulation.settings.cancelReasons.descriptionInternal" />,
   [FIELDS_MAP.publicDescription]: <FormattedMessage id="ui-circulation.settings.cancelReasons.descriptionPublic" />,
 };
+const TRANSLATIONS = getControlledVocabTranslations('ui-circulation.settings.cancelReasons');
+
+const actionSuppression = {
+  edit: () => false,
+  delete: reason => reason.requiresAdditionalInformation,
+};
 
 export const RequestCancellationReasons = () => {
   const intl = useIntl();
@@ -37,7 +38,7 @@ export const RequestCancellationReasons = () => {
       label={intl.formatMessage({ id: 'ui-circulation.settings.cancelReasons.label' })}
       path={CANCELLATION_REASONS_API}
       records="cancellationReasons"
-      translations={getControlledVocabTranslations('ui-circulation.settings.cancelReasons')}
+      translations={TRANSLATIONS}
       actionSuppression={actionSuppression}
       visibleFields={VISIBLE_FIELDS}
     />

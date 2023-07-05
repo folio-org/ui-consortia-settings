@@ -9,6 +9,7 @@ import {
   RECORD_SOURCE,
 } from '../../../../../../constants';
 
+const ITEM_TEMPLATE = { source: RECORD_SOURCE.LOCAL };
 const FIELDS_MAP = {
   name: 'name',
   source: 'source',
@@ -20,6 +21,7 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.name]: <FormattedMessage id="ui-inventory.name" />,
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
+const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.classificationTypes');
 
 const suppress = getSourceSuppressor(RECORD_SOURCE.FOLIO);
 const actionSuppression = { edit: suppress, delete: suppress };
@@ -34,8 +36,8 @@ export const ClassificationTypes = () => {
       label={intl.formatMessage({ id: 'ui-inventory.classificationIdentifierTypes' })}
       path={CLASSIFICATION_TYPES_API}
       records="classificationTypes"
-      translations={getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.classificationTypes')}
-      itemTemplate={{ source: RECORD_SOURCE.LOCAL }}
+      translations={TRANSLATIONS}
+      itemTemplate={ITEM_TEMPLATE}
       actionSuppression={actionSuppression}
       readOnlyFields={READONLY_FIELDS}
       visibleFields={VISIBLE_FIELDS}

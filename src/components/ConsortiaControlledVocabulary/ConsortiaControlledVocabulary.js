@@ -47,6 +47,8 @@ import { renderLastUpdated } from './renderLastUpdated';
 // eslint-disable-next-line prefer-promise-reject-errors
 const safeReject = () => Promise.reject({});
 
+const CREATE_BUTTON_LABEL = <FormattedMessage id="stripes-core.button.new" />;
+
 const EditableListMemoized = memo(EditableList);
 
 export const ConsortiaControlledVocabulary = ({
@@ -261,7 +263,7 @@ export const ConsortiaControlledVocabulary = ({
           <EditableListMemoized
             formType="final-form"
             label={label}
-            createButtonLabel={<FormattedMessage id="stripes-core.button.new" />}
+            createButtonLabel={CREATE_BUTTON_LABEL}
             contentData={entries}
             totalCount={totalRecords}
             fieldComponents={fieldComponents}

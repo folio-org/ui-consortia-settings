@@ -8,6 +8,7 @@ import {
   RECORD_SOURCE,
 } from '../../../../../../constants';
 
+const ITEM_TEMPLATE = { source: RECORD_SOURCE.LOCAL };
 const FIELDS_MAP = {
   name: 'name',
   source: 'source',
@@ -19,6 +20,7 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.name]: <FormattedMessage id="ui-inventory.name" />,
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
+const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.alternativeTitleTypes');
 
 export const AlternativeTitleTypes = () => {
   const intl = useIntl();
@@ -30,8 +32,8 @@ export const AlternativeTitleTypes = () => {
       label={intl.formatMessage({ id: 'ui-inventory.alternativeTitleTypes' })}
       path={ALTERNATIVE_TITLE_TYPES_API}
       records="alternativeTitleTypes"
-      translations={getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.alternativeTitleTypes')}
-      itemTemplate={{ source: RECORD_SOURCE.LOCAL }}
+      translations={TRANSLATIONS}
+      itemTemplate={ITEM_TEMPLATE}
       readOnlyFields={READONLY_FIELDS}
       visibleFields={VISIBLE_FIELDS}
     />
