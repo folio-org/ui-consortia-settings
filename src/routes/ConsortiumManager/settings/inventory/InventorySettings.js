@@ -19,6 +19,7 @@ import {
 import {
   ItemNoteTypes,
   LoanTypes,
+  MaterialTypes,
 } from './items';
 
 const sections = [
@@ -94,6 +95,12 @@ const sections = [
         label: <FormattedMessage id="ui-inventory.loanTypes" />,
         component: LoanTypes,
         perm: 'ui-inventory.settings.loantypes',
+      },
+      {
+        route: 'materialtypes',
+        label: <FormattedMessage id="ui-inventory.materialTypes" />,
+        component: MaterialTypes,
+        perm: 'ui-inventory.settings.materialtypes',
       },
     ],
   },
