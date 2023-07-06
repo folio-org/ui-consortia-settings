@@ -107,6 +107,11 @@
   "consortiumManager.controlledVocab.statisticalCodeTypes.deleteEntry": "Delete statistical code type",
   "consortiumManager.controlledVocab.statisticalCodeTypes.termDeleted": "The statistical code type <b>{term}</b> was successfully <b>deleted</b>.",
   "consortiumManager.controlledVocab.statisticalCodeTypes.termWillBeDeleted": "The statistical code type <b>{term}</b> will be <b>deleted</b>.",
+  "consortiumManager.controlledVocab.URLrelationship.cannotDeleteTermHeader": "Cannot delete the URL relationship term",
+  "consortiumManager.controlledVocab.URLrelationship.cannotDeleteTermMessage": "This URL relationship term cannot be deleted, as it is in use by one or more records.",
+  "consortiumManager.controlledVocab.URLrelationship.deleteEntry": "Delete URL relationship term",
+  "consortiumManager.controlledVocab.URLrelationship.termDeleted": "The URL relationship term <b>{term}</b> was successfully <b>deleted</b>.",
+  "consortiumManager.controlledVocab.URLrelationship.termWillBeDeleted": "The URL relationship term <b>{term}</b> will be <b>deleted</b>.",
 
   "consortiumManager.findMember.trigger.label": "Select members",
   "consortiumManager.findMember.modal.aria.search": "Search members",

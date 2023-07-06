@@ -22,6 +22,7 @@ import {
 } from './instances';
 import {
   StatisticalCodeTypes,
+  URLRelationship,
 } from './instances-holdings-items';
 import {
   ItemNoteTypes,
@@ -143,6 +144,12 @@ const sections = [
         label: <FormattedMessage id="ui-inventory.statisticalCodeTypes" />,
         component: StatisticalCodeTypes,
         perm: 'ui-inventory.settings.statistical-code-types',
+      },
+      {
+        route: 'URLrelationship',
+        label: <FormattedMessage id="ui-inventory.URLrelationship" />,
+        component: URLRelationship,
+        perm: 'ui-inventory.settings.electronic-access-relationships',
       },
     ],
   },

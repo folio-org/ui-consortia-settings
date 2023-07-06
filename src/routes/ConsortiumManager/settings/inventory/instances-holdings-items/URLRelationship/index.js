@@ -1,0 +1,1 @@
+export { URLRelationship } from './URLRelationship';

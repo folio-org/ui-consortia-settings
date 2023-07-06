@@ -16,6 +16,7 @@ export const CONSORTIA_USER_TENANTS_API = 'user-tenants';
 export const CONTRIBUTOR_TYPES_API = 'contributor-types';
 export const DATA_EXPORT_API = 'data-export';
 export const DEPARTMENTS_API = 'departments';
+export const ELECTRONIC_ACCESS_RELATIONSHIPS_API = 'electronic-access-relationships';
 export const HOLDINGS_NOTE_TYPES_API = 'holdings-note-types';
 export const HOLDINGS_TYPES_API = 'holdings-types';
 export const IDENTIFIERS_TYPES_API = 'identifier-types';
