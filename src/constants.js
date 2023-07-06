@@ -22,6 +22,7 @@ export const IDENTIFIERS_TYPES_API = 'identifier-types';
 export const INSTANCE_FORMATS_API = 'instance-formats';
 export const INSTANCE_NOTE_TYPES_API = 'instance-note-types';
 export const INSTANCE_STATUSES_API = 'instance-statuses';
+export const INSTANCE_TYPES_API = 'instance-types';
 export const ITEM_NOTE_TYPES_API = 'item-note-types';
 export const LOAN_TYPES_API = 'loan-types';
 export const MATERIAL_TYPES_API = 'material-types';

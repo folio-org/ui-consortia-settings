@@ -7,3 +7,4 @@ export { InstanceStatusTypes } from './InstanceStatusTypes';
 export { ModesOfIssuance } from './ModesOfIssuance';
 export { NatureOfContentTerms } from './NatureOfContentTerms';
 export { ResourceIdentifierTypes } from './ResourceIdentifierTypes';
+export { ResourceTypes } from './ResourceTypes';

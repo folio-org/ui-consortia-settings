@@ -18,6 +18,7 @@ import {
   ModesOfIssuance,
   NatureOfContentTerms,
   ResourceIdentifierTypes,
+  ResourceTypes,
 } from './instances';
 import {
   ItemNoteTypes,
@@ -82,6 +83,12 @@ const sections = [
         label: <FormattedMessage id="ui-inventory.resourceIdentifierTypes" />,
         component: ResourceIdentifierTypes,
         perm: 'ui-inventory.settings.identifier-types',
+      },
+      {
+        route: 'resourcetypes',
+        label: <FormattedMessage id="ui-inventory.resourceTypes" />,
+        component: ResourceTypes,
+        perm: 'ui-inventory.settings.instance-types',
       },
     ],
   },

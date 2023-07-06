@@ -97,6 +97,11 @@
   "consortiumManager.controlledVocab.resourceIdentifierTypes.deleteEntry": "Delete resource identifier type",
   "consortiumManager.controlledVocab.resourceIdentifierTypes.termDeleted": "The resource identifier type <b>{term}</b> was successfully <b>deleted</b>.",
   "consortiumManager.controlledVocab.resourceIdentifierTypes.termWillBeDeleted": "The resource identifier type <b>{term}</b> will be <b>deleted</b>.",
+  "consortiumManager.controlledVocab.resourceTypes.cannotDeleteTermHeader": "Cannot delete the resource type",
+  "consortiumManager.controlledVocab.resourceTypes.cannotDeleteTermMessage": "This resource type cannot be deleted, as it is in use by one or more records.",
+  "consortiumManager.controlledVocab.resourceTypes.deleteEntry": "Delete resource type",
+  "consortiumManager.controlledVocab.resourceTypes.termDeleted": "The resource type <b>{term}</b> was successfully <b>deleted</b>.",
+  "consortiumManager.controlledVocab.resourceTypes.termWillBeDeleted": "The resource type <b>{term}</b> will be <b>deleted</b>.",
 
   "consortiumManager.findMember.trigger.label": "Select members",
   "consortiumManager.findMember.modal.aria.search": "Search members",
