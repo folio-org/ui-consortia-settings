@@ -18,6 +18,7 @@ import {
 } from './instances';
 import {
   ItemNoteTypes,
+  LoanTypes,
 } from './items';
 
 const sections = [
@@ -87,6 +88,12 @@ const sections = [
         label: <FormattedMessage id="ui-inventory.itemNoteTypes" />,
         component: ItemNoteTypes,
         perm: 'ui-inventory.settings.item-note-types',
+      },
+      {
+        route: 'loantypes',
+        label: <FormattedMessage id="ui-inventory.loanTypes" />,
+        component: LoanTypes,
+        perm: 'ui-inventory.settings.loantypes',
       },
     ],
   },

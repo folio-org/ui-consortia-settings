@@ -22,6 +22,7 @@ export const INSTANCE_FORMATS_API = 'instance-formats';
 export const INSTANCE_NOTE_TYPES_API = 'instance-note-types';
 export const INSTANCE_STATUSES_API = 'instance-statuses';
 export const ITEM_NOTE_TYPES_API = 'item-note-types';
+export const LOAN_TYPES_API = 'loan-types';
 export const METADATA_PROVIDER_API = 'metadata-provider';
 export const PATRON_GROUPS_API = 'groups';
 /*  */
