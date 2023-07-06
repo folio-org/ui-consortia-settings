@@ -16,6 +16,7 @@ import {
   InstanceNoteTypes,
   InstanceStatusTypes,
   ModesOfIssuance,
+  NatureOfContentTerms,
 } from './instances';
 import {
   ItemNoteTypes,
@@ -68,6 +69,12 @@ const sections = [
         label: <FormattedMessage id="ui-inventory.modesOfIssuance" />,
         component: ModesOfIssuance,
         perm: 'ui-inventory.settings.modes-of-issuance',
+      },
+      {
+        route: 'natureOfContentTerms',
+        label: <FormattedMessage id="ui-inventory.natureOfContentTerms" />,
+        component: NatureOfContentTerms,
+        perm: 'ui-inventory.settings.nature-of-content-terms',
       },
     ],
   },

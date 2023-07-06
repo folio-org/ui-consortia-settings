@@ -5,3 +5,4 @@ export { Formats } from './Formats';
 export { InstanceNoteTypes } from './InstanceNoteTypes';
 export { InstanceStatusTypes } from './InstanceStatusTypes';
 export { ModesOfIssuance } from './ModesOfIssuance';
+export { NatureOfContentTerms } from './NatureOfContentTerms';

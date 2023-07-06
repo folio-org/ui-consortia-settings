@@ -26,6 +26,7 @@ export const LOAN_TYPES_API = 'loan-types';
 export const MATERIAL_TYPES_API = 'material-types';
 export const METADATA_PROVIDER_API = 'metadata-provider';
 export const MODES_OF_ISSUANCE_API = 'modes-of-issuance';
+export const NATURE_OF_CONTENT_TERMS_API = 'nature-of-content-terms';
 export const PATRON_GROUPS_API = 'groups';
 /*  */
 
