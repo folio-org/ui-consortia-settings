@@ -18,6 +18,7 @@ export const DATA_EXPORT_API = 'data-export';
 export const DEPARTMENTS_API = 'departments';
 export const HOLDINGS_NOTE_TYPES_API = 'holdings-note-types';
 export const HOLDINGS_TYPES_API = 'holdings-types';
+export const IDENTIFIERS_TYPES_API = 'identifier-types';
 export const INSTANCE_FORMATS_API = 'instance-formats';
 export const INSTANCE_NOTE_TYPES_API = 'instance-note-types';
 export const INSTANCE_STATUSES_API = 'instance-statuses';
