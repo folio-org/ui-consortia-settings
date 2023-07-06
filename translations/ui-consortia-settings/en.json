@@ -102,6 +102,11 @@
   "consortiumManager.controlledVocab.resourceTypes.deleteEntry": "Delete resource type",
   "consortiumManager.controlledVocab.resourceTypes.termDeleted": "The resource type <b>{term}</b> was successfully <b>deleted</b>.",
   "consortiumManager.controlledVocab.resourceTypes.termWillBeDeleted": "The resource type <b>{term}</b> will be <b>deleted</b>.",
+  "consortiumManager.controlledVocab.statisticalCodeTypes.cannotDeleteTermHeader": "Cannot delete the statistical code type",
+  "consortiumManager.controlledVocab.statisticalCodeTypes.cannotDeleteTermMessage": "This statistical code type cannot be deleted, as it is in use by one or more records.",
+  "consortiumManager.controlledVocab.statisticalCodeTypes.deleteEntry": "Delete statistical code type",
+  "consortiumManager.controlledVocab.statisticalCodeTypes.termDeleted": "The statistical code type <b>{term}</b> was successfully <b>deleted</b>.",
+  "consortiumManager.controlledVocab.statisticalCodeTypes.termWillBeDeleted": "The statistical code type <b>{term}</b> will be <b>deleted</b>.",
 
   "consortiumManager.findMember.trigger.label": "Select members",
   "consortiumManager.findMember.modal.aria.search": "Search members",

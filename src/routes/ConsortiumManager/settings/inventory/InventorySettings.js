@@ -21,6 +21,9 @@ import {
   ResourceTypes,
 } from './instances';
 import {
+  StatisticalCodeTypes,
+} from './instances-holdings-items';
+import {
   ItemNoteTypes,
   LoanTypes,
   MaterialTypes,
@@ -134,7 +137,14 @@ const sections = [
   },
   {
     label: <FormattedMessage id="ui-inventory.instanceHoldingsItem" />,
-    pages: [],
+    pages: [
+      {
+        route: 'statisticalCodeTypes',
+        label: <FormattedMessage id="ui-inventory.statisticalCodeTypes" />,
+        component: StatisticalCodeTypes,
+        perm: 'ui-inventory.settings.statistical-code-types',
+      },
+    ],
   },
 ];
 
