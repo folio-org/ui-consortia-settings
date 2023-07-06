@@ -15,6 +15,7 @@ import {
   Formats,
   InstanceNoteTypes,
   InstanceStatusTypes,
+  ModesOfIssuance,
 } from './instances';
 import {
   ItemNoteTypes,
@@ -61,6 +62,12 @@ const sections = [
         label: <FormattedMessage id="ui-inventory.instanceStatusTypes" />,
         component: InstanceStatusTypes,
         perm: 'ui-inventory.settings.instance-statuses',
+      },
+      {
+        route: 'modesOfIssuance',
+        label: <FormattedMessage id="ui-inventory.modesOfIssuance" />,
+        component: ModesOfIssuance,
+        perm: 'ui-inventory.settings.modes-of-issuance',
       },
     ],
   },
