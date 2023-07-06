@@ -1,2 +1,2 @@
 export { StatisticalCodeTypes } from './StatisticalCodeTypes';
-export { URLRelationship } from './URLRelationship';
+export { URLRelationships } from './URLRelationships';

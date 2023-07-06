@@ -26,7 +26,7 @@ const COLUMN_MAPPING = {
 };
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.URLrelationship');
 
-export const URLRelationship = () => {
+export const URLRelationships = () => {
   const intl = useIntl();
 
   return (
