@@ -57,6 +57,7 @@ export const ConsortiaControlledVocabulary = ({
   firstMenu,
   formatter: formatterProp,
   id,
+  isLoading: isLoadingProp,
   label,
   path,
   primaryField: primaryFieldProp,
@@ -249,7 +250,7 @@ export const ConsortiaControlledVocabulary = ({
     'shared',
   ], [visibleFieldsProp]);
 
-  const isLoading = isEntriesFetching || isUsersLoading;
+  const isLoading = isLoadingProp || isEntriesFetching || isUsersLoading;
 
   return (
     <Paneset id={panesetId}>
@@ -304,6 +305,7 @@ ConsortiaControlledVocabulary.propTypes = {
   firstMenu: PropTypes.element,
   formatter: PropTypes.object,
   id: PropTypes.string,
+  isLoading: PropTypes.bool,
   label: PropTypes.string,
   path: PropTypes.string.isRequired,
   primaryField: PropTypes.string,

@@ -5,7 +5,7 @@ import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 import { ConsortiaControlledVocabulary } from '../../../../../../components';
 import {
   RECORD_SOURCE,
-  STATICAL_CODE_TYPES_API,
+  STATISTICAL_CODE_TYPES_API,
 } from '../../../../../../constants';
 import {
   SETTINGS,
@@ -35,7 +35,7 @@ export const StatisticalCodeTypes = () => {
       firstMenu={SETTINGS_BACK_LINKS[SETTINGS.inventory]}
       columnMapping={COLUMN_MAPPING}
       label={intl.formatMessage({ id: 'ui-inventory.statisticalCodeTypes' })}
-      path={STATICAL_CODE_TYPES_API}
+      path={STATISTICAL_CODE_TYPES_API}
       records="statisticalCodeTypes"
       translations={TRANSLATIONS}
       itemTemplate={ITEM_TEMPLATE}

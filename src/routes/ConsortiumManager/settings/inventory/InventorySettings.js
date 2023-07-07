@@ -21,6 +21,7 @@ import {
   ResourceTypes,
 } from './instances';
 import {
+  StatisticalCodes,
   StatisticalCodeTypes,
   URLRelationships,
 } from './instances-holdings-items';
@@ -144,6 +145,12 @@ const sections = [
         label: <FormattedMessage id="ui-inventory.statisticalCodeTypes" />,
         component: StatisticalCodeTypes,
         perm: 'ui-inventory.settings.statistical-code-types',
+      },
+      {
+        route: 'statistical-code-settings',
+        label: <FormattedMessage id="ui-inventory.statisticalCodes" />,
+        component: StatisticalCodes,
+        perm: 'ui-inventory.settings.statistical-codes',
       },
       {
         route: 'url-relationships',
