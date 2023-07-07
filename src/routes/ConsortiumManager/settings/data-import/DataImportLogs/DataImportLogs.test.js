@@ -3,6 +3,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
+import { MemoryRouter } from 'react-router-dom';
 
 import { useShowCallout } from '@folio/stripes-acq-components';
 
@@ -28,7 +29,9 @@ const queryClient = new QueryClient();
 const wrapper = ({ children }) => (
   <QueryClientProvider client={queryClient}>
     <ConsortiumManagerContextProviderMock>
-      {children}
+      <MemoryRouter>
+        {children}
+      </MemoryRouter>
     </ConsortiumManagerContextProviderMock>
   </QueryClientProvider>
 );
