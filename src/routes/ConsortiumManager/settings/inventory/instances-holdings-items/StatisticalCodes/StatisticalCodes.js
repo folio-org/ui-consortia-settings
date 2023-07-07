@@ -4,19 +4,16 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 
 import { ConsortiaControlledVocabulary } from '../../../../../../components';
-import {
-  RECORD_SOURCE,
-  STATISTICAL_CODES_API,
-} from '../../../../../../constants';
+import { STATISTICAL_CODES_API } from '../../../../../../constants';
 import {
   SETTINGS,
   SETTINGS_BACK_LINKS,
 } from '../../../../constants';
+import { DEFAULT_ITEM_TEMPLATE } from '../../constants';
 import { useStatisticalCodeTypes } from '../hooks';
 import { FieldStatisticalCodeType } from './FieldStatisticalCodeType';
 import { validate } from './validate';
 
-const ITEM_TEMPLATE = { source: RECORD_SOURCE.LOCAL };
 const FIELDS_MAP = {
   name: 'name',
   code: 'code',
@@ -77,7 +74,7 @@ export const StatisticalCodes = () => {
       path={STATISTICAL_CODES_API}
       records="statisticalCodes"
       translations={TRANSLATIONS}
-      itemTemplate={ITEM_TEMPLATE}
+      itemTemplate={DEFAULT_ITEM_TEMPLATE}
       readOnlyFields={READONLY_FIELDS}
       sortby={FIELDS_MAP.code}
       validate={validate}

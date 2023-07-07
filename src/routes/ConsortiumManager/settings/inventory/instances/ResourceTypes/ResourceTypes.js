@@ -13,8 +13,8 @@ import {
   SETTINGS_BACK_LINKS,
 } from '../../../../constants';
 import { validateNameAndCodeRequired } from '../../../../utils';
+import { DEFAULT_ITEM_TEMPLATE } from '../../constants';
 
-const ITEM_TEMPLATE = { source: RECORD_SOURCE.LOCAL };
 const FIELDS_MAP = {
   name: 'name',
   code: 'code',
@@ -46,7 +46,7 @@ export const ResourceTypes = () => {
       records="instanceTypes"
       translations={TRANSLATIONS}
       actionSuppression={actionSuppression}
-      itemTemplate={ITEM_TEMPLATE}
+      itemTemplate={DEFAULT_ITEM_TEMPLATE}
       readOnlyFields={READONLY_FIELDS}
       visibleFields={VISIBLE_FIELDS}
       validate={validateNameAndCodeRequired}

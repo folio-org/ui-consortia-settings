@@ -12,8 +12,8 @@ import {
   SETTINGS,
   SETTINGS_BACK_LINKS,
 } from '../../../../constants';
+import { DEFAULT_ITEM_TEMPLATE } from '../../constants';
 
-const ITEM_TEMPLATE = { source: RECORD_SOURCE.LOCAL };
 const FIELDS_MAP = {
   name: 'name',
   source: 'source',
@@ -42,7 +42,7 @@ export const ModesOfIssuance = () => {
       path={MODES_OF_ISSUANCE_API}
       records="issuanceModes"
       translations={TRANSLATIONS}
-      itemTemplate={ITEM_TEMPLATE}
+      itemTemplate={DEFAULT_ITEM_TEMPLATE}
       actionSuppression={actionSuppression}
       readOnlyFields={READONLY_FIELDS}
       visibleFields={VISIBLE_FIELDS}

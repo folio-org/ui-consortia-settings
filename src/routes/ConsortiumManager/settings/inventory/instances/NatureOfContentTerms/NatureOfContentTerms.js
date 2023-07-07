@@ -12,19 +12,19 @@ import {
   SETTINGS,
   SETTINGS_BACK_LINKS,
 } from '../../../../constants';
+import { DEFAULT_ITEM_TEMPLATE } from '../../constants';
 
-const ITEM_TEMPLATE = { source: RECORD_SOURCE.LOCAL };
 const FIELDS_MAP = {
   name: 'name',
   source: 'source',
   lastUpdated: 'lastUpdated',
 };
-const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
-const READONLY_FIELDS = [FIELDS_MAP.source];
 const COLUMN_MAPPING = {
   [FIELDS_MAP.name]: <FormattedMessage id="ui-inventory.name" />,
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
+const READONLY_FIELDS = [FIELDS_MAP.source];
+const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.natureOfContentTerms');
 
 const suppress = getSourceSuppressor(RECORD_SOURCE.FOLIO);
@@ -42,7 +42,7 @@ export const NatureOfContentTerms = () => {
       path={NATURE_OF_CONTENT_TERMS_API}
       records="natureOfContentTerms"
       translations={TRANSLATIONS}
-      itemTemplate={ITEM_TEMPLATE}
+      itemTemplate={DEFAULT_ITEM_TEMPLATE}
       actionSuppression={actionSuppression}
       readOnlyFields={READONLY_FIELDS}
       visibleFields={VISIBLE_FIELDS}

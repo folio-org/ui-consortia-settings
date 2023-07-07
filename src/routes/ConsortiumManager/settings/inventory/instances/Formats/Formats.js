@@ -13,8 +13,8 @@ import {
   SETTINGS_BACK_LINKS,
 } from '../../../../constants';
 import { validateNameAndCodeRequired } from '../../../../utils';
+import { DEFAULT_ITEM_TEMPLATE } from '../../constants';
 
-const ITEM_TEMPLATE = { source: RECORD_SOURCE.LOCAL };
 const FIELDS_MAP = {
   name: 'name',
   code: 'code',
@@ -45,7 +45,7 @@ export const Formats = () => {
       path={INSTANCE_FORMATS_API}
       records="instanceFormats"
       translations={TRANSLATIONS}
-      itemTemplate={ITEM_TEMPLATE}
+      itemTemplate={DEFAULT_ITEM_TEMPLATE}
       actionSuppression={actionSuppression}
       readOnlyFields={READONLY_FIELDS}
       validate={validateNameAndCodeRequired}

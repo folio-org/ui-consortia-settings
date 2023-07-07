@@ -13,25 +13,25 @@ import {
   SETTINGS_BACK_LINKS,
 } from '../../../../constants';
 import { validateNameAndCodeRequired } from '../../../../utils';
+import { DEFAULT_ITEM_TEMPLATE } from '../../constants';
 
-const ITEM_TEMPLATE = { source: RECORD_SOURCE.LOCAL };
+const suppress = getSourceSuppressor(RECORD_SOURCE.MARC_RELATOR);
+const actionSuppression = { edit: suppress, delete: suppress };
+
 const FIELDS_MAP = {
-  name: 'name',
   code: 'code',
-  source: 'source',
   lastUpdated: 'lastUpdated',
+  name: 'name',
+  source: 'source',
 };
 const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
 const READONLY_FIELDS = [FIELDS_MAP.source];
 const COLUMN_MAPPING = {
-  [FIELDS_MAP.name]: <FormattedMessage id="ui-inventory.name" />,
   [FIELDS_MAP.code]: <FormattedMessage id="ui-consortia-settings.code" />,
+  [FIELDS_MAP.name]: <FormattedMessage id="ui-inventory.name" />,
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.instanceStatusType');
-
-const suppress = getSourceSuppressor(RECORD_SOURCE.MARC_RELATOR);
-const actionSuppression = { edit: suppress, delete: suppress };
 
 export const InstanceStatusTypes = () => {
   const intl = useIntl();
@@ -46,7 +46,7 @@ export const InstanceStatusTypes = () => {
       records="instanceStatuses"
       translations={TRANSLATIONS}
       actionSuppression={actionSuppression}
-      itemTemplate={ITEM_TEMPLATE}
+      itemTemplate={DEFAULT_ITEM_TEMPLATE}
       readOnlyFields={READONLY_FIELDS}
       visibleFields={VISIBLE_FIELDS}
       validate={validateNameAndCodeRequired}

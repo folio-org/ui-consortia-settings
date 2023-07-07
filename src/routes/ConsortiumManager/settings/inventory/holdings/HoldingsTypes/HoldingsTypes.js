@@ -3,16 +3,13 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 
 import { ConsortiaControlledVocabulary } from '../../../../../../components';
-import {
-  HOLDINGS_TYPES_API,
-  RECORD_SOURCE,
-} from '../../../../../../constants';
+import { HOLDINGS_TYPES_API } from '../../../../../../constants';
 import {
   SETTINGS,
   SETTINGS_BACK_LINKS,
 } from '../../../../constants';
+import { DEFAULT_ITEM_TEMPLATE } from '../../constants';
 
-const ITEM_TEMPLATE = { source: RECORD_SOURCE.LOCAL };
 const FIELDS_MAP = {
   name: 'name',
   source: 'source',
@@ -38,7 +35,7 @@ export const HoldingsTypes = () => {
       path={HOLDINGS_TYPES_API}
       records="holdingsTypes"
       translations={TRANSLATIONS}
-      itemTemplate={ITEM_TEMPLATE}
+      itemTemplate={DEFAULT_ITEM_TEMPLATE}
       readOnlyFields={READONLY_FIELDS}
       visibleFields={VISIBLE_FIELDS}
     />
