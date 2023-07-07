@@ -57,7 +57,7 @@ export const Departments = ({ stripes }) => {
       actionSuppression={actionSuppression}
       columnMapping={columnMapping}
       formatter={FORMATTER}
-      label={intl.formatMessage({ id: 'ui-users.information.patronGroups' })}
+      label={intl.formatMessage({ id: 'ui-users.departments' })}
       path={DEPARTMENTS_API}
       records="departments"
       translations={TRANSLATIONS}
