@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { identity, noop } from 'lodash';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -14,7 +14,8 @@ import { PermissionSetDetails } from '../../../../../../temp';
 import { useMemberSelection } from '../../../../hooks';
 import { PermissionSetsActionsMenu } from './PermissionSetsActionsMenu';
 import { PermissionSetsCompare } from './PermissionSetsCompare';
-import { ACTIVE_MEMBER_SEARCH_PARAMS, PERMISSION_SET_ROUTES } from './constants';
+import { PermissionSetsCreate } from './PermissionSetsCreate';
+import { TENANT_ID_SEARCH_PARAMS, PERMISSION_SET_ROUTES } from './constants';
 
 const entryLabel = <FormattedMessage id="ui-users.permissionSet" />;
 const paneTitle = <FormattedMessage id="ui-users.settings.permissionSet" />;
@@ -24,6 +25,8 @@ export const PermissionSets = (props) => {
   const { history, location, match } = props;
   const intl = useIntl();
   const showCallout = useShowCallout();
+
+  const isPermissionsUpdated = location.state?.isUpdated;
 
   const {
     activeMember,
@@ -52,6 +55,7 @@ export const PermissionSets = (props) => {
 
   const {
     isFetching,
+    refetch: refetchPermissions,
     permissions: contentData,
   } = useTenantPermissions(
     {
@@ -77,6 +81,14 @@ export const PermissionSets = (props) => {
     contentData.find(({ id }) => id === selectedItemId)
   ), [contentData, selectedItemId]);
 
+  useEffect(() => {
+    if (isPermissionsUpdated) {
+      refetchPermissions();
+    }
+  }, [isPermissionsUpdated, refetchPermissions]);
+
+  const searchParams = activeMember ? `?${TENANT_ID_SEARCH_PARAMS}=${activeMember}` : '';
+
   const rowFilter = (
     <Selection
       autoFocus
@@ -91,14 +103,13 @@ export const PermissionSets = (props) => {
 
   const addMenu = (
     <PermissionSetsActionsMenu
-    // TODO: UICONSET-59
-      onCreate={noop}
-    // ^^^^^^^^^^^^^^^^^
+      onCreate={() => {
+        history.push(`${PERMISSION_SET_ROUTES.CREATE}${searchParams}`);
+      }}
       onCompare={() => {
-        const searchParams = activeMember ? `?${ACTIVE_MEMBER_SEARCH_PARAMS}=${activeMember}` : '';
-
         history.push(`${PERMISSION_SET_ROUTES.COMPARE}${searchParams}`);
       }}
+      disabled={!activeMember}
     />
   );
 
@@ -106,13 +117,11 @@ export const PermissionSets = (props) => {
     <EntrySelector
       {...props}
       nameKey={nameKey}
-            // TODO: UICONSET-59
-      editable={false}
+      editable
       onAdd={noop}
-      onEdit={noop}
+      onEdit={() => history.push(`${PERMISSION_SET_ROUTES.EDIT}/${selectedItemId}${searchParams}`)}
       onClone={noop}
       onRemove={noop}
-            // ^^^^^^^^^^^^^^^^^
       onClick={onItemClick}
       addMenu={addMenu}
       contentData={contentData}
@@ -125,6 +134,8 @@ export const PermissionSets = (props) => {
     >
       <Switch>
         <Route exact path={PERMISSION_SET_ROUTES.COMPARE} component={PermissionSetsCompare} />
+        <Route exact path={PERMISSION_SET_ROUTES.CREATE} component={PermissionSetsCreate} />
+        <Route exact path={`${PERMISSION_SET_ROUTES.EDIT}/:id`} component={PermissionSetsCreate} />
       </Switch>
     </EntrySelector>
   );

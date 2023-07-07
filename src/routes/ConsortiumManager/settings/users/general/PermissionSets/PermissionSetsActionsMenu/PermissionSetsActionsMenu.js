@@ -13,6 +13,7 @@ import { IfPermission } from '@folio/stripes/core';
 export const PermissionSetsActionsMenu = ({
   onCreate,
   onCompare,
+  disabled,
 }) => {
   return (
     <Dropdown
@@ -32,11 +33,9 @@ export const PermissionSetsActionsMenu = ({
             <Button
               id="clickable-create-entry"
               onClick={onCreate}
-              // TODO: UICONSET-59
-              disabled
-              // ^^^^^^^^^^^^^^^^^
               buttonStyle="dropdownItem"
               marginBottom0
+              disabled={disabled}
             >
               <Icon size="small" icon="plus-sign">
                 <FormattedMessage id="stripes-components.addNew" />
@@ -64,4 +63,5 @@ export const PermissionSetsActionsMenu = ({
 PermissionSetsActionsMenu.propTypes = {
   onCreate: PropTypes.func.isRequired,
   onCompare: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
