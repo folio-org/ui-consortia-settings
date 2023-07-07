@@ -34,6 +34,21 @@ const COLUMN_MAPPING = {
 };
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.statisticalCodes');
 
+const formatStatisticalCodeTypeId = (statisticalCodeTypes) => (item) => {
+  const record = Array.isArray(statisticalCodeTypes)
+    ? statisticalCodeTypes.find(element => element.id === item.statisticalCodeTypeId)
+    : null;
+
+  return record ? <p>{record.name}</p> : null;
+};
+
+const renderStatisticalCodeTypeField = (statisticalCodeTypes) => ({ fieldProps }) => (
+  <FieldStatisticalCodeType
+    statisticalCodeTypes={statisticalCodeTypes}
+    {...fieldProps}
+  />
+);
+
 export const StatisticalCodes = () => {
   const intl = useIntl();
 
@@ -43,23 +58,11 @@ export const StatisticalCodes = () => {
   } = useStatisticalCodeTypes();
 
   const fieldComponents = useMemo(() => ({
-    // eslint-disable-next-line react/prop-types
-    [FIELDS_MAP.statisticalCodeTypeId]: ({ fieldProps }) => (
-      <FieldStatisticalCodeType
-        statisticalCodeTypes={statisticalCodeTypes}
-        {...fieldProps}
-      />
-    ),
+    [FIELDS_MAP.statisticalCodeTypeId]: renderStatisticalCodeTypeField(statisticalCodeTypes),
   }), [statisticalCodeTypes]);
 
   const formatter = useMemo(() => ({
-    [FIELDS_MAP.statisticalCodeTypeId]: (item) => {
-      const record = Array.isArray(statisticalCodeTypes)
-        ? statisticalCodeTypes.find(element => element.id === item.statisticalCodeTypeId)
-        : null;
-
-      return record ? <p>{record.name}</p> : null;
-    },
+    [FIELDS_MAP.statisticalCodeTypeId]: formatStatisticalCodeTypeId(statisticalCodeTypes),
   }), [statisticalCodeTypes]);
 
   return (
