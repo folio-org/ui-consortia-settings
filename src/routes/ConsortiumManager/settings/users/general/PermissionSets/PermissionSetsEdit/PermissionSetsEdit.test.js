@@ -153,4 +153,10 @@ describe('PermissionSetsEdit', () => {
 
     expect(onCancel).toHaveBeenCalled();
   });
+
+  it('should display loader', () => {
+    const { container } = renderComponent({ isLoading: true });
+
+    expect(container.querySelector('.spinner')).toBeInTheDocument();
+  });
 });
