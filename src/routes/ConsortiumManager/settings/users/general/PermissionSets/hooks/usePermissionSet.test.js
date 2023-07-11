@@ -22,7 +22,7 @@ describe('usePermissionSet', () => {
       tenantId: 'diku',
     }));
 
-    expect(result.current.selectedPermissionSet).toEqual(mockPermission);
+    expect(result.current.permissionsSet).toEqual(mockPermission);
   });
 
   it('should return empty permission set', () => {
@@ -33,6 +33,6 @@ describe('usePermissionSet', () => {
       tenantId: 'diku',
     }));
 
-    expect(result.current.selectedPermissionSet).toEqual({});
+    expect(result.current.permissionsSet).toEqual({});
   });
 });

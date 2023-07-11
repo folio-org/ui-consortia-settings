@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { identity, noop, omit } from 'lodash';
+import { identity, noop } from 'lodash';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Route, Switch } from 'react-router-dom';
-import { useQueryClient } from 'react-query';
 
 import { Selection } from '@folio/stripes/components';
 import { EntrySelector } from '@folio/stripes/smart-components';
@@ -19,18 +18,15 @@ import { PermissionSetsCompare } from './PermissionSetsCompare';
 import { PermissionSetsCreate } from './PermissionSetsCreate';
 import { PermissionSetsEdit } from './PermissionSetsEdit';
 import { TENANT_ID_SEARCH_PARAMS, PERMISSION_SET_ROUTES } from './constants';
-import { usePermissionSet, useTenantPermissionMutations } from './hooks';
 
 const entryLabel = <FormattedMessage id="ui-users.permissionSet" />;
 const paneTitle = <FormattedMessage id="ui-users.settings.permissionSet" />;
 const nameKey = 'displayName';
 
 export const PermissionSets = (props) => {
-  const { history, location, match, stripes } = props;
+  const { history, location, match } = props;
   const intl = useIntl();
-  const search = window.location.search;
   const showCallout = useShowCallout();
-  const queryClient = useQueryClient();
 
   const {
     activeMember,
@@ -41,7 +37,6 @@ export const PermissionSets = (props) => {
     new RegExp(UUID_REGEX).exec(location.pathname)?.[0]
   ));
 
-  const tenantId = useMemo(() => new URLSearchParams(search).get(TENANT_ID_SEARCH_PARAMS), [search]);
   const defaultActiveMember = useMemo(() => {
     return new URLSearchParams(location.search).get(TENANT_ID_SEARCH_PARAMS);
   }, [location.search]);
@@ -50,23 +45,9 @@ export const PermissionSets = (props) => {
     if (defaultActiveMember && defaultActiveMember !== activeMember) {
       setActiveMember(defaultActiveMember);
     }
-  }, [activeMember, defaultActiveMember, setActiveMember]);
-
-  const { isLoading, selectedPermissionSet: initialValues } = usePermissionSet({
-    permissionSetId: selectedItemId,
-    tenantId,
-  });
-
-  const handlePermissionsMutationError = async ({ response }) => {
-    const errorMessageId = 'ui-consortia-settings.consortiumManager.members.permissionSets.create.permissionSet.error';
-
-    const error = await response?.text();
-
-    return showCallout({
-      message: intl.formatMessage({ id: errorMessageId }, { error }),
-      type: 'error',
-    });
-  };
+    // Excluded activeMember from dependencies to prevent infinite loop
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultActiveMember, setActiveMember]);
 
   const handleLogsLoadingError = useCallback(({ response }) => {
     const defaultMessage = intl.formatMessage({ id: 'ui-consortia-settings.errors.permissionSets.load.common' });
@@ -111,78 +92,15 @@ export const PermissionSets = (props) => {
     contentData.find(({ id }) => id === selectedItemId)
   ), [contentData, selectedItemId]);
 
-  const searchParams = activeMember ? `?${TENANT_ID_SEARCH_PARAMS}=${activeMember}` : '';
+  const redirectWithParams = useCallback((path) => {
+    const searchParams = activeMember ? `?${TENANT_ID_SEARCH_PARAMS}=${activeMember}` : '';
 
-  const onCreate = () => {
-    history.push(`${PERMISSION_SET_ROUTES.CREATE}${searchParams}`);
-  };
+    history.push(`${path}${searchParams}`);
+  }, [activeMember, history]);
 
-  const onCompare = () => {
-    history.push(`${PERMISSION_SET_ROUTES.COMPARE}${searchParams}`);
-  };
-
-  const onEdit = () => {
-    history.push(`${PERMISSION_SET_ROUTES.EDIT}/${selectedItemId}${searchParams}`);
-  };
-
-  const onCancel = () => {
-    history.push({
-      pathname: PERMISSION_SET_ROUTES.PERMISSION_SETS,
-      search: `?${TENANT_ID_SEARCH_PARAMS}=${tenantId}`,
-    });
-  };
-
-  const handleSuccess = (permissionName) => {
-    onCancel();
-
-    const messageId = 'ui-consortia-settings.consortiumManager.members.permissionSets.save.permissionSet.success';
-
-    queryClient.invalidateQueries({ tenantId });
-
-    return showCallout({
-      message: intl.formatMessage({ id: messageId }, { permissionName }),
-      type: 'success',
-    });
-  };
-
-  const { createPermission, removePermission, updatePermission } = useTenantPermissionMutations(tenantId, {
-    onError: handlePermissionsMutationError,
-  });
-
-  const onRemove = () => {
-    removePermission(selectedItemId, {
-      onSuccess: () => handleSuccess('remove'),
-    });
-  };
-
-  const getNormalizedPermissionSet = (values) => {
-    const filtered = omit(values, ['childOf', 'grantedTo', 'dummy', 'deprecated']);
-    const permSet = {
-      ...filtered,
-      mutable: true,
-      subPermissions: (values.subPermissions || []).map(p => p.permissionName),
-    };
-
-    return permSet;
-  };
-
-  const onSave = (values) => {
-    return createPermission(getNormalizedPermissionSet(values), {
-      onSuccess: () => handleSuccess(values.displayName),
-    });
-  };
-
-  const onSaveEdit = (values) => {
-    return updatePermission(getNormalizedPermissionSet(values), {
-      onSuccess: () => handleSuccess('update'),
-    });
-  };
-
-  const defaultProps = {
-    onCancel,
-    intl,
-    stripes,
-  };
+  const onCreate = () => redirectWithParams(PERMISSION_SET_ROUTES.CREATE);
+  const onCompare = () => redirectWithParams(PERMISSION_SET_ROUTES.COMPARE);
+  const onEdit = () => redirectWithParams(`${PERMISSION_SET_ROUTES.EDIT}/${selectedItemId}`);
 
   const rowFilter = (
     <Selection
@@ -225,18 +143,8 @@ export const PermissionSets = (props) => {
     >
       <Switch>
         <Route exact path={PERMISSION_SET_ROUTES.COMPARE} component={PermissionSetsCompare} />
-        <Route exact path={PERMISSION_SET_ROUTES.CREATE}>
-          <PermissionSetsCreate {...defaultProps} onSave={onSave} />
-        </Route>
-        <Route exact path={`${PERMISSION_SET_ROUTES.EDIT}/:id`}>
-          <PermissionSetsEdit
-            {...defaultProps}
-            onSave={onSaveEdit}
-            onRemove={onRemove}
-            initialValues={initialValues}
-            isLoading={isLoading}
-          />
-        </Route>
+        <Route exact path={PERMISSION_SET_ROUTES.CREATE} component={PermissionSetsCreate} />
+        <Route exact path={`${PERMISSION_SET_ROUTES.EDIT}/:id`} component={PermissionSetsEdit} />
       </Switch>
     </EntrySelector>
   );

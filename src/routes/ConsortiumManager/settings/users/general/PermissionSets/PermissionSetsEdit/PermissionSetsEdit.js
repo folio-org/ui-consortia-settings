@@ -1,55 +1,37 @@
-import PropTypes from 'prop-types';
+import { useMemo } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 
-import { HasCommand, Layer, Loading } from '@folio/stripes/components';
+import { Loading } from '@folio/stripes/components';
 
-import { PermissionSetForm } from '../../../../../../../temp';
+import { ConsortiumPermissionsSetForm } from '../ConsortiumPermissionsSetForm/ConsortiumPermissionsSetForm';
+import { usePermissionSet, useTenantPermissionMutations } from '../hooks';
+import { TENANT_ID_SEARCH_PARAMS } from '../constants';
 
-export const PermissionSetsEdit = ({
-  onCancel,
-  onRemove,
-  onSave,
-  intl,
-  initialValues,
-  isLoading,
-  stripes,
-}) => {
-  const keyboardCommands = [
-    {
-      name: 'cancel',
-      handler: onCancel,
-      shortcut: 'esc',
-    },
-  ];
+export const PermissionSetsEdit = () => {
+  const location = useLocation();
+  const params = useParams();
+  const tenantId = useMemo(() => new URLSearchParams(location.search).get(TENANT_ID_SEARCH_PARAMS), [location.search]);
+  const permissionSetId = params?.id;
+
+  const { isLoading, permissionsSet } = usePermissionSet({
+    tenantId,
+    permissionSetId,
+  });
+
+  const { removePermission, updatePermission } = useTenantPermissionMutations(tenantId);
+
+  const onSave = (values) => updatePermission((values));
+  const onRemove = () => removePermission(permissionSetId);
 
   if (isLoading) {
     return <Loading />;
   }
 
   return (
-    <HasCommand
-      commands={keyboardCommands}
-      scope={document.body}
-    >
-      <Layer isOpen inRootSet contentLabel="permission-sets-create">
-        <PermissionSetForm
-          intl={intl}
-          stripes={stripes}
-          onSubmit={onSave}
-          onCancel={onCancel}
-          onRemove={onRemove}
-          initialValues={initialValues}
-        />
-      </Layer>
-    </HasCommand>
+    <ConsortiumPermissionsSetForm
+      onSave={onSave}
+      onRemove={onRemove}
+      initialValues={permissionsSet}
+    />
   );
-};
-
-PermissionSetsEdit.propTypes = {
-  intl: PropTypes.object.isRequired,
-  stripes: PropTypes.object.isRequired,
-  onSave: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
-  onRemove: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  initialValues: PropTypes.object.isRequired,
 };

@@ -7,10 +7,11 @@ export const usePermissionSet = ({ permissionSetId, tenantId }) => {
       query: `mutable==true and id==${permissionSetId}`,
       expandSubs: true,
     },
+    permissionId: permissionSetId,
   });
 
   return ({
     isLoading,
-    selectedPermissionSet: permissions[0] || {},
+    permissionsSet: permissions[0] || {},
   });
 };

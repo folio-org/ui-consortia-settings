@@ -7,7 +7,7 @@ import { useTenantKy } from '../useTenantKy';
 const DEFAULT_DATA = [];
 
 export const useTenantPermissions = (params = {}, options = {}) => {
-  const { tenantId, searchParams: _searchParams = {} } = params;
+  const { tenantId, permissionId, searchParams: _searchParams = {} } = params;
 
   const ky = useTenantKy({ tenantId });
   const [namespace] = useNamespace({ key: 'tenant-permissions' });
@@ -22,7 +22,7 @@ export const useTenantPermissions = (params = {}, options = {}) => {
     isLoading,
     data = {},
   } = useQuery(
-    [namespace, tenantId, searchParams],
+    [namespace, tenantId, permissionId],
     ({ signal }) => ky.get('perms/permissions', { searchParams, signal }).json(),
     {
       enabled: Boolean(tenantId),

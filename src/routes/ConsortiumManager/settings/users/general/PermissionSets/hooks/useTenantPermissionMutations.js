@@ -1,6 +1,18 @@
 import { useMutation } from 'react-query';
+import { omit } from 'lodash';
 
 import { useTenantKy } from '../../../../../../../hooks';
+
+const getNormalizedPermissionSet = (values) => {
+  const filtered = omit(values, ['childOf', 'grantedTo', 'dummy', 'deprecated']);
+  const permSet = {
+    ...filtered,
+    mutable: true,
+    subPermissions: (values.subPermissions || []).map(p => p.permissionName),
+  };
+
+  return permSet;
+};
 
 export const useTenantPermissionMutations = (tenantId, options = {}) => {
   const ky = useTenantKy({ tenantId });
@@ -8,7 +20,7 @@ export const useTenantPermissionMutations = (tenantId, options = {}) => {
   const createMutationFn = (permissions = {}) => {
     return ky.post('perms/permissions', {
       json: {
-        ...permissions,
+        ...getNormalizedPermissionSet(permissions),
         mutable: true,
       },
     }).json();
@@ -17,7 +29,7 @@ export const useTenantPermissionMutations = (tenantId, options = {}) => {
   const updateMutationFn = (permissions = {}) => {
     return ky.put(`perms/permissions/${permissions.id}`, {
       json: {
-        ...permissions,
+        ...getNormalizedPermissionSet(permissions),
         mutable: true,
       },
     }).json();

@@ -1,43 +1,21 @@
-import PropTypes from 'prop-types';
+import { useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 
-import { HasCommand, Layer } from '@folio/stripes/components';
+import { ConsortiumPermissionsSetForm } from '../ConsortiumPermissionsSetForm/ConsortiumPermissionsSetForm';
+import { useTenantPermissionMutations } from '../hooks';
+import { TENANT_ID_SEARCH_PARAMS } from '../constants';
 
-import { PermissionSetForm } from '../../../../../../../temp';
+export const PermissionSetsCreate = () => {
+  const location = useLocation();
+  const tenantId = useMemo(() => new URLSearchParams(location.search).get(TENANT_ID_SEARCH_PARAMS), [location.search]);
 
-export const PermissionSetsCreate = ({
-  onSave,
-  onCancel,
-  intl,
-  stripes,
-}) => {
-  const keyboardCommands = [
-    {
-      name: 'cancel',
-      handler: onCancel,
-      shortcut: 'esc',
-    },
-  ];
+  const { createPermission } = useTenantPermissionMutations(tenantId);
+
+  const onSave = (values) => createPermission((values));
 
   return (
-    <HasCommand
-      commands={keyboardCommands}
-      scope={document.body}
-    >
-      <Layer isOpen inRootSet contentLabel="permission-sets-create">
-        <PermissionSetForm
-          intl={intl}
-          stripes={stripes}
-          onSubmit={onSave}
-          onCancel={onCancel}
-        />
-      </Layer>
-    </HasCommand>
+    <ConsortiumPermissionsSetForm
+      onSave={onSave}
+    />
   );
-};
-
-PermissionSetsCreate.propTypes = {
-  intl: PropTypes.object.isRequired,
-  stripes: PropTypes.object.isRequired,
-  onSave: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
 };
