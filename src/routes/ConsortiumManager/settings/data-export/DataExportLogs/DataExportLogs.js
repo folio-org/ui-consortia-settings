@@ -9,6 +9,7 @@ import {
   Loading,
   MultiColumnList,
   Pane,
+  PaneBackLink,
   Selection,
 } from '@folio/stripes/components';
 import {
@@ -21,6 +22,7 @@ import {
   useJobLogsProperties,
 } from '@folio/stripes-data-transfer-components';
 
+import { MODULE_ROOT_ROUTE } from '../../../../../constants';
 import { useMemberSelection } from '../../../hooks';
 import {
   DEFAULT_PAGINATION,
@@ -109,6 +111,7 @@ export const DataExportLogs = () => {
     <Pane
       appIcon={<AppIcon app="data-export" />}
       defaultWidth="fill"
+      firstMenu={<PaneBackLink to={MODULE_ROOT_ROUTE} />}
       paneTitle={<FormattedMessage id="ui-data-export.meta.title" />}
       paneSub={paneSub}
       noOverflow

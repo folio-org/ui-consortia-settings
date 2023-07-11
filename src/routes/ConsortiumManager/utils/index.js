@@ -1,0 +1,1 @@
+export { validateNameAndCodeRequired } from './validateNameAndCodeRequired';

@@ -4,7 +4,9 @@ import { FormattedMessage } from 'react-intl';
 import { stripesShape } from '@folio/stripes/core';
 import { Settings } from '@folio/stripes/smart-components';
 
+import { MODULE_ROOT_ROUTE } from '../../../../constants';
 import {
+  Departments,
   PatronGroups,
   PermissionSets,
 } from './general';
@@ -25,6 +27,12 @@ const sections = [
         component: PatronGroups,
         perm: 'ui-users.settings.usergroups.view',
       },
+      {
+        route: 'departments',
+        label: <FormattedMessage id="ui-users.settings.departments" />,
+        component: Departments,
+        perm: 'ui-users.settings.departments.view',
+      },
     ], ['label']),
   },
 ];
@@ -35,6 +43,7 @@ const UsersSettings = (props) => {
       {...props}
       sections={sections}
       paneTitle={<FormattedMessage id="ui-users.settings.label" />}
+      paneBackLink={MODULE_ROOT_ROUTE}
     />
   );
 };

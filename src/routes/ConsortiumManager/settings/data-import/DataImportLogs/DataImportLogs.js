@@ -9,6 +9,7 @@ import {
   Loading,
   MultiColumnList,
   Pane,
+  PaneBackLink,
   Selection,
 } from '@folio/stripes/components';
 import {
@@ -17,6 +18,7 @@ import {
   useSorting,
 } from '@folio/stripes-acq-components';
 
+import { MODULE_ROOT_ROUTE } from '../../../../../constants';
 import { useMemberSelection } from '../../../hooks';
 import {
   DEFAULT_PAGINATION,
@@ -93,6 +95,7 @@ export const DataImportLogs = () => {
     <Pane
       appIcon={<AppIcon app="data-import" />}
       defaultWidth="fill"
+      firstMenu={<PaneBackLink to={MODULE_ROOT_ROUTE} />}
       paneTitle={<FormattedMessage id="ui-data-import.meta.title" />}
       paneSub={!isNil(totalRecords) && intl.formatMessage(
         { id: 'ui-data-import.logsPaneSubtitle' },

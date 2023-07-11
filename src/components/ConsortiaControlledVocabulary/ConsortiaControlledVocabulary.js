@@ -47,13 +47,17 @@ import { renderLastUpdated } from './renderLastUpdated';
 // eslint-disable-next-line prefer-promise-reject-errors
 const safeReject = () => Promise.reject({});
 
+const CREATE_BUTTON_LABEL = <FormattedMessage id="stripes-core.button.new" />;
+
 const EditableListMemoized = memo(EditableList);
 
 export const ConsortiaControlledVocabulary = ({
   columnMapping: columnMappingProp,
   fieldComponents: fieldComponentsProp,
+  firstMenu,
   formatter: formatterProp,
   id,
+  isLoading: isLoadingProp,
   label,
   path,
   primaryField: primaryFieldProp,
@@ -231,6 +235,7 @@ export const ConsortiaControlledVocabulary = ({
 
   const columnMapping = useMemo(() => ({
     shared: <FormattedMessage id="ui-consortia-settings.consortiumManager.controlledVocab.column.memberLibraries" />,
+    lastUpdated: <FormattedMessage id="stripes-smart-components.cv.lastUpdated" />,
     ...columnMappingProp,
   }), [columnMappingProp]);
 
@@ -245,13 +250,14 @@ export const ConsortiaControlledVocabulary = ({
     'shared',
   ], [visibleFieldsProp]);
 
-  const isLoading = isEntriesFetching || isUsersLoading;
+  const isLoading = isLoadingProp || isEntriesFetching || isUsersLoading;
 
   return (
     <Paneset id={panesetId}>
       <Pane
         defaultWidth="fill"
         fluidContentWidth
+        firstMenu={firstMenu}
         paneTitle={label}
         paneTitleRef={paneTitleRef}
         id="consortia-controlled-vocabulary-pane"
@@ -260,6 +266,7 @@ export const ConsortiaControlledVocabulary = ({
           <EditableListMemoized
             formType="final-form"
             label={label}
+            createButtonLabel={CREATE_BUTTON_LABEL}
             contentData={entries}
             totalCount={totalRecords}
             fieldComponents={fieldComponents}
@@ -295,8 +302,10 @@ ConsortiaControlledVocabulary.defaultProps = {
 ConsortiaControlledVocabulary.propTypes = {
   columnMapping: PropTypes.object,
   fieldComponents: PropTypes.object,
+  firstMenu: PropTypes.element,
   formatter: PropTypes.object,
   id: PropTypes.string,
+  isLoading: PropTypes.bool,
   label: PropTypes.string,
   path: PropTypes.string.isRequired,
   primaryField: PropTypes.string,
