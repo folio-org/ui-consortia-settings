@@ -1,13 +1,16 @@
 import PropTypes from 'prop-types';
 
-import { HasCommand, Layer } from '@folio/stripes/components';
+import { HasCommand, Layer, Loading } from '@folio/stripes/components';
 
 import { PermissionSetForm } from '../../../../../../../temp';
 
-export const PermissionSetsCreate = ({
-  onSave,
+export const PermissionSetsEdit = ({
   onCancel,
+  onRemove,
+  onSave,
   intl,
+  initialValues,
+  isLoading,
   stripes,
 }) => {
   const keyboardCommands = [
@@ -17,6 +20,10 @@ export const PermissionSetsCreate = ({
       shortcut: 'esc',
     },
   ];
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <HasCommand
@@ -29,15 +36,20 @@ export const PermissionSetsCreate = ({
           stripes={stripes}
           onSubmit={onSave}
           onCancel={onCancel}
+          onRemove={onRemove}
+          initialValues={initialValues}
         />
       </Layer>
     </HasCommand>
   );
 };
 
-PermissionSetsCreate.propTypes = {
+PermissionSetsEdit.propTypes = {
   intl: PropTypes.object.isRequired,
   stripes: PropTypes.object.isRequired,
   onSave: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  initialValues: PropTypes.object.isRequired,
 };

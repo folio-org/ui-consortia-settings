@@ -1,2 +1,2 @@
-export { useManageTenantPermissions } from './useManageTenantPermissions';
-export { useSelectPermissionSetById } from './useSelectPermissionSetById';
+export { useTenantPermissionMutations } from './useTenantPermissionMutations';
+export { usePermissionSet } from './usePermissionSet';

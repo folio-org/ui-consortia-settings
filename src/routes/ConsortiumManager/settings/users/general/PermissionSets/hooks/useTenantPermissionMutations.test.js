@@ -4,7 +4,7 @@ import {
   QueryClientProvider,
 } from 'react-query';
 
-import { useManageTenantPermissions } from './useManageTenantPermissions';
+import { useTenantPermissionMutations } from './useTenantPermissionMutations';
 import { useTenantKy } from '../../../../../../../hooks';
 
 jest.mock('../../../../../../../hooks', () => ({
@@ -44,7 +44,7 @@ describe('useManageTenantPermission', () => {
 
   it('should have createPermission, removePermission, updatePermission mutations', async () => {
     const tenantId = 'diku';
-    const { result } = renderHook(() => useManageTenantPermissions(tenantId, {}), { wrapper });
+    const { result } = renderHook(() => useTenantPermissionMutations(tenantId, {}), { wrapper });
 
     expect(result.current).toHaveProperty('createPermission');
     expect(result.current).toHaveProperty('removePermission');
@@ -53,7 +53,7 @@ describe('useManageTenantPermission', () => {
 
   it('should call createPermission, removePermission, updatePermission mutations', async () => {
     const tenantId = 'diku';
-    const { result } = renderHook(() => useManageTenantPermissions(tenantId, {}), { wrapper });
+    const { result } = renderHook(() => useTenantPermissionMutations(tenantId, {}), { wrapper });
 
     const createPermission = await result.current.createPermission();
     const updatePermission = await result.current.updatePermission();

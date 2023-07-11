@@ -1,1 +1,1 @@
-export { default as PermissionSetsCreate } from './PermissionSetsCreate';
+export { PermissionSetsCreate } from './PermissionSetsCreate';

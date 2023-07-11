@@ -2,7 +2,7 @@ import { useMutation } from 'react-query';
 
 import { useTenantKy } from '../../../../../../../hooks';
 
-export const useManageTenantPermissions = (tenantId, options = {}) => {
+export const useTenantPermissionMutations = (tenantId, options = {}) => {
   const ky = useTenantKy({ tenantId });
 
   const createMutationFn = (permissions = {}) => {

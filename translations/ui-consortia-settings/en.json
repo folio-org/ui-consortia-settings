@@ -39,10 +39,9 @@
   "consortiumManager.members.permissionSets.compare.permissionSet": "Permission set",
   "consortiumManager.members.permissionSets.compare.permissionSet.placeholder": "Select Permission set",
   "consortiumManager.members.permissionSets.compare.permissionSet.empty": "No items to show",
-  "consortiumManager.members.permissionSets.create.permissionSet.error": "Users were not successfully assigned to permission set. {error}",
-  "consortiumManager.members.permissionSets.create.permissionSet.success": "Users successfully assigned to permission set.",
+  "consortiumManager.members.permissionSets.create.permissionSet.error": "The permission set was not successfully saved. {error}",
   "consortiumManager.members.permissionSets.remove.permissionSet.success": "The permission set <strong>{permissionName}</strong> was successfully <strong>deleted</strong>.",
-  "consortiumManager.members.permissionSets.update.permissionSet.success": "The permission set <strong>{permissionName}</strong> was successfully <strong>updated</strong>.",
+  "consortiumManager.members.permissionSets.save.permissionSet.success": "The permission set <strong>{permissionName}</strong> was successfully <strong>saved</strong>.",
 
 
   "settings.heading": "Network settings",

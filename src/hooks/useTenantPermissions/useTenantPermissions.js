@@ -21,9 +21,8 @@ export const useTenantPermissions = (params = {}, options = {}) => {
     isFetching,
     isLoading,
     data = {},
-    refetch,
   } = useQuery(
-    [namespace, tenantId],
+    [namespace, tenantId, searchParams],
     ({ signal }) => ky.get('perms/permissions', { searchParams, signal }).json(),
     {
       enabled: Boolean(tenantId),
@@ -34,7 +33,6 @@ export const useTenantPermissions = (params = {}, options = {}) => {
   return ({
     isFetching,
     isLoading,
-    refetch,
     permissions: data.permissions || DEFAULT_DATA,
     totalRecords: data.totalRecords,
   });
