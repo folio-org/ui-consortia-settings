@@ -1,21 +1,21 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
+import { MemoryRouter, useLocation } from 'react-router-dom';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
 
 import { Paneset } from '@folio/stripes/components';
 
 import {
   ConsortiumManagerContextProviderMock,
-  buildStripesObject,
 } from '../../../../../../../../test/jest/helpers';
 import { PermissionSetsEdit } from './PermissionSetsEdit';
-import { useTenantPermissionMutations } from '../hooks';
+import { usePermissionSet, useTenantPermissionSetMutations } from '../hooks';
 
-const STRIPES = buildStripesObject();
-const displayName = 'displayName';
-const initialValues = {
+const initialValue = {
   'permissionName': 'ui-consortia-settings.consortium-manager.edit',
-  'displayName': displayName,
+  'displayName': 'Consortium manager: Can edit existing settings',
   'id': '5317f357-422a-46a4-88de-702b858672b4',
   'tags': [],
   'subPermissions': [
@@ -62,100 +62,58 @@ const initialValues = {
   },
 };
 
-const defaultProps = {
-  onCancel: jest.fn(),
-  onSave: jest.fn(),
-  onRemove: jest.fn(),
-  isLoading: false,
-  initialValues,
-  intl: {},
-  stripes: STRIPES,
-};
-
-jest.mock('../hooks', () => ({
-  ...jest.requireActual('../hooks'),
-  useTenantPermissionMutations: jest.fn(),
-}));
+const queryClient = new QueryClient();
 
 const wrapper = ({ children }) => (
   <MemoryRouter>
     <ConsortiumManagerContextProviderMock>
-      <Paneset>
-        {children}
-      </Paneset>
+      <QueryClientProvider client={queryClient}>
+        <Paneset>
+          {children}
+        </Paneset>
+      </QueryClientProvider>
     </ConsortiumManagerContextProviderMock>
   </MemoryRouter>
 );
 
-const renderComponent = (props = {}) => render(
-  <PermissionSetsEdit
-    {...defaultProps}
-    {...props}
-  />,
+const renderComponent = () => render(
+  <PermissionSetsEdit />,
   { wrapper },
 );
 
-jest.mock('@folio/stripes/core', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  IfPermission: jest.fn(({ children }) => <>{children}</>),
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useLocation: jest.fn(),
+}));
+
+jest.mock('../hooks', () => ({
+  usePermissionSet: jest.fn(),
+  useTenantPermissionSetMutations: jest.fn(),
 }));
 
 jest.mock('../../../../../../../temp/PermissionsAccordion', () => (jest.fn(() => <div>PermissionsAccordion</div>)));
 
 describe('PermissionSetsEdit', () => {
-  const createPermissionSet = jest.fn();
-  const updatePermissionSet = jest.fn();
-  const deletePermissionSet = jest.fn();
-
   beforeEach(() => {
-    useTenantPermissionMutations.mockClear().mockReturnValue({
-      createPermissionSet,
-      updatePermissionSet,
-      deletePermissionSet,
+    jest.clearAllMocks();
+    useLocation.mockClear().mockReturnValue({ search: 'mobius' });
+    usePermissionSet.mockClear().mockReturnValue({ isLoading: false, permissionsSet: [initialValue] });
+    useTenantPermissionSetMutations.mockClear().mockReturnValue({
+      removePermissionSet: jest.fn(),
+      updatePermissionSet: jest.fn(),
     });
   });
 
   it('should render component', () => {
     renderComponent();
 
-    expect(screen.getByText(`ui-users.edit: ${displayName}`)).toBeInTheDocument();
+    expect(screen.getByText('ui-users.permissions.newPermissionSet')).toBeInTheDocument();
     expect(screen.getByText('PermissionsAccordion')).toBeInTheDocument();
-    expect(screen.getByText('ui-users.delete')).toBeInTheDocument();
   });
 
-  it('should redirect member to permissions page', async () => {
-    const onSave = jest.fn();
-
-    const inputValue = ' test';
-    const updatedPermissionSetName = displayName + inputValue;
-
-    renderComponent({ onSave });
-
-    const displayNameInput = screen.getByRole('textbox', { name: 'ui-users.permissions.permissionSetName' });
-    const saveButton = screen.getByText('ui-users.saveAndClose');
-
-    userEvent.type(displayNameInput, inputValue);
-    await waitFor(() => expect(displayNameInput.value).toBe(updatedPermissionSetName));
-
-    userEvent.click(saveButton);
-
-    expect(onSave).toHaveBeenCalled();
-  });
-
-  it('should call onCancel function', () => {
-    const onCancel = jest.fn();
-
-    renderComponent({ onCancel });
-
-    const cancelButton = screen.getByText('ui-users.cancel');
-
-    userEvent.click(cancelButton);
-
-    expect(onCancel).toHaveBeenCalled();
-  });
-
-  it('should display loader', () => {
-    const { container } = renderComponent({ isLoading: true });
+  it('should render Loading component', () => {
+    usePermissionSet.mockClear().mockReturnValue({ isLoading: true, permissionsSet: {} });
+    const { container } = renderComponent();
 
     expect(container.querySelector('.spinner')).toBeInTheDocument();
   });

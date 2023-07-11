@@ -3,8 +3,8 @@ import { useLocation, useParams } from 'react-router-dom';
 
 import { Loading } from '@folio/stripes/components';
 
-import { ConsortiumPermissionsSetForm } from '../ConsortiumPermissionsSetForm/ConsortiumPermissionsSetForm';
-import { usePermissionSet, useTenantPermissionMutations } from '../hooks';
+import { ConsortiumPermissionsSetForm } from '../ConsortiumPermissionsSetForm';
+import { usePermissionSet, useTenantPermissionSetMutations } from '../hooks';
 import { TENANT_ID_SEARCH_PARAMS } from '../constants';
 
 export const PermissionSetsEdit = () => {
@@ -18,10 +18,10 @@ export const PermissionSetsEdit = () => {
     permissionSetId,
   });
 
-  const { removePermission, updatePermission } = useTenantPermissionMutations(tenantId);
+  const { removePermissionSet, updatePermissionSet } = useTenantPermissionSetMutations(tenantId);
 
-  const onSave = (values) => updatePermission((values));
-  const onRemove = () => removePermission(permissionSetId);
+  const updatePermission = (values) => updatePermissionSet(values);
+  const onRemove = () => removePermissionSet(permissionSetId);
 
   if (isLoading) {
     return <Loading />;
@@ -29,7 +29,7 @@ export const PermissionSetsEdit = () => {
 
   return (
     <ConsortiumPermissionsSetForm
-      onSave={onSave}
+      onSave={updatePermission}
       onRemove={onRemove}
       initialValues={permissionsSet}
     />

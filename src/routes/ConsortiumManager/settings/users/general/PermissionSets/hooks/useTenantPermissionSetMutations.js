@@ -14,7 +14,7 @@ const getNormalizedPermissionSet = (values) => {
   return permSet;
 };
 
-export const useTenantPermissionMutations = (tenantId, options = {}) => {
+export const useTenantPermissionSetMutations = (tenantId, options = {}) => {
   const ky = useTenantKy({ tenantId });
 
   const createMutationFn = (permissions = {}) => {
@@ -40,20 +40,20 @@ export const useTenantPermissionMutations = (tenantId, options = {}) => {
   };
 
   const {
-    mutateAsync: createPermission,
+    mutateAsync: createPermissionSet,
   } = useMutation({ mutationFn: createMutationFn, ...options });
 
   const {
-    mutateAsync: removePermission,
+    mutateAsync: removePermissionSet,
   } = useMutation({ mutationFn: removeMutationFn, ...options });
 
   const {
-    mutateAsync: updatePermission,
+    mutateAsync: updatePermissionSet,
   } = useMutation({ mutationFn: updateMutationFn, ...options });
 
   return ({
-    createPermission,
-    removePermission,
-    updatePermission,
+    createPermissionSet,
+    removePermissionSet,
+    updatePermissionSet,
   });
 };
