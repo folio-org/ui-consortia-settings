@@ -20,7 +20,6 @@ export const PermissionSetsEdit = () => {
 
   const { removePermissionSet, updatePermissionSet } = useTenantPermissionSetMutations(tenantId);
 
-  const updatePermission = (values) => updatePermissionSet(values);
   const onRemove = () => removePermissionSet(permissionSetId);
 
   if (isLoading) {
@@ -29,7 +28,7 @@ export const PermissionSetsEdit = () => {
 
   return (
     <ConsortiumPermissionsSetForm
-      onSave={updatePermission}
+      onSave={updatePermissionSet}
       onRemove={onRemove}
       initialValues={permissionsSet}
     />

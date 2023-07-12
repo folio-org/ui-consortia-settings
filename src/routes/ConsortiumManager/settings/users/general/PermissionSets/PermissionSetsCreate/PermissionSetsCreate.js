@@ -11,7 +11,5 @@ export const PermissionSetsCreate = () => {
 
   const { createPermissionSet } = useTenantPermissionSetMutations(tenantId);
 
-  const onSave = (values) => createPermissionSet(values);
-
-  return <ConsortiumPermissionsSetForm onSave={onSave} />;
+  return <ConsortiumPermissionsSetForm onSave={createPermissionSet} />;
 };

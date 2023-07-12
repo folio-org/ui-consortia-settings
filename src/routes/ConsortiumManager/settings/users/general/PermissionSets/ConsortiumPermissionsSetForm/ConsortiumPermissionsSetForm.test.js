@@ -14,9 +14,9 @@ import {
   ConsortiumManagerContextProviderMock,
   buildStripesObject,
 } from '../../../../../../../../test/jest/helpers';
-import { ConsortiumPermissionsSetForm } from './ConsortiumPermissionsSetForm';
 import { useTenantPermissionSetMutations } from '../hooks';
 import { PERMISSION_SET_ROUTES, TENANT_ID_SEARCH_PARAMS } from '../constants';
+import { ConsortiumPermissionsSetForm } from './ConsortiumPermissionsSetForm';
 
 const initialValues = {
   'permissionName': 'ui-consortia-settings.consortium-manager.edit',

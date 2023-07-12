@@ -6,7 +6,7 @@ import { useQueryClient } from 'react-query';
 
 import { HasCommand, Layer } from '@folio/stripes/components';
 import { useShowCallout } from '@folio/stripes-acq-components';
-import { useStripes } from '@folio/stripes/core';
+import { useNamespace, useStripes } from '@folio/stripes/core';
 
 import { PermissionSetForm } from '../../../../../../../temp';
 
@@ -21,6 +21,7 @@ export const ConsortiumPermissionsSetForm = ({
   const location = useLocation();
   const intl = useIntl();
   const stripes = useStripes();
+  const [namespace] = useNamespace({ key: 'tenant-permissions' });
 
   const tenantId = useMemo(() => new URLSearchParams(location.search).get(TENANT_ID_SEARCH_PARAMS), [location.search]);
   const showCallout = useShowCallout();
@@ -38,7 +39,7 @@ export const ConsortiumPermissionsSetForm = ({
 
     const messageId = `ui-consortia-settings.consortiumManager.members.permissionSets.${isDeleted ? 'remove' : 'save'}.permissionSet.success`;
 
-    queryClient.invalidateQueries({ tenantId });
+    queryClient.invalidateQueries([namespace, tenantId]);
 
     return showCallout({
       message: intl.formatMessage({ id: messageId }, { permissionName }),
@@ -88,7 +89,11 @@ export const ConsortiumPermissionsSetForm = ({
       commands={keyboardCommands}
       scope={document.body}
     >
-      <Layer isOpen inRootSet contentLabel="permission-sets-create">
+      <Layer
+        isOpen
+        inRootSet
+        contentLabel="permission-sets-create"
+      >
         <PermissionSetForm
           {...defaultProps}
           onSubmit={handleSubmit}
