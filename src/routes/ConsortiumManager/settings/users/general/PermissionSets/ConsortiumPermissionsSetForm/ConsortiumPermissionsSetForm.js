@@ -34,10 +34,10 @@ export const ConsortiumPermissionsSetForm = ({
     });
   };
 
-  const handleMutationSuccess = (permissionName, isDeleted) => {
+  const handleMutationSuccess = (permissionName, actionType = 'save') => {
     onCancel();
 
-    const messageId = `ui-consortia-settings.consortiumManager.members.permissionSets.${isDeleted ? 'remove' : 'save'}.permissionSet.success`;
+    const messageId = `ui-consortia-settings.consortiumManager.members.permissionSets.${actionType}.permissionSet.success`;
 
     queryClient.invalidateQueries([namespace, tenantId]);
 
@@ -66,7 +66,7 @@ export const ConsortiumPermissionsSetForm = ({
 
   const handleRemove = () => {
     return onRemove()
-      .then(() => handleMutationSuccess(initialValues.displayName, true))
+      .then(() => handleMutationSuccess(initialValues.displayName, 'remove'))
       .catch(handleMutationError);
   };
 
@@ -92,7 +92,7 @@ export const ConsortiumPermissionsSetForm = ({
       <Layer
         isOpen
         inRootSet
-        contentLabel="permission-sets-create"
+        contentLabel={intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.members.permissionSets.create.permissionSet.contentLabel' })}
       >
         <PermissionSetForm
           {...defaultProps}
