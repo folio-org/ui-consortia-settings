@@ -102,6 +102,7 @@ jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
   useStripes: jest.fn(),
   IfPermission: jest.fn(({ children }) => <>{children}</>),
+  useNamespace: jest.fn(() => ['test']),
 }));
 
 jest.mock('@folio/stripes/components', () => ({
