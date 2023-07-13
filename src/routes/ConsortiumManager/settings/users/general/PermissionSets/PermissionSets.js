@@ -140,6 +140,11 @@ export const PermissionSets = (props) => {
       paneTitle={paneTitle}
       paneWidth="70%"
       rowFilter={rowFilter}
+      permissions={{
+        put: 'perms.permissions.item.post',
+        post: 'perms.permissions.item.post',
+        delete: 'perms.permissions.item.delete',
+      }}
     >
       <Switch>
         <Route exact path={PERMISSION_SET_ROUTES.COMPARE} component={PermissionSetsCompare} />
