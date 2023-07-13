@@ -1,0 +1,1 @@
+export { ConsortiumPermissionsSetForm } from './ConsortiumPermissionsSetForm';

@@ -1,6 +1,6 @@
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, useLocation } from 'react-router-dom';
 
 import { useShowCallout } from '@folio/stripes-acq-components';
 
@@ -11,15 +11,22 @@ import {
 } from 'helpers';
 import { useTenantPermissions } from '../../../../../../hooks';
 import { PermissionSets } from './PermissionSets';
-import { PERMISSION_SET_ROUTES } from './constants';
+import { PERMISSION_SET_ROUTES, TENANT_ID_SEARCH_PARAMS } from './constants';
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useLocation: jest.fn(),
+}));
 
 jest.mock('@folio/stripes-acq-components', () => ({
   ...jest.requireActual('@folio/stripes-acq-components'),
   useShowCallout: jest.fn(),
 }));
+
 jest.mock('./../../../../../../temp/IfConsortiumPermission', () => ({
   IfConsortiumPermission: jest.fn(({ children }) => <>{children}</>),
 }));
+
 jest.mock('../../../../../../hooks', () => ({
   ...jest.requireActual('../../../../../../hooks'),
   useTenantPermissions: jest.fn(),
@@ -73,11 +80,8 @@ describe('PermissionsSets', () => {
   beforeEach(() => {
     showCalloutMock.mockClear();
     useShowCallout.mockClear().mockReturnValue(showCalloutMock);
-    useTenantPermissions
-      .mockClear()
-      .mockReturnValue({
-        permissions,
-      });
+    useLocation.mockClear().mockReturnValue({ search: 'mobius' });
+    useTenantPermissions.mockClear().mockReturnValue({ permissions });
   });
 
   it('should render permission sets list', () => {
@@ -117,7 +121,7 @@ describe('PermissionsSets', () => {
 
     expect(compareButton).toBeInTheDocument();
     userEvent.click(compareButton);
-    expect(defaultProps.history.push).toHaveBeenCalledWith(`${PERMISSION_SET_ROUTES.COMPARE}?active_member=${tenants[3].id}`);
+    expect(defaultProps.history.push).toHaveBeenCalledWith(`${PERMISSION_SET_ROUTES.COMPARE}?${TENANT_ID_SEARCH_PARAMS}=${tenants[3].id}`);
   });
 
   describe('Error handling', () => {

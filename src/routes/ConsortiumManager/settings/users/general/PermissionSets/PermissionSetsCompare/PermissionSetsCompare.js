@@ -15,12 +15,12 @@ import {
 import { PermissionSetsCompareItem } from './PermissionSetsCompareItem';
 import { useConsortiumManagerContext } from '../../../../../../../contexts/ConsortiumManagerContext';
 import { COMPARE_ITEM_NAME } from './constants';
-import { ACTIVE_MEMBER_SEARCH_PARAMS, PERMISSION_SET_ROUTES } from '../constants';
+import { TENANT_ID_SEARCH_PARAMS, PERMISSION_SET_ROUTES } from '../constants';
 
 export const PermissionSetsCompare = () => {
   const history = useHistory();
   const { search } = useLocation();
-  const initialSelectedMemberId = useMemo(() => new URLSearchParams(search).get(ACTIVE_MEMBER_SEARCH_PARAMS), [search]);
+  const initialSelectedMemberId = useMemo(() => new URLSearchParams(search).get(TENANT_ID_SEARCH_PARAMS), [search]);
 
   const { selectedMembers } = useConsortiumManagerContext();
 

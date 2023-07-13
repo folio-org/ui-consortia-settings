@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { identity, noop } from 'lodash';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -7,6 +7,7 @@ import { Route, Switch } from 'react-router-dom';
 import { Selection } from '@folio/stripes/components';
 import { EntrySelector } from '@folio/stripes/smart-components';
 import { useShowCallout } from '@folio/stripes-acq-components';
+import { stripesShape } from '@folio/stripes/core';
 
 import { UUID_REGEX } from '../../../../../../constants';
 import { useTenantPermissions } from '../../../../../../hooks';
@@ -14,7 +15,9 @@ import { PermissionSetDetails } from '../../../../../../temp';
 import { useMemberSelection } from '../../../../hooks';
 import { PermissionSetsActionsMenu } from './PermissionSetsActionsMenu';
 import { PermissionSetsCompare } from './PermissionSetsCompare';
-import { ACTIVE_MEMBER_SEARCH_PARAMS, PERMISSION_SET_ROUTES } from './constants';
+import { PermissionSetsCreate } from './PermissionSetsCreate';
+import { PermissionSetsEdit } from './PermissionSetsEdit';
+import { TENANT_ID_SEARCH_PARAMS, PERMISSION_SET_ROUTES } from './constants';
 
 const entryLabel = <FormattedMessage id="ui-users.permissionSet" />;
 const paneTitle = <FormattedMessage id="ui-users.settings.permissionSet" />;
@@ -33,6 +36,18 @@ export const PermissionSets = (props) => {
   const [selectedItemId, setSelectedItemId] = useState(() => (
     new RegExp(UUID_REGEX).exec(location.pathname)?.[0]
   ));
+
+  const defaultActiveMember = useMemo(() => {
+    return new URLSearchParams(location.search).get(TENANT_ID_SEARCH_PARAMS);
+  }, [location.search]);
+
+  useEffect(() => {
+    if (defaultActiveMember && defaultActiveMember !== activeMember) {
+      setActiveMember(defaultActiveMember);
+    }
+    // Excluded activeMember from dependencies to prevent infinite loop
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultActiveMember, setActiveMember]);
 
   const handleLogsLoadingError = useCallback(({ response }) => {
     const defaultMessage = intl.formatMessage({ id: 'ui-consortia-settings.errors.permissionSets.load.common' });
@@ -77,6 +92,16 @@ export const PermissionSets = (props) => {
     contentData.find(({ id }) => id === selectedItemId)
   ), [contentData, selectedItemId]);
 
+  const redirectWithParams = useCallback((path) => {
+    const searchParams = activeMember ? `?${TENANT_ID_SEARCH_PARAMS}=${activeMember}` : '';
+
+    history.push(`${path}${searchParams}`);
+  }, [activeMember, history]);
+
+  const onCreate = () => redirectWithParams(PERMISSION_SET_ROUTES.CREATE);
+  const onCompare = () => redirectWithParams(PERMISSION_SET_ROUTES.COMPARE);
+  const onEdit = () => redirectWithParams(`${PERMISSION_SET_ROUTES.EDIT}/${selectedItemId}`);
+
   const rowFilter = (
     <Selection
       autoFocus
@@ -91,14 +116,9 @@ export const PermissionSets = (props) => {
 
   const addMenu = (
     <PermissionSetsActionsMenu
-    // TODO: UICONSET-59
-      onCreate={noop}
-    // ^^^^^^^^^^^^^^^^^
-      onCompare={() => {
-        const searchParams = activeMember ? `?${ACTIVE_MEMBER_SEARCH_PARAMS}=${activeMember}` : '';
-
-        history.push(`${PERMISSION_SET_ROUTES.COMPARE}${searchParams}`);
-      }}
+      onCreate={onCreate}
+      onCompare={onCompare}
+      disabled={!activeMember}
     />
   );
 
@@ -106,13 +126,11 @@ export const PermissionSets = (props) => {
     <EntrySelector
       {...props}
       nameKey={nameKey}
-            // TODO: UICONSET-59
-      editable={false}
+      editable
       onAdd={noop}
-      onEdit={noop}
+      onEdit={onEdit}
       onClone={noop}
       onRemove={noop}
-            // ^^^^^^^^^^^^^^^^^
       onClick={onItemClick}
       addMenu={addMenu}
       contentData={contentData}
@@ -125,6 +143,8 @@ export const PermissionSets = (props) => {
     >
       <Switch>
         <Route exact path={PERMISSION_SET_ROUTES.COMPARE} component={PermissionSetsCompare} />
+        <Route exact path={PERMISSION_SET_ROUTES.CREATE} component={PermissionSetsCreate} />
+        <Route exact path={`${PERMISSION_SET_ROUTES.EDIT}/:id`} component={PermissionSetsEdit} />
       </Switch>
     </EntrySelector>
   );
@@ -134,4 +154,5 @@ PermissionSets.propTypes = {
   history: ReactRouterPropTypes.history.isRequired,
   location: ReactRouterPropTypes.location.isRequired,
   match: ReactRouterPropTypes.match.isRequired,
+  stripes: stripesShape.isRequired,
 };
