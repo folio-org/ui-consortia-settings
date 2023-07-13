@@ -141,7 +141,7 @@ export const PermissionSets = (props) => {
       paneWidth="70%"
       rowFilter={rowFilter}
       permissions={{
-        put: 'perms.permissions.item.post',
+        put: 'perms.permissions.item.put',
         post: 'perms.permissions.item.post',
         delete: 'perms.permissions.item.delete',
       }}
