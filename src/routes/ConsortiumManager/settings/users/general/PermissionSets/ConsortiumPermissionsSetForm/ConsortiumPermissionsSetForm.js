@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useQueryClient } from 'react-query';
 
 import { HasCommand, Layer } from '@folio/stripes/components';
@@ -10,7 +10,9 @@ import { useNamespace, useStripes } from '@folio/stripes/core';
 
 import { PermissionSetForm } from '../../../../../../../temp';
 
-import { TENANT_ID_SEARCH_PARAMS, PERMISSION_SET_ROUTES } from '../constants';
+import { TENANT_ID_SEARCH_PARAMS, PERMISSION_SET_ROUTES, ACTION_TYPES } from '../constants';
+
+const { EDIT, CREATE, REMOVE } = ACTION_TYPES;
 
 export const ConsortiumPermissionsSetForm = ({
   onSave,
@@ -19,6 +21,7 @@ export const ConsortiumPermissionsSetForm = ({
 }) => {
   const history = useHistory();
   const location = useLocation();
+  const params = useParams();
   const intl = useIntl();
   const stripes = useStripes();
   const [namespace] = useNamespace({ key: 'tenant-permissions' });
@@ -27,17 +30,25 @@ export const ConsortiumPermissionsSetForm = ({
   const showCallout = useShowCallout();
   const queryClient = useQueryClient();
 
-  const onCancel = () => {
+  const onCancel = (actionType) => {
+    const permissionSetId = params?.id;
+    let pathname = PERMISSION_SET_ROUTES.PERMISSION_SETS;
+
+    if (actionType === CREATE || actionType === EDIT) {
+      pathname = `${PERMISSION_SET_ROUTES.PERMISSION_SETS}/${permissionSetId}`;
+    }
+
     history.push({
-      pathname: PERMISSION_SET_ROUTES.PERMISSION_SETS,
+      pathname,
       search: `?${TENANT_ID_SEARCH_PARAMS}=${tenantId}`,
     });
   };
 
-  const handleMutationSuccess = (permissionName, actionType = 'save') => {
-    onCancel();
+  const handleMutationSuccess = (permissionName, actionType) => {
+    onCancel(actionType);
 
-    const messageId = `ui-consortia-settings.consortiumManager.members.permissionSets.${actionType}.permissionSet.success`;
+    const messageIntendedType = actionType === REMOVE ? 'remove' : 'save';
+    const messageId = `ui-consortia-settings.consortiumManager.members.permissionSets.${messageIntendedType}.permissionSet.success`;
 
     queryClient.invalidateQueries([namespace, tenantId]);
 
@@ -59,14 +70,16 @@ export const ConsortiumPermissionsSetForm = ({
   };
 
   const handleSubmit = (values) => {
+    const actionType = initialValues.id ? EDIT : CREATE;
+
     return onSave(values)
-      .then(() => handleMutationSuccess(values.displayName))
+      .then(() => handleMutationSuccess(values.displayName, actionType))
       .catch(handleMutationError);
   };
 
   const handleRemove = () => {
     return onRemove()
-      .then(() => handleMutationSuccess(initialValues.displayName, 'remove'))
+      .then(() => handleMutationSuccess(initialValues.displayName, REMOVE))
       .catch(handleMutationError);
   };
 

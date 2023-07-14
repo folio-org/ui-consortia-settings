@@ -5,5 +5,11 @@ export const PERMISSION_SET_ROUTES = {
   EDIT: '/consortia-settings/users/perms/edit',
 };
 
+export const ACTION_TYPES = {
+  CREATE: 'create',
+  EDIT: 'edit',
+  REMOVE: 'remove',
+};
+
 export const TENANT_ID_SEARCH_PARAMS = 'tenantId';
 export const PERMISSION_SET_ID_SEARCH_PARAMS = 'permissionSetId';
