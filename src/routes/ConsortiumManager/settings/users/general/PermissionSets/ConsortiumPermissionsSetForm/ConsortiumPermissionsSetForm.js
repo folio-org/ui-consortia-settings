@@ -32,11 +32,9 @@ export const ConsortiumPermissionsSetForm = ({
 
   const onCancel = (actionType) => {
     const permissionSetId = params?.id;
-    let pathname = PERMISSION_SET_ROUTES.PERMISSION_SETS;
-
-    if (actionType === CREATE || actionType === EDIT) {
-      pathname = `${PERMISSION_SET_ROUTES.PERMISSION_SETS}/${permissionSetId}`;
-    }
+    const pathname = actionType === REMOVE || !permissionSetId
+      ? PERMISSION_SET_ROUTES.PERMISSION_SETS
+      : `${PERMISSION_SET_ROUTES.PERMISSION_SETS}/${permissionSetId}`;
 
     history.push({
       pathname,
