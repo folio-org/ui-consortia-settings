@@ -12,7 +12,7 @@ import {
   useStripes,
 } from '@folio/stripes/core';
 
-import { useUserAffiliations } from '../hooks';
+import { useConsortiumMembers, useUserAffiliations } from '../hooks';
 
 const DEFAULT_SELECTED_MEMBERS = [];
 
@@ -42,14 +42,18 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
     { onSuccess: initSelectedMembers },
   );
 
+  const { members } = useConsortiumMembers();
+
   const contextValue = useMemo(() => ({
     affiliations,
+    members,
     selectedMembers: selectedMembers || DEFAULT_SELECTED_MEMBERS,
     selectMembers,
     selectMembersDisabled,
     setSelectMembersDisabled,
   }), [
     affiliations,
+    members,
     selectMembers,
     selectMembersDisabled,
     selectedMembers,
