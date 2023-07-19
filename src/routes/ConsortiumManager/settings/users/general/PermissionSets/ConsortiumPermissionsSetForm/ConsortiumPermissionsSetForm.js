@@ -91,6 +91,7 @@ export const ConsortiumPermissionsSetForm = ({
 
   const defaultProps = {
     onCancel,
+    tenantId,
     intl,
     stripes,
   };
