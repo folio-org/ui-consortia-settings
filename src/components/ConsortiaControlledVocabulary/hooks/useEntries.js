@@ -1,46 +1,102 @@
+import { groupBy, sortBy } from 'lodash/fp';
+import { stringify } from 'query-string';
 import { useQuery } from 'react-query';
 
 import {
   useNamespace,
-  useOkapiKy,
+  useStripes,
 } from '@folio/stripes/core';
 import {
   LIMIT_PARAMETER,
   OFFSET_PARAMETER,
-  SEARCH_PARAMETER,
 } from '@folio/stripes-acq-components';
 
-import { CONTROLLED_VOCAB_LIMIT } from '../../../constants';
+import {
+  CONTROLLED_VOCAB_LIMIT,
+  RECORD_SOURCE,
+} from '../../../constants';
+import { useConsortiumManagerContext } from '../../../contexts';
 import { throwErrorResponse } from '../../../utils';
+import { usePublishCoordinator } from '../../../hooks';
 
 const DEFAULT_DATA = [];
 
-export const useEntries = (params = {}, options = {}) => {
-  const ky = useOkapiKy();
-  const [namespace] = useNamespace();
+const squashSharedRecords = (records, sharedRecordIds) => {
+  return Object.entries(groupBy('id', records)).flatMap(([recordId, items]) => {
+    return sharedRecordIds.has(recordId)
+      ? [items.reduce((acc, curr) => Object.assign(acc, curr), {})]
+      : items;
+  });
+};
 
+const hydrateResults = (recordsField) => ({ publicationResults }) => {
+  const sharedRecordIds = new Set();
+
+  const flattenRecords = publicationResults.flatMap(({ tenantId, response }) => (
+    response[recordsField]?.map((item) => {
+      const shared = item.source === RECORD_SOURCE.CONSORTIUM;
+
+      if (shared) sharedRecordIds.add(item.id);
+
+      const additive = {
+        tenantId: shared ? undefined : tenantId,
+        shared,
+      };
+
+      return { ...item, ...additive };
+    })
+  ));
+
+  return squashSharedRecords(flattenRecords, sharedRecordIds);
+};
+
+export const useEntries = (params = {}, options = {}) => {
+  const stripes = useStripes();
+  const [namespace] = useNamespace();
+  const { selectedMembers } = useConsortiumManagerContext();
+  const { initPublicationRequest } = usePublishCoordinator();
+
+  const consortium = stripes.user?.user?.consortium;
   const {
     path,
     records,
     sortby,
   } = params;
 
-  const queryKey = [namespace, path, records];
+  const queryKey = [namespace, path, records, selectedMembers];
   const searchParams = {
-    [SEARCH_PARAMETER]: `cql.allRecords=1 sortby ${sortby || 'name'}`,
     [LIMIT_PARAMETER]: CONTROLLED_VOCAB_LIMIT,
     [OFFSET_PARAMETER]: 0,
   };
 
+  const enabled = Boolean(
+    path
+    && records
+    && consortium?.id,
+  );
+
   const {
-    data = {},
+    data,
     isFetching,
     refetch,
   } = useQuery(
     queryKey,
-    async () => ky.get(path, { searchParams }).json().catch(throwErrorResponse),
+    async () => {
+      if (!selectedMembers?.length) return DEFAULT_DATA;
+
+      const publication = {
+        url: `/${path}?${stringify(searchParams)}`,
+        method: 'GET',
+        // TODO: refine how to distinguish shared records
+        tenants: selectedMembers.map(({ id }) => id),
+      };
+
+      return initPublicationRequest(publication)
+        .then(hydrateResults(records))
+        .then(sortBy([sortby || 'name', 'tenantId']));
+    },
     {
-      enabled: Boolean(path && records),
+      enabled,
       keepPreviousData: true,
       ...options,
     },
@@ -48,8 +104,8 @@ export const useEntries = (params = {}, options = {}) => {
 
   return {
     isFetching,
-    entries: data[records] || DEFAULT_DATA,
+    entries: data || DEFAULT_DATA,
     refetch,
-    totalRecords: data.totalRecords,
+    totalRecords: data?.length,
   };
 };

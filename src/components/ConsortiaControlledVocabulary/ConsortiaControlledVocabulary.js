@@ -12,7 +12,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import {
   Loading,
@@ -25,6 +25,7 @@ import {
   useUsersBatch,
 } from '@folio/stripes-acq-components';
 
+import { useConsortiumManagerContext } from '../../contexts';
 import { translationsShape } from '../../shapes';
 import {
   ACTION_TYPES,
@@ -47,11 +48,18 @@ import { renderLastUpdated } from './renderLastUpdated';
 // eslint-disable-next-line prefer-promise-reject-errors
 const safeReject = () => Promise.reject({});
 
+const skipAborted = (error) => {
+  if (!error?.aborted) {
+    throw error;
+  }
+};
+
 const CREATE_BUTTON_LABEL = <FormattedMessage id="stripes-core.button.new" />;
 
 const EditableListMemoized = memo(EditableList);
 
 export const ConsortiaControlledVocabulary = ({
+  actionProps: actionPropsProp,
   columnMapping: columnMappingProp,
   fieldComponents: fieldComponentsProp,
   firstMenu,
@@ -70,13 +78,16 @@ export const ConsortiaControlledVocabulary = ({
   visibleFields: visibleFieldsProp,
   ...props
 }) => {
+  const intl = useIntl();
   const paneTitleRef = useRef();
   const showCallout = useShowCallout();
   const [activeDialog, setActiveDialog] = useState(null);
+  const { selectedMembers } = useConsortiumManagerContext();
 
   const panesetId = `${PANESET_PREFIX}${id}`;
   const primaryField = primaryFieldProp || visibleFieldsProp[0];
   const sortby = sortbyProp || primaryField;
+  const allMembersLabel = intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.all' });
 
   const {
     entries,
@@ -160,13 +171,15 @@ export const ConsortiaControlledVocabulary = ({
     });
   }, [primaryField, showCallout, translations]);
 
-  const onCreate = useCallback(async ({ shared, ...entry }) => {
-    // TODO: use the publish coordinator for the action handling
+  const onCreate = useCallback(async (entry) => {
+    const members = ['mobius', 'university'];
 
-    console.log('shared', shared);
-    const members = ['tenant-1'];
+    console.log('selected', selectedMembers);
 
-    return createEntry({ entry })
+    return createEntry({
+      entry,
+      tenants: selectedMembers.map(({ id: _id }) => _id),
+    })
       .then(() => {
         showSuccessCallout({
           actionType: ACTION_TYPES.create,
@@ -174,16 +187,19 @@ export const ConsortiaControlledVocabulary = ({
           members,
         });
       })
-      .then(refetch);
-  }, [createEntry, refetch, showSuccessCallout]);
+      .then(refetch)
+      .catch(skipAborted);
+  }, [createEntry, refetch, selectedMembers, showSuccessCallout]);
 
   const onUpdate = useCallback(async ({ shared, ...entry }) => {
     // TODO: use publish coordinator for the action handling
 
     console.log('shared', shared);
-    const members = ['tenant-1', 'tenant-2'];
+    const members = entry.shared
+      ? [allMembersLabel]
+      : [selectedMembers.find(({ id: _id }) => _id === entry.tenantID)?.name];
 
-    return updateEntry({ entry })
+    return updateEntry({ entry, tenants: members })
       .then(() => {
         showSuccessCallout({
           actionType: ACTION_TYPES.update,
@@ -191,13 +207,16 @@ export const ConsortiaControlledVocabulary = ({
           members,
         });
       })
-      .then(refetch);
-  }, [refetch, showSuccessCallout, updateEntry]);
+      .then(refetch)
+      .catch(skipAborted);
+  }, [allMembersLabel, refetch, selectedMembers, showSuccessCallout, updateEntry]);
 
   const handleDeleteEntry = useCallback((entry) => {
     // TODO: use publish coordinator for the action handling
 
-    const members = ['tenant-1', 'tenant-2'];
+    const members = entry.shared
+      ? [allMembersLabel]
+      : [selectedMembers.find(({ id: _id }) => _id === entry.tenantID)?.name];
 
     return deleteEntry({ entry })
       .then(() => {
@@ -212,7 +231,7 @@ export const ConsortiaControlledVocabulary = ({
         buildDialog({ type: DIALOG_TYPES.itemInUse })
           .then(safeReject)
       ));
-  }, [buildDialog, deleteEntry, refetch, showSuccessCallout]);
+  }, [allMembersLabel, buildDialog, deleteEntry, refetch, selectedMembers, showSuccessCallout]);
 
   const onDelete = useCallback((uniqueFieldValue) => {
     const entryToDelete = entries.find(entry => entry[uniqueField] === uniqueFieldValue);
@@ -229,9 +248,11 @@ export const ConsortiaControlledVocabulary = ({
 
   const formatter = useMemo(() => ({
     lastUpdated: ({ metadata }) => renderLastUpdated(metadata, users),
-    shared: () => 'TODO: "All" or members list',
+    shared: ({ tenantId, shared }) => (
+      shared ? <b>{allMembersLabel}</b> : selectedMembers?.find(({ id: _id }) => _id === tenantId)?.name
+    ),
     ...formatterProp,
-  }), [formatterProp, users]);
+  }), [allMembersLabel, formatterProp, selectedMembers, users]);
 
   const columnMapping = useMemo(() => ({
     shared: <FormattedMessage id="ui-consortia-settings.consortiumManager.controlledVocab.column.memberLibraries" />,
@@ -249,6 +270,14 @@ export const ConsortiaControlledVocabulary = ({
     ...visibleFieldsProp,
     'shared',
   ], [visibleFieldsProp]);
+
+  const actionProps = useMemo(() => ({
+    ...actionPropsProp,
+    create: (...args) => ({
+      ...(actionPropsProp.create?.(...args) || {}),
+      disabled: !selectedMembers?.length,
+    }),
+  }), [actionPropsProp, selectedMembers?.length]);
 
   const isLoading = isLoadingProp || isEntriesFetching || isUsersLoading;
 
@@ -274,6 +303,7 @@ export const ConsortiaControlledVocabulary = ({
             columnMapping={columnMapping}
             readOnlyFields={readOnlyFields}
             visibleFields={visibleFields}
+            actionProps={actionProps}
             onCreate={onCreate}
             onUpdate={onUpdate}
             onDelete={onDelete}
@@ -289,6 +319,7 @@ export const ConsortiaControlledVocabulary = ({
 };
 
 ConsortiaControlledVocabulary.defaultProps = {
+  actionProps: {},
   columnMapping: {},
   fieldComponents: {},
   formatter: {},
@@ -300,6 +331,13 @@ ConsortiaControlledVocabulary.defaultProps = {
 };
 
 ConsortiaControlledVocabulary.propTypes = {
+  actionProps: PropTypes.shape({
+    cancel: PropTypes.func,
+    create: PropTypes.func,
+    delete: PropTypes.func,
+    edit: PropTypes.func,
+    save: PropTypes.func,
+  }),
   columnMapping: PropTypes.object,
   fieldComponents: PropTypes.object,
   firstMenu: PropTypes.element,

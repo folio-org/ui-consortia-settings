@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 import {
   useOkapiKy,
@@ -13,27 +13,49 @@ import {
 
 const TIMEOUT = 2500;
 
+const formatPublicationResult = ({ publicationResults, totalRecords }) => {
+  const formattedResults = publicationResults.map(({ response, ...rest }) => ({
+    response: JSON.parse(response),
+    ...rest,
+  }));
+
+  return {
+    publicationResults: formattedResults,
+    totalRecords,
+  };
+};
+
 export const usePublishCoordinator = (options = {}) => {
   const ky = useOkapiKy();
   const stripes = useStripes();
-  const [isLoading, setIsLoading] = useState(false);
-  const [abortController] = useState(new AbortController());
+  const abortController = useRef(new AbortController());
 
   const consortium = stripes.user?.user?.consortium;
-  const signal = options.signal || abortController.signal;
   const baseApi = `${CONSORTIA_API}/${consortium?.id}/${PUBLICATIONS_API}`;
 
   useEffect(() => {
     return () => {
-      abortController.abort();
+      abortController.current.abort();
+      console.log('usePublishCoordinator unmount');
     };
-  }, [abortController]);
+  }, []);
 
   const getPublicationResults = useCallback((id) => {
-    return ky.get(`${baseApi}/${id}/results`, { signal }).json();
-  }, [signal, baseApi, ky]);
+    const signal = options.signal || abortController.current.signal;
+
+    return ky.get(`${baseApi}/${id}/results`, { signal })
+      .json()
+      .then(formatPublicationResult)
+      .then(r => {
+        console.log('formatPublicationResult', r);
+
+        return r;
+      });
+  }, [options.signal, ky, baseApi]);
 
   const getPublicationDetails = useCallback(async (requestId) => {
+    const signal = options.signal || abortController.current.signal;
+
     const {
       id,
       status,
@@ -46,43 +68,30 @@ export const usePublishCoordinator = (options = {}) => {
 
     await new Promise((resolve) => setTimeout(resolve, TIMEOUT));
 
-    return !abortController.signal.aborted
+    console.log('abortController.signal', signal);
+
+    return !signal.aborted
       ? getPublicationDetails(id)
-      : Promise.reject(abortController.signal.reason);
-  }, [
-    abortController.signal.aborted,
-    abortController.signal.reason,
-    baseApi,
-    getPublicationResults,
-    ky,
-    signal,
-  ]);
+      : Promise.reject(signal);
+  }, [baseApi, getPublicationResults, ky, options.signal]);
 
   const getPublicationResponse = useCallback(({ id, status }) => {
+    console.log('status', status);
     if (status === PUBLISH_COORDINATOR_STATUSES.COMPLETE) return getPublicationResults(id);
 
     return getPublicationDetails(id);
   }, [getPublicationDetails, getPublicationResults]);
 
-  // { url, method, tenants, payload }
   const initPublicationRequest = useCallback((publication) => {
-    setIsLoading(true);
+    abortController.current = new AbortController();
+    const signal = options.signal || abortController.current.signal;
 
     return ky.post(baseApi, { json: publication, signal })
       .json()
-      .then(getPublicationResponse)
-      .catch(error => (!abortController.signal.aborted ? Promise.reject(error) : Promise.resolve()))
-      .finally(() => setIsLoading(false));
-  }, [
-    abortController.signal.aborted,
-    baseApi,
-    getPublicationResponse,
-    ky,
-    signal,
-  ]);
+      .then(getPublicationResponse);
+  }, [baseApi, getPublicationResponse, ky, options.signal]);
 
   return {
     initPublicationRequest,
-    isLoading,
   };
 };
