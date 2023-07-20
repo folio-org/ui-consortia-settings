@@ -67,10 +67,13 @@ const initialValues = {
   },
 };
 
+const tenantId = 'mobius';
+
 const defaultProps = {
   onSave: jest.fn(),
   onRemove: jest.fn(),
   initialValues: {},
+  tenantId,
 };
 
 const queryClient = new QueryClient();
@@ -135,7 +138,7 @@ jest.mock('../../../../../../../temp/PermissionsAccordion', () => (jest.fn(() =>
 describe('ConsortiumPermissionsSetForm', () => {
   const showCalloutMock = jest.fn();
   const historyMock = { push: jest.fn() };
-  const defaultTenantId = `?${TENANT_ID_SEARCH_PARAMS}=mobius`;
+  const defaultTenantId = `?${TENANT_ID_SEARCH_PARAMS}=${tenantId}`;
 
   beforeEach(() => {
     useLocation.mockClear().mockReturnValue({ search: defaultTenantId });
