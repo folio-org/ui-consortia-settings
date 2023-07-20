@@ -72,7 +72,7 @@ export const ConsortiaControlledVocabulary = ({
   readOnlyFields: readOnlyFieldsProp,
   records,
   sortby: sortbyProp,
-  squashSharedRecords,
+  squashSharedSetting,
   translations,
   uniqueField,
   validate,
@@ -99,7 +99,7 @@ export const ConsortiaControlledVocabulary = ({
     path,
     records,
     sortby,
-    squashSharedRecords,
+    squashSharedSetting,
   });
 
   const {
@@ -348,7 +348,7 @@ ConsortiaControlledVocabulary.propTypes = {
   readOnlyFields: PropTypes.arrayOf(PropTypes.string),
   records: PropTypes.string.isRequired,
   sortby: PropTypes.string,
-  squashSharedRecords: PropTypes.func,
+  squashSharedSetting: PropTypes.func,
   translations: translationsShape.isRequired,
   uniqueField: PropTypes.string,
   validate: PropTypes.func,
