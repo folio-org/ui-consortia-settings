@@ -6,7 +6,7 @@ import {
 
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { useEntryMutation } from './useEntryMutation';
+import { useSettingMutation } from './useSettingMutation';
 
 const queryClient = new QueryClient();
 
@@ -28,7 +28,7 @@ const kyMock = {
   delete: jest.fn(() => Promise.resolve()),
 };
 
-describe('useEntryMutation', () => {
+describe('useSettingMutation', () => {
   beforeEach(() => {
     kyMock.post.mockClear();
     kyMock.put.mockClear();
@@ -43,7 +43,7 @@ describe('useEntryMutation', () => {
     ['updateEntry', kyMock.put, [`${path}/${entry.id}`, { json: entry }]],
     ['deleteEntry', kyMock.delete, [`${path}/${entry.id}`]],
   ])('should handle \'%s\' mutation', async (fnName, mockedFn, args) => {
-    const { result, waitFor } = renderHook(() => useEntryMutation({ path }), { wrapper });
+    const { result, waitFor } = renderHook(() => useSettingMutation({ path }), { wrapper });
 
     const mutationFn = result.current[fnName];
 

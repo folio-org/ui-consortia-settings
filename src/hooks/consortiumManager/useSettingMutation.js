@@ -3,9 +3,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { OKAPI_TENANT_HEADER } from '../../../constants';
-import { usePublishCoordinator } from '../../../hooks';
-import { throwErrorResponse } from '../../../utils';
+import { OKAPI_TENANT_HEADER } from '../../constants';
+import { throwErrorResponse } from '../../utils';
+import { usePublishCoordinator } from '../usePublishCoordinator';
 
 const injectTenantHeader = (ky, tenantId) => ky.extend({
   hooks: {
@@ -17,7 +17,7 @@ const injectTenantHeader = (ky, tenantId) => ky.extend({
   },
 });
 
-export const useEntryMutation = ({ path }) => {
+export const useSettingMutation = ({ path }) => {
   const ky = useOkapiKy();
   const { initPublicationRequest } = usePublishCoordinator();
 

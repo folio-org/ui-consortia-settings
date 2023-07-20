@@ -19,10 +19,10 @@ const suppress = getSourceSuppressor(RECORD_SOURCE.MARC_RELATOR);
 const actionSuppression = { edit: suppress, delete: suppress };
 
 const FIELDS_MAP = {
-  code: 'code',
-  lastUpdated: 'lastUpdated',
   name: 'name',
+  code: 'code',
   source: 'source',
+  lastUpdated: 'lastUpdated',
 };
 const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
 const READONLY_FIELDS = [FIELDS_MAP.source];

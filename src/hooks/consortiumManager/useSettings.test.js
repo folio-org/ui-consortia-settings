@@ -6,7 +6,7 @@ import {
 
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { useEntries } from './useEntries';
+import { useSettings } from './useSettings';
 
 const queryClient = new QueryClient();
 
@@ -32,7 +32,7 @@ const kyMock = {
   })),
 };
 
-describe('useEntries', () => {
+describe('useSettings', () => {
   beforeEach(() => {
     kyMock.get.mockClear();
     useOkapiKy
@@ -41,7 +41,7 @@ describe('useEntries', () => {
   });
 
   it('should send a request to \'path\' and get entity records', async () => {
-    const { result, waitFor } = renderHook(() => useEntries({ path, records }), { wrapper });
+    const { result, waitFor } = renderHook(() => useSettings({ path, records }), { wrapper });
 
     await waitFor(() => !result.current.isFetching);
 
@@ -53,9 +53,10 @@ describe('useEntries', () => {
     expect(result.current.entries).toEqual(response[records]);
   });
 
+  // TODO: update test - query not supported in PC
   it('should apply sorting in the request', async () => {
     const sortby = 'group/sort.descending';
-    const { result, waitFor } = renderHook(() => useEntries({
+    const { result, waitFor } = renderHook(() => useSettings({
       path,
       records,
       sortby,

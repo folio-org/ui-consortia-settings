@@ -1,1 +1,0 @@
-export { useStatisticalCodeTypes } from './useStatisticalCodeTypes';

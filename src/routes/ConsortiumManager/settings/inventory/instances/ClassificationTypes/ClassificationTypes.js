@@ -18,9 +18,9 @@ const suppress = getSourceSuppressor(RECORD_SOURCE.FOLIO);
 const actionSuppression = { edit: suppress, delete: suppress };
 
 const FIELDS_MAP = {
-  lastUpdated: 'lastUpdated',
   name: 'name',
   source: 'source',
+  lastUpdated: 'lastUpdated',
 };
 const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
 const READONLY_FIELDS = [FIELDS_MAP.source];
