@@ -36,6 +36,14 @@ const getColumnMapping = ({ intl }) => ({
   ),
 });
 
+const squashSharedSetting = (sharedSettingRecords) => {
+  return sharedSettingRecords.reduce((acc, curr) => ({
+    ...acc,
+    ...curr,
+    usageNumber: Number(acc.usageNumber || 0) + Number(curr.usageNumber || 0),
+  }));
+};
+
 export const Departments = ({ stripes }) => {
   const intl = useIntl();
   const hasEditPerm = stripes.hasPerm('ui-users.settings.departments.edit');
@@ -60,6 +68,7 @@ export const Departments = ({ stripes }) => {
       label={intl.formatMessage({ id: 'ui-users.departments' })}
       path={DEPARTMENTS_API}
       records="departments"
+      squashSharedSetting={squashSharedSetting}
       translations={TRANSLATIONS}
       validate={validate}
       visibleFields={VISIBLE_FIELDS}

@@ -29,7 +29,7 @@ export const useSettings = (params = {}, options = {}) => {
     path,
     records,
     sortby,
-    squashSharedRecords,
+    squashSharedSetting,
   } = params;
 
   const queryKey = [namespace, path, records, selectedMembers];
@@ -62,7 +62,7 @@ export const useSettings = (params = {}, options = {}) => {
       };
 
       return initPublicationRequest(publication)
-        .then(hydrateSharedRecords(records, squashSharedRecords))
+        .then(hydrateSharedRecords(records, squashSharedSetting))
         .then(sortBy([sortby || 'name', 'tenantId']));
     },
     {

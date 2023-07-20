@@ -8,7 +8,7 @@ const defaultSquashFn = (sharedSettingRecords) => {
 
 export const hydrateSharedRecords = (
   recordsField,
-  squashSharedRecords = defaultSquashFn,
+  squashSharedSetting = defaultSquashFn,
 ) => ({ publicationResults }) => {
   const sharedRecordIds = new Set();
 
@@ -29,7 +29,7 @@ export const hydrateSharedRecords = (
 
   return Object.entries(groupBy(flattenRecords, 'id')).flatMap(([recordId, items]) => {
     return sharedRecordIds.has(recordId)
-      ? [squashSharedRecords(items)]
+      ? [squashSharedSetting(items)]
       : items;
   });
 };
