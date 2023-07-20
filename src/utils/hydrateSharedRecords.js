@@ -2,15 +2,14 @@ import groupBy from 'lodash/groupBy';
 
 import { RECORD_SOURCE } from '../constants';
 
-const squashSharedRecords = (records, sharedRecordIds) => {
-  return Object.entries(groupBy(records, 'id')).flatMap(([recordId, items]) => {
-    return sharedRecordIds.has(recordId)
-      ? [items.reduce((acc, curr) => Object.assign(acc, curr), {})]
-      : items;
-  });
+const defaultSquashFn = (sharedSettingRecords) => {
+  return sharedSettingRecords.reduce((acc, curr) => Object.assign(acc, curr), {});
 };
 
-export const hydrateSharedRecords = (recordsField) => ({ publicationResults }) => {
+export const hydrateSharedRecords = (
+  recordsField,
+  squashSharedRecords = defaultSquashFn,
+) => ({ publicationResults }) => {
   const sharedRecordIds = new Set();
 
   const flattenRecords = publicationResults.flatMap(({ tenantId, response }) => (
@@ -28,5 +27,9 @@ export const hydrateSharedRecords = (recordsField) => ({ publicationResults }) =
     })
   ));
 
-  return squashSharedRecords(flattenRecords, sharedRecordIds);
+  return Object.entries(groupBy(flattenRecords, 'id')).flatMap(([recordId, items]) => {
+    return sharedRecordIds.has(recordId)
+      ? [squashSharedRecords(items)]
+      : items;
+  });
 };

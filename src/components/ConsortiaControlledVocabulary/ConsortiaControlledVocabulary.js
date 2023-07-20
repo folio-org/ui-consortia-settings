@@ -72,6 +72,7 @@ export const ConsortiaControlledVocabulary = ({
   readOnlyFields: readOnlyFieldsProp,
   records,
   sortby: sortbyProp,
+  squashSharedRecords,
   translations,
   uniqueField,
   validate,
@@ -94,7 +95,12 @@ export const ConsortiaControlledVocabulary = ({
     totalRecords,
     isFetching: isEntriesFetching,
     refetch,
-  } = useSettings({ path, records, sortby });
+  } = useSettings({
+    path,
+    records,
+    sortby,
+    squashSharedRecords,
+  });
 
   const {
     createEntry,
@@ -342,6 +348,7 @@ ConsortiaControlledVocabulary.propTypes = {
   readOnlyFields: PropTypes.arrayOf(PropTypes.string),
   records: PropTypes.string.isRequired,
   sortby: PropTypes.string,
+  squashSharedRecords: PropTypes.func,
   translations: translationsShape.isRequired,
   uniqueField: PropTypes.string,
   validate: PropTypes.func,

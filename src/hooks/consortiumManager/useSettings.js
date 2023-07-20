@@ -29,6 +29,7 @@ export const useSettings = (params = {}, options = {}) => {
     path,
     records,
     sortby,
+    squashSharedRecords,
   } = params;
 
   const queryKey = [namespace, path, records, selectedMembers];
@@ -36,6 +37,8 @@ export const useSettings = (params = {}, options = {}) => {
     [LIMIT_PARAMETER]: CONTROLLED_VOCAB_LIMIT,
     [OFFSET_PARAMETER]: 0,
   };
+  // Publications API requires `url` value to start with slash (`/`)
+  const url = path.startsWith('/') ? path : `/${path}`;
 
   const enabled = Boolean(
     path
@@ -53,14 +56,13 @@ export const useSettings = (params = {}, options = {}) => {
       if (!selectedMembers?.length) return DEFAULT_DATA;
 
       const publication = {
-        url: `/${path}?${stringify(searchParams)}`,
+        url: `${url}?${stringify(searchParams)}`,
         method: 'GET',
-        // TODO: refine how to distinguish shared records
         tenants: selectedMembers.map(({ id }) => id),
       };
 
       return initPublicationRequest(publication)
-        .then(hydrateSharedRecords(records))
+        .then(hydrateSharedRecords(records, squashSharedRecords))
         .then(sortBy([sortby || 'name', 'tenantId']));
     },
     {
