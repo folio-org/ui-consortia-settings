@@ -158,8 +158,20 @@ export const ConsortiaControlledVocabulary = ({
     }).finally(setActiveDialog);
   }, [translations]);
 
-  const showSuccessCallout = useCallback(({ actionType, entry, members }) => {
+  const showSuccessCallout = useCallback(({ actionType, entry }) => {
     const translationKey = TRANSLATION_KEYS_MAP[actionType];
+
+    const getLocalTenantName = () => [selectedMembers?.find(({ id: _id }) => entry.tenantId === _id)?.name];
+
+    const membersGetters = {
+      [ACTION_TYPES.create]: () => selectedMembers.map(({ name }) => name),
+      [ACTION_TYPES.delete]: getLocalTenantName,
+      [ACTION_TYPES.update]: getLocalTenantName,
+    };
+
+    const members = entry.shared
+      ? [allMembersLabel]
+      : membersGetters[actionType]();
 
     return showCallout({
       messageId: translations[translationKey] || `ui-consortia-settings.consortiumManager.controlledVocab.common.${translationKey}`,
@@ -169,13 +181,9 @@ export const ConsortiaControlledVocabulary = ({
         term: entry[primaryField],
       },
     });
-  }, [primaryField, showCallout, translations]);
+  }, [allMembersLabel, primaryField, selectedMembers, showCallout, translations]);
 
   const onCreate = useCallback(async (entry) => {
-    const members = ['mobius', 'university'];
-
-    console.log('selected', selectedMembers);
-
     return createEntry({
       entry,
       tenants: selectedMembers.map(({ id: _id }) => _id),
@@ -184,46 +192,30 @@ export const ConsortiaControlledVocabulary = ({
         showSuccessCallout({
           actionType: ACTION_TYPES.create,
           entry,
-          members,
         });
       })
       .then(refetch)
       .catch(skipAborted);
   }, [createEntry, refetch, selectedMembers, showSuccessCallout]);
 
-  const onUpdate = useCallback(async ({ shared, ...entry }) => {
-    // TODO: use publish coordinator for the action handling
-
-    console.log('shared', shared);
-    const members = entry.shared
-      ? [allMembersLabel]
-      : [selectedMembers.find(({ id: _id }) => _id === entry.tenantID)?.name];
-
-    return updateEntry({ entry, tenants: members })
+  const onUpdate = useCallback(async (entry) => {
+    return updateEntry({ entry })
       .then(() => {
         showSuccessCallout({
           actionType: ACTION_TYPES.update,
           entry,
-          members,
         });
       })
       .then(refetch)
       .catch(skipAborted);
-  }, [allMembersLabel, refetch, selectedMembers, showSuccessCallout, updateEntry]);
+  }, [refetch, showSuccessCallout, updateEntry]);
 
   const handleDeleteEntry = useCallback((entry) => {
-    // TODO: use publish coordinator for the action handling
-
-    const members = entry.shared
-      ? [allMembersLabel]
-      : [selectedMembers.find(({ id: _id }) => _id === entry.tenantID)?.name];
-
     return deleteEntry({ entry })
       .then(() => {
         showSuccessCallout({
           actionType: ACTION_TYPES.delete,
           entry,
-          members,
         });
       })
       .then(refetch)
@@ -231,7 +223,7 @@ export const ConsortiaControlledVocabulary = ({
         buildDialog({ type: DIALOG_TYPES.itemInUse })
           .then(safeReject)
       ));
-  }, [allMembersLabel, buildDialog, deleteEntry, refetch, selectedMembers, showSuccessCallout]);
+  }, [buildDialog, deleteEntry, refetch, showSuccessCallout]);
 
   const onDelete = useCallback((uniqueFieldValue) => {
     const entryToDelete = entries.find(entry => entry[uniqueField] === uniqueFieldValue);

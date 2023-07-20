@@ -32,7 +32,7 @@ export const useSettingMutation = ({ path }) => {
       const { shared, ...json } = entry;
 
       if (shared) {
-        // TODO: implement editing of a shared setting
+        // TODO: implement creation of a shared setting
         return Promise.reject(new Error('Not implemented yet'));
       }
 
