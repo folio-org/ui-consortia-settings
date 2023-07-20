@@ -125,7 +125,10 @@
         "permissionName": "ui-consortia-settings.consortium-manager.view",
         "displayName": "Consortium manager: Can view existing settings",
         "subPermissions": [
-          "module.consortia-settings.enabled"
+          "module.consortia-settings.enabled",
+          "consortia.publications.item.get",
+          "consortia.publications.item.post",
+          "consortia.publications-results.item.get"
         ],
         "visible": true
       },
@@ -173,9 +176,6 @@
         "subPermissions": [
           "settings.consortia-settings.enabled",
           "consortia.consortium.collection.get",
-          "consortia.publications.item.get",
-          "consortia.publications.item.post",
-          "consortia.publications-results.item.get",
           "consortia.tenants.collection.get"
         ],
         "visible": true
