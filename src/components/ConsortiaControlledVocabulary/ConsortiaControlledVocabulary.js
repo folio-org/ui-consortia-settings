@@ -26,6 +26,10 @@ import {
 } from '@folio/stripes-acq-components';
 
 import { useConsortiumManagerContext } from '../../contexts';
+import {
+  useSettings,
+  useSettingMutation,
+} from '../../hooks/consortiumManager';
 import { translationsShape } from '../../shapes';
 import {
   ACTION_TYPES,
@@ -35,10 +39,6 @@ import {
   TRANSLATION_KEYS_MAP,
 } from './constants';
 import { FieldSharedEntry } from './FieldSharedEntry';
-import {
-  useEntries,
-  useEntryMutation,
-} from './hooks';
 import { renderLastUpdated } from './renderLastUpdated';
 
 /**
@@ -94,13 +94,13 @@ export const ConsortiaControlledVocabulary = ({
     totalRecords,
     isFetching: isEntriesFetching,
     refetch,
-  } = useEntries({ path, records, sortby });
+  } = useSettings({ path, records, sortby });
 
   const {
     createEntry,
     deleteEntry,
     updateEntry,
-  } = useEntryMutation({ path });
+  } = useSettingMutation({ path });
 
   const userIds = useMemo(() => uniq(
     entries

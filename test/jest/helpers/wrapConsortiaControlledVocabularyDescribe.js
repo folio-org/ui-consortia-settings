@@ -3,18 +3,18 @@ import { clone, uniqBy } from 'lodash';
 import { useUsersBatch } from '@folio/stripes-acq-components';
 
 import {
-  useEntries,
-  useEntryMutation,
-} from '../../../src/components/ConsortiaControlledVocabulary/hooks';
+  useSettings,
+  useSettingMutation,
+} from '../../../src/hooks/consortiumManager';
 
 jest.unmock('react-final-form-arrays');
 jest.mock('@folio/stripes-acq-components', () => ({
   ...jest.requireActual('@folio/stripes-acq-components'),
   useUsersBatch: jest.fn(),
 }));
-jest.mock('../../../src/components/ConsortiaControlledVocabulary/hooks', () => ({
-  useEntries: jest.fn(),
-  useEntryMutation: jest.fn(),
+jest.mock('../../../src/hooks/consortiumManager', () => ({
+  useSettings: jest.fn(),
+  useSettingMutation: jest.fn(),
 }));
 
 export const wrapConsortiaControlledVocabularyDescribe = ({
@@ -57,8 +57,8 @@ export const wrapConsortiaControlledVocabularyDescribe = ({
       mutationsMock.createEntry.mockClear();
       mutationsMock.updateEntry.mockClear();
       mutationsMock.deleteEntry.mockClear();
-      useEntries.mockClear().mockReturnValue(entriesMock);
-      useEntryMutation.mockClear().mockReturnValue(mutationsMock);
+      useSettings.mockClear().mockReturnValue(entriesMock);
+      useSettingMutation.mockClear().mockReturnValue(mutationsMock);
       useUsersBatch.mockClear().mockReturnValue(usersMock);
     });
 

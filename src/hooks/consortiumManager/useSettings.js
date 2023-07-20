@@ -1,4 +1,4 @@
-import { groupBy, sortBy } from 'lodash/fp';
+import { sortBy } from 'lodash/fp';
 import { stringify } from 'query-string';
 import { useQuery } from 'react-query';
 
@@ -11,46 +11,14 @@ import {
   OFFSET_PARAMETER,
 } from '@folio/stripes-acq-components';
 
-import {
-  CONTROLLED_VOCAB_LIMIT,
-  RECORD_SOURCE,
-} from '../../../constants';
-import { useConsortiumManagerContext } from '../../../contexts';
-import { throwErrorResponse } from '../../../utils';
-import { usePublishCoordinator } from '../../../hooks';
+import { CONTROLLED_VOCAB_LIMIT } from '../../constants';
+import { useConsortiumManagerContext } from '../../contexts';
+import { hydrateSharedRecords, throwErrorResponse } from '../../utils';
+import { usePublishCoordinator } from '../usePublishCoordinator';
 
 const DEFAULT_DATA = [];
 
-const squashSharedRecords = (records, sharedRecordIds) => {
-  return Object.entries(groupBy('id', records)).flatMap(([recordId, items]) => {
-    return sharedRecordIds.has(recordId)
-      ? [items.reduce((acc, curr) => Object.assign(acc, curr), {})]
-      : items;
-  });
-};
-
-const hydrateResults = (recordsField) => ({ publicationResults }) => {
-  const sharedRecordIds = new Set();
-
-  const flattenRecords = publicationResults.flatMap(({ tenantId, response }) => (
-    response[recordsField]?.map((item) => {
-      const shared = item.source === RECORD_SOURCE.CONSORTIUM;
-
-      if (shared) sharedRecordIds.add(item.id);
-
-      const additive = {
-        tenantId: shared ? undefined : tenantId,
-        shared,
-      };
-
-      return { ...item, ...additive };
-    })
-  ));
-
-  return squashSharedRecords(flattenRecords, sharedRecordIds);
-};
-
-export const useEntries = (params = {}, options = {}) => {
+export const useSettings = (params = {}, options = {}) => {
   const stripes = useStripes();
   const [namespace] = useNamespace();
   const { selectedMembers } = useConsortiumManagerContext();
@@ -92,7 +60,7 @@ export const useEntries = (params = {}, options = {}) => {
       };
 
       return initPublicationRequest(publication)
-        .then(hydrateResults(records))
+        .then(hydrateSharedRecords(records))
         .then(sortBy([sortby || 'name', 'tenantId']));
     },
     {

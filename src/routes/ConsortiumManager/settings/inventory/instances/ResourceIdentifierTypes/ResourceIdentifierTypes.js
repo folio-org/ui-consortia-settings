@@ -16,8 +16,8 @@ import { DEFAULT_ITEM_TEMPLATE } from '../../constants';
 
 const FIELDS_MAP = {
   name: 'name',
-  lastUpdated: 'lastUpdated',
   source: 'source',
+  lastUpdated: 'lastUpdated',
 };
 const READONLY_FIELDS = [FIELDS_MAP.source];
 const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
