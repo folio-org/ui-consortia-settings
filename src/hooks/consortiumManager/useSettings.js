@@ -61,7 +61,8 @@ export const useSettings = (params = {}, options = {}) => {
 
       return initPublicationRequest(publication)
         .then(hydrateSharedRecords(records, squashSharedSetting))
-        .then(sortBy([sortby || 'name', 'tenantId']));
+        .then(sortBy([sortby || 'name', 'tenantId']))
+        .catch(throwErrorResponse);
     },
     {
       enabled,
