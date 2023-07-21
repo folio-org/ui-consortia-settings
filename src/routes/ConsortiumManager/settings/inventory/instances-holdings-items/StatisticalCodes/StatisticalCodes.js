@@ -43,12 +43,10 @@ const formatStatisticalCodeTypeId = (statisticalCodeTypes) => (item) => {
   return record ? <p>{record.name}</p> : null;
 };
 
-const renderStatisticalCodeTypeField = (groupedStatisticalCodeTypes) => ({ fieldProps, field, rowIndex }) => (
+const renderStatisticalCodeTypeField = (groupedStatisticalCodeTypes) => (props) => (
   <FieldStatisticalCodeType
-    field={field}
-    rowIndex={rowIndex}
     groupedStatisticalCodeTypes={groupedStatisticalCodeTypes}
-    {...fieldProps}
+    {...props}
   />
 );
 

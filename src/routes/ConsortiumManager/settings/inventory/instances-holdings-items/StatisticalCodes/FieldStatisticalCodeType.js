@@ -8,9 +8,9 @@ import { Select } from '@folio/stripes/components';
 
 export const FieldStatisticalCodeType = ({
   field,
+  fieldProps,
   groupedStatisticalCodeTypes,
   rowIndex,
-  ...props
 }) => {
   const intl = useIntl();
   const { values } = useFormState();
@@ -33,7 +33,7 @@ export const FieldStatisticalCodeType = ({
       fullWidth
       dataOptions={dataOptions}
       placeholder={intl.formatMessage({ id: 'ui-inventory.selectStatisticalCode' })}
-      {...props}
+      {...fieldProps}
     />
   );
 };
@@ -47,6 +47,10 @@ FieldStatisticalCodeType.defaultProps = {
 
 FieldStatisticalCodeType.propTypes = {
   field: PropTypes.string.isRequired,
+  fieldProps: PropTypes.shape({
+    name: PropTypes.string,
+    'aria-label': PropTypes.string,
+  }).isRequired,
   groupedStatisticalCodeTypes: PropTypes.shape({
     local: PropTypes.object,
     shared: PropTypes.arrayOf(PropTypes.shape({

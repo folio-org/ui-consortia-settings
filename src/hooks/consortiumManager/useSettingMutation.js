@@ -21,9 +21,6 @@ export const useSettingMutation = ({ path }) => {
   const ky = useOkapiKy();
   const { initPublicationRequest } = usePublishCoordinator();
 
-  // Publications API requires `url` value to start with slash (`/`)
-  const url = path.startsWith('/') ? path : `/${path}`;
-
   const {
     isLoading: isEntryCreating,
     mutateAsync: createEntry,
@@ -37,7 +34,7 @@ export const useSettingMutation = ({ path }) => {
       }
 
       const publication = {
-        url,
+        url: path,
         method: 'POST',
         tenants,
         payload: { id: uuidv4(), ...json },

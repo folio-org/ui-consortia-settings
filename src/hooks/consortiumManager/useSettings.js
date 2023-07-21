@@ -37,8 +37,6 @@ export const useSettings = (params = {}, options = {}) => {
     [LIMIT_PARAMETER]: CONTROLLED_VOCAB_LIMIT,
     [OFFSET_PARAMETER]: 0,
   };
-  // Publications API requires `url` value to start with slash (`/`)
-  const url = path.startsWith('/') ? path : `/${path}`;
 
   const enabled = Boolean(
     path
@@ -56,7 +54,7 @@ export const useSettings = (params = {}, options = {}) => {
       if (!selectedMembers?.length) return DEFAULT_DATA;
 
       const publication = {
-        url: `${url}?${stringify(searchParams)}`,
+        url: `${path}?${stringify(searchParams)}`,
         method: 'GET',
         tenants: selectedMembers.map(({ id }) => id),
       };

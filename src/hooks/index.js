@@ -1,4 +1,3 @@
-export { useConsortiumMembers } from './useConsortiumMembers';
 export { useCurrentConsortium } from './useCurrentConsortium';
 export { usePublishCoordinator } from './usePublishCoordinator';
 export { useTenantKy } from './useTenantKy';

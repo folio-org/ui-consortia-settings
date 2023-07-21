@@ -36,7 +36,6 @@ export const usePublishCoordinator = (options = {}) => {
   useEffect(() => {
     return () => {
       abortController.current.abort();
-      console.log('usePublishCoordinator unmount');
     };
   }, []);
 
@@ -45,12 +44,7 @@ export const usePublishCoordinator = (options = {}) => {
 
     return ky.get(`${baseApi}/${id}/results`, { signal })
       .json()
-      .then(formatPublicationResult)
-      .then(r => {
-        console.log('formatPublicationResult', r);
-
-        return r;
-      });
+      .then(formatPublicationResult);
   }, [options.signal, ky, baseApi]);
 
   const getPublicationDetails = useCallback(async (requestId) => {
@@ -68,25 +62,27 @@ export const usePublishCoordinator = (options = {}) => {
 
     await new Promise((resolve) => setTimeout(resolve, TIMEOUT));
 
-    console.log('abortController.signal', signal);
-
     return !signal.aborted
       ? getPublicationDetails(id)
       : Promise.reject(signal);
   }, [baseApi, getPublicationResults, ky, options.signal]);
 
   const getPublicationResponse = useCallback(({ id, status }) => {
-    console.log('status', status);
     if (status === PUBLISH_COORDINATOR_STATUSES.COMPLETE) return getPublicationResults(id);
 
     return getPublicationDetails(id);
   }, [getPublicationDetails, getPublicationResults]);
 
-  const initPublicationRequest = useCallback((publication) => {
+  const initPublicationRequest = useCallback(({ url, ...publication }) => {
     abortController.current = new AbortController();
     const signal = options.signal || abortController.current.signal;
+    const json = {
+      // Publications API requires `url` value to start with slash (`/`)
+      url: url.startsWith('/') ? url : `/${url}`,
+      ...publication,
+    };
 
-    return ky.post(baseApi, { json: publication, signal })
+    return ky.post(baseApi, { json, signal })
       .json()
       .then(getPublicationResponse);
   }, [baseApi, getPublicationResponse, ky, options.signal]);
