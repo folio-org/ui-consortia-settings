@@ -1,17 +1,38 @@
-import { useTenantPermissions } from '../../../../../../../hooks';
+import { useQuery } from 'react-query';
+import { get } from 'lodash';
 
-export const usePermissionSet = ({ permissionSetId, tenantId }) => {
-  const { permissions, isLoading } = useTenantPermissions({
-    tenantId,
-    searchParams: {
-      query: `mutable==true and id==${permissionSetId}`,
-      expandSubs: true,
+import { useNamespace } from '@folio/stripes/core';
+
+import { useTenantKy } from '../../../../../../../hooks';
+
+const DEFAULT_DATA = {};
+
+export const usePermissionSet = ({ permissionSetId, tenantId, options = {} }) => {
+  const ky = useTenantKy({ tenantId });
+  const [namespace] = useNamespace({ key: 'view-permission-set' });
+
+  const searchParams = {
+    length: 10_000,
+    query: `mutable==true and id==${permissionSetId}`,
+    expandSubs: true,
+  };
+
+  const {
+    isLoading,
+    data = {},
+  } = useQuery(
+    [namespace],
+    ({ signal }) => ky.get('perms/permissions', { searchParams, signal }).json(),
+    {
+      enabled: Boolean(tenantId && permissionSetId),
+      ...options,
     },
-    permissionId: permissionSetId,
-  });
+  );
+
+  const permissionsSet = get(data, 'permissions[0]', DEFAULT_DATA);
 
   return ({
     isLoading,
-    permissionsSet: permissions[0] || {},
+    permissionsSet,
   });
 };
