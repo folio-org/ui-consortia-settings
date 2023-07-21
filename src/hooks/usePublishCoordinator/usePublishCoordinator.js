@@ -10,7 +10,6 @@ import {
   PUBLICATIONS_API,
   PUBLISH_COORDINATOR_STATUSES,
 } from '../../constants';
-import { throwErrorResponse } from '../../utils';
 
 const TIMEOUT = 2500;
 
