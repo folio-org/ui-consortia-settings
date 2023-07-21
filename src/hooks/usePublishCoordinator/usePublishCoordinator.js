@@ -10,6 +10,7 @@ import {
   PUBLICATIONS_API,
   PUBLISH_COORDINATOR_STATUSES,
 } from '../../constants';
+import { throwErrorResponse } from '../../utils';
 
 const TIMEOUT = 2500;
 
@@ -23,6 +24,26 @@ const formatPublicationResult = ({ publicationResults, totalRecords }) => {
     publicationResults: formattedResults,
     totalRecords,
   };
+};
+
+const throwPublicationErrorsResponse = (errors) => {
+  const { errorCode, errorMessage } = errors[0];
+
+  const body = new Blob(
+    [JSON.stringify({ errors })],
+    { type: 'application/json' },
+  );
+  const options = {
+    status: errorCode,
+    statusText: errorMessage,
+  };
+
+  const error = new Error(errorMessage);
+
+  error.status = errorCode;
+  error.response = new Response(body, options);
+
+  throw error;
 };
 
 export const usePublishCoordinator = (options = {}) => {
@@ -53,11 +74,10 @@ export const usePublishCoordinator = (options = {}) => {
     const {
       id,
       status,
-      request,
       errors,
     } = await ky.get(`${baseApi}/${requestId}`, { signal }).json();
 
-    if (status === PUBLISH_COORDINATOR_STATUSES.ERROR) throw { errors, request };
+    if (status === PUBLISH_COORDINATOR_STATUSES.ERROR) throwPublicationErrorsResponse(errors);
     if (status === PUBLISH_COORDINATOR_STATUSES.COMPLETE) return getPublicationResults(id);
 
     await new Promise((resolve) => setTimeout(resolve, TIMEOUT));

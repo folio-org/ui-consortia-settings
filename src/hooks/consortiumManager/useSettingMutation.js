@@ -40,7 +40,7 @@ export const useSettingMutation = ({ path }) => {
         payload: { id: uuidv4(), ...json },
       };
 
-      return initPublicationRequest(publication);
+      return initPublicationRequest(publication).catch(throwErrorResponse);
     },
   });
 
