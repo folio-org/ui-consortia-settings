@@ -247,7 +247,7 @@ export const ConsortiaControlledVocabulary = ({
   const formatter = useMemo(() => ({
     lastUpdated: ({ metadata }) => renderLastUpdated(metadata, users),
     shared: ({ tenantId, shared }) => (
-      shared ? <b>{allMembersLabel}</b> : selectedMembers?.find(({ id: _id }) => _id === tenantId)?.name
+      shared ? allMembersLabel : selectedMembers?.find(({ id: _id }) => _id === tenantId)?.name
     ),
     ...formatterProp,
   }), [allMembersLabel, formatterProp, selectedMembers, users]);
