@@ -23,12 +23,20 @@ export const pcPublicationResults = {
   publicationResults: [
     {
       tenantId: 'central',
-      response: '',
+      response: JSON.stringify({
+        items: [{
+          name: 'Test-1',
+        }],
+      }),
       statusCode: 0,
     },
     {
       tenantId: 'secondary',
-      response: '',
+      response: JSON.stringify({
+        items: [{
+          name: 'Test-2',
+        }],
+      }),
       statusCode: 0,
     },
   ],

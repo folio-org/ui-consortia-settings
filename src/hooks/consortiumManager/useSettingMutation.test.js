@@ -6,7 +6,13 @@ import {
 
 import { useOkapiKy } from '@folio/stripes/core';
 
+import { tenants } from 'fixtures';
+import { usePublishCoordinator } from '../usePublishCoordinator';
 import { useSettingMutation } from './useSettingMutation';
+
+jest.mock('../usePublishCoordinator', () => ({
+  usePublishCoordinator: jest.fn(),
+}));
 
 const queryClient = new QueryClient();
 
@@ -18,15 +24,18 @@ const wrapper = ({ children }) => (
 );
 
 const path = 'some-storage/entries';
-const entry = { id: 'test-id', name: 'foo' };
+const setting = { id: 'test-id', name: 'foo' };
+const localHydratedSetting = { ...setting, shared: false, tenantId: 'tenantId' };
 
 const kyMock = {
+  extend: jest.fn(() => kyMock),
   post: jest.fn(() => ({
-    json: () => Promise.resolve(entry),
+    json: () => Promise.resolve(localHydratedSetting),
   })),
   put: jest.fn(() => Promise.resolve()),
   delete: jest.fn(() => Promise.resolve()),
 };
+const initPublicationRequest = jest.fn(() => Promise.resolve());
 
 describe('useSettingMutation', () => {
   beforeEach(() => {
@@ -36,20 +45,36 @@ describe('useSettingMutation', () => {
     useOkapiKy
       .mockClear()
       .mockReturnValue(kyMock);
+    usePublishCoordinator.mockClear().mockReturnValue(({ initPublicationRequest }));
   });
 
-  it.each([
-    ['createEntry', kyMock.post, [path, { json: entry }]],
-    ['updateEntry', kyMock.put, [`${path}/${entry.id}`, { json: entry }]],
-    ['deleteEntry', kyMock.delete, [`${path}/${entry.id}`]],
-  ])('should handle \'%s\' mutation', async (fnName, mockedFn, args) => {
-    const { result, waitFor } = renderHook(() => useSettingMutation({ path }), { wrapper });
+  describe('Members local settings', () => {
+    it('should send POST request to create settings in the provided tenants', async () => {
+      const { result, waitFor } = renderHook(() => useSettingMutation({ path }), { wrapper });
 
-    const mutationFn = result.current[fnName];
+      await result.current.createEntry({ entry: localHydratedSetting, tenants });
+      await waitFor(() => !result.current.isLoading);
 
-    await mutationFn({ entry });
-    await waitFor(() => !result.current.isLoading);
+      expect(initPublicationRequest).toHaveBeenCalledWith({
+        method: 'POST',
+        payload: expect.objectContaining(setting),
+        tenants,
+        url: path,
+      });
+    });
 
-    expect(mockedFn).toHaveBeenCalledWith(...args);
+    it.each([
+      ['updateEntry', kyMock.put, [`${path}/${setting.id}`, { json: setting }]],
+      ['deleteEntry', kyMock.delete, [`${path}/${setting.id}`]],
+    ])('should handle \'%s\' mutation', async (fnName, mockedFn, args) => {
+      const { result, waitFor } = renderHook(() => useSettingMutation({ path }), { wrapper });
+
+      const mutationFn = result.current[fnName];
+
+      await mutationFn({ entry: localHydratedSetting });
+      await waitFor(() => !result.current.isLoading);
+
+      expect(mockedFn).toHaveBeenCalledWith(...args);
+    });
   });
 });

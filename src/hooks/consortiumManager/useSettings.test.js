@@ -4,70 +4,82 @@ import {
   QueryClientProvider,
 } from 'react-query';
 
-import { useOkapiKy } from '@folio/stripes/core';
+import { useStripes } from '@folio/stripes/core';
 
+import {
+  pcPublicationResults,
+  tenants,
+} from 'fixtures';
+import {
+  buildStripesObject,
+  ConsortiumManagerContextProviderMock,
+} from 'helpers';
+import { usePublishCoordinator } from '../usePublishCoordinator';
 import { useSettings } from './useSettings';
+import { RECORD_SOURCE } from '../../constants';
+
+jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes/core'),
+  useStripes: jest.fn(),
+  useNamespace: jest.fn(() => ['namespace']),
+}));
+
+jest.mock('../usePublishCoordinator', () => ({
+  usePublishCoordinator: jest.fn(),
+}));
 
 const queryClient = new QueryClient();
 
-// eslint-disable-next-line react/prop-types
 const wrapper = ({ children }) => (
   <QueryClientProvider client={queryClient}>
-    {children}
+    <ConsortiumManagerContextProviderMock>
+      {children}
+    </ConsortiumManagerContextProviderMock>
   </QueryClientProvider>
 );
 
 const path = 'some-storage/entries';
 const records = 'items';
+const publicationResults = pcPublicationResults.publicationResults.map(({ response, ...rest }) => ({
+  response: JSON.parse(response),
+  ...rest,
+}));
 const response = {
-  [records]: [
-    { id: 'test-id-1', name: 'foo' },
-    { id: 'test-id-2', name: 'bar' },
-  ],
+  publicationResults,
+  totalRecords: pcPublicationResults.totalRecords,
 };
 
-const kyMock = {
-  get: jest.fn(() => ({
-    json: () => Promise.resolve(response),
-  })),
+const initPublicationRequest = jest.fn();
+
+const publication = {
+  url: `${path}?limit=2000&offset=0`,
+  method: 'GET',
+  tenants: tenants.slice(3).map(({ id }) => id),
 };
 
 describe('useSettings', () => {
   beforeEach(() => {
-    kyMock.get.mockClear();
-    useOkapiKy
-      .mockClear()
-      .mockReturnValue(kyMock);
+    initPublicationRequest.mockClear().mockResolvedValue(response);
+    usePublishCoordinator.mockClear().mockReturnValue(({ initPublicationRequest }));
+    useStripes.mockClear().mockReturnValue(buildStripesObject());
   });
 
-  it('should send a request to \'path\' and get entity records', async () => {
+  it('should send a publish coordinator request to get settings', async () => {
     const { result, waitFor } = renderHook(() => useSettings({ path, records }), { wrapper });
 
     await waitFor(() => !result.current.isFetching);
 
-    expect(kyMock.get).toHaveBeenCalledWith(path, expect.objectContaining({
-      searchParams: expect.objectContaining({
-        query: 'cql.allRecords=1 sortby name',
-      }),
-    }));
-    expect(result.current.entries).toEqual(response[records]);
+    expect(initPublicationRequest).toHaveBeenCalledWith(publication);
   });
 
-  // TODO: update test - query not supported in PC
-  it('should apply sorting in the request', async () => {
-    const sortby = 'group/sort.descending';
-    const { result, waitFor } = renderHook(() => useSettings({
-      path,
-      records,
-      sortby,
-    }), { wrapper });
+  it('should hydrate settings with \'tenantId\' and \'shared\' values', async () => {
+    const { result, waitFor } = renderHook(() => useSettings({ path, records }), { wrapper });
 
     await waitFor(() => !result.current.isFetching);
 
-    expect(kyMock.get).toHaveBeenCalledWith(path, expect.objectContaining({
-      searchParams: expect.objectContaining({
-        query: `cql.allRecords=1 sortby ${sortby}`,
-      }),
-    }));
+    result.current.entries.forEach((item, i) => {
+      expect(item.tenantId).toEqual(publicationResults[i].tenantId);
+      expect(item.shared).toEqual(item.source === RECORD_SOURCE.CONSORTIUM);
+    });
   });
 });
