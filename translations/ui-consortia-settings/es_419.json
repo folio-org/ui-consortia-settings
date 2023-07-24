@@ -162,8 +162,8 @@
     "validation.error.maxLength": "La longitud no debe ser superior a {length} caracteres.",
     "validation.error.minLength": "La longitud no debe ser inferior a {length} caracteres.",
     "validation.error.mismatchLength": "La longitud debe ser {length, plural, one {# carácter} other {# caracteres}}.",
-    "consortiumManager.members.permissionSets.create.permissionSet.error": "The permission set was not successfully saved. {error}",
-    "consortiumManager.members.permissionSets.create.permissionSet.contentLabel": "Create permission set",
-    "consortiumManager.members.permissionSets.remove.permissionSet.success": "The permission set <strong>{permissionName}</strong> was successfully <strong>deleted</strong>.",
-    "consortiumManager.members.permissionSets.save.permissionSet.success": "The permission set <strong>{permissionName}</strong> was successfully <strong>saved</strong>."
+    "consortiumManager.members.permissionSets.create.permissionSet.error": "El conjunto de permisos no se ha guardado correctamente. {error}",
+    "consortiumManager.members.permissionSets.create.permissionSet.contentLabel": "Crear conjunto de permisos",
+    "consortiumManager.members.permissionSets.remove.permissionSet.success": "El conjunto de permisos <strong>{permissionName}</strong> se ha <strong>eliminado</strong> correctamente.",
+    "consortiumManager.members.permissionSets.save.permissionSet.success": "El conjunto de permisos <strong>{permissionName}</strong> se ha <strong>guardado</strong> correctamente."
 }
