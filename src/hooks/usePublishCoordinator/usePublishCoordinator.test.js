@@ -12,9 +12,11 @@ import {
   pcPublicationResults,
 } from 'fixtures';
 import { PUBLISH_COORDINATOR_STATUSES } from '../../constants';
-import { usePublishCoordinator } from './usePublishCoordinator';
+import { TIMEOUT, usePublishCoordinator } from './usePublishCoordinator';
 
 const queryClient = new QueryClient();
+
+const nativeResponse = global.Response;
 
 // eslint-disable-next-line react/prop-types
 const wrapper = ({ children }) => (
@@ -55,6 +57,14 @@ describe('usePublishCoordinator.test', () => {
     useOkapiKy.mockClear().mockReturnValue(kyMock);
   });
 
+  beforeAll(() => {
+    global.Response = global?.Response || class ResponseMock {};
+  });
+
+  afterAll(() => {
+    global.Response = nativeResponse;
+  });
+
   it('should initiate publish coordinator request to get records from provided tenants', async () => {
     const { result } = renderHook(() => usePublishCoordinator(), { wrapper });
 
@@ -67,9 +77,21 @@ describe('usePublishCoordinator.test', () => {
     expect(kyMock.post).toHaveBeenCalled();
   });
 
+  it('should return results if PC has managed to process the request on the first turn', async () => {
+    kyMock.post.mockReturnValue({ json: () => Promise.resolve({
+      ...pcPublicationDetails,
+      status: PUBLISH_COORDINATOR_STATUSES.COMPLETE,
+    }) });
+
+    const { result } = renderHook(() => usePublishCoordinator(), { wrapper });
+
+    const { initPublicationRequest } = result.current;
+
+    expect(await initPublicationRequest(pcPostRequest)).toEqual(response);
+  });
+
   it('should poll publish coordinator until the publication status is \'In progress\'', async () => {
     kyMock.get
-      .mockClear()
       .mockImplementationOnce(getMockedImplementation(PUBLISH_COORDINATOR_STATUSES.IN_PROGRESS))
       .mockImplementationOnce(getMockedImplementation(PUBLISH_COORDINATOR_STATUSES.IN_PROGRESS))
       .mockImplementation(getMockedImplementation(PUBLISH_COORDINATOR_STATUSES.COMPLETE));
@@ -81,5 +103,28 @@ describe('usePublishCoordinator.test', () => {
     expect(await initPublicationRequest(pcPostRequest)).toEqual(response);
     expect(getDetailsMock).toHaveBeenCalledTimes(3);
     expect(getResultsMock).toHaveBeenCalledTimes(1);
-  }, 10_000);
+  }, TIMEOUT * 3);
+
+  describe('Errors', () => {
+    it('should format publish coordinator result with \'Error\' status', async () => {
+      const errorMessage = 'Test error message';
+
+      getDetailsMock.mockClear().mockImplementation((status) => ({
+        ...pcPublicationDetails,
+        status,
+        errors: [{
+          tenantId: pcPostRequest.tenants[0],
+          errorMessage,
+          errorCode: 0,
+        }],
+      }));
+      kyMock.get.mockImplementation(getMockedImplementation(PUBLISH_COORDINATOR_STATUSES.ERROR));
+
+      const { result } = renderHook(() => usePublishCoordinator(), { wrapper });
+
+      const { initPublicationRequest } = result.current;
+
+      return expect(initPublicationRequest(pcPostRequest)).rejects.toThrowError(errorMessage);
+    });
+  });
 });

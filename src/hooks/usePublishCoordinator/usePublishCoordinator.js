@@ -11,7 +11,7 @@ import {
   PUBLISH_COORDINATOR_STATUSES,
 } from '../../constants';
 
-const TIMEOUT = 2500;
+export const TIMEOUT = 2500;
 
 const formatPublicationResult = ({ publicationResults, totalRecords }) => {
   const formattedResults = publicationResults.map(({ response, ...rest }) => ({

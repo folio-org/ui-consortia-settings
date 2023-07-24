@@ -31,9 +31,9 @@ export const wrapConsortiaControlledVocabularyDescribe = ({
   };
 
   const mutationsMock = {
-    createEntry: jest.fn(),
-    updateEntry: jest.fn(),
-    deleteEntry: jest.fn(),
+    createEntry: jest.fn(() => Promise.resolve()),
+    updateEntry: jest.fn(() => Promise.resolve()),
+    deleteEntry: jest.fn(() => Promise.resolve()),
     isLoading: false,
   };
 
