@@ -167,10 +167,11 @@ export const ConsortiaControlledVocabulary = ({
   const showSuccessCallout = useCallback(({ actionType, entry }) => {
     const translationKey = TRANSLATION_KEYS_MAP[actionType];
 
+    const getSeletedMembersNames = () => selectedMembers.map(({ name }) => name);
     const getLocalTenantName = () => [selectedMembers?.find(({ id: _id }) => entry.tenantId === _id)?.name];
 
     const membersGetters = {
-      [ACTION_TYPES.create]: () => selectedMembers.map(({ name }) => name),
+      [ACTION_TYPES.create]: getSeletedMembersNames,
       [ACTION_TYPES.delete]: getLocalTenantName,
       [ACTION_TYPES.update]: getLocalTenantName,
     };
