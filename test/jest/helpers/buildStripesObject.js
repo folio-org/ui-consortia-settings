@@ -19,6 +19,14 @@ export const buildStripesObject = (otherProperties = {}) => {
     setSinglePlugin: jest.fn(),
     setBindings: jest.fn(),
     connect: jest.fn(v => v),
+    user: {
+      user: {
+        consortium: {
+          id: '7afc7e04-02bd-4cf1-9a49-4b17e68d0518',
+          name: 'consortium-name',
+        },
+      },
+    },
     ...otherProperties,
   };
 

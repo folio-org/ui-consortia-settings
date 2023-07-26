@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 
+import { ConsortiaControlledVocabularyWrapper } from 'helpers';
 import { wrapConsortiaControlledVocabularyDescribe } from 'helpers/wrapConsortiaControlledVocabularyDescribe';
 
 import { RequestCancellationReasons } from './RequestCancellationReasons';
@@ -9,7 +9,7 @@ const renderRequestCancellationReasons = (props = {}) => render(
   <RequestCancellationReasons
     {...props}
   />,
-  { wrapper: MemoryRouter },
+  { wrapper: ConsortiaControlledVocabularyWrapper },
 );
 
 const entries = [

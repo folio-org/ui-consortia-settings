@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 
+import { ConsortiaControlledVocabularyWrapper } from 'helpers';
 import { wrapConsortiaControlledVocabularyDescribe } from 'helpers/wrapConsortiaControlledVocabularyDescribe';
 
 import { ClassificationTypes } from './ClassificationTypes';
@@ -9,7 +9,7 @@ const renderClassificationTypes = (props = {}) => render(
   <ClassificationTypes
     {...props}
   />,
-  { wrapper: MemoryRouter },
+  { wrapper: ConsortiaControlledVocabularyWrapper },
 );
 
 const entries = [

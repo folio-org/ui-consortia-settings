@@ -1,8 +1,10 @@
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 
-import { buildStripesObject } from 'helpers';
+import {
+  buildStripesObject,
+  ConsortiaControlledVocabularyWrapper,
+} from 'helpers';
 import { wrapConsortiaControlledVocabularyDescribe } from 'helpers/wrapConsortiaControlledVocabularyDescribe';
 
 import { Departments } from './Departments';
@@ -16,7 +18,7 @@ const renderDepartments = (props = {}) => render(
     {...defaultProps}
     {...props}
   />,
-  { wrapper: MemoryRouter },
+  { wrapper: ConsortiaControlledVocabularyWrapper },
 );
 
 const entries = [

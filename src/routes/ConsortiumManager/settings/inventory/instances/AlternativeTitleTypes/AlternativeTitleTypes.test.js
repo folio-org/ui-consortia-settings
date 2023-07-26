@@ -1,7 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 
-import { buildStripesObject } from 'helpers';
+import {
+  buildStripesObject,
+  ConsortiaControlledVocabularyWrapper,
+} from 'helpers';
 import { wrapConsortiaControlledVocabularyDescribe } from 'helpers/wrapConsortiaControlledVocabularyDescribe';
 
 import { AlternativeTitleTypes } from './AlternativeTitleTypes';
@@ -15,7 +17,7 @@ const renderAlternativeTitleTypes = (props = {}) => render(
     {...defaultProps}
     {...props}
   />,
-  { wrapper: MemoryRouter },
+  { wrapper: ConsortiaControlledVocabularyWrapper },
 );
 
 const entries = [

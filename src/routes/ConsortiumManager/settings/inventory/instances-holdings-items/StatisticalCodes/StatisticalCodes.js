@@ -4,21 +4,25 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 
 import { ConsortiaControlledVocabulary } from '../../../../../../components';
-import { STATISTICAL_CODES_API } from '../../../../../../constants';
+import {
+  STATISTICAL_CODES_API,
+  STATISTICAL_CODE_TYPES_API,
+} from '../../../../../../constants';
+import { useSettings } from '../../../../../../hooks/consortiumManager';
 import {
   SETTINGS,
   SETTINGS_BACK_LINKS,
 } from '../../../../constants';
+import { groupMembersSettings } from '../../../../utils';
 import { DEFAULT_ITEM_TEMPLATE } from '../../constants';
-import { useStatisticalCodeTypes } from '../hooks';
 import { FieldStatisticalCodeType } from './FieldStatisticalCodeType';
 import { validate } from './validate';
 
 const FIELDS_MAP = {
-  name: 'name',
   code: 'code',
-  source: 'source',
+  name: 'name',
   statisticalCodeTypeId: 'statisticalCodeTypeId',
+  source: 'source',
   lastUpdated: 'lastUpdated',
 };
 const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
@@ -39,10 +43,10 @@ const formatStatisticalCodeTypeId = (statisticalCodeTypes) => (item) => {
   return record ? <p>{record.name}</p> : null;
 };
 
-const renderStatisticalCodeTypeField = (statisticalCodeTypes) => ({ fieldProps }) => (
+const renderStatisticalCodeTypeField = (groupedStatisticalCodeTypes) => (props) => (
   <FieldStatisticalCodeType
-    statisticalCodeTypes={statisticalCodeTypes}
-    {...fieldProps}
+    groupedStatisticalCodeTypes={groupedStatisticalCodeTypes}
+    {...props}
   />
 );
 
@@ -50,12 +54,15 @@ export const StatisticalCodes = () => {
   const intl = useIntl();
 
   const {
+    entries: statisticalCodeTypes,
     isFetching,
-    statisticalCodeTypes,
-  } = useStatisticalCodeTypes();
+  } = useSettings({
+    path: STATISTICAL_CODE_TYPES_API,
+    records: 'statisticalCodeTypes',
+  });
 
   const fieldComponents = useMemo(() => ({
-    [FIELDS_MAP.statisticalCodeTypeId]: renderStatisticalCodeTypeField(statisticalCodeTypes),
+    [FIELDS_MAP.statisticalCodeTypeId]: renderStatisticalCodeTypeField(groupMembersSettings(statisticalCodeTypes)),
   }), [statisticalCodeTypes]);
 
   const formatter = useMemo(() => ({

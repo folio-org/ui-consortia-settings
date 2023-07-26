@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 
+import { ConsortiaControlledVocabularyWrapper } from 'helpers';
 import { wrapConsortiaControlledVocabularyDescribe } from 'helpers/wrapConsortiaControlledVocabularyDescribe';
 
 import { MaterialTypes } from './MaterialTypes';
@@ -9,7 +9,7 @@ const renderMaterialTypes = (props = {}) => render(
   <MaterialTypes
     {...props}
   />,
-  { wrapper: MemoryRouter },
+  { wrapper: ConsortiaControlledVocabularyWrapper },
 );
 
 const entries = [

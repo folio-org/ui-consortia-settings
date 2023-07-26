@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 
+import { ConsortiaControlledVocabularyWrapper } from 'helpers';
 import { wrapConsortiaControlledVocabularyDescribe } from 'helpers/wrapConsortiaControlledVocabularyDescribe';
 import { ContributorTypes } from './ContributorTypes';
 
@@ -9,7 +9,7 @@ const renderContributorTypes = (props = {}) => render(
   <ContributorTypes
     {...props}
   />,
-  { wrapper: MemoryRouter },
+  { wrapper: ConsortiaControlledVocabularyWrapper },
 );
 
 const entries = [

@@ -1,9 +1,10 @@
 import userEvent from '@testing-library/user-event';
 import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 
 import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 
+import { tenants } from 'fixtures';
+import { ConsortiaControlledVocabularyWrapper } from 'helpers';
 import { wrapConsortiaControlledVocabularyDescribe } from 'helpers/wrapConsortiaControlledVocabularyDescribe';
 import { ConsortiaControlledVocabulary } from './ConsortiaControlledVocabulary';
 
@@ -60,7 +61,7 @@ const renderConsortiaControlledVocabulary = (props = {}) => render(
     {...defaultProps}
     {...props}
   />,
-  { wrapper: MemoryRouter },
+  { wrapper: ConsortiaControlledVocabularyWrapper },
 );
 
 wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('ConsortiaControlledVocabulary', ({ mutations }) => {
@@ -86,6 +87,7 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
           foo: 'New',
           bar: 'Record',
         },
+        tenants: tenants.slice(3).map(({ id }) => id),
       });
     });
 

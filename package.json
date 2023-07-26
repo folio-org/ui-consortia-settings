@@ -59,7 +59,8 @@
     "react-final-form": "^6.5.9",
     "react-final-form-arrays": "^3.1.4",
     "react-final-form-listeners": "^1.0.3",
-    "react-router-prop-types": "^1.0.5"
+    "react-router-prop-types": "^1.0.5",
+    "uuid": "^9.0.0"
   },
   "peerDependencies": {
     "@folio/stripes": "^8.0.0",
@@ -124,7 +125,10 @@
         "permissionName": "ui-consortia-settings.consortium-manager.view",
         "displayName": "Consortium manager: Can view existing settings",
         "subPermissions": [
-          "module.consortia-settings.enabled"
+          "module.consortia-settings.enabled",
+          "consortia.publications.item.get",
+          "consortia.publications.item.post",
+          "consortia.publications-results.item.get"
         ],
         "visible": true
       },

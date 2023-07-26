@@ -19,10 +19,10 @@ const suppress = getSourceSuppressor(RECORD_SOURCE.MARC_RELATOR);
 const actionSuppression = { edit: suppress, delete: suppress };
 
 const FIELDS_MAP = {
-  code: 'code',
   name: 'name',
-  lastUpdated: 'lastUpdated',
+  code: 'code',
   source: 'source',
+  lastUpdated: 'lastUpdated',
 };
 const COLUMN_MAPPING = {
   [FIELDS_MAP.name]: <FormattedMessage id="ui-inventory.name" />,

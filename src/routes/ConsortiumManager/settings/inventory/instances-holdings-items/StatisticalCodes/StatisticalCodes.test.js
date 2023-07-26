@@ -1,25 +1,16 @@
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 
+import { ConsortiaControlledVocabularyWrapper } from 'helpers';
 import { wrapConsortiaControlledVocabularyDescribe } from 'helpers/wrapConsortiaControlledVocabularyDescribe';
 
 import { StatisticalCodes } from './StatisticalCodes';
-
-jest.mock('../hooks', () => ({
-  useStatisticalCodeTypes: jest.fn(() => ({
-    statisticalCodeTypes: [{
-      id: '0d3ec58e-dc3c-4aa1-9eba-180fca95c544',
-      name: 'Test',
-    }],
-  })),
-}));
 
 const renderStatisticalCodes = (props = {}) => render(
   <StatisticalCodes
     {...props}
   />,
-  { wrapper: MemoryRouter },
+  { wrapper: ConsortiaControlledVocabularyWrapper },
 );
 
 const entries = [
