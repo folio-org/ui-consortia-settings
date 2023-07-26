@@ -14,6 +14,7 @@ import {
 } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import { useStripes } from '@folio/stripes/core';
 import {
   Loading,
   Pane,
@@ -60,6 +61,7 @@ const EditableListMemoized = memo(EditableList);
 
 export const ConsortiaControlledVocabulary = ({
   actionProps: actionPropsProp,
+  actionSuppression: actionSuppressionProp,
   columnMapping: columnMappingProp,
   fieldComponents: fieldComponentsProp,
   firstMenu,
@@ -82,6 +84,7 @@ export const ConsortiaControlledVocabulary = ({
   const intl = useIntl();
   const paneTitleRef = useRef();
   const showCallout = useShowCallout();
+  const stripes = useStripes();
   const [activeDialog, setActiveDialog] = useState(null);
   const { selectedMembers } = useConsortiumManagerContext();
 
@@ -274,9 +277,14 @@ export const ConsortiaControlledVocabulary = ({
     ...actionPropsProp,
     create: (...args) => ({
       ...(actionPropsProp.create?.(...args) || {}),
-      disabled: !selectedMembers?.length,
+      disabled: !stripes.hasPerm('ui-consortia-settings.consortium-manager.edit') || !selectedMembers?.length,
     }),
-  }), [actionPropsProp, selectedMembers?.length]);
+  }), [actionPropsProp, selectedMembers?.length, stripes]);
+
+  const actionSuppression = useMemo(() => ({
+    delete: (item) => !stripes.hasPerm('ui-consortia-settings.consortium-manager.edit') || actionSuppressionProp.delete(item),
+    edit: (item) => !stripes.hasPerm('ui-consortia-settings.consortium-manager.edit') || actionSuppressionProp.edit(item),
+  }), [actionSuppressionProp, stripes]);
 
   const isLoading = isLoadingProp || isEntriesFetching || isUsersLoading;
 
@@ -303,6 +311,7 @@ export const ConsortiaControlledVocabulary = ({
             readOnlyFields={readOnlyFields}
             visibleFields={visibleFields}
             actionProps={actionProps}
+            actionSuppression={actionSuppression}
             onCreate={onCreate}
             onUpdate={onUpdate}
             onDelete={onDelete}
@@ -319,6 +328,10 @@ export const ConsortiaControlledVocabulary = ({
 
 ConsortiaControlledVocabulary.defaultProps = {
   actionProps: {},
+  actionSuppression: {
+    delete: () => false,
+    edit: () => false,
+  },
   columnMapping: {},
   fieldComponents: {},
   formatter: {},
@@ -336,6 +349,10 @@ ConsortiaControlledVocabulary.propTypes = {
     delete: PropTypes.func,
     edit: PropTypes.func,
     save: PropTypes.func,
+  }),
+  actionSuppression: PropTypes.shape({
+    delete: PropTypes.func,
+    edit: PropTypes.func,
   }),
   columnMapping: PropTypes.object,
   fieldComponents: PropTypes.object,
