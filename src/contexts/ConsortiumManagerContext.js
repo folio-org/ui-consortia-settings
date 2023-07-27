@@ -12,7 +12,10 @@ import {
   useStripes,
 } from '@folio/stripes/core';
 
-import { useUserAffiliations, useUserTenantsPermissions } from '../hooks';
+import {
+  useUserAffiliations,
+  useUserTenantsPermissions,
+} from '../hooks';
 
 const DEFAULT_SELECTED_MEMBERS = [];
 
@@ -63,7 +66,7 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
     const tenants = (Array.isArray(tenantIds) ? tenantIds : [tenantIds]).filter(Boolean);
     const perms = (Array.isArray(permissions) ? permissions : [permissions]).filter(Boolean);
 
-    return tenants.every((tenant) => perms.every(perm => permissionNamesMap[tenant]?.[perm]));
+    return tenants.every((tenant) => perms.every(perm => Boolean(permissionNamesMap[tenant]?.[perm])));
   }, [permissionNamesMap]);
 
   const contextValue = useMemo(() => ({

@@ -32,6 +32,11 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.instanceStatusType');
+const PERMISSIONS = {
+  create: 'inventory-storage.instance-statuses.item.post',
+  delete: 'inventory-storage.instance-statuses.item.delete',
+  update: 'inventory-storage.instance-statuses.item.put',
+};
 
 export const InstanceStatusTypes = () => {
   const intl = useIntl();
@@ -43,6 +48,7 @@ export const InstanceStatusTypes = () => {
       columnMapping={COLUMN_MAPPING}
       label={intl.formatMessage({ id: 'ui-inventory.instanceStatusType' })}
       path={INSTANCE_STATUSES_API}
+      permissions={PERMISSIONS}
       records="instanceStatuses"
       translations={TRANSLATIONS}
       actionSuppression={actionSuppression}

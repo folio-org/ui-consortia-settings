@@ -22,6 +22,11 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.URLrelationship');
+const PERMISSIONS = {
+  create: 'inventory-storage.electronic-access-relationships.item.post',
+  delete: 'inventory-storage.electronic-access-relationships.item.delete',
+  update: 'inventory-storage.electronic-access-relationships.item.put',
+};
 
 export const URLRelationships = () => {
   const intl = useIntl();
@@ -33,6 +38,7 @@ export const URLRelationships = () => {
       columnMapping={COLUMN_MAPPING}
       label={intl.formatMessage({ id: 'ui-inventory.URLrelationship' })}
       path={ELECTRONIC_ACCESS_RELATIONSHIPS_API}
+      permissions={PERMISSIONS}
       records="electronicAccessRelationships"
       translations={TRANSLATIONS}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}

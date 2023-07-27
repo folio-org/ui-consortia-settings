@@ -22,6 +22,11 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.materialTypes');
+const PERMISSIONS = {
+  create: 'inventory-storage.material-types.item.post',
+  delete: 'inventory-storage.material-types.item.delete',
+  update: 'inventory-storage.material-types.item.put',
+};
 
 export const MaterialTypes = () => {
   const intl = useIntl();
@@ -33,6 +38,7 @@ export const MaterialTypes = () => {
       columnMapping={COLUMN_MAPPING}
       label={intl.formatMessage({ id: 'ui-inventory.materialTypes' })}
       path={MATERIAL_TYPES_API}
+      permissions={PERMISSIONS}
       records="mtypes"
       translations={TRANSLATIONS}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}

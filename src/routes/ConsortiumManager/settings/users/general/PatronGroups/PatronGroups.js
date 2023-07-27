@@ -26,6 +26,11 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.lastUpdated]: <FormattedMessage id="stripes-smart-components.cv.lastUpdated" />,
 };
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.patronGroups');
+const PERMISSIONS = {
+  create: 'usergroups.item.post',
+  delete: 'usergroups.item.delete',
+  update: 'usergroups.item.put',
+};
 
 const isPositiveInteger = (n) => Number.isInteger(Number(n)) && Number.parseInt(n, 10) >= 1;
 const isValidExpirationOffset = (n) => (n ? isPositiveInteger(n) : true);
@@ -46,6 +51,7 @@ export const PatronGroups = () => {
       columnMapping={COLUMN_MAPPING}
       label={intl.formatMessage({ id: 'ui-users.information.patronGroups' })}
       path={PATRON_GROUPS_API}
+      permissions={PERMISSIONS}
       records="usergroups"
       translations={TRANSLATIONS}
       validate={validateFields}

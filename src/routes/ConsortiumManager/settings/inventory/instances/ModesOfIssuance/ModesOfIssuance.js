@@ -26,6 +26,11 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.modesOfIssuance');
+const PERMISSIONS = {
+  create: 'inventory-storage.modes-of-issuance.item.post',
+  delete: 'inventory-storage.modes-of-issuance.item.delete',
+  update: 'inventory-storage.modes-of-issuance.item.put',
+};
 
 const suppress = getSourceSuppressor(RECORD_SOURCE.RDA_MODE_ISSUE);
 const actionSuppression = { edit: suppress, delete: suppress };
@@ -40,6 +45,7 @@ export const ModesOfIssuance = () => {
       columnMapping={COLUMN_MAPPING}
       label={intl.formatMessage({ id: 'ui-inventory.modesOfIssuance' })}
       path={MODES_OF_ISSUANCE_API}
+      permissions={PERMISSIONS}
       records="issuanceModes"
       translations={TRANSLATIONS}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}
