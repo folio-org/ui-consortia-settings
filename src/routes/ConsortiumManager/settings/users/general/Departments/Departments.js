@@ -44,23 +44,22 @@ const squashSharedSetting = (sharedSettingRecords) => {
   }));
 };
 
+const actionSuppression = {
+  delete: item => item.usageNumber,
+  edit: () => false,
+};
+
 export const Departments = ({ stripes }) => {
   const intl = useIntl();
   const hasEditPerm = stripes.hasPerm('ui-users.settings.departments.edit');
   const hasDeletePerm = stripes.hasPerm('ui-users.settings.departments.delete');
   const hasCreatePerm = stripes.hasPerm('ui-users.settings.departments.create');
 
-  const actionSuppression = useMemo(() => ({
-    delete: item => !hasDeletePerm || item.usageNumber,
-    edit: () => !hasEditPerm,
-  }), [hasDeletePerm, hasEditPerm]);
-
   const columnMapping = useMemo(() => getColumnMapping({ intl }), [intl]);
 
   return (
     <ConsortiaControlledVocabulary
       id="departments"
-      canCreate={hasCreatePerm}
       firstMenu={SETTINGS_BACK_LINKS[SETTINGS.users]}
       actionSuppression={actionSuppression}
       columnMapping={columnMapping}

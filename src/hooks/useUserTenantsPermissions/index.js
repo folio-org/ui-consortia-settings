@@ -1,0 +1,1 @@
+export { useUserTenantsPermissions } from './useUserTenantsPermissions';

@@ -12,7 +12,7 @@ import {
   useStripes,
 } from '@folio/stripes/core';
 
-import { useUserAffiliations } from '../hooks';
+import { useUserAffiliations, useUserTenantsPermissions } from '../hooks';
 
 const DEFAULT_SELECTED_MEMBERS = [];
 
@@ -22,6 +22,7 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
   const stripes = useStripes();
   const [selectMembersDisabled, setSelectMembersDisabled] = useState();
   const selectedMembers = stripes?.user?.user?.selectedConsortiumMembers;
+  const userId = stripes?.user?.user?.id;
 
   const selectMembers = useCallback(async (members) => {
     await updateUser(stripes.store, {
@@ -38,9 +39,13 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
   }, [selectedMembers, selectMembers]);
 
   const { affiliations } = useUserAffiliations(
-    { userId: stripes?.user?.user?.id },
+    { userId },
     { onSuccess: initSelectedMembers },
   );
+
+  const { perms } = useUserTenantsPermissions({ userId, tenants: selectMembers.map(({ id }) => id) });
+
+  console.log('perms', perms);
 
   const contextValue = useMemo(() => ({
     affiliations,
