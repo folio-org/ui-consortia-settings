@@ -7,7 +7,10 @@ import { useStripes } from '@folio/stripes/core';
 
 import { affiliations } from '../test/jest/fixtures';
 import { MODULE_ROOT_ROUTE } from './constants';
-import { useUserAffiliations, useUserTenantsPermissions } from './hooks';
+import {
+  useUserAffiliations,
+  useUserTenantsPermissions,
+} from './hooks';
 import Root from './Root';
 
 jest.mock('@folio/stripes/core', () => ({

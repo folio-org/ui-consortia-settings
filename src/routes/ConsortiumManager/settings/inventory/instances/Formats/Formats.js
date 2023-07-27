@@ -23,17 +23,17 @@ const FIELDS_MAP = {
 };
 const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
 const READONLY_FIELDS = [FIELDS_MAP.source];
+const PERMISSIONS = {
+  create: 'inventory-storage.instance-formats.item.post',
+  delete: 'inventory-storage.instance-formats.item.delete',
+  update: 'inventory-storage.instance-formats.item.put',
+};
 const COLUMN_MAPPING = {
   [FIELDS_MAP.name]: <FormattedMessage id="ui-inventory.name" />,
   [FIELDS_MAP.code]: <FormattedMessage id="ui-consortia-settings.code" />,
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.formats');
-const PERMISSIONS = {
-  create: 'inventory-storage.instance-formats.item.post',
-  delete: 'inventory-storage.instance-formats.item.delete',
-  update: 'inventory-storage.instance-formats.item.put',
-};
 
 const suppress = getSourceSuppressor(RECORD_SOURCE.RDA_CARRIER);
 const actionSuppression = { edit: suppress, delete: suppress };
