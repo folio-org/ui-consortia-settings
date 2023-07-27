@@ -2,9 +2,9 @@ import { MemoryRouter } from 'react-router-dom';
 
 import { ConsortiumManagerContextProviderMock } from './ConsortiumManagerContextProviderMock';
 
-export const ConsortiaControlledVocabularyWrapper = ({ children }) => (
+export const ConsortiaControlledVocabularyWrapper = ({ children, context }) => (
   <MemoryRouter>
-    <ConsortiumManagerContextProviderMock>
+    <ConsortiumManagerContextProviderMock context={context}>
       {children}
     </ConsortiumManagerContextProviderMock>
   </MemoryRouter>
