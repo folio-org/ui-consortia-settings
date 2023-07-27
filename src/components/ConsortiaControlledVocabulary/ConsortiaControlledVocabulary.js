@@ -303,7 +303,7 @@ export const ConsortiaControlledVocabulary = ({
 
   const actionSuppression = useMemo(() => ({
     delete: (item) => actionSuppressionProp.delete(item) || !hasRequiredPerms(item, permissions[ACTION_TYPES.delete]),
-    edit: (item) => actionSuppressionProp.edit(item) || !hasRequiredPerms(item, permissions[ACTION_TYPES.edit]),
+    edit: (item) => actionSuppressionProp.edit(item) || !hasRequiredPerms(item, permissions[ACTION_TYPES.update]),
   }), [actionSuppressionProp, hasRequiredPerms, permissions]);
 
   const isLoading = (
