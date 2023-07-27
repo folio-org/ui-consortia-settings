@@ -1,31 +1,47 @@
 import { useQuery } from 'react-query';
 
+import { useNamespace } from '@folio/stripes/core';
+
 import { usePublishCoordinator } from '../usePublishCoordinator';
 import { PERMISSIONS_USERS_API } from '../../constants';
 
 const DEFAULT_DATA = {};
 
-export const useUserTenantsPermissions = ({ tenants = [], userId }, options = {}) => {
+export const useUserTenantsPermissions = (params = {}, options = {}) => {
+  const [namespace] = useNamespace('user-tenants-permissions');
   const { initPublicationRequest } = usePublishCoordinator();
+
+  const {
+    userId,
+    expanded = true,
+    full = false,
+    indexField = 'userId',
+    tenants = [],
+  } = params;
 
   const {
     isFetching,
     data = DEFAULT_DATA,
   } = useQuery(
-    [userId, tenants],
+    [namespace, userId, expanded, full, indexField, tenants],
     async () => {
       const searchParams = new URLSearchParams({
-        full: true,
-        indexField: 'userId',
+        expanded,
+        full,
+        indexField,
       });
 
-      const res = await initPublicationRequest({
+      const { publicationResults } = await initPublicationRequest({
         url: `${PERMISSIONS_USERS_API}/${userId}/permissions?${searchParams.toString()}`,
         method: 'GET',
         tenants,
       });
 
-      return res;
+      return publicationResults.reduce((acc, { response, tenantId }) => {
+        acc[tenantId] = response.permissionNames;
+
+        return acc;
+      }, {});
     },
     {
       enabled: Boolean(tenants?.length && userId),
@@ -35,8 +51,7 @@ export const useUserTenantsPermissions = ({ tenants = [], userId }, options = {}
   );
 
   return ({
-    perms: data,
-    totalRecords: data?.length,
+    permissionNames: data,
     isFetching,
   });
 };

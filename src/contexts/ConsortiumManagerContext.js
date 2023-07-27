@@ -38,23 +38,46 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
     }
   }, [selectedMembers, selectMembers]);
 
-  const { affiliations } = useUserAffiliations(
+  const {
+    affiliations,
+    isFetching: isAffiliationsFetching,
+  } = useUserAffiliations(
     { userId },
     { onSuccess: initSelectedMembers },
   );
 
-  const { perms } = useUserTenantsPermissions({ userId, tenants: selectMembers.map(({ id }) => id) });
+  const {
+    permissionNames,
+    isFetching: isPermissionsFetching,
+  } = useUserTenantsPermissions({ userId, tenants: selectedMembers?.map(({ id }) => id) });
 
-  console.log('perms', perms);
+  const isFetching = isPermissionsFetching || isAffiliationsFetching;
+
+  const permissionNamesMap = useMemo(() => Object.entries(permissionNames).reduce((acc, [tenant, perms]) => {
+    acc[tenant] = perms.reduce((_acc, perm) => ({ ..._acc, [perm]: true }), {});
+
+    return acc;
+  }, {}), [permissionNames]);
+
+  const hasPerm = useCallback((tenantIds, permissions) => {
+    const tenants = (Array.isArray(tenantIds) ? tenantIds : [tenantIds]).filter(Boolean);
+    const perms = (Array.isArray(permissions) ? permissions : [permissions]).filter(Boolean);
+
+    return tenants.every((tenant) => perms.every(perm => permissionNamesMap[tenant]?.[perm]));
+  }, [permissionNamesMap]);
 
   const contextValue = useMemo(() => ({
     affiliations,
+    hasPerm,
+    isFetching,
     selectedMembers: selectedMembers || DEFAULT_SELECTED_MEMBERS,
     selectMembers,
     selectMembersDisabled,
     setSelectMembersDisabled,
   }), [
     affiliations,
+    hasPerm,
+    isFetching,
     selectMembers,
     selectMembersDisabled,
     selectedMembers,

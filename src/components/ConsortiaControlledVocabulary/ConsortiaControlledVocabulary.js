@@ -87,7 +87,12 @@ export const ConsortiaControlledVocabulary = ({
   const showCallout = useShowCallout();
   const stripes = useStripes();
   const [activeDialog, setActiveDialog] = useState(null);
-  const { selectedMembers } = useConsortiumManagerContext();
+
+  const {
+    hasPerm,
+    selectedMembers,
+    isFetching: isContextDataFetching,
+  } = useConsortiumManagerContext();
 
   const panesetId = `${PANESET_PREFIX}${id}`;
   const primaryField = primaryFieldProp || visibleFieldsProp[0];
@@ -167,6 +172,12 @@ export const ConsortiaControlledVocabulary = ({
       setActiveDialog(Dialog);
     }).finally(setActiveDialog);
   }, [translations]);
+
+  const hasRequiredPerms = useCallback((item, perms) => {
+    return item.shared
+      ? stripes.hasPerm('ui-consortia-settings.consortium-manager.edit')
+      : hasPerm(item.tenantId, perms);
+  }, [hasPerm, stripes]);
 
   const showSuccessCallout = useCallback(({ actionType, entry }) => {
     const translationKey = TRANSLATION_KEYS_MAP[actionType];
@@ -276,18 +287,31 @@ export const ConsortiaControlledVocabulary = ({
 
   const actionProps = useMemo(() => ({
     ...actionPropsProp,
-    create: (...args) => ({
-      ...(actionPropsProp.create?.(...args) || {}),
-      disabled: !stripes.hasPerm('ui-consortia-settings.consortium-manager.edit') || !selectedMembers?.length,
-    }),
-  }), [actionPropsProp, selectedMembers?.length, stripes]);
+    create: (...args) => {
+      const actionCreateProps = actionPropsProp.create?.(...args) || {};
+
+      return {
+        ...actionCreateProps,
+        disabled: (
+          !selectedMembers?.length
+          || actionCreateProps.disabled
+          || !hasPerm(selectedMembers.map(({ id: _id }) => _id), permissions[ACTION_TYPES.create])
+        ),
+      };
+    },
+  }), [actionPropsProp, hasPerm, permissions, selectedMembers]);
 
   const actionSuppression = useMemo(() => ({
-    delete: (item) => !stripes.hasPerm('ui-consortia-settings.consortium-manager.edit') || actionSuppressionProp.delete(item),
-    edit: (item) => !stripes.hasPerm('ui-consortia-settings.consortium-manager.edit') || actionSuppressionProp.edit(item),
-  }), [actionSuppressionProp, stripes]);
+    delete: (item) => actionSuppressionProp.delete(item) || !hasRequiredPerms(item, permissions[ACTION_TYPES.delete]),
+    edit: (item) => actionSuppressionProp.edit(item) || !hasRequiredPerms(item, permissions[ACTION_TYPES.edit]),
+  }), [actionSuppressionProp, hasRequiredPerms, permissions]);
 
-  const isLoading = isLoadingProp || isEntriesFetching || isUsersLoading;
+  const isLoading = (
+    isLoadingProp
+    || isEntriesFetching
+    || isUsersLoading
+    || isContextDataFetching
+  );
 
   return (
     <Paneset id={panesetId}>

@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { NoValue } from '@folio/stripes/components';
-import { stripesShape } from '@folio/stripes/core';
 import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 
 import { ConsortiaControlledVocabulary } from '../../../../../../components';
@@ -49,11 +48,14 @@ const actionSuppression = {
   edit: () => false,
 };
 
-export const Departments = ({ stripes }) => {
+const permissions = {
+  create: 'departments.item.post',
+  delete: 'departments.item.delete',
+  update: 'departments.item.put',
+};
+
+export const Departments = () => {
   const intl = useIntl();
-  const hasEditPerm = stripes.hasPerm('ui-users.settings.departments.edit');
-  const hasDeletePerm = stripes.hasPerm('ui-users.settings.departments.delete');
-  const hasCreatePerm = stripes.hasPerm('ui-users.settings.departments.create');
 
   const columnMapping = useMemo(() => getColumnMapping({ intl }), [intl]);
 
@@ -62,6 +64,7 @@ export const Departments = ({ stripes }) => {
       id="departments"
       firstMenu={SETTINGS_BACK_LINKS[SETTINGS.users]}
       actionSuppression={actionSuppression}
+      permissions={permissions}
       columnMapping={columnMapping}
       formatter={FORMATTER}
       label={intl.formatMessage({ id: 'ui-users.departments' })}
@@ -73,8 +76,4 @@ export const Departments = ({ stripes }) => {
       visibleFields={VISIBLE_FIELDS}
     />
   );
-};
-
-Departments.propTypes = {
-  stripes: stripesShape,
 };
