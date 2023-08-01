@@ -60,8 +60,8 @@ const CREATE_BUTTON_LABEL = <FormattedMessage id="stripes-core.button.new" />;
 const EditableListMemoized = memo(EditableList);
 
 export const ConsortiaControlledVocabulary = ({
-  actionProps: actionPropsProp,
   actionSuppression: actionSuppressionProp,
+  canCreate: canCreateProp,
   columnMapping: columnMappingProp,
   fieldComponents: fieldComponentsProp,
   firstMenu,
@@ -285,21 +285,13 @@ export const ConsortiaControlledVocabulary = ({
     'shared',
   ], [visibleFieldsProp]);
 
-  const actionProps = useMemo(() => ({
-    ...actionPropsProp,
-    create: (...args) => {
-      const actionCreateProps = actionPropsProp.create?.(...args) || {};
-
-      return {
-        ...actionCreateProps,
-        disabled: (
-          !selectedMembers?.length
-          || actionCreateProps.disabled
-          || !hasPerm(selectedMembers.map(({ id: _id }) => _id), permissions[ACTION_TYPES.create])
-        ),
-      };
-    },
-  }), [actionPropsProp, hasPerm, permissions, selectedMembers]);
+  const canCreate = useMemo(() => {
+    return Boolean(
+      selectedMembers?.length
+      && hasPerm(selectedMembers.map(({ id: _id }) => _id), permissions[ACTION_TYPES.create])
+      && canCreateProp,
+    );
+  }, [canCreateProp, hasPerm, permissions, selectedMembers]);
 
   const actionSuppression = useMemo(() => ({
     delete: (item) => actionSuppressionProp.delete(item) || !hasRequiredPerms(item, permissions[ACTION_TYPES.delete]),
@@ -335,8 +327,8 @@ export const ConsortiaControlledVocabulary = ({
             columnMapping={columnMapping}
             readOnlyFields={readOnlyFields}
             visibleFields={visibleFields}
-            actionProps={actionProps}
             actionSuppression={actionSuppression}
+            canCreate={canCreate}
             onCreate={onCreate}
             onUpdate={onUpdate}
             onDelete={onDelete}
@@ -352,11 +344,11 @@ export const ConsortiaControlledVocabulary = ({
 };
 
 ConsortiaControlledVocabulary.defaultProps = {
-  actionProps: {},
   actionSuppression: {
     delete: () => false,
     edit: () => false,
   },
+  canCreate: true,
   columnMapping: {},
   fieldComponents: {},
   formatter: {},
@@ -368,17 +360,11 @@ ConsortiaControlledVocabulary.defaultProps = {
 };
 
 ConsortiaControlledVocabulary.propTypes = {
-  actionProps: PropTypes.shape({
-    cancel: PropTypes.func,
-    create: PropTypes.func,
-    delete: PropTypes.func,
-    edit: PropTypes.func,
-    save: PropTypes.func,
-  }),
   actionSuppression: PropTypes.shape({
     delete: PropTypes.func,
     edit: PropTypes.func,
   }),
+  canCreate: PropTypes.bool,
   columnMapping: PropTypes.object,
   fieldComponents: PropTypes.object,
   firstMenu: PropTypes.element,
@@ -388,9 +374,9 @@ ConsortiaControlledVocabulary.propTypes = {
   label: PropTypes.string,
   path: PropTypes.string.isRequired,
   permissions: PropTypes.shape({
+    create: PropTypes.string.isRequired,
     delete: PropTypes.string.isRequired,
-    post: PropTypes.string.isRequired,
-    put: PropTypes.string.isRequired,
+    update: PropTypes.string.isRequired,
   }).isRequired,
   primaryField: PropTypes.string,
   readOnlyFields: PropTypes.arrayOf(PropTypes.string),
