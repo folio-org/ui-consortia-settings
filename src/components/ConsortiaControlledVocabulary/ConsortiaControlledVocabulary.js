@@ -211,9 +211,18 @@ export const ConsortiaControlledVocabulary = ({
     });
   }, [allMembersLabel, primaryField, selectedMembers, showCallout, translations]);
 
+  const onShare = useCallback((entry) => {
+    // TODO: show modal
+    // return upsertSharedSetting({ entry });
+
+    return buildDialog({ type: DIALOG_TYPES.confirmShare })
+      .then(() => upsertSharedSetting({ entry }))
+      .catch(safeReject);
+  }, [buildDialog, upsertSharedSetting]);
+
   const onCreate = useCallback(async ({ shared, ...entry }) => {
     const createPromise = shared
-      ? upsertSharedSetting({ entry })
+      ? onShare(entry)
       : createEntry({
         entry,
         tenants: selectedMembers.map(({ id: _id }) => _id),
@@ -227,11 +236,11 @@ export const ConsortiaControlledVocabulary = ({
     })
       .then(refetch)
       .catch(skipAborted);
-  }, [createEntry, upsertSharedSetting, refetch, selectedMembers, showSuccessCallout]);
+  }, [onShare, createEntry, selectedMembers, refetch, showSuccessCallout]);
 
   const onUpdate = useCallback(async ({ shared, ...entry }) => {
     const updatePromise = shared
-      ? upsertSharedSetting({ entry })
+      ? onShare(entry)
       : updateEntry({ entry });
 
     return updatePromise.then(() => {
@@ -242,7 +251,7 @@ export const ConsortiaControlledVocabulary = ({
     })
       .then(refetch)
       .catch(skipAborted);
-  }, [refetch, showSuccessCallout, updateEntry, upsertSharedSetting]);
+  }, [onShare, refetch, showSuccessCallout, updateEntry]);
 
   const handleDeleteEntry = useCallback(({ shared, ...entry }) => {
     const deletePromise = shared
