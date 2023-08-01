@@ -27,18 +27,11 @@ export const useSettingMutation = ({ path }) => {
     mutateAsync: createEntry,
   } = useMutation({
     mutationFn: ({ entry, tenants }) => {
-      const { shared, ...json } = entry;
-
-      if (shared) {
-        // TODO: implement creation of a shared setting
-        return Promise.reject(new Error('Not implemented yet'));
-      }
-
       const publication = {
         url: path,
         method: 'POST',
         tenants,
-        payload: { id: uuidv4(), ...json },
+        payload: { id: uuidv4(), ...entry },
       };
 
       return initPublicationRequest(publication).catch(throwErrorResponse);
@@ -50,12 +43,7 @@ export const useSettingMutation = ({ path }) => {
     mutateAsync: updateEntry,
   } = useMutation({
     mutationFn: ({ entry }) => {
-      const { shared, tenantId, ...json } = entry;
-
-      if (shared) {
-        // TODO: implement editing of a shared setting
-        return Promise.reject(new Error('Not implemented yet'));
-      }
+      const { tenantId, ...json } = entry;
 
       return injectTenantHeader(ky, tenantId).put(`${path}/${entry.id}`, { json }).catch(throwErrorResponse);
     },
@@ -66,14 +54,9 @@ export const useSettingMutation = ({ path }) => {
     mutateAsync: deleteEntry,
   } = useMutation({
     mutationFn: ({ entry }) => {
-      const { shared, tenantId } = entry;
+      const { id, tenantId } = entry;
 
-      if (shared) {
-        // TODO: implement deletion of a shared setting
-        return Promise.reject(new Error('Not implemented yet'));
-      }
-
-      return injectTenantHeader(ky, tenantId).delete(`${path}/${entry.id}`).catch(throwErrorResponse);
+      return injectTenantHeader(ky, tenantId).delete(`${path}/${id}`).catch(throwErrorResponse);
     },
   });
 

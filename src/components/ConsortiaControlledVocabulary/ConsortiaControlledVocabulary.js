@@ -30,6 +30,7 @@ import { useConsortiumManagerContext } from '../../contexts';
 import {
   useSettings,
   useSettingMutation,
+  useSettingSharing,
 } from '../../hooks/consortiumManager';
 import { translationsShape } from '../../shapes';
 import {
@@ -116,6 +117,11 @@ export const ConsortiaControlledVocabulary = ({
     deleteEntry,
     updateEntry,
   } = useSettingMutation({ path });
+
+  const {
+    deleteSharedSetting,
+    upsertSharedSetting,
+  } = useSettingSharing({ path });
 
   const userIds = useMemo(() => uniq(
     entries
@@ -205,47 +211,56 @@ export const ConsortiaControlledVocabulary = ({
     });
   }, [allMembersLabel, primaryField, selectedMembers, showCallout, translations]);
 
-  const onCreate = useCallback(async (entry) => {
-    return createEntry({
-      entry,
-      tenants: selectedMembers.map(({ id: _id }) => _id),
+  const onCreate = useCallback(async ({ shared, ...entry }) => {
+    const createPromise = shared
+      ? upsertSharedSetting({ entry })
+      : createEntry({
+        entry,
+        tenants: selectedMembers.map(({ id: _id }) => _id),
+      });
+
+    return createPromise.then(() => {
+      showSuccessCallout({
+        actionType: ACTION_TYPES.create,
+        entry,
+      });
     })
-      .then(() => {
-        showSuccessCallout({
-          actionType: ACTION_TYPES.create,
-          entry,
-        });
-      })
       .then(refetch)
       .catch(skipAborted);
-  }, [createEntry, refetch, selectedMembers, showSuccessCallout]);
+  }, [createEntry, upsertSharedSetting, refetch, selectedMembers, showSuccessCallout]);
 
-  const onUpdate = useCallback(async (entry) => {
-    return updateEntry({ entry })
-      .then(() => {
-        showSuccessCallout({
-          actionType: ACTION_TYPES.update,
-          entry,
-        });
-      })
+  const onUpdate = useCallback(async ({ shared, ...entry }) => {
+    const updatePromise = shared
+      ? upsertSharedSetting({ entry })
+      : updateEntry({ entry });
+
+    return updatePromise.then(() => {
+      showSuccessCallout({
+        actionType: ACTION_TYPES.update,
+        entry,
+      });
+    })
       .then(refetch)
       .catch(skipAborted);
-  }, [refetch, showSuccessCallout, updateEntry]);
+  }, [refetch, showSuccessCallout, updateEntry, upsertSharedSetting]);
 
-  const handleDeleteEntry = useCallback((entry) => {
-    return deleteEntry({ entry })
-      .then(() => {
-        showSuccessCallout({
-          actionType: ACTION_TYPES.delete,
-          entry,
-        });
-      })
+  const handleDeleteEntry = useCallback(({ shared, ...entry }) => {
+    const deletePromise = shared
+      ? deleteSharedSetting({ entry })
+      : deleteEntry({ entry });
+
+    return deletePromise.then(() => {
+      showSuccessCallout({
+        actionType: ACTION_TYPES.delete,
+        entry,
+      });
+    })
       .then(refetch)
       .catch(() => (
         buildDialog({ type: DIALOG_TYPES.itemInUse })
           .then(safeReject)
       ));
-  }, [buildDialog, deleteEntry, refetch, showSuccessCallout]);
+  }, [buildDialog, deleteEntry, deleteSharedSetting, refetch, showSuccessCallout]);
 
   const onDelete = useCallback((uniqueFieldValue) => {
     const entryToDelete = entries.find(entry => entry[uniqueField] === uniqueFieldValue);

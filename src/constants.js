@@ -33,6 +33,7 @@ export const NATURE_OF_CONTENT_TERMS_API = 'nature-of-content-terms';
 export const PATRON_GROUPS_API = 'groups';
 export const PERMISSION_USERS_API = 'perms/users';
 export const PUBLICATIONS_API = 'publications';
+export const SETTINGS_SHARING_API = 'sharing/settings';
 export const STATISTICAL_CODE_TYPES_API = 'statistical-code-types';
 export const STATISTICAL_CODES_API = 'statistical-codes';
 /*  */
