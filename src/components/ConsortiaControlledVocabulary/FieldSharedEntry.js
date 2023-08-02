@@ -6,7 +6,7 @@ import { Field, useFormState } from 'react-final-form';
 import { useStripes } from '@folio/stripes/core';
 import { Checkbox } from '@folio/stripes/components';
 
-import { RECORD_SOURCE } from '../../constants';
+import { isSettingShared } from '../../utils';
 
 export const FieldSharedEntry = ({ fieldProps, field, rowIndex }) => {
   const stripes = useStripes();
@@ -14,7 +14,7 @@ export const FieldSharedEntry = ({ fieldProps, field, rowIndex }) => {
   const entryValues = get(values, [field, rowIndex]);
 
   const isEditing = Boolean(entryValues?.id);
-  const isShared = entryValues.source === RECORD_SOURCE.CONSORTIUM;
+  const isShared = isSettingShared(entryValues);
   const isDisabled = (isEditing && isShared) || !stripes.hasPerm('ui-consortia-settings.consortium-manager.share');
 
   return (

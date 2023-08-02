@@ -215,10 +215,10 @@ export const ConsortiaControlledVocabulary = ({
     // TODO: show modal
     // return upsertSharedSetting({ entry });
 
-    return buildDialog({ type: DIALOG_TYPES.confirmShare })
+    return buildDialog({ type: DIALOG_TYPES.confirmShare }, { term: entry[primaryField] })
       .then(() => upsertSharedSetting({ entry }))
       .catch(safeReject);
-  }, [buildDialog, upsertSharedSetting]);
+  }, [buildDialog, primaryField, upsertSharedSetting]);
 
   const onCreate = useCallback(async ({ shared, ...entry }) => {
     const createPromise = shared

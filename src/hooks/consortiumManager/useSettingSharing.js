@@ -9,10 +9,12 @@ import {
 
 import {
   CONSORTIA_API,
-  RECORD_SOURCE,
   SETTINGS_SHARING_API,
 } from '../../constants';
-import { throwErrorResponse } from '../../utils';
+import {
+  isSettingShared,
+  throwErrorResponse,
+} from '../../utils';
 import { usePublishCoordinator } from '../usePublishCoordinator';
 
 export const useSettingSharing = ({ path }, options = {}) => {
@@ -61,7 +63,7 @@ export const useSettingSharing = ({ path }, options = {}) => {
           id: settingId,
         },
       };
-      const isShared = entry.source === RECORD_SOURCE.CONSORTIUM;
+      const isShared = isSettingShared(entry);
 
       return initSettingSharingRequest(
         publication,

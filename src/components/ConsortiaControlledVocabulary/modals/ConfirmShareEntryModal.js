@@ -11,7 +11,7 @@ export const ConfirmShareEntryModal = ({
 }) => {
   return (
     <ConfirmationModal
-      id="delete-controlled-vocab-entry-confirmation"
+      id="share-controlled-vocab-entry-confirmation"
       open={open}
       heading={<FormattedMessage id="ui-consortia-settings.consortiumManager.modal.confirmShare.all.heading" />}
       message={(
@@ -26,4 +26,11 @@ export const ConfirmShareEntryModal = ({
       confirmLabel={<FormattedMessage id="ui-consortia-settings.confirm" />}
     />
   );
+};
+
+ConfirmShareEntryModal.propTypes = {
+  onCancel: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
+  open: PropTypes.bool,
+  term: PropTypes.string.isRequired,
 };
