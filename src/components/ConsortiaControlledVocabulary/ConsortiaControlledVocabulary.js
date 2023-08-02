@@ -212,13 +212,14 @@ export const ConsortiaControlledVocabulary = ({
   }, [allMembersLabel, primaryField, selectedMembers, showCallout, translations]);
 
   const onShare = useCallback((entry) => {
-    // TODO: show modal
-    // return upsertSharedSetting({ entry });
+    const entryToShare = entries.find(_entry => _entry[uniqueField] === entry[uniqueField]);
+
+    if (entryToShare?.shared) return upsertSharedSetting({ entry });
 
     return buildDialog({ type: DIALOG_TYPES.confirmShare }, { term: entry[primaryField] })
       .then(() => upsertSharedSetting({ entry }))
       .catch(safeReject);
-  }, [buildDialog, primaryField, upsertSharedSetting]);
+  }, [buildDialog, entries, primaryField, uniqueField, upsertSharedSetting]);
 
   const onCreate = useCallback(async ({ shared, ...entry }) => {
     const createPromise = shared

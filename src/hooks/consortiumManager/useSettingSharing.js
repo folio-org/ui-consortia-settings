@@ -11,11 +11,13 @@ import {
   CONSORTIA_API,
   SETTINGS_SHARING_API,
 } from '../../constants';
-import {
-  isSettingShared,
-  throwErrorResponse,
-} from '../../utils';
+import { throwErrorResponse } from '../../utils';
 import { usePublishCoordinator } from '../usePublishCoordinator';
+
+const getRequestId = (details) => (
+  details.createSettingsPCId
+  || details.updateSettingsPCId
+);
 
 export const useSettingSharing = ({ path }, options = {}) => {
   const ky = useOkapiKy();
@@ -33,7 +35,7 @@ export const useSettingSharing = ({ path }, options = {}) => {
     };
   }, []);
 
-  const initSettingSharingRequest = ({ url, ...setting }, { method, publicationKey }) => {
+  const initSettingSharingRequest = ({ url, ...setting }, { method }) => {
     abortController.current = new AbortController();
     const signal = options.signal || abortController.current.signal;
     const json = {
@@ -46,7 +48,7 @@ export const useSettingSharing = ({ path }, options = {}) => {
 
     return ky(api, { method, json, signal })
       .json()
-      .then(res => getPublicationDetails(res[publicationKey], { signal }))
+      .then(res => getPublicationDetails(getRequestId(res), { signal }))
       .catch(throwErrorResponse);
   };
 
@@ -63,15 +65,8 @@ export const useSettingSharing = ({ path }, options = {}) => {
           id: settingId,
         },
       };
-      const isShared = isSettingShared(entry);
 
-      return initSettingSharingRequest(
-        publication,
-        {
-          method: 'POST',
-          publicationKey: isShared ? 'updateSettingsPCId' : 'createSettingsPCId',
-        },
-      );
+      return initSettingSharingRequest(publication, { method: 'POST' });
     },
   });
 
@@ -87,7 +82,7 @@ export const useSettingSharing = ({ path }, options = {}) => {
       // TODO: implement creation of a shared setting
       return Promise.reject(new Error('Not implemented yet'));
 
-      // return initSettingSharingRequest(publication, { method: 'DELETE', publicationKey: 'pcId' });
+      // return initSettingSharingRequest(publication, { method: 'DELETE', upsert: false });
     },
   });
 

@@ -23,7 +23,7 @@ export const ConfirmShareEntryModal = ({
       onConfirm={onConfirm}
       onCancel={onCancel}
       cancelLabel={<FormattedMessage id="stripes-form.keepEditing" />}
-      confirmLabel={<FormattedMessage id="ui-consortia-settings.confirm" />}
+      confirmLabel={<FormattedMessage id="ui-consortia-settings.button.confirm" />}
     />
   );
 };
