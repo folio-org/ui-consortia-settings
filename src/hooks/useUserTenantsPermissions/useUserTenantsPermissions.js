@@ -2,8 +2,8 @@ import { useQuery } from 'react-query';
 
 import { useNamespace } from '@folio/stripes/core';
 
+import { PERMISSION_USERS_API } from '../../constants';
 import { usePublishCoordinator } from '../usePublishCoordinator';
-import { PERMISSIONS_USERS_API } from '../../constants';
 
 const DEFAULT_DATA = {};
 
@@ -32,7 +32,7 @@ export const useUserTenantsPermissions = (params = {}, options = {}) => {
       });
 
       const { publicationResults } = await initPublicationRequest({
-        url: `${PERMISSIONS_USERS_API}/${userId}/permissions?${searchParams.toString()}`,
+        url: `${PERMISSION_USERS_API}/${userId}/permissions?${searchParams.toString()}`,
         method: 'GET',
         tenants,
       });

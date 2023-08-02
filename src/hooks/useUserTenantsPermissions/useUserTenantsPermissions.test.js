@@ -6,7 +6,7 @@ import {
 
 import { tenants as tenantsMock } from 'fixtures';
 import { ConsortiumManagerContextProviderMock } from 'helpers';
-import { PERMISSIONS_USERS_API } from '../../constants';
+import { PERMISSION_USERS_API } from '../../constants';
 import { usePublishCoordinator } from '../usePublishCoordinator';
 import { useUserTenantsPermissions } from './useUserTenantsPermissions';
 
@@ -57,7 +57,7 @@ describe('useUserTenantsPermissions', () => {
     expect(initPublicationRequest).toHaveBeenCalledWith({
       method: 'GET',
       tenants,
-      url: expect.stringContaining(`${PERMISSIONS_USERS_API}/${userId}/permissions`),
+      url: expect.stringContaining(`${PERMISSION_USERS_API}/${userId}/permissions`),
     });
     expect(result.current.permissionNames).toEqual(expect.objectContaining(
       tenants.reduce((acc, tenantId) => ({ ...acc, [tenantId]: permissionNames }), {}),
