@@ -212,9 +212,9 @@ export const ConsortiaControlledVocabulary = ({
   }, [allMembersLabel, primaryField, selectedMembers, showCallout, translations]);
 
   const onShare = useCallback((entry) => {
-    const entryToShare = entries.find(_entry => _entry[uniqueField] === entry[uniqueField]);
+    const initEntryValue = entries.find(_entry => _entry[uniqueField] === entry[uniqueField]);
 
-    if (entryToShare?.shared) return upsertSharedSetting({ entry });
+    if (initEntryValue?.shared) return upsertSharedSetting({ entry });
 
     return buildDialog({ type: DIALOG_TYPES.confirmShare }, { term: entry[primaryField] })
       .then(() => upsertSharedSetting({ entry }))
