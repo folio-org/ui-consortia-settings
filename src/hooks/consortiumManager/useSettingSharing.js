@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useMutation } from 'react-query';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -9,15 +9,24 @@ import {
 
 import {
   CONSORTIA_API,
+  HTTP_METHODS,
   SETTINGS_SHARING_API,
 } from '../../constants';
 import { throwErrorResponse } from '../../utils';
 import { usePublishCoordinator } from '../usePublishCoordinator';
 
-const getRequestId = (details) => (
-  details.createSettingsPCId
-  || details.updateSettingsPCId
-);
+const PC_SHARE_DETAILS_KEYS = {
+  create: 'createSettingsPCId',
+  update: 'updateSettingsPCId',
+  // TODO: adjust with BE (MODCON-71)
+  delete: 'pcId',
+};
+
+const getRequestId = (pcDetails, method) => {
+  return method === HTTP_METHODS.DELETE
+    ? pcDetails[PC_SHARE_DETAILS_KEYS.delete]
+    : pcDetails[PC_SHARE_DETAILS_KEYS.update] || pcDetails[PC_SHARE_DETAILS_KEYS.create];
+};
 
 export const useSettingSharing = ({ path }, options = {}) => {
   const ky = useOkapiKy();
@@ -35,7 +44,7 @@ export const useSettingSharing = ({ path }, options = {}) => {
     };
   }, []);
 
-  const initSettingSharingRequest = ({ url, ...setting }, { method }) => {
+  const initSettingSharingRequest = useCallback(({ url, ...setting }, { method }) => {
     abortController.current = new AbortController();
     const signal = options.signal || abortController.current.signal;
     const json = {
@@ -44,20 +53,20 @@ export const useSettingSharing = ({ path }, options = {}) => {
       ...setting,
     };
 
-    const api = method === 'POST' ? baseApi : `${baseApi}/${setting.settingId}`;
+    const api = method === HTTP_METHODS.POST ? baseApi : `${baseApi}/${setting.settingId}`;
 
     return ky(api, { method, json, signal })
       .json()
-      .then(res => getPublicationDetails(getRequestId(res), { signal }))
+      .then(res => getPublicationDetails(getRequestId(res, method), { signal }))
       .catch(throwErrorResponse);
-  };
+  }, [baseApi, getPublicationDetails, ky, options.signal]);
 
   const {
     mutateAsync: upsertSharedSetting,
   } = useMutation({
     mutationFn: ({ entry }) => {
       const settingId = entry.id || uuidv4();
-      const publication = {
+      const request = {
         settingId,
         url: path,
         payload: {
@@ -66,7 +75,7 @@ export const useSettingSharing = ({ path }, options = {}) => {
         },
       };
 
-      return initSettingSharingRequest(publication, { method: 'POST' });
+      return initSettingSharingRequest(request, { method: HTTP_METHODS.POST });
     },
   });
 
@@ -74,15 +83,14 @@ export const useSettingSharing = ({ path }, options = {}) => {
     mutateAsync: deleteSharedSetting,
   } = useMutation({
     mutationFn: ({ entry }) => {
-      const publication = {
+      const request = {
         settingId: entry.id,
         url: `${path}/${entry.id}`,
       };
 
       // TODO: implement creation of a shared setting
-      return Promise.reject(new Error('Not implemented yet'));
-
-      // return initSettingSharingRequest(publication, { method: 'DELETE', upsert: false });
+      // return initSettingSharingRequest(request, { method: HTTP_METHODS.DELETE });
+      return Promise.reject(new Error('Not implemented yet' + JSON.stringify(request)));
     },
   });
 
