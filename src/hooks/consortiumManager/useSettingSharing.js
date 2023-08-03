@@ -88,7 +88,7 @@ export const useSettingSharing = ({ path }, options = {}) => {
         url: `${path}/${entry.id}`,
       };
 
-      // TODO: implement creation of a shared setting
+      // TODO: implement deletion of a shared setting
       // return initSettingSharingRequest(request, { method: HTTP_METHODS.DELETE });
       return Promise.reject(new Error('Not implemented yet' + JSON.stringify(request)));
     },
