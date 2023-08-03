@@ -142,7 +142,7 @@ export const ConsortiaControlledVocabulary = ({
     if (Array.isArray(items)) {
       const errors = items.reduce((acc, item, index) => {
         const itemErrors = Object.fromEntries(
-          Object.entries(validate(item, index, items) || {}).filter(([, value]) => Boolean(value)),
+          Object.entries(validate(item, index, items, entries) || {}).filter(([, value]) => Boolean(value)),
         );
 
         // Check if the primary field has had data entered into it.
@@ -164,7 +164,7 @@ export const ConsortiaControlledVocabulary = ({
     }
 
     return {};
-  }, [primaryField, validate]);
+  }, [entries, primaryField, validate]);
 
   const buildDialog = useCallback(({ type }, properties = {}) => {
     return new Promise((resolve, reject) => {
