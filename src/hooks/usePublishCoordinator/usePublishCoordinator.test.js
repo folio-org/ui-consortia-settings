@@ -36,6 +36,7 @@ const publicationResults = pcPublicationResults.publicationResults.map(({ respon
 }));
 const response = {
   publicationResults,
+  publicationErrors: [],
   totalRecords: pcPublicationResults.totalRecords,
 };
 
@@ -108,23 +109,23 @@ describe('usePublishCoordinator.test', () => {
   describe('Errors', () => {
     it('should format publish coordinator result with \'Error\' status', async () => {
       const errorMessage = 'Test error message';
+      const errorResult = {
+        tenantId: pcPostRequest.tenants[0],
+        response: errorMessage,
+        statusCode: 400,
+      };
 
-      getDetailsMock.mockClear().mockImplementation((status) => ({
-        ...pcPublicationDetails,
-        status,
-        errors: [{
-          tenantId: pcPostRequest.tenants[0],
-          errorMessage,
-          errorCode: 0,
-        }],
+      getResultsMock.mockClear().mockImplementation(() => ({
+        publicationResults: [errorResult],
       }));
-      kyMock.get.mockImplementation(getMockedImplementation(PUBLISH_COORDINATOR_STATUSES.ERROR));
 
       const { result } = renderHook(() => usePublishCoordinator(), { wrapper });
 
       const { initPublicationRequest } = result.current;
 
-      return expect(initPublicationRequest(pcPostRequest)).rejects.toThrowError(errorMessage);
+      return expect(await initPublicationRequest(pcPostRequest)).toEqual(expect.objectContaining({
+        publicationErrors: [errorResult],
+      }));
     });
   });
 });

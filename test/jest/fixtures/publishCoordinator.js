@@ -28,7 +28,7 @@ export const pcPublicationResults = {
           name: 'Test-1',
         }],
       }),
-      statusCode: 0,
+      statusCode: 200,
     },
     {
       tenantId: 'secondary',
@@ -37,7 +37,7 @@ export const pcPublicationResults = {
           name: 'Test-2',
         }],
       }),
-      statusCode: 0,
+      statusCode: 200,
     },
   ],
   totalRecords: 2,
