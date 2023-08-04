@@ -75,6 +75,7 @@ export const wrapConsortiaControlledVocabularyDescribe = ({
     callback({
       entries: entriesMock,
       mutations: mutationsMock,
+      sharing: sharingMock,
     });
   });
 };
