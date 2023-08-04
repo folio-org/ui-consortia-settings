@@ -14,6 +14,10 @@ jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useUserAffiliations: jest.fn(() => ({ affiliations: [], isFetching: false })),
 }));
+jest.mock('../../utils', () => ({
+  ...jest.requireActual('../../utils'),
+  getCurrentModulePath: jest.fn(() => 'https://folio.org'),
+}));
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
   updateTenant: jest.fn(),
@@ -76,7 +80,6 @@ describe('SwitchActiveAffiliation', () => {
 
     expect(updateTenant).toHaveBeenCalledWith(
       defaultProps.stripes.okapi,
-      defaultProps.stripes.store,
       tenants[2].id,
     );
   });
