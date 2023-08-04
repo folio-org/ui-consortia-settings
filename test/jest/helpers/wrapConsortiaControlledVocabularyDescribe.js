@@ -5,6 +5,7 @@ import { useUsersBatch } from '@folio/stripes-acq-components';
 import {
   useSettings,
   useSettingMutation,
+  useSettingSharing,
 } from '../../../src/hooks/consortiumManager';
 
 jest.unmock('react-final-form-arrays');
@@ -15,6 +16,7 @@ jest.mock('@folio/stripes-acq-components', () => ({
 jest.mock('../../../src/hooks/consortiumManager', () => ({
   useSettings: jest.fn(),
   useSettingMutation: jest.fn(),
+  useSettingSharing: jest.fn(),
 }));
 
 export const wrapConsortiaControlledVocabularyDescribe = ({
@@ -37,6 +39,11 @@ export const wrapConsortiaControlledVocabularyDescribe = ({
     isLoading: false,
   };
 
+  const sharingMock = {
+    deleteSharedSetting: jest.fn(() => Promise.resolve()),
+    upsertSharedSetting: jest.fn(() => Promise.resolve()),
+  };
+
   const usersMock = {
     users: uniqBy(
       entries.filter(({ metadata }) => Boolean(metadata?.updatedByUserId)),
@@ -57,8 +64,11 @@ export const wrapConsortiaControlledVocabularyDescribe = ({
       mutationsMock.createEntry.mockClear();
       mutationsMock.updateEntry.mockClear();
       mutationsMock.deleteEntry.mockClear();
+      sharingMock.deleteSharedSetting.mockClear();
+      sharingMock.upsertSharedSetting.mockClear();
       useSettings.mockClear().mockReturnValue(entriesMock);
       useSettingMutation.mockClear().mockReturnValue(mutationsMock);
+      useSettingSharing.mockClear().mockReturnValue(sharingMock);
       useUsersBatch.mockClear().mockReturnValue(usersMock);
     });
 

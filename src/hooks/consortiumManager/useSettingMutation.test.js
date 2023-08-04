@@ -25,7 +25,7 @@ const wrapper = ({ children }) => (
 
 const path = 'some-storage/entries';
 const setting = { id: 'test-id', name: 'foo' };
-const localHydratedSetting = { ...setting, shared: false, tenantId: 'tenantId' };
+const localHydratedSetting = { ...setting, tenantId: 'tenantId' };
 
 const kyMock = {
   extend: jest.fn(() => kyMock),
