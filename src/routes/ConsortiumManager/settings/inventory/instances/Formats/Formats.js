@@ -23,6 +23,11 @@ const FIELDS_MAP = {
 };
 const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
 const READONLY_FIELDS = [FIELDS_MAP.source];
+const PERMISSIONS = {
+  create: 'inventory-storage.instance-formats.item.post',
+  delete: 'inventory-storage.instance-formats.item.delete',
+  update: 'inventory-storage.instance-formats.item.put',
+};
 const COLUMN_MAPPING = {
   [FIELDS_MAP.name]: <FormattedMessage id="ui-inventory.name" />,
   [FIELDS_MAP.code]: <FormattedMessage id="ui-consortia-settings.code" />,
@@ -43,6 +48,7 @@ export const Formats = () => {
       columnMapping={COLUMN_MAPPING}
       label={intl.formatMessage({ id: 'ui-inventory.formats' })}
       path={INSTANCE_FORMATS_API}
+      permissions={PERMISSIONS}
       records="instanceFormats"
       translations={TRANSLATIONS}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}

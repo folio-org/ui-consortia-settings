@@ -34,6 +34,11 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.statisticalCodeTypeId]: <FormattedMessage id="ui-inventory.statisticalCodeTypes" />,
 };
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.statisticalCodes');
+const PERMISSIONS = {
+  create: 'inventory-storage.statistical-codes.item.post',
+  delete: 'inventory-storage.statistical-codes.item.delete',
+  update: 'inventory-storage.statistical-codes.item.put',
+};
 
 const formatStatisticalCodeTypeId = (statisticalCodeTypes) => (item) => {
   const record = Array.isArray(statisticalCodeTypes)
@@ -79,6 +84,7 @@ export const StatisticalCodes = () => {
       columnMapping={COLUMN_MAPPING}
       label={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}
       path={STATISTICAL_CODES_API}
+      permissions={PERMISSIONS}
       records="statisticalCodes"
       translations={TRANSLATIONS}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}

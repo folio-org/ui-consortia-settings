@@ -19,6 +19,11 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.name]: <FormattedMessage id="ui-inventory.loanType" />,
 };
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.loanTypes');
+const PERMISSIONS = {
+  create: 'inventory-storage.loan-types.item.post',
+  delete: 'inventory-storage.loan-types.item.delete',
+  update: 'inventory-storage.loan-types.item.put',
+};
 
 export const LoanTypes = () => {
   const intl = useIntl();
@@ -30,6 +35,7 @@ export const LoanTypes = () => {
       columnMapping={COLUMN_MAPPING}
       label={intl.formatMessage({ id: 'ui-inventory.loanTypes' })}
       path={LOAN_TYPES_API}
+      permissions={PERMISSIONS}
       records="loantypes"
       translations={TRANSLATIONS}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}

@@ -22,6 +22,11 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.statisticalCodeTypes');
+const PERMISSIONS = {
+  create: 'inventory-storage.statistical-code-types.item.post',
+  delete: 'inventory-storage.statistical-code-types.item.delete',
+  update: 'inventory-storage.statistical-code-types.item.put',
+};
 
 export const StatisticalCodeTypes = () => {
   const intl = useIntl();
@@ -33,6 +38,7 @@ export const StatisticalCodeTypes = () => {
       columnMapping={COLUMN_MAPPING}
       label={intl.formatMessage({ id: 'ui-inventory.statisticalCodeTypes' })}
       path={STATISTICAL_CODE_TYPES_API}
+      permissions={PERMISSIONS}
       records="statisticalCodeTypes"
       translations={TRANSLATIONS}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}

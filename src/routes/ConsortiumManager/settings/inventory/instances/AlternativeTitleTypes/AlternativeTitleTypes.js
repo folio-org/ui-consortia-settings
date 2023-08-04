@@ -22,6 +22,11 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.alternativeTitleTypes');
+const PERMISSIONS = {
+  create: 'inventory-storage.alternative-title-types.item.post',
+  delete: 'inventory-storage.alternative-title-types.item.delete',
+  update: 'inventory-storage.alternative-title-types.item.put',
+};
 
 export const AlternativeTitleTypes = () => {
   const intl = useIntl();
@@ -33,6 +38,7 @@ export const AlternativeTitleTypes = () => {
       columnMapping={COLUMN_MAPPING}
       label={intl.formatMessage({ id: 'ui-inventory.alternativeTitleTypes' })}
       path={ALTERNATIVE_TITLE_TYPES_API}
+      permissions={PERMISSIONS}
       records="alternativeTitleTypes"
       translations={TRANSLATIONS}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}

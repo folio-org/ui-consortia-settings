@@ -46,6 +46,11 @@ const defaultProps = {
   },
   label: 'Test vocabulary',
   path,
+  permissions: {
+    create: 'post',
+    delete: 'delete',
+    update: 'put',
+  },
   records,
   translations: getControlledVocabTranslations('ui-app'),
   validate: jest.fn(),

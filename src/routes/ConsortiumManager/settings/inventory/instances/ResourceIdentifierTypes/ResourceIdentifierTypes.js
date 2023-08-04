@@ -26,6 +26,11 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.resourceIdentifierTypes');
+const PERMISSIONS = {
+  create: 'inventory-storage.identifier-types.item.post',
+  delete: 'inventory-storage.identifier-types.item.delete',
+  update: 'inventory-storage.identifier-types.item.put',
+};
 
 const suppress = getSourceSuppressor(RECORD_SOURCE.FOLIO);
 const actionSuppression = { edit: suppress, delete: suppress };
@@ -40,6 +45,7 @@ export const ResourceIdentifierTypes = () => {
       columnMapping={COLUMN_MAPPING}
       label={intl.formatMessage({ id: 'ui-inventory.resourceIdentifierTypes' })}
       path={IDENTIFIERS_TYPES_API}
+      permissions={PERMISSIONS}
       records="identifierTypes"
       translations={TRANSLATIONS}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}

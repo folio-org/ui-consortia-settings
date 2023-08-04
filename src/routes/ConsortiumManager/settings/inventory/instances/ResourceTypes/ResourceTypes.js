@@ -29,6 +29,11 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.resourceTypes');
+const PERMISSIONS = {
+  create: 'inventory-storage.instance-types.item.post',
+  delete: 'inventory-storage.instance-types.item.delete',
+  update: 'inventory-storage.instance-types.item.put',
+};
 
 const suppress = getSourceSuppressor(RECORD_SOURCE.RDA_CONTENT);
 const actionSuppression = { edit: suppress, delete: suppress };
@@ -43,6 +48,7 @@ export const ResourceTypes = () => {
       columnMapping={COLUMN_MAPPING}
       label={intl.formatMessage({ id: 'ui-inventory.resourceTypes' })}
       path={INSTANCE_TYPES_API}
+      permissions={PERMISSIONS}
       records="instanceTypes"
       translations={TRANSLATIONS}
       actionSuppression={actionSuppression}

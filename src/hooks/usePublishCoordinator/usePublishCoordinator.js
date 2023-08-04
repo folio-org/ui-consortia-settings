@@ -1,3 +1,4 @@
+import partititon from 'lodash/partition';
 import { useCallback, useEffect, useRef } from 'react';
 
 import {
@@ -14,35 +15,18 @@ import {
 export const TIMEOUT = 2500;
 
 const formatPublicationResult = ({ publicationResults, totalRecords }) => {
-  const formattedResults = publicationResults.map(({ response, ...rest }) => ({
+  const [results, errors] = partititon(publicationResults, ({ statusCode }) => statusCode >= 200 && statusCode < 300);
+
+  const formattedResults = results.map(({ response, ...rest }) => ({
     response: JSON.parse(response),
     ...rest,
   }));
 
   return {
     publicationResults: formattedResults,
+    publicationErrors: errors,
     totalRecords,
   };
-};
-
-const throwPublicationErrorsResponse = (errors) => {
-  const { errorCode, errorMessage } = errors[0];
-
-  const body = new Blob(
-    [JSON.stringify({ errors })],
-    { type: 'application/json' },
-  );
-  const options = {
-    status: errorCode,
-    statusText: errorMessage,
-  };
-
-  const error = new Error(errorMessage);
-
-  error.status = errorCode;
-  error.response = new Response(body, options);
-
-  throw error;
 };
 
 export const usePublishCoordinator = (options = {}) => {
@@ -59,37 +43,28 @@ export const usePublishCoordinator = (options = {}) => {
     };
   }, []);
 
-  const getPublicationResults = useCallback((id) => {
-    const signal = options.signal || abortController.current.signal;
-
+  const getPublicationResults = useCallback((id, { signal }) => {
     return ky.get(`${baseApi}/${id}/results`, { signal })
       .json()
       .then(formatPublicationResult);
-  }, [options.signal, ky, baseApi]);
+  }, [ky, baseApi]);
 
-  const getPublicationDetails = useCallback(async (requestId) => {
-    const signal = options.signal || abortController.current.signal;
+  const getPublicationDetails = useCallback(async (requestId, { signal } = {}) => {
+    const { id, status } = await ky.get(`${baseApi}/${requestId}`, { signal }).json();
 
-    const {
-      id,
-      status,
-      errors,
-    } = await ky.get(`${baseApi}/${requestId}`, { signal }).json();
-
-    if (status === PUBLISH_COORDINATOR_STATUSES.ERROR) throwPublicationErrorsResponse(errors);
-    if (status === PUBLISH_COORDINATOR_STATUSES.COMPLETE) return getPublicationResults(id);
+    if (status !== PUBLISH_COORDINATOR_STATUSES.IN_PROGRESS) return getPublicationResults(id, { signal });
 
     await new Promise((resolve) => setTimeout(resolve, TIMEOUT));
 
-    return !signal.aborted
-      ? getPublicationDetails(id)
+    return !signal?.aborted
+      ? getPublicationDetails(id, { signal })
       : Promise.reject(signal);
-  }, [baseApi, getPublicationResults, ky, options.signal]);
+  }, [baseApi, getPublicationResults, ky]);
 
-  const getPublicationResponse = useCallback(({ id, status }) => {
-    if (status === PUBLISH_COORDINATOR_STATUSES.COMPLETE) return getPublicationResults(id);
+  const getPublicationResponse = useCallback(({ id, status }, { signal }) => {
+    if (status !== PUBLISH_COORDINATOR_STATUSES.IN_PROGRESS) return getPublicationResults(id, { signal });
 
-    return getPublicationDetails(id);
+    return getPublicationDetails(id, { signal });
   }, [getPublicationDetails, getPublicationResults]);
 
   const initPublicationRequest = useCallback(({ url, ...publication }) => {
@@ -103,10 +78,11 @@ export const usePublishCoordinator = (options = {}) => {
 
     return ky.post(baseApi, { json, signal })
       .json()
-      .then(getPublicationResponse);
+      .then(res => getPublicationResponse(res, { signal }));
   }, [baseApi, getPublicationResponse, ky, options.signal]);
 
   return {
     initPublicationRequest,
+    getPublicationDetails,
   };
 };

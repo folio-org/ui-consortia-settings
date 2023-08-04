@@ -26,6 +26,11 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.publicDescription]: <FormattedMessage id="ui-circulation.settings.cancelReasons.descriptionPublic" />,
 };
 const TRANSLATIONS = getControlledVocabTranslations('ui-circulation.settings.cancelReasons');
+const PERMISSIONS = {
+  create: 'circulation-storage.cancellation-reasons.item.post',
+  delete: 'circulation-storage.cancellation-reasons.item.delete',
+  update: 'circulation-storage.cancellation-reasons.item.put',
+};
 
 const actionSuppression = {
   edit: () => false,
@@ -42,6 +47,7 @@ export const RequestCancellationReasons = () => {
       firstMenu={SETTINGS_BACK_LINKS[SETTINGS.circulation]}
       label={intl.formatMessage({ id: 'ui-circulation.settings.cancelReasons.label' })}
       path={CANCELLATION_REASONS_API}
+      permissions={PERMISSIONS}
       records="cancellationReasons"
       translations={TRANSLATIONS}
       actionSuppression={actionSuppression}

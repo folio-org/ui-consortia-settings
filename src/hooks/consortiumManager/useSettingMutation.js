@@ -17,6 +17,7 @@ const injectTenantHeader = (ky, tenantId) => ky.extend({
   },
 });
 
+// TODO: handle PC result errors (UICONSET-112, UICONSET-113)
 export const useSettingMutation = ({ path }) => {
   const ky = useOkapiKy();
   const { initPublicationRequest } = usePublishCoordinator();

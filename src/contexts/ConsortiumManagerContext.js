@@ -12,7 +12,10 @@ import {
   useStripes,
 } from '@folio/stripes/core';
 
-import { useUserAffiliations } from '../hooks';
+import {
+  useUserAffiliations,
+  useUserTenantsPermissions,
+} from '../hooks';
 
 const DEFAULT_SELECTED_MEMBERS = [];
 
@@ -22,6 +25,7 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
   const stripes = useStripes();
   const [selectMembersDisabled, setSelectMembersDisabled] = useState();
   const selectedMembers = stripes?.user?.user?.selectedConsortiumMembers;
+  const userId = stripes?.user?.user?.id;
 
   const selectMembers = useCallback(async (members) => {
     await updateUser(stripes.store, {
@@ -37,19 +41,46 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
     }
   }, [selectedMembers, selectMembers]);
 
-  const { affiliations } = useUserAffiliations(
-    { userId: stripes?.user?.user?.id },
+  const {
+    affiliations,
+    isFetching: isAffiliationsFetching,
+  } = useUserAffiliations(
+    { userId },
     { onSuccess: initSelectedMembers },
   );
 
+  const {
+    permissionNames,
+    isFetching: isPermissionsFetching,
+  } = useUserTenantsPermissions({ userId, tenants: selectedMembers?.map(({ id }) => id) });
+
+  const isFetching = isPermissionsFetching || isAffiliationsFetching;
+
+  const permissionNamesMap = useMemo(() => Object.entries(permissionNames).reduce((acc, [tenant, perms]) => {
+    acc[tenant] = perms.reduce((_acc, perm) => ({ ..._acc, [perm]: true }), {});
+
+    return acc;
+  }, {}), [permissionNames]);
+
+  const hasPerm = useCallback((tenantIds, permissions) => {
+    const tenants = (Array.isArray(tenantIds) ? tenantIds : [tenantIds]).filter(Boolean);
+    const perms = (Array.isArray(permissions) ? permissions : [permissions]).filter(Boolean);
+
+    return tenants.every((tenant) => perms.every(perm => Boolean(permissionNamesMap[tenant]?.[perm])));
+  }, [permissionNamesMap]);
+
   const contextValue = useMemo(() => ({
     affiliations,
+    hasPerm,
+    isFetching,
     selectedMembers: selectedMembers || DEFAULT_SELECTED_MEMBERS,
     selectMembers,
     selectMembersDisabled,
     setSelectMembersDisabled,
   }), [
     affiliations,
+    hasPerm,
+    isFetching,
     selectMembers,
     selectMembersDisabled,
     selectedMembers,

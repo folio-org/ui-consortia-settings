@@ -32,6 +32,11 @@ const COLUMN_MAPPING = {
 const READONLY_FIELDS = [FIELDS_MAP.source];
 const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.contributorTypes');
+const PERMISSIONS = {
+  create: 'inventory-storage.contributor-types.item.post',
+  delete: 'inventory-storage.contributor-types.item.delete',
+  update: 'inventory-storage.contributor-types.item.put',
+};
 
 export const ContributorTypes = () => {
   const intl = useIntl();
@@ -43,6 +48,7 @@ export const ContributorTypes = () => {
       columnMapping={COLUMN_MAPPING}
       label={intl.formatMessage({ id: 'ui-inventory.contributorTypes' })}
       path={CONTRIBUTOR_TYPES_API}
+      permissions={PERMISSIONS}
       records="contributorTypes"
       translations={TRANSLATIONS}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}

@@ -29,6 +29,11 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.name]: <FormattedMessage id="ui-inventory.name" />,
 };
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.classificationTypes');
+const PERMISSIONS = {
+  create: 'inventory-storage.classification-types.item.post',
+  delete: 'inventory-storage.classification-types.item.delete',
+  update: 'inventory-storage.classification-types.item.put',
+};
 
 export const ClassificationTypes = () => {
   const intl = useIntl();
@@ -40,6 +45,7 @@ export const ClassificationTypes = () => {
       columnMapping={COLUMN_MAPPING}
       label={intl.formatMessage({ id: 'ui-inventory.classificationIdentifierTypes' })}
       path={CLASSIFICATION_TYPES_API}
+      permissions={PERMISSIONS}
       records="classificationTypes"
       translations={TRANSLATIONS}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}
