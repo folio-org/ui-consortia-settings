@@ -15,7 +15,7 @@ import {
 import { throwErrorResponse } from '../../utils';
 import { usePublishCoordinator } from '../usePublishCoordinator';
 
-const PC_SHARE_DETAILS_KEYS = {
+export const PC_SHARE_DETAILS_KEYS = {
   create: 'createSettingsPCId',
   update: 'updateSettingsPCId',
   // TODO: adjust with BE (MODCON-71)
@@ -62,6 +62,7 @@ export const useSettingSharing = ({ path }, options = {}) => {
   }, [baseApi, getPublicationDetails, ky, options.signal]);
 
   const {
+    isLoading: isUpserting,
     mutateAsync: upsertSharedSetting,
   } = useMutation({
     mutationFn: ({ entry }) => {
@@ -80,6 +81,7 @@ export const useSettingSharing = ({ path }, options = {}) => {
   });
 
   const {
+    isLoading: isDeleting,
     mutateAsync: deleteSharedSetting,
   } = useMutation({
     mutationFn: ({ entry }) => {
@@ -94,7 +96,10 @@ export const useSettingSharing = ({ path }, options = {}) => {
     },
   });
 
+  const isLoading = isUpserting || isDeleting;
+
   return {
+    isLoading,
     upsertSharedSetting,
     deleteSharedSetting,
   };
