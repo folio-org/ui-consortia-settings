@@ -57,7 +57,11 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
   const isFetching = isPermissionsFetching || isAffiliationsFetching;
 
   const permissionNamesMap = useMemo(() => Object.entries(permissionNames).reduce((acc, [tenant, perms]) => {
-    acc[tenant] = perms.reduce((_acc, perm) => ({ ..._acc, [perm]: true }), {});
+    acc[tenant] = perms.reduce((_acc, perm) => {
+      _acc[perm] = true;
+
+      return _acc;
+    }, {});
 
     return acc;
   }, {}), [permissionNames]);
