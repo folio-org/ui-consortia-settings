@@ -58,6 +58,8 @@ const skipAborted = (error) => {
 };
 
 const CREATE_BUTTON_LABEL = <FormattedMessage id="stripes-core.button.new" />;
+// Used in a translation to indicate a plural value.
+const SHARED_MEMBERS_COUNT = Number.MAX_SAFE_INTEGER;
 
 const EditableListMemoized = memo(EditableList);
 
@@ -205,7 +207,7 @@ export const ConsortiaControlledVocabulary = ({
     return showCallout({
       messageId: translations[translationKey] || `ui-consortia-settings.consortiumManager.controlledVocab.common.${translationKey}`,
       values: {
-        count: members.length,
+        count: entry.shared ? SHARED_MEMBERS_COUNT : members.length,
         members: members.join(', '),
         term: entry[primaryField],
       },
@@ -223,7 +225,8 @@ export const ConsortiaControlledVocabulary = ({
       .catch(safeReject);
   }, [buildDialog, entries, primaryField, uniqueField, upsertSharedSetting]);
 
-  const onCreate = useCallback(async ({ shared, ...entry }) => {
+  const onCreate = useCallback(async (hydratedEntry) => {
+    const { shared, ...entry } = hydratedEntry;
     const createPromise = shared
       ? onShare(entry)
       : createEntry({
@@ -234,14 +237,15 @@ export const ConsortiaControlledVocabulary = ({
     return createPromise.then(() => {
       showSuccessCallout({
         actionType: ACTION_TYPES.create,
-        entry,
+        entry: hydratedEntry,
       });
     })
       .then(refetch)
       .catch(skipAborted);
   }, [onShare, createEntry, selectedMembers, refetch, showSuccessCallout]);
 
-  const onUpdate = useCallback(async ({ shared, ...entry }) => {
+  const onUpdate = useCallback(async (hydratedEntry) => {
+    const { shared, ...entry } = hydratedEntry;
     const updatePromise = shared
       ? onShare(entry)
       : updateEntry({ entry });
@@ -249,14 +253,15 @@ export const ConsortiaControlledVocabulary = ({
     return updatePromise.then(() => {
       showSuccessCallout({
         actionType: ACTION_TYPES.update,
-        entry,
+        entry: hydratedEntry,
       });
     })
       .then(refetch)
       .catch(skipAborted);
   }, [onShare, refetch, showSuccessCallout, updateEntry]);
 
-  const handleDeleteEntry = useCallback(({ shared, ...entry }) => {
+  const handleDeleteEntry = useCallback((hydratedEntry) => {
+    const { shared, ...entry } = hydratedEntry;
     const deletePromise = shared
       ? deleteSharedSetting({ entry })
       : deleteEntry({ entry });
