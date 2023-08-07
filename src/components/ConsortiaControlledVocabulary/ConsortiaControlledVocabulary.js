@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import {
   noop,
+  omit,
   uniq,
   uniqueId,
 } from 'lodash';
@@ -211,7 +212,8 @@ export const ConsortiaControlledVocabulary = ({
     });
   }, [allMembersLabel, primaryField, selectedMembers, showCallout, translations]);
 
-  const onShare = useCallback((entry) => {
+  const onShare = useCallback((entryToShare) => {
+    const entry = omit(entryToShare, 'tenantId');
     const initEntryValue = entries.find(_entry => _entry[uniqueField] === entry[uniqueField]);
 
     if (initEntryValue?.shared) return upsertSharedSetting({ entry });

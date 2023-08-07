@@ -25,7 +25,7 @@ export const hydrateSharedRecords = (
 
       return { ...item, ...additive };
     })
-  ));
+  )).filter(Boolean);
 
   return Object.entries(groupBy(flattenRecords, 'id')).flatMap(([recordId, items]) => {
     return sharedRecordIds.has(recordId)

@@ -144,7 +144,8 @@
         "permissionName": "ui-consortia-settings.consortium-manager.share",
         "displayName": "Consortium manager: Can share settings to all members",
         "subPermissions": [
-          "ui-consortia-settings.consortium-manager.view"
+          "ui-consortia-settings.consortium-manager.view",
+          "consortia.sharing-settings.item.post"
         ],
         "visible": true
       },
