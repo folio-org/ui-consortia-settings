@@ -5,7 +5,6 @@ import {
 } from 'react';
 import { useIntl } from 'react-intl';
 import {
-  useHistory,
   useLocation,
 } from 'react-router-dom';
 
@@ -23,7 +22,6 @@ import { SwitchActiveAffiliationModal } from './SwitchActiveAffiliationModal';
 export const SwitchActiveAffiliation = ({ stripes }) => {
   const intl = useIntl();
   const location = useLocation();
-  const history = useHistory();
   const modules = useModules();
   const [open, toggle] = useToggle(true);
   const [submitting, toggleSubmit] = useToggle(false);
@@ -53,16 +51,15 @@ export const SwitchActiveAffiliation = ({ stripes }) => {
   const resetCurrentModule = useCallback(() => {
     const path = getCurrentModulePath(modules, location.pathname) ?? '/';
 
-    history.replace(path);
-    history.go(0);
-  }, [history, modules, location.pathname]);
+    window.location.href = path;
+  }, [modules, location.pathname]);
 
   const onSubmit = useCallback(async () => {
     const affiliation = affiliations.find(({ tenantId }) => tenantId === activeAffiliation);
 
     toggleSubmit();
 
-    await updateTenant(stripes.okapi, stripes.store, affiliation.tenantId);
+    await updateTenant(stripes.okapi, affiliation.tenantId);
 
     resetCurrentModule();
   // eslint-disable-next-line react-hooks/exhaustive-deps
