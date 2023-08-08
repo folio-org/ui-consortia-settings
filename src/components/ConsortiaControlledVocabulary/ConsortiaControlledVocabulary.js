@@ -94,6 +94,7 @@ export const ConsortiaControlledVocabulary = ({
 
   const {
     hasPerm,
+    permissionNamesMap,
     selectedMembers,
     isFetching: isContextDataFetching,
   } = useConsortiumManagerContext();
@@ -103,17 +104,42 @@ export const ConsortiaControlledVocabulary = ({
   const sortby = sortbyProp || primaryField;
   const allMembersLabel = intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.all' });
 
+  const handleSettingsLoading = ({ errors = [] }) => {
+    const forbiddenMembers = errors.filter(({ response }) => response?.startsWith('403'));
+
+    if (forbiddenMembers.length) {
+      const members = forbiddenMembers.reduce((acc, { tenantId }) => {
+        const memberName = selectedMembers.find(({ id: _id }) => tenantId === _id)?.name;
+
+        acc.push(memberName);
+
+        return acc;
+      }, []).join(', ');
+
+      showCallout({
+        messageId: 'ui-consortia-settings.consortiumManager.error.forbiddenMembers',
+        type: 'error',
+        values: { members },
+      });
+    }
+  };
+
   const {
     entries,
     totalRecords,
     isFetching: isEntriesFetching,
     refetch,
-  } = useSettings({
-    path,
-    records,
-    sortby,
-    squashSharedSetting,
-  });
+  } = useSettings(
+    {
+      path,
+      records,
+      sortby,
+      squashSharedSetting,
+    },
+    {
+      onSuccess: handleSettingsLoading,
+    },
+  );
 
   const {
     createEntry,
@@ -225,14 +251,33 @@ export const ConsortiaControlledVocabulary = ({
       .catch(safeReject);
   }, [buildDialog, entries, primaryField, uniqueField, upsertSharedSetting]);
 
+  const handleCreateEntry = useCallback(({ entry }) => {
+    if (!hasPerm(selectedMembers.map(({ id: _id }) => _id), permissions[ACTION_TYPES.create])) {
+      const members = selectedMembers
+        .filter(({ id: tenantId }) => {
+          return !permissionNamesMap[tenantId]?.[permissions[ACTION_TYPES.create]];
+        })
+        .map(({ name }) => name)
+        .join(', ');
+
+      return showCallout({
+        messageId: 'ui-consortia-settings.consortiumManager.error.forbiddenMembers',
+        type: 'error',
+        values: { members },
+      });
+    }
+
+    return createEntry({
+      entry,
+      tenants: selectedMembers.map(({ id: _id }) => _id),
+    });
+  }, [createEntry, hasPerm, permissionNamesMap, permissions, selectedMembers, showCallout]);
+
   const onCreate = useCallback(async (hydratedEntry) => {
     const { shared, ...entry } = hydratedEntry;
     const createPromise = shared
       ? onShare(entry)
-      : createEntry({
-        entry,
-        tenants: selectedMembers.map(({ id: _id }) => _id),
-      });
+      : handleCreateEntry({ entry });
 
     return createPromise.then(() => {
       showSuccessCallout({
@@ -242,7 +287,7 @@ export const ConsortiaControlledVocabulary = ({
     })
       .then(refetch)
       .catch(skipAborted);
-  }, [onShare, createEntry, selectedMembers, refetch, showSuccessCallout]);
+  }, [onShare, handleCreateEntry, refetch, showSuccessCallout]);
 
   const onUpdate = useCallback(async (hydratedEntry) => {
     const { shared, ...entry } = hydratedEntry;
@@ -320,10 +365,14 @@ export const ConsortiaControlledVocabulary = ({
   const canCreate = useMemo(() => {
     return Boolean(
       selectedMembers?.length
-      && hasPerm(selectedMembers.map(({ id: _id }) => _id), permissions[ACTION_TYPES.create])
+      && (
+        stripes.hasPerm('ui-consortia-settings.consortium-manager.share')
+        || stripes.hasPerm('ui-consortia-settings.consortium-manager.edit')
+        || hasPerm(selectedMembers.map(({ id: _id }) => _id), permissions[ACTION_TYPES.create])
+      )
       && canCreateProp,
     );
-  }, [canCreateProp, hasPerm, permissions, selectedMembers]);
+  }, [canCreateProp, hasPerm, permissions, selectedMembers, stripes]);
 
   const actionSuppression = useMemo(() => ({
     delete: (item) => actionSuppressionProp.delete(item) || !hasRequiredPerms(item, permissions[ACTION_TYPES.delete]),
