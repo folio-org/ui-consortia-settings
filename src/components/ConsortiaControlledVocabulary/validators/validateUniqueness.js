@@ -1,7 +1,7 @@
 import { FormattedMessage } from 'react-intl';
 
 const isInitiallyShared = (item, initialValues) => Boolean(
-  initialValues.find(({ id, tenantId }) => id === item.id && tenantId === item.tenantId)?.shared
+  initialValues.find(({ id, tenantId }) => id === item.id && tenantId === item.tenantId)?.shared,
 );
 
 export const validateUniqueness = ({
