@@ -165,5 +165,8 @@
     "consortiumManager.members.permissionSets.create.permissionSet.error": "Sada oprávnění nebyla úspěšně uložena. {error}",
     "consortiumManager.members.permissionSets.create.permissionSet.contentLabel": "Vytvořit sadu oprávnění",
     "consortiumManager.members.permissionSets.remove.permissionSet.success": "Sada oprávnění <strong>{permissionName}</strong> byla úspěšně <strong>smazána</strong> .",
-    "consortiumManager.members.permissionSets.save.permissionSet.success": "Sada oprávnění <strong>{permissionName}</strong> byla úspěšně <strong>uložena</strong> ."
+    "consortiumManager.members.permissionSets.save.permissionSet.success": "Sada oprávnění <strong>{permissionName}</strong> byla úspěšně <strong>uložena</strong> .",
+    "button.confirm": "Confirm",
+    "consortiumManager.modal.confirmShare.all.heading": "Confirm share to all",
+    "consortiumManager.modal.confirmShare.all.message": "Are you sure you want to share {term} with <b>ALL</b> members?"
 }
