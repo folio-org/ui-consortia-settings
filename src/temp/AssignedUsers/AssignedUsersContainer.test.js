@@ -17,6 +17,13 @@ import { getUpdatedUsersList } from './utils';
 jest.unmock('@folio/stripes/components');
 jest.unmock('@folio/stripes/util');
 
+jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes/core'),
+  useCallout: jest.fn(() => ({
+    sendCallout: jest.fn(),
+  })),
+}));
+
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   Loading: jest.fn(() => <div>Loading</div>),
