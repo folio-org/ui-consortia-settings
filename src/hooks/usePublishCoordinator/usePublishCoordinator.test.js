@@ -16,8 +16,6 @@ import { TIMEOUT, usePublishCoordinator } from './usePublishCoordinator';
 
 const queryClient = new QueryClient();
 
-const nativeResponse = global.Response;
-
 // eslint-disable-next-line react/prop-types
 const wrapper = ({ children }) => (
   <QueryClientProvider client={queryClient}>
@@ -56,14 +54,6 @@ describe('usePublishCoordinator.test', () => {
       json: () => Promise.resolve(pcPublicationDetails),
     }));
     useOkapiKy.mockClear().mockReturnValue(kyMock);
-  });
-
-  beforeAll(() => {
-    global.Response = global?.Response || class ResponseMock {};
-  });
-
-  afterAll(() => {
-    global.Response = nativeResponse;
   });
 
   it('should initiate publish coordinator request to get records from provided tenants', async () => {

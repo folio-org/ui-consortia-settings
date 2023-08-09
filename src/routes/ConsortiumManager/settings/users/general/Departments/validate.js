@@ -5,13 +5,14 @@ import {
   validateUniqueness,
 } from '../../../../../../components/ConsortiaControlledVocabulary/validators';
 
-export const validate = (item, index, items) => {
+export const validate = (item, index, items, initialValues) => {
   const validateFieldUniqueness = (field, message) => validateUniqueness({
     index,
     item,
     items,
     field,
     message,
+    initialValues,
   });
 
   const nameError = validateFieldUniqueness('name', <FormattedMessage id="ui-users.settings.departments.name.error" />);

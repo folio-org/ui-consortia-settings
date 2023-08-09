@@ -69,7 +69,7 @@ const renderConsortiaControlledVocabulary = (props = {}) => render(
   { wrapper: ConsortiaControlledVocabularyWrapper },
 );
 
-wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('ConsortiaControlledVocabulary', ({ mutations }) => {
+wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('ConsortiaControlledVocabulary', ({ mutations, sharing }) => {
   it('should render consortia-related controlled vocabulary', () => {
     renderConsortiaControlledVocabulary();
 
@@ -129,6 +129,45 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
       await waitForElementToBeRemoved(confirmDeleteBtn);
 
       expect(mutations.deleteEntry).toHaveBeenCalledWith({ entry: response[records][0] });
+    });
+  });
+
+  describe('Sharing', () => {
+    it('should handle new record sharing', async () => {
+      renderConsortiaControlledVocabulary();
+
+      userEvent.click(await screen.findByText('stripes-core.button.new'));
+      userEvent.type(await screen.findByPlaceholderText('foo'), 'New');
+      userEvent.type(await screen.findByPlaceholderText('bar'), 'Record');
+      userEvent.click(await screen.findByText('ui-consortia-settings.share'));
+      userEvent.click(await screen.findByText('stripes-core.button.save'));
+
+      const confirmBtn = await screen.findByText('ui-consortia-settings.button.confirm');
+
+      userEvent.click(confirmBtn);
+      await waitForElementToBeRemoved(confirmBtn);
+
+      expect(sharing.upsertSharedSetting).toHaveBeenCalledWith({
+        entry: {
+          foo: 'New',
+          bar: 'Record',
+        },
+      });
+    });
+
+    it('should handle existing record sharing', async () => {
+      renderConsortiaControlledVocabulary();
+
+      userEvent.click(screen.getAllByLabelText('stripes-components.editThisItem')[0]);
+      userEvent.click(await screen.findByText('ui-consortia-settings.share'));
+      userEvent.click(await screen.findByText('stripes-core.button.save'));
+
+      const confirmBtn = await screen.findByText('ui-consortia-settings.button.confirm');
+
+      userEvent.click(confirmBtn);
+      await waitForElementToBeRemoved(confirmBtn);
+
+      expect(sharing.upsertSharedSetting).toHaveBeenCalledWith({ entry: response[records][0] });
     });
   });
 

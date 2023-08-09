@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import {
   noop,
+  omit,
   uniq,
   uniqueId,
 } from 'lodash';
@@ -30,6 +31,7 @@ import { useConsortiumManagerContext } from '../../contexts';
 import {
   useSettings,
   useSettingMutation,
+  useSettingSharing,
 } from '../../hooks/consortiumManager';
 import { translationsShape } from '../../shapes';
 import {
@@ -56,6 +58,8 @@ const skipAborted = (error) => {
 };
 
 const CREATE_BUTTON_LABEL = <FormattedMessage id="stripes-core.button.new" />;
+// Used in a translation to indicate a plural value.
+const SHARED_MEMBERS_COUNT = Number.MAX_SAFE_INTEGER;
 
 const EditableListMemoized = memo(EditableList);
 
@@ -117,6 +121,11 @@ export const ConsortiaControlledVocabulary = ({
     updateEntry,
   } = useSettingMutation({ path });
 
+  const {
+    deleteSharedSetting,
+    upsertSharedSetting,
+  } = useSettingSharing({ path });
+
   const userIds = useMemo(() => uniq(
     entries
       .map(({ metadata }) => metadata?.updatedByUserId)
@@ -136,7 +145,7 @@ export const ConsortiaControlledVocabulary = ({
     if (Array.isArray(items)) {
       const errors = items.reduce((acc, item, index) => {
         const itemErrors = Object.fromEntries(
-          Object.entries(validate(item, index, items) || {}).filter(([, value]) => Boolean(value)),
+          Object.entries(validate(item, index, items, entries) || {}).filter(([, value]) => Boolean(value)),
         );
 
         // Check if the primary field has had data entered into it.
@@ -158,7 +167,7 @@ export const ConsortiaControlledVocabulary = ({
     }
 
     return {};
-  }, [primaryField, validate]);
+  }, [entries, primaryField, validate]);
 
   const buildDialog = useCallback(({ type }, properties = {}) => {
     return new Promise((resolve, reject) => {
@@ -198,54 +207,77 @@ export const ConsortiaControlledVocabulary = ({
     return showCallout({
       messageId: translations[translationKey] || `ui-consortia-settings.consortiumManager.controlledVocab.common.${translationKey}`,
       values: {
-        count: members.length,
+        count: entry.shared ? SHARED_MEMBERS_COUNT : members.length,
         members: members.join(', '),
         term: entry[primaryField],
       },
     });
   }, [allMembersLabel, primaryField, selectedMembers, showCallout, translations]);
 
-  const onCreate = useCallback(async (entry) => {
-    return createEntry({
-      entry,
-      tenants: selectedMembers.map(({ id: _id }) => _id),
+  const onShare = useCallback((entryToShare) => {
+    const entry = omit(entryToShare, 'tenantId');
+    const initEntryValue = entries.find(_entry => _entry[uniqueField] === entry[uniqueField]);
+
+    if (initEntryValue?.shared) return upsertSharedSetting({ entry });
+
+    return buildDialog({ type: DIALOG_TYPES.confirmShare }, { term: entry[primaryField] })
+      .then(() => upsertSharedSetting({ entry }))
+      .catch(safeReject);
+  }, [buildDialog, entries, primaryField, uniqueField, upsertSharedSetting]);
+
+  const onCreate = useCallback(async (hydratedEntry) => {
+    const { shared, ...entry } = hydratedEntry;
+    const createPromise = shared
+      ? onShare(entry)
+      : createEntry({
+        entry,
+        tenants: selectedMembers.map(({ id: _id }) => _id),
+      });
+
+    return createPromise.then(() => {
+      showSuccessCallout({
+        actionType: ACTION_TYPES.create,
+        entry: hydratedEntry,
+      });
     })
-      .then(() => {
-        showSuccessCallout({
-          actionType: ACTION_TYPES.create,
-          entry,
-        });
-      })
       .then(refetch)
       .catch(skipAborted);
-  }, [createEntry, refetch, selectedMembers, showSuccessCallout]);
+  }, [onShare, createEntry, selectedMembers, refetch, showSuccessCallout]);
 
-  const onUpdate = useCallback(async (entry) => {
-    return updateEntry({ entry })
-      .then(() => {
-        showSuccessCallout({
-          actionType: ACTION_TYPES.update,
-          entry,
-        });
-      })
+  const onUpdate = useCallback(async (hydratedEntry) => {
+    const { shared, ...entry } = hydratedEntry;
+    const updatePromise = shared
+      ? onShare(entry)
+      : updateEntry({ entry });
+
+    return updatePromise.then(() => {
+      showSuccessCallout({
+        actionType: ACTION_TYPES.update,
+        entry: hydratedEntry,
+      });
+    })
       .then(refetch)
       .catch(skipAborted);
-  }, [refetch, showSuccessCallout, updateEntry]);
+  }, [onShare, refetch, showSuccessCallout, updateEntry]);
 
-  const handleDeleteEntry = useCallback((entry) => {
-    return deleteEntry({ entry })
-      .then(() => {
-        showSuccessCallout({
-          actionType: ACTION_TYPES.delete,
-          entry,
-        });
-      })
+  const handleDeleteEntry = useCallback((hydratedEntry) => {
+    const { shared, ...entry } = hydratedEntry;
+    const deletePromise = shared
+      ? deleteSharedSetting({ entry })
+      : deleteEntry({ entry });
+
+    return deletePromise.then(() => {
+      showSuccessCallout({
+        actionType: ACTION_TYPES.delete,
+        entry,
+      });
+    })
       .then(refetch)
       .catch(() => (
         buildDialog({ type: DIALOG_TYPES.itemInUse })
           .then(safeReject)
       ));
-  }, [buildDialog, deleteEntry, refetch, showSuccessCallout]);
+  }, [buildDialog, deleteEntry, deleteSharedSetting, refetch, showSuccessCallout]);
 
   const onDelete = useCallback((uniqueFieldValue) => {
     const entryToDelete = entries.find(entry => entry[uniqueField] === uniqueFieldValue);

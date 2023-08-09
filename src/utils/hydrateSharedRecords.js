@@ -1,6 +1,6 @@
 import groupBy from 'lodash/groupBy';
 
-import { RECORD_SOURCE } from '../constants';
+import { isSettingShared } from './isSettingShared';
 
 const defaultSquashFn = (sharedSettingRecords) => {
   return sharedSettingRecords.reduce((acc, curr) => Object.assign(acc, curr), {});
@@ -14,7 +14,7 @@ export const hydrateSharedRecords = (
 
   const flattenRecords = publicationResults.flatMap(({ tenantId, response }) => (
     response[recordsField]?.map((item) => {
-      const shared = item.source === RECORD_SOURCE.CONSORTIUM;
+      const shared = isSettingShared(item);
 
       if (shared) sharedRecordIds.add(item.id);
 
@@ -25,7 +25,7 @@ export const hydrateSharedRecords = (
 
       return { ...item, ...additive };
     })
-  ));
+  )).filter(Boolean);
 
   return Object.entries(groupBy(flattenRecords, 'id')).flatMap(([recordId, items]) => {
     return sharedRecordIds.has(recordId)

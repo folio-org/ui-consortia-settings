@@ -3,6 +3,7 @@
 
   "affiliation.primary.suffix": "(Primary)",
 
+  "button.confirm": "Confirm",
   "button.saveAndClose": "Save & close",
 
   "errors.jobs.load.common": "Could not load jobs data.",
@@ -143,6 +144,8 @@
   "consortiumManager.members.permissionSets.remove.permissionSet.success": "The permission set <strong>{permissionName}</strong> was successfully <strong>deleted</strong>.",
   "consortiumManager.members.permissionSets.save.permissionSet.success": "The permission set <strong>{permissionName}</strong> was successfully <strong>saved</strong>.",
 
+  "consortiumManager.modal.confirmShare.all.heading": "Confirm share to all",
+  "consortiumManager.modal.confirmShare.all.message": "Are you sure you want to share {term} with <b>ALL</b> members?",
 
   "settings.heading": "Network settings",
   "settings.section.general": "General",
