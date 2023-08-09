@@ -36,11 +36,11 @@ export const DIALOGS_MAP = {
     />
   ),
   // eslint-disable-next-line react/prop-types
-  [DIALOG_TYPES.itemInUse]: ({ resolve, translations }) => (
+  [DIALOG_TYPES.itemInUse]: ({ reject, translations }) => (
     <ItemInUseModal
       open
       translations={translations}
-      onConfirm={resolve}
+      onConfirm={reject}
     />
   ),
   // eslint-disable-next-line react/prop-types

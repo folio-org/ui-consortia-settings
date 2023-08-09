@@ -14,8 +14,7 @@ export const FieldSharedEntry = ({ fieldProps, field, rowIndex }) => {
   const entryValues = get(values, [field, rowIndex]);
 
   const isEditing = Boolean(entryValues?.id);
-  const isShared = isSettingShared(entryValues);
-  const isDisabled = (isEditing && isShared) || !stripes.hasPerm('ui-consortia-settings.consortium-manager.share');
+  const isDisabled = isEditing || !stripes.hasPerm('ui-consortia-settings.consortium-manager.share');
 
   return (
     <Field

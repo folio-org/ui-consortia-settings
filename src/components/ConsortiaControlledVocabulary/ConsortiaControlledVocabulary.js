@@ -27,6 +27,7 @@ import {
   useUsersBatch,
 } from '@folio/stripes-acq-components';
 
+import { UNIQUE_FIELD_KEY } from '../../constants';
 import { useConsortiumManagerContext } from '../../contexts';
 import {
   useSettings,
@@ -44,17 +45,20 @@ import {
 import { FieldSharedEntry } from './FieldSharedEntry';
 import { renderLastUpdated } from './renderLastUpdated';
 
-/**
- * Rejects with empty object.
- * Required to terminate execution of 'onCreate', 'onUpdate' and 'onDelete' handlers in the <EditableListForm>.
-*/
-// eslint-disable-next-line prefer-promise-reject-errors
-const safeReject = () => Promise.reject({});
+const dehydrateEntry = (entry) => omit(entry, ['shared', UNIQUE_FIELD_KEY]);
 
 const skipAborted = (error) => {
   if (!error?.aborted) {
     throw error;
   }
+};
+
+const showForbiddenMembersCallout = (callout, members) => {
+  callout({
+    messageId: 'ui-consortia-settings.consortiumManager.error.forbiddenMembers',
+    type: 'error',
+    values: { members },
+  });
 };
 
 const CREATE_BUTTON_LABEL = <FormattedMessage id="stripes-core.button.new" />;
@@ -81,7 +85,6 @@ export const ConsortiaControlledVocabulary = ({
   sortby: sortbyProp,
   squashSharedSetting,
   translations,
-  uniqueField,
   validate,
   visibleFields: visibleFieldsProp,
   ...props
@@ -104,25 +107,30 @@ export const ConsortiaControlledVocabulary = ({
   const sortby = sortbyProp || primaryField;
   const allMembersLabel = intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.all' });
 
-  const handleSettingsLoading = ({ errors = [] }) => {
-    const forbiddenMembers = errors.filter(({ response }) => response?.startsWith('403'));
+  const handleSettingsLoading = useCallback(({ errors }) => {
+    if (errors?.length) {
+      const forbiddenMembers = errors.filter(({ response }) => response?.startsWith('403'));
 
-    if (forbiddenMembers.length) {
-      const members = forbiddenMembers.reduce((acc, { tenantId }) => {
-        const memberName = selectedMembers.find(({ id: _id }) => tenantId === _id)?.name;
+      if (forbiddenMembers.length) {
+        const members = forbiddenMembers.reduce((acc, { tenantId }) => {
+          const memberName = selectedMembers.find(({ id: _id }) => tenantId === _id)?.name;
 
-        acc.push(memberName);
+          acc.push(memberName);
 
-        return acc;
-      }, []).join(', ');
+          return acc;
+        }, []).join(', ');
 
-      showCallout({
-        messageId: 'ui-consortia-settings.consortiumManager.error.forbiddenMembers',
+        return showForbiddenMembersCallout(showCallout, members);
+      }
+
+      // TODO: handle other errors
+
+      return showCallout({
+        message: errors.map(({ response }) => response),
         type: 'error',
-        values: { members },
-      });
+      })
     }
-  };
+  }, [selectedMembers, showCallout]);
 
   const {
     entries,
@@ -196,10 +204,10 @@ export const ConsortiaControlledVocabulary = ({
   }, [entries, primaryField, validate]);
 
   const buildDialog = useCallback(({ type }, properties = {}) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const Dialog = DIALOGS_MAP[type]({
         resolve,
-        reject,
+        reject: () => setActiveDialog(null),
         translations,
         ...properties,
       });
@@ -210,7 +218,7 @@ export const ConsortiaControlledVocabulary = ({
 
   const hasRequiredPerms = useCallback((item, perms) => {
     return item.shared
-      ? stripes.hasPerm('ui-consortia-settings.consortium-manager.edit')
+      ? stripes.hasPerm('ui-consortia-settings.consortium-manager.share')
       : hasPerm(item.tenantId, perms);
   }, [hasPerm, stripes]);
 
@@ -241,30 +249,25 @@ export const ConsortiaControlledVocabulary = ({
   }, [allMembersLabel, primaryField, selectedMembers, showCallout, translations]);
 
   const onShare = useCallback((entryToShare) => {
-    const entry = omit(entryToShare, 'tenantId');
-    const initEntryValue = entries.find(_entry => _entry[uniqueField] === entry[uniqueField]);
+    const initEntryValue = entries.find(_entry => _entry[UNIQUE_FIELD_KEY] === entryToShare[UNIQUE_FIELD_KEY]);
+    const entry = dehydrateEntry(omit(entryToShare, 'tenantId'));
 
     if (initEntryValue?.shared) return upsertSharedSetting({ entry });
 
     return buildDialog({ type: DIALOG_TYPES.confirmShare }, { term: entry[primaryField] })
       .then(() => upsertSharedSetting({ entry }))
-      .catch(safeReject);
-  }, [buildDialog, entries, primaryField, uniqueField, upsertSharedSetting]);
+  }, [buildDialog, entries, primaryField, upsertSharedSetting]);
 
   const handleCreateEntry = useCallback(({ entry }) => {
-    if (!hasPerm(selectedMembers.map(({ id: _id }) => _id), permissions[ACTION_TYPES.create])) {
-      const members = selectedMembers
-        .filter(({ id: tenantId }) => {
-          return !permissionNamesMap[tenantId]?.[permissions[ACTION_TYPES.create]];
-        })
-        .map(({ name }) => name)
-        .join(', ');
+    const forbiddenMembers = selectedMembers
+      .filter(({ id: tenantId }) => {
+        return !permissionNamesMap[tenantId]?.[permissions[ACTION_TYPES.create]];
+      })
+      .map(({ name }) => name)
+      .join(', ');
 
-      return showCallout({
-        messageId: 'ui-consortia-settings.consortiumManager.error.forbiddenMembers',
-        type: 'error',
-        values: { members },
-      });
+    if (forbiddenMembers.length) {
+      return showForbiddenMembersCallout(showCallout, forbiddenMembers);
     }
 
     return createEntry({
@@ -274,8 +277,8 @@ export const ConsortiaControlledVocabulary = ({
   }, [createEntry, hasPerm, permissionNamesMap, permissions, selectedMembers, showCallout]);
 
   const onCreate = useCallback(async (hydratedEntry) => {
-    const { shared, ...entry } = hydratedEntry;
-    const createPromise = shared
+    const entry = dehydrateEntry(hydratedEntry);
+    const createPromise = hydratedEntry.shared
       ? onShare(entry)
       : handleCreateEntry({ entry });
 
@@ -290,8 +293,8 @@ export const ConsortiaControlledVocabulary = ({
   }, [onShare, handleCreateEntry, refetch, showSuccessCallout]);
 
   const onUpdate = useCallback(async (hydratedEntry) => {
-    const { shared, ...entry } = hydratedEntry;
-    const updatePromise = shared
+    const entry = dehydrateEntry(hydratedEntry);
+    const updatePromise = hydratedEntry.shared
       ? onShare(entry)
       : updateEntry({ entry });
 
@@ -306,8 +309,8 @@ export const ConsortiaControlledVocabulary = ({
   }, [onShare, refetch, showSuccessCallout, updateEntry]);
 
   const handleDeleteEntry = useCallback((hydratedEntry) => {
-    const { shared, ...entry } = hydratedEntry;
-    const deletePromise = shared
+    const entry = dehydrateEntry(hydratedEntry);
+    const deletePromise = hydratedEntry.shared
       ? deleteSharedSetting({ entry })
       : deleteEntry({ entry });
 
@@ -318,19 +321,15 @@ export const ConsortiaControlledVocabulary = ({
       });
     })
       .then(refetch)
-      .catch(() => (
-        buildDialog({ type: DIALOG_TYPES.itemInUse })
-          .then(safeReject)
-      ));
+      .catch(() => buildDialog({ type: DIALOG_TYPES.itemInUse }));
   }, [buildDialog, deleteEntry, deleteSharedSetting, refetch, showSuccessCallout]);
 
   const onDelete = useCallback((uniqueFieldValue) => {
-    const entryToDelete = entries.find(entry => entry[uniqueField] === uniqueFieldValue);
+    const entryToDelete = entries.find(entry => entry[UNIQUE_FIELD_KEY] === uniqueFieldValue);
 
     return buildDialog({ type: DIALOG_TYPES.confirmDelete }, { term: entryToDelete[primaryField] })
       .then(() => handleDeleteEntry(entryToDelete))
-      .catch(safeReject);
-  }, [buildDialog, entries, handleDeleteEntry, primaryField, uniqueField]);
+  }, [buildDialog, entries, handleDeleteEntry, primaryField]);
 
   const fieldComponents = useMemo(() => ({
     ...fieldComponentsProp,
@@ -367,7 +366,6 @@ export const ConsortiaControlledVocabulary = ({
       selectedMembers?.length
       && (
         stripes.hasPerm('ui-consortia-settings.consortium-manager.share')
-        || stripes.hasPerm('ui-consortia-settings.consortium-manager.edit')
         || hasPerm(selectedMembers.map(({ id: _id }) => _id), permissions[ACTION_TYPES.create])
       )
       && canCreateProp,
@@ -416,6 +414,7 @@ export const ConsortiaControlledVocabulary = ({
             onSubmit={noop}
             validate={validateSync}
             {...props}
+            uniqueField={UNIQUE_FIELD_KEY}
           />
         )}
         {activeDialog}
@@ -435,7 +434,6 @@ ConsortiaControlledVocabulary.defaultProps = {
   formatter: {},
   id: uniqueId(),
   readOnlyFields: [],
-  uniqueField: 'id',
   validate: noop,
   visibleFields: [],
 };
@@ -465,7 +463,6 @@ ConsortiaControlledVocabulary.propTypes = {
   sortby: PropTypes.string,
   squashSharedSetting: PropTypes.func,
   translations: translationsShape.isRequired,
-  uniqueField: PropTypes.string,
   validate: PropTypes.func,
   visibleFields: PropTypes.arrayOf(PropTypes.string),
 };
