@@ -165,5 +165,8 @@
     "consortiumManager.members.permissionSets.create.permissionSet.error": "El conjunto de permisos no se ha guardado correctamente. {error}",
     "consortiumManager.members.permissionSets.create.permissionSet.contentLabel": "Crear conjunto de permisos",
     "consortiumManager.members.permissionSets.remove.permissionSet.success": "El conjunto de permisos <strong>{permissionName}</strong> se ha <strong>eliminado</strong> correctamente.",
-    "consortiumManager.members.permissionSets.save.permissionSet.success": "El conjunto de permisos <strong>{permissionName}</strong> se ha <strong>guardado</strong> correctamente."
+    "consortiumManager.members.permissionSets.save.permissionSet.success": "El conjunto de permisos <strong>{permissionName}</strong> se ha <strong>guardado</strong> correctamente.",
+    "button.confirm": "Confirm",
+    "consortiumManager.modal.confirmShare.all.heading": "Confirm share to all",
+    "consortiumManager.modal.confirmShare.all.message": "Are you sure you want to share {term} with <b>ALL</b> members?"
 }

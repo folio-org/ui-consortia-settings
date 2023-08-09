@@ -165,5 +165,8 @@
     "consortiumManager.members.permissionSets.create.permissionSet.error": "权限集未成功保存。 {error}",
     "consortiumManager.members.permissionSets.create.permissionSet.contentLabel": "创建权限集",
     "consortiumManager.members.permissionSets.remove.permissionSet.success": "权限集<strong> {permissionName} </strong>已成功<strong>删除</strong> 。",
-    "consortiumManager.members.permissionSets.save.permissionSet.success": "权限集<strong> {permissionName} </strong>已成功<strong>保存</strong> 。"
+    "consortiumManager.members.permissionSets.save.permissionSet.success": "权限集<strong> {permissionName} </strong>已成功<strong>保存</strong> 。",
+    "button.confirm": "Confirm",
+    "consortiumManager.modal.confirmShare.all.heading": "Confirm share to all",
+    "consortiumManager.modal.confirmShare.all.message": "Are you sure you want to share {term} with <b>ALL</b> members?"
 }
