@@ -5,8 +5,8 @@ import {
 
 import {
   CHUNK_SIZE,
-  PERMISSIONS_API,
   MAX_RECORDS,
+  PERMISSIONS_API,
 } from '../constants';
 
 export const buildQueryByIds = (itemsChunk) => {
