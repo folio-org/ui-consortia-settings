@@ -270,11 +270,19 @@ export const ConsortiaControlledVocabulary = ({
       return showForbiddenMembersCallout(showCallout, forbiddenMembers);
     }
 
-    return createEntry({
-      entry,
-      tenants: selectedMembers.map(({ id: _id }) => _id),
+    return buildDialog(
+      { type: DIALOG_TYPES.confirmCreate },
+      {
+        term: entry[primaryField],
+        members: selectedMembers.map(({ name }) => name),
+      }
+    ).then(() => {
+      return createEntry({
+        entry,
+        tenants: selectedMembers.map(({ id: _id }) => _id),
+      })
     });
-  }, [createEntry, hasPerm, permissionNamesMap, permissions, selectedMembers, showCallout]);
+  }, [createEntry, hasPerm, permissionNamesMap, permissions, primaryField, selectedMembers, showCallout]);
 
   const onCreate = useCallback(async (hydratedEntry) => {
     const entry = dehydrateEntry(hydratedEntry);
