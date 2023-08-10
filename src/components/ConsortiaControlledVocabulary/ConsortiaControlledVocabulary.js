@@ -44,6 +44,7 @@ import {
 } from './constants';
 import { FieldSharedEntry } from './FieldSharedEntry';
 import { renderLastUpdated } from './renderLastUpdated';
+import { validateUniqueness } from './validators';
 
 const dehydrateEntry = (entry) => omit(entry, ['shared', UNIQUE_FIELD_KEY]);
 
@@ -85,6 +86,7 @@ export const ConsortiaControlledVocabulary = ({
   sortby: sortbyProp,
   squashSharedSetting,
   translations,
+  uniqueFields,
   validate,
   visibleFields: visibleFieldsProp,
   ...props
@@ -182,6 +184,26 @@ export const ConsortiaControlledVocabulary = ({
           Object.entries(validate(item, index, items, entries) || {}).filter(([, value]) => Boolean(value)),
         );
 
+        // Validate settings uniqueness in scope of consortium
+        uniqueFields.forEach(field => {
+          const errorMessage = (
+            <FormattedMessage
+              id="ui-consortia-settings.validation.error.entry.duplicate"
+              values={{ field: columnMapping[field] || field }}
+            />
+          );
+          const error = validateUniqueness({
+            index,
+            item,
+            items,
+            field,
+            initialValues: entries,
+            message: errorMessage,
+          });
+
+          itemErrors[field] = error;
+        })
+
         // Check if the primary field has had data entered into it.
         if (!item[primaryField]) {
           itemErrors[primaryField] = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
@@ -201,7 +223,7 @@ export const ConsortiaControlledVocabulary = ({
     }
 
     return {};
-  }, [entries, primaryField, validate]);
+  }, [entries, primaryField, uniqueFields, validate]);
 
   const buildDialog = useCallback(({ type }, properties = {}) => {
     return new Promise((resolve) => {
@@ -369,16 +391,7 @@ export const ConsortiaControlledVocabulary = ({
     'shared',
   ], [visibleFieldsProp]);
 
-  const canCreate = useMemo(() => {
-    return Boolean(
-      selectedMembers?.length
-      && (
-        stripes.hasPerm('ui-consortia-settings.consortium-manager.share')
-        || hasPerm(selectedMembers.map(({ id: _id }) => _id), permissions[ACTION_TYPES.create])
-      )
-      && canCreateProp,
-    );
-  }, [canCreateProp, hasPerm, permissions, selectedMembers, stripes]);
+  const canCreate = Boolean(selectedMembers?.length && canCreateProp);
 
   const actionSuppression = useMemo(() => ({
     delete: (item) => actionSuppressionProp.delete(item) || !hasRequiredPerms(item, permissions[ACTION_TYPES.delete]),
@@ -442,6 +455,7 @@ ConsortiaControlledVocabulary.defaultProps = {
   formatter: {},
   id: uniqueId(),
   readOnlyFields: [],
+  uniqueFields: [],
   validate: noop,
   visibleFields: [],
 };
@@ -471,6 +485,7 @@ ConsortiaControlledVocabulary.propTypes = {
   sortby: PropTypes.string,
   squashSharedSetting: PropTypes.func,
   translations: translationsShape.isRequired,
+  uniqueFields: PropTypes.arrayOf(PropTypes.string),
   validate: PropTypes.func,
   visibleFields: PropTypes.arrayOf(PropTypes.string),
 };
