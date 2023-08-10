@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import {
+  lowerCase,
   noop,
   omit,
   uniq,
   uniqueId,
+  upperFirst,
 } from 'lodash';
 import {
   memo,
@@ -185,7 +187,7 @@ export const ConsortiaControlledVocabulary = ({
           const errorMessage = (
             <FormattedMessage
               id="ui-consortia-settings.validation.error.entry.duplicate"
-              values={{ field: columnMapping[field] || field }}
+              values={{ field: upperFirst(lowerCase(field)) }}
             />
           );
           const error = validateUniqueness({
