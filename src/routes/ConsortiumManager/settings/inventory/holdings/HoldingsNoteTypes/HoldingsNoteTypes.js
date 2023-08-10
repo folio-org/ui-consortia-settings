@@ -21,6 +21,7 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.name]: <FormattedMessage id="ui-inventory.name" />,
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
+const UNIQUE_FIELDS = [FIELDS_MAP.name];
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.holdingsNoteTypes');
 const PERMISSIONS = {
   create: 'inventory-storage.holdings-note-types.item.post',
@@ -43,6 +44,7 @@ export const HoldingsNoteTypes = () => {
       translations={TRANSLATIONS}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}
       readOnlyFields={READONLY_FIELDS}
+      uniqueFields={UNIQUE_FIELDS}
       visibleFields={VISIBLE_FIELDS}
     />
   );

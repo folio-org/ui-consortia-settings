@@ -33,6 +33,7 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.code]: <FormattedMessage id="ui-consortia-settings.code" />,
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
+const UNIQUE_FIELDS = [FIELDS_MAP.name, FIELDS_MAP.code];
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.formats');
 
 const suppress = getSourceSuppressor(RECORD_SOURCE.RDA_CARRIER);
@@ -54,6 +55,7 @@ export const Formats = () => {
       itemTemplate={DEFAULT_ITEM_TEMPLATE}
       actionSuppression={actionSuppression}
       readOnlyFields={READONLY_FIELDS}
+      uniqueFields={UNIQUE_FIELDS}
       validate={validateNameAndCodeRequired}
       visibleFields={VISIBLE_FIELDS}
     />

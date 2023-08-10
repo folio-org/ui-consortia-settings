@@ -15,6 +15,7 @@ const FIELDS_MAP = {
   source: 'source',
   lastUpdated: 'lastUpdated',
 };
+const UNIQUE_FIELDS = [FIELDS_MAP.name];
 const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
 const READONLY_FIELDS = [FIELDS_MAP.source];
 const COLUMN_MAPPING = {
@@ -43,6 +44,7 @@ export const InstanceNoteTypes = () => {
       translations={TRANSLATIONS}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}
       readOnlyFields={READONLY_FIELDS}
+      uniqueFields={UNIQUE_FIELDS}
       visibleFields={VISIBLE_FIELDS}
     />
   );

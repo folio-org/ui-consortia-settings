@@ -29,6 +29,7 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.code]: <FormattedMessage id="ui-consortia-settings.code" />,
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
+const UNIQUE_FIELDS = [FIELDS_MAP.name, FIELDS_MAP.code];
 const READONLY_FIELDS = [FIELDS_MAP.source];
 const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.contributorTypes');
@@ -54,6 +55,7 @@ export const ContributorTypes = () => {
       itemTemplate={DEFAULT_ITEM_TEMPLATE}
       actionSuppression={actionSuppression}
       readOnlyFields={READONLY_FIELDS}
+      uniqueFields={UNIQUE_FIELDS}
       validate={validateNameAndCodeRequired}
       visibleFields={VISIBLE_FIELDS}
     />

@@ -180,12 +180,8 @@ export const ConsortiaControlledVocabulary = ({
   const validateSync = useCallback(({ items }) => {
     if (Array.isArray(items)) {
       const errors = items.reduce((acc, item, index) => {
-        const itemErrors = Object.fromEntries(
-          Object.entries(validate(item, index, items, entries) || {}).filter(([, value]) => Boolean(value)),
-        );
-
         // Validate settings uniqueness in scope of consortium
-        uniqueFields.forEach(field => {
+        const uniqueFieldsErrors = uniqueFields.reduce((acc, field) => {
           const errorMessage = (
             <FormattedMessage
               id="ui-consortia-settings.validation.error.entry.duplicate"
@@ -201,8 +197,17 @@ export const ConsortiaControlledVocabulary = ({
             message: errorMessage,
           });
 
-          itemErrors[field] = error;
-        })
+          if (error) acc[field] = error;
+
+          return acc;
+        }, {});
+
+        const itemErrors = Object.assign(
+          Object.fromEntries(
+            Object.entries(validate(item, index, items, entries) || {}).filter(([, value]) => Boolean(value)),
+          ),
+          uniqueFieldsErrors,
+        );
 
         // Check if the primary field has had data entered into it.
         if (!item[primaryField]) {

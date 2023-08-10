@@ -23,6 +23,7 @@ const FIELDS_MAP = {
 };
 const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
 const READONLY_FIELDS = [FIELDS_MAP.source];
+const UNIQUE_FIELDS = [FIELDS_MAP.name, FIELDS_MAP.code];
 const COLUMN_MAPPING = {
   [FIELDS_MAP.name]: <FormattedMessage id="ui-inventory.name" />,
   [FIELDS_MAP.code]: <FormattedMessage id="ui-consortia-settings.code" />,
@@ -54,6 +55,7 @@ export const ResourceTypes = () => {
       actionSuppression={actionSuppression}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}
       readOnlyFields={READONLY_FIELDS}
+      uniqueFields={UNIQUE_FIELDS}
       visibleFields={VISIBLE_FIELDS}
       validate={validateNameAndCodeRequired}
     />

@@ -22,6 +22,7 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.holdingsTypes');
+const UNIQUE_FIELDS = [FIELDS_MAP.name];
 const PERMISSIONS = {
   create: 'inventory-storage.holdings-types.item.post',
   delete: 'inventory-storage.holdings-types.item.delete',
@@ -43,6 +44,7 @@ export const HoldingsTypes = () => {
       translations={TRANSLATIONS}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}
       readOnlyFields={READONLY_FIELDS}
+      uniqueFields={UNIQUE_FIELDS}
       visibleFields={VISIBLE_FIELDS}
     />
   );
