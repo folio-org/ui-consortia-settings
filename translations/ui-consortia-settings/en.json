@@ -179,6 +179,7 @@
   "validation.error.maxLength": "Length should not be more than {length} characters.",
   "validation.error.minLength": "Length should not be less than {length} characters.",
   "validation.error.mismatchLength": "Length should be {length, plural, one {# character} other {# characters}}.",
+  "validation.error.entry.duplicate": "{field} is already in use at one or more member libraries.",
 
   "permission.consortia.affiliations.view": "Consortia: View affiliations",
   "permission.consortia.affiliations.edit": "Consortia: Assign and unassign affiliations",
