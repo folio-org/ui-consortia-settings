@@ -114,7 +114,7 @@ export const ConsortiaControlledVocabulary = ({
 
   const handleSettingsLoading = useCallback(({ errors }) => {
     if (errors?.length) {
-      const [forbiddenMembers, ...otherErrors] = partition(errors, ({ response }) => response?.startsWith('403'));
+      const [forbiddenMembers, otherErrors] = partition(errors, ({ response }) => response?.startsWith('403'));
 
       if (forbiddenMembers.length) {
         const members = forbiddenMembers.reduce((acc, { tenantId }) => {

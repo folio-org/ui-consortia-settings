@@ -6,6 +6,7 @@ import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 import { tenants } from 'fixtures';
 import { ConsortiaControlledVocabularyWrapper } from 'helpers';
 import { wrapConsortiaControlledVocabularyDescribe } from 'helpers/wrapConsortiaControlledVocabularyDescribe';
+import { useSettings } from '../../hooks/consortiumManager';
 import { ConsortiaControlledVocabulary } from './ConsortiaControlledVocabulary';
 
 jest.unmock('react-final-form-arrays');
@@ -69,7 +70,7 @@ const renderConsortiaControlledVocabulary = (props = {}) => render(
   { wrapper: ConsortiaControlledVocabularyWrapper },
 );
 
-wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('ConsortiaControlledVocabulary', ({ mutations, sharing }) => {
+wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('ConsortiaControlledVocabulary', ({ mutations, sharing, callout }) => {
   it('should render consortia-related controlled vocabulary', () => {
     renderConsortiaControlledVocabulary();
 
@@ -185,6 +186,36 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
       await waitForElementToBeRemoved(confirmDeleteBtn);
 
       expect(screen.getByText('ui-app.cannotDeleteTermMessage')).toBeInTheDocument();
+    });
+  });
+
+  describe('Errors', () => {
+    it('should display error message when a user does not have an access to some members\' settings', () => {
+      const errors = [
+        {
+          tenantId: tenants[4].id,
+          response: '403 Forbidden',
+          status: 400,
+        },
+      ];
+
+      useSettings.mockClear().mockImplementation((params, { onSuccess }) => {
+        onSuccess({ errors });
+
+        return {
+          entries: response[records],
+        };
+      });
+
+      renderConsortiaControlledVocabulary();
+
+      expect(callout).toHaveBeenCalledWith(expect.objectContaining({
+        messageId: 'ui-consortia-settings.consortiumManager.error.forbiddenMembers',
+        type: 'error',
+        values: {
+          members: tenants[4].name,
+        },
+      }));
     });
   });
 });

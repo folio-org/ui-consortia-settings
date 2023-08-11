@@ -1,6 +1,9 @@
 import { clone, uniqBy } from 'lodash';
 
-import { useUsersBatch } from '@folio/stripes-acq-components';
+import {
+  useShowCallout,
+  useUsersBatch,
+} from '@folio/stripes-acq-components';
 
 import {
   useSettings,
@@ -11,6 +14,7 @@ import {
 jest.unmock('react-final-form-arrays');
 jest.mock('@folio/stripes-acq-components', () => ({
   ...jest.requireActual('@folio/stripes-acq-components'),
+  useShowCallout: jest.fn(),
   useUsersBatch: jest.fn(),
 }));
 jest.mock('../../../src/hooks/consortiumManager', () => ({
@@ -58,6 +62,8 @@ export const wrapConsortiaControlledVocabularyDescribe = ({
     isLoading: false,
   };
 
+  const callout = jest.fn();
+
   describe(name, () => {
     beforeEach(() => {
       entriesMock.refetch.mockClear();
@@ -69,6 +75,7 @@ export const wrapConsortiaControlledVocabularyDescribe = ({
       useSettings.mockClear().mockReturnValue(entriesMock);
       useSettingMutation.mockClear().mockReturnValue(mutationsMock);
       useSettingSharing.mockClear().mockReturnValue(sharingMock);
+      useShowCallout.mockClear().mockReturnValue(callout);
       useUsersBatch.mockClear().mockReturnValue(usersMock);
     });
 
@@ -76,6 +83,7 @@ export const wrapConsortiaControlledVocabularyDescribe = ({
       entries: entriesMock,
       mutations: mutationsMock,
       sharing: sharingMock,
+      callout,
     });
   });
 };

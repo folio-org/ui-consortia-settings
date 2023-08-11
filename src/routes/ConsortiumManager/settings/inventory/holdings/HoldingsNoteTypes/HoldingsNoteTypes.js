@@ -17,11 +17,11 @@ const FIELDS_MAP = {
 };
 const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
 const READONLY_FIELDS = [FIELDS_MAP.source];
+const UNIQUE_FIELDS = [FIELDS_MAP.name];
 const COLUMN_MAPPING = {
   [FIELDS_MAP.name]: <FormattedMessage id="ui-inventory.name" />,
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
-const UNIQUE_FIELDS = [FIELDS_MAP.name];
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.holdingsNoteTypes');
 const PERMISSIONS = {
   create: 'inventory-storage.holdings-note-types.item.post',
