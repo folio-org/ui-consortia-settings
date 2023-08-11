@@ -11,12 +11,16 @@ import {
   Loading,
   Accordion,
 } from '@folio/stripes/components';
-import { useCallout } from '@folio/stripes/core';
+import {
+  IfPermission,
+  useCallout,
+} from '@folio/stripes/core';
 
 import {
   useAssignedUsers,
   useAssignedUsersMutation,
 } from './hooks';
+import AssignUsers from './AssignUsers';
 import AssignedUsersList from './AssignedUsersList';
 import { getUpdatedUsersList } from './utils';
 
@@ -82,13 +86,21 @@ const AssignedUsersContainer = ({ permissionsSet, expanded, onToggle, tenantId }
       displayWhenClosed={
         isLoading ? <Loading /> : <Badge>{users.length}</Badge>
       }
+      displayWhenOpen={
+        <IfPermission perm="perms.users.item.post">
+          <AssignUsers
+            assignUsers={handleAssignUsers}
+            selectedUsers={users}
+            tenantId={tenantId}
+          />
+        </IfPermission>
+      }
     >
       {isLoading ?
         <Loading />
         : (
           <AssignedUsersList
             isFetching={isFetching || isMutationLoading}
-            assignUsers={handleAssignUsers}
             users={users}
           />
         )}

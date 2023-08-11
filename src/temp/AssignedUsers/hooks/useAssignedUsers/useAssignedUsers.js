@@ -74,7 +74,7 @@ const useAssignedUsers = ({ grantedToIds = [], permissionSetId, tenantId }, opti
         ...rest,
         personal,
         patronGroup,
-        fullName: [personal.firstName, personal.lastName].filter(Boolean).join(' '),
+        fullName: [personal?.firstName, personal?.lastName].filter(Boolean).join(' '),
         groupName: patronGroupsById[patronGroup],
       }));
     },

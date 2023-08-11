@@ -22,6 +22,7 @@ jest.mock('@folio/stripes/core', () => ({
   useCallout: jest.fn(() => ({
     sendCallout: jest.fn(),
   })),
+  IfPermission: props => <>{props.children}</>,
 }));
 
 jest.mock('@folio/stripes/components', () => ({
@@ -36,9 +37,14 @@ jest.mock('./hooks', () => ({
 jest.mock('./utils', () => ({
   getUpdatedUsersList: jest.fn(),
 }));
-jest.mock('./AssignedUsersList', () => jest.fn(({ assignUsers }) => (
+
+jest.mock('./AssignUsers', () => jest.fn(({ assignUsers }) => (
   <div>
     <button onClick={assignUsers} type="button">Assign/Unassign</button>
+  </div>
+)));
+jest.mock('./AssignedUsersList', () => jest.fn(() => (
+  <div>
     <h2>AssignedUsersList</h2>
   </div>
 )));
