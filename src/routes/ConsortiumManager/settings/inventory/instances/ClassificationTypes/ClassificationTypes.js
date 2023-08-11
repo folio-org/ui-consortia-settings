@@ -51,7 +51,7 @@ export const ClassificationTypes = () => {
       translations={TRANSLATIONS}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}
       actionSuppression={actionSuppression}
-      readOnlyFields={READONLY_FIELDS}z
+      readOnlyFields={READONLY_FIELDS}
       uniqueFields={UNIQUE_FIELDS}
       visibleFields={VISIBLE_FIELDS}
     />

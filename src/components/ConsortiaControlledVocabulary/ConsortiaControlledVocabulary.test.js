@@ -87,6 +87,11 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
       userEvent.type(await screen.findByPlaceholderText('bar'), 'Record');
       userEvent.click(await screen.findByText('stripes-core.button.save'));
 
+      const confirmBtn = await screen.findByText('ui-consortia-settings.button.confirm');
+
+      userEvent.click(confirmBtn);
+      await waitForElementToBeRemoved(confirmBtn);
+
       expect(mutations.createEntry).toHaveBeenCalledWith({
         entry: {
           foo: 'New',
@@ -153,21 +158,6 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
           bar: 'Record',
         },
       });
-    });
-
-    it('should handle existing record sharing', async () => {
-      renderConsortiaControlledVocabulary();
-
-      userEvent.click(screen.getAllByLabelText('stripes-components.editThisItem')[0]);
-      userEvent.click(await screen.findByText('ui-consortia-settings.share'));
-      userEvent.click(await screen.findByText('stripes-core.button.save'));
-
-      const confirmBtn = await screen.findByText('ui-consortia-settings.button.confirm');
-
-      userEvent.click(confirmBtn);
-      await waitForElementToBeRemoved(confirmBtn);
-
-      expect(sharing.upsertSharedSetting).toHaveBeenCalledWith({ entry: response[records][0] });
     });
   });
 

@@ -3,6 +3,7 @@ import {
   lowerCase,
   noop,
   omit,
+  partition,
   uniq,
   uniqueId,
   upperFirst,
@@ -113,7 +114,7 @@ export const ConsortiaControlledVocabulary = ({
 
   const handleSettingsLoading = useCallback(({ errors }) => {
     if (errors?.length) {
-      const forbiddenMembers = errors.filter(({ response }) => response?.startsWith('403'));
+      const [forbiddenMembers, ...otherErrors] = partition(errors, ({ response }) => response?.startsWith('403'));
 
       if (forbiddenMembers.length) {
         const members = forbiddenMembers.reduce((acc, { tenantId }) => {
@@ -124,15 +125,15 @@ export const ConsortiaControlledVocabulary = ({
           return acc;
         }, []).join(', ');
 
-        return showForbiddenMembersCallout(showCallout, members);
+        showForbiddenMembersCallout(showCallout, members);
       }
 
-      // TODO: handle other errors
-
-      return showCallout({
-        message: errors.map(({ response }) => response),
-        type: 'error',
-      })
+      if (otherErrors.length) {
+        showCallout({
+          message: otherErrors.map(({ response }) => response),
+          type: 'error',
+        });
+      }
     }
   }, [selectedMembers, showCallout]);
 
@@ -183,7 +184,7 @@ export const ConsortiaControlledVocabulary = ({
     if (Array.isArray(items)) {
       const errors = items.reduce((acc, item, index) => {
         // Validate settings uniqueness in scope of consortium
-        const uniqueFieldsErrors = uniqueFields.reduce((acc, field) => {
+        const uniqueFieldsErrors = uniqueFields.reduce((_acc, field) => {
           const errorMessage = (
             <FormattedMessage
               id="ui-consortia-settings.validation.error.entry.duplicate"
@@ -199,9 +200,9 @@ export const ConsortiaControlledVocabulary = ({
             message: errorMessage,
           });
 
-          if (error) acc[field] = error;
+          if (error) _acc[field] = error;
 
-          return acc;
+          return _acc;
         }, {});
 
         const itemErrors = Object.assign(
@@ -284,7 +285,7 @@ export const ConsortiaControlledVocabulary = ({
     if (initEntryValue?.shared) return upsertSharedSetting({ entry });
 
     return buildDialog({ type: DIALOG_TYPES.confirmShare }, { term: entry[primaryField] })
-      .then(() => upsertSharedSetting({ entry }))
+      .then(() => upsertSharedSetting({ entry }));
   }, [buildDialog, entries, primaryField, upsertSharedSetting]);
 
   const handleCreateEntry = useCallback(({ entry }) => {
@@ -304,14 +305,14 @@ export const ConsortiaControlledVocabulary = ({
       {
         term: entry[primaryField],
         members: selectedMembers.map(({ name }) => name),
-      }
+      },
     ).then(() => {
       return createEntry({
         entry,
         tenants: selectedMembers.map(({ id: _id }) => _id),
-      })
+      });
     });
-  }, [createEntry, hasPerm, permissionNamesMap, permissions, primaryField, selectedMembers, showCallout]);
+  }, [buildDialog, createEntry, permissionNamesMap, permissions, primaryField, selectedMembers, showCallout]);
 
   const onCreate = useCallback(async (hydratedEntry) => {
     const entry = dehydrateEntry(hydratedEntry);
@@ -365,7 +366,7 @@ export const ConsortiaControlledVocabulary = ({
     const entryToDelete = entries.find(entry => entry[UNIQUE_FIELD_KEY] === uniqueFieldValue);
 
     return buildDialog({ type: DIALOG_TYPES.confirmDelete }, { term: entryToDelete[primaryField] })
-      .then(() => handleDeleteEntry(entryToDelete))
+      .then(() => handleDeleteEntry(entryToDelete));
   }, [buildDialog, entries, handleDeleteEntry, primaryField]);
 
   const fieldComponents = useMemo(() => ({

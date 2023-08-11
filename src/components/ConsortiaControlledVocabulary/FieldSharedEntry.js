@@ -6,8 +6,6 @@ import { Field, useFormState } from 'react-final-form';
 import { useStripes } from '@folio/stripes/core';
 import { Checkbox } from '@folio/stripes/components';
 
-import { isSettingShared } from '../../utils';
-
 export const FieldSharedEntry = ({ fieldProps, field, rowIndex }) => {
   const stripes = useStripes();
   const { values } = useFormState();
