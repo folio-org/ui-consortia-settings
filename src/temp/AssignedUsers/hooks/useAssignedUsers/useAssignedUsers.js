@@ -35,7 +35,7 @@ const useAssignedUsers = ({ grantedToIds = [], permissionSetId, tenantId }, opti
     refetch,
     isFetching,
   } = useQuery(
-    [namespace, permissionSetId, grantedToIds],
+    [namespace, permissionSetId, ...grantedToIds],
     async ({ signal }) => {
       const permissionUsersResponse = await batchRequest(
         ({ params: searchParams }) => api
@@ -74,12 +74,12 @@ const useAssignedUsers = ({ grantedToIds = [], permissionSetId, tenantId }, opti
         ...rest,
         personal,
         patronGroup,
-        fullName: [personal?.firstName, personal?.lastName].filter(Boolean).join(' '),
+        fullName: [personal?.lastName, personal?.firstName].filter(Boolean).join(', '),
         groupName: patronGroupsById[patronGroup],
       }));
     },
     {
-      enabled: Boolean(grantedToIds.length && permissionSetId),
+      enabled: Boolean(permissionSetId),
       keepPreviousData: true,
       ...options,
     },

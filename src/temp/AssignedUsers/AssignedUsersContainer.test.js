@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   render,
   screen,
@@ -11,6 +10,7 @@ import AssignedUsersList from './AssignedUsersList';
 import {
   useAssignedUsers,
   useAssignedUsersMutation,
+  usePermissionSet,
 } from './hooks';
 import { getUpdatedUsersList } from './utils';
 
@@ -33,6 +33,10 @@ jest.mock('@folio/stripes/components', () => ({
 jest.mock('./hooks', () => ({
   useAssignedUsers: jest.fn(),
   useAssignedUsersMutation: jest.fn(),
+  usePermissionSet: jest.fn(() => ({
+    permissionSet: {},
+    isLoading: true,
+  })),
 }));
 jest.mock('./utils', () => ({
   getUpdatedUsersList: jest.fn(),
@@ -75,6 +79,15 @@ describe('AssignedUsersContainer', () => {
 
   beforeEach(() => {
     AssignedUsersList.mockClear();
+    usePermissionSet.mockClear().mockReturnValue({
+      permissionSet: {
+        id: '1',
+        name: 'permissionSetName',
+        displayName: 'permissionSetDisplayName',
+        grantedTo: ['1', '2'],
+      },
+      isLoading: false,
+    });
     useAssignedUsers.mockClear().mockReturnValue({
       users: [],
       isLoading: true,
@@ -159,6 +172,15 @@ describe('handle mutations', () => {
     const mockAssignUsers = jest.fn();
     const mockRefetch = jest.fn();
 
+    usePermissionSet.mockClear().mockReturnValue({
+      permissionSet: {
+        id: '1',
+        name: 'permissionSetName',
+        grantedTo: ['1', '2'],
+      },
+      isLoading: false,
+      refetch: mockRefetch,
+    });
     useAssignedUsersMutation.mockClear().mockReturnValue({
       assignUsers: jest.fn(),
       unassignUsers: jest.fn(),
@@ -167,7 +189,6 @@ describe('handle mutations', () => {
     useAssignedUsers.mockReturnValue({
       users: mockUsers,
       isLoading: false,
-      refetch: mockRefetch,
     });
 
     getUpdatedUsersList.mockClear().mockReturnValue(input);
