@@ -30,7 +30,7 @@ const AssignedUsersContainer = ({ permissionSetId, expanded, onToggle, tenantId 
 
   const { permissionSet, isLoading: isPermissionSetLoading, refetch } = usePermissionSet({
     permissionSetId,
-    tenantId
+    tenantId,
   });
   const { grantedTo, permissionName } = permissionSet;
 

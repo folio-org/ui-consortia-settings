@@ -129,7 +129,7 @@ class PermissionSetDetails extends React.Component {
         <AssignedUsers
           onToggle={this.handleSectionToggle}
           expanded={sections.assignedUsers}
-          permissionsSet={selectedSet}
+          permissionSetId={selectedSet.id}
           tenantId={tenantId}
         />
       </div>
