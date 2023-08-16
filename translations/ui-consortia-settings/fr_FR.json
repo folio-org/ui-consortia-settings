@@ -168,5 +168,9 @@
     "consortiumManager.members.permissionSets.save.permissionSet.success": "The permission set <strong>{permissionName}</strong> was successfully <strong>saved</strong>.",
     "button.confirm": "Confirm",
     "consortiumManager.modal.confirmShare.all.heading": "Confirm share to all",
-    "consortiumManager.modal.confirmShare.all.message": "Are you sure you want to share {term} with <b>ALL</b> members?"
+    "consortiumManager.modal.confirmShare.all.message": "Are you sure you want to share {term} with <b>ALL</b> members?",
+    "consortiumManager.error.forbiddenMembers": "You do not have permissions at one or more members: <b>{members}</b>",
+    "consortiumManager.modal.confirmCreate.heading": "Confirm member libraries",
+    "consortiumManager.modal.confirmCreate.message": "<b>{term}</b> will be saved for the member libraries:",
+    "validation.error.entry.duplicate": "{field} is already in use at one or more member libraries."
 }
