@@ -27,6 +27,7 @@ const PERMISSIONS = {
   delete: 'inventory-storage.holdings-types.item.delete',
   update: 'inventory-storage.holdings-types.item.put',
 };
+const UNIQUE_FIELDS = [FIELDS_MAP.name];
 
 export const HoldingsTypes = () => {
   const intl = useIntl();
@@ -43,6 +44,7 @@ export const HoldingsTypes = () => {
       translations={TRANSLATIONS}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}
       readOnlyFields={READONLY_FIELDS}
+      uniqueFields={UNIQUE_FIELDS}
       visibleFields={VISIBLE_FIELDS}
     />
   );

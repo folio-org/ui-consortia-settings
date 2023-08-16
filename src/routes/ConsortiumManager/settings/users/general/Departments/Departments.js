@@ -23,6 +23,7 @@ const FORMATTER = {
   numberOfObjects: item => item.usageNumber || <NoValue />,
 };
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.departments');
+const UNIQUE_FIELDS = [FIELDS_MAP.name, FIELDS_MAP.code];
 
 const getColumnMapping = ({ intl }) => ({
   [FIELDS_MAP.name]: <FormattedMessage id="ui-users.settings.departments.name" />,
@@ -72,6 +73,7 @@ export const Departments = () => {
       records="departments"
       squashSharedSetting={squashSharedSetting}
       translations={TRANSLATIONS}
+      uniqueFields={UNIQUE_FIELDS}
       validate={validate}
       visibleFields={VISIBLE_FIELDS}
     />

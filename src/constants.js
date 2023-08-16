@@ -86,3 +86,5 @@ export const HTTP_METHODS = {
   PATCH: 'PATCH',
   DELETE: 'DELETE',
 };
+
+export const UNIQUE_FIELD_KEY = '__key__';

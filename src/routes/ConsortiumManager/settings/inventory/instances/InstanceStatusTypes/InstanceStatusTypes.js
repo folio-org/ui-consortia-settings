@@ -25,6 +25,7 @@ const FIELDS_MAP = {
   lastUpdated: 'lastUpdated',
 };
 const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
+const UNIQUE_FIELDS = [FIELDS_MAP.name, FIELDS_MAP.code];
 const READONLY_FIELDS = [FIELDS_MAP.source];
 const COLUMN_MAPPING = {
   [FIELDS_MAP.code]: <FormattedMessage id="ui-consortia-settings.code" />,
@@ -54,6 +55,7 @@ export const InstanceStatusTypes = () => {
       actionSuppression={actionSuppression}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}
       readOnlyFields={READONLY_FIELDS}
+      uniqueFields={UNIQUE_FIELDS}
       visibleFields={VISIBLE_FIELDS}
       validate={validateNameAndCodeRequired}
     />

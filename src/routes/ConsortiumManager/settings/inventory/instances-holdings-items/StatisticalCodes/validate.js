@@ -1,13 +1,8 @@
-import {
-  validateRequired,
-  validateUniqueness,
-} from '../../../../../../components/ConsortiaControlledVocabulary/validators';
+import { validateRequired } from '../../../../../../components/ConsortiaControlledVocabulary/validators';
 
-export const validate = (item, index, items, initialValues) => {
-  const validateFieldUniqueness = (field) => validateUniqueness({ index, item, items, field, initialValues });
-
-  const nameError = validateRequired({ value: item.name }) || validateFieldUniqueness('name');
-  const codeError = validateRequired({ value: item.code }) || validateFieldUniqueness('code');
+export const validate = (item) => {
+  const nameError = validateRequired({ value: item.name });
+  const codeError = validateRequired({ value: item.code });
   const statisticalCodeTypeError = validateRequired({ value: item.statisticalCodeTypeId });
 
   return {

@@ -25,6 +25,7 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.expirationOffsetInDays]: <FormattedMessage id="ui-users.information.patronGroup.expirationOffset" />,
   [FIELDS_MAP.lastUpdated]: <FormattedMessage id="stripes-smart-components.cv.lastUpdated" />,
 };
+const UNIQUE_FIELDS = [FIELDS_MAP.group];
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.patronGroups');
 const PERMISSIONS = {
   create: 'usergroups.item.post',
@@ -54,6 +55,7 @@ export const PatronGroups = () => {
       permissions={PERMISSIONS}
       records="usergroups"
       translations={TRANSLATIONS}
+      uniqueFields={UNIQUE_FIELDS}
       validate={validateFields}
       visibleFields={VISIBLE_FIELDS}
     />

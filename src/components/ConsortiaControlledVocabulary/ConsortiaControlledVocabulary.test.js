@@ -6,6 +6,7 @@ import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 import { tenants } from 'fixtures';
 import { ConsortiaControlledVocabularyWrapper } from 'helpers';
 import { wrapConsortiaControlledVocabularyDescribe } from 'helpers/wrapConsortiaControlledVocabularyDescribe';
+import { useSettings } from '../../hooks/consortiumManager';
 import { ConsortiaControlledVocabulary } from './ConsortiaControlledVocabulary';
 
 jest.unmock('react-final-form-arrays');
@@ -69,7 +70,7 @@ const renderConsortiaControlledVocabulary = (props = {}) => render(
   { wrapper: ConsortiaControlledVocabularyWrapper },
 );
 
-wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('ConsortiaControlledVocabulary', ({ mutations, sharing }) => {
+wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('ConsortiaControlledVocabulary', ({ mutations, sharing, callout }) => {
   it('should render consortia-related controlled vocabulary', () => {
     renderConsortiaControlledVocabulary();
 
@@ -86,6 +87,11 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
       userEvent.type(await screen.findByPlaceholderText('foo'), 'New');
       userEvent.type(await screen.findByPlaceholderText('bar'), 'Record');
       userEvent.click(await screen.findByText('stripes-core.button.save'));
+
+      const confirmBtn = await screen.findByText('ui-consortia-settings.button.confirm');
+
+      userEvent.click(confirmBtn);
+      await waitForElementToBeRemoved(confirmBtn);
 
       expect(mutations.createEntry).toHaveBeenCalledWith({
         entry: {
@@ -154,21 +160,6 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
         },
       });
     });
-
-    it('should handle existing record sharing', async () => {
-      renderConsortiaControlledVocabulary();
-
-      userEvent.click(screen.getAllByLabelText('stripes-components.editThisItem')[0]);
-      userEvent.click(await screen.findByText('ui-consortia-settings.share'));
-      userEvent.click(await screen.findByText('stripes-core.button.save'));
-
-      const confirmBtn = await screen.findByText('ui-consortia-settings.button.confirm');
-
-      userEvent.click(confirmBtn);
-      await waitForElementToBeRemoved(confirmBtn);
-
-      expect(sharing.upsertSharedSetting).toHaveBeenCalledWith({ entry: response[records][0] });
-    });
   });
 
   describe('Validation', () => {
@@ -195,6 +186,36 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
       await waitForElementToBeRemoved(confirmDeleteBtn);
 
       expect(screen.getByText('ui-app.cannotDeleteTermMessage')).toBeInTheDocument();
+    });
+  });
+
+  describe('Errors', () => {
+    it('should display error message when a user does not have an access to some members\' settings', () => {
+      const errors = [
+        {
+          tenantId: tenants[4].id,
+          response: '403 Forbidden',
+          status: 400,
+        },
+      ];
+
+      useSettings.mockClear().mockImplementation((params, { onSuccess }) => {
+        onSuccess({ errors });
+
+        return {
+          entries: response[records],
+        };
+      });
+
+      renderConsortiaControlledVocabulary();
+
+      expect(callout).toHaveBeenCalledWith(expect.objectContaining({
+        messageId: 'ui-consortia-settings.consortiumManager.error.forbiddenMembers',
+        type: 'error',
+        values: {
+          members: tenants[4].name,
+        },
+      }));
     });
   });
 });

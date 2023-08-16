@@ -68,7 +68,7 @@ wrapConsortiaControlledVocabularyDescribe({ entries })('Departments', () => {
       userEvent.type(screen.getByPlaceholderText(fieldName), entries[0][fieldName]);
       userEvent.click(screen.getByText('stripes-core.button.save'));
 
-      expect(screen.getByText(`ui-users.settings.departments.${fieldName}.error`)).toBeInTheDocument();
+      expect(screen.getByText('ui-consortia-settings.validation.error.entry.duplicate')).toBeInTheDocument();
     });
 
     it('should validate if a department code field is filled in', () => {

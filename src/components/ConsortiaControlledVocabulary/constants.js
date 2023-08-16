@@ -1,4 +1,5 @@
 import {
+  ConfirmCreateEntryModal,
   ConfirmDeleteEntryModal,
   ConfirmShareEntryModal,
   ItemInUseModal,
@@ -19,12 +20,23 @@ export const TRANSLATION_KEYS_MAP = {
 export const PANESET_PREFIX = 'consortia-controlled-vocabulary-paneset-';
 
 export const DIALOG_TYPES = {
+  confirmCreate: 'confirmCreate',
   confirmDelete: 'confirmDelete',
   confirmShare: 'confirmShare',
   itemInUse: 'itemInUse',
 };
 
 export const DIALOGS_MAP = {
+  // eslint-disable-next-line react/prop-types
+  [DIALOG_TYPES.confirmCreate]: ({ members, resolve, reject, term }) => (
+    <ConfirmCreateEntryModal
+      open
+      members={members}
+      term={term}
+      onConfirm={resolve}
+      onCancel={reject}
+    />
+  ),
   // eslint-disable-next-line react/prop-types
   [DIALOG_TYPES.confirmDelete]: ({ resolve, reject, term, translations }) => (
     <ConfirmDeleteEntryModal
@@ -36,11 +48,11 @@ export const DIALOGS_MAP = {
     />
   ),
   // eslint-disable-next-line react/prop-types
-  [DIALOG_TYPES.itemInUse]: ({ resolve, translations }) => (
+  [DIALOG_TYPES.itemInUse]: ({ reject, translations }) => (
     <ItemInUseModal
       open
       translations={translations}
-      onConfirm={resolve}
+      onConfirm={reject}
     />
   ),
   // eslint-disable-next-line react/prop-types
