@@ -166,7 +166,11 @@
     "consortiumManager.members.permissionSets.create.permissionSet.contentLabel": "Crear conjunto de permisos",
     "consortiumManager.members.permissionSets.remove.permissionSet.success": "El conjunto de permisos <strong>{permissionName}</strong> se ha <strong>eliminado</strong> correctamente.",
     "consortiumManager.members.permissionSets.save.permissionSet.success": "El conjunto de permisos <strong>{permissionName}</strong> se ha <strong>guardado</strong> correctamente.",
-    "button.confirm": "Confirm",
-    "consortiumManager.modal.confirmShare.all.heading": "Confirm share to all",
-    "consortiumManager.modal.confirmShare.all.message": "Are you sure you want to share {term} with <b>ALL</b> members?"
+    "button.confirm": "Confirmar",
+    "consortiumManager.modal.confirmShare.all.heading": "Confirmar compartir a todos",
+    "consortiumManager.modal.confirmShare.all.message": "¿Estás seguro de que quieres compartir {term} con <b>TODOS los</b> miembros?",
+    "consortiumManager.error.forbiddenMembers": "You do not have permissions at one or more members: <b>{members}</b>",
+    "consortiumManager.modal.confirmCreate.heading": "Confirm member libraries",
+    "consortiumManager.modal.confirmCreate.message": "<b>{term}</b> will be saved for the member libraries:",
+    "validation.error.entry.duplicate": "{field} is already in use at one or more member libraries."
 }
