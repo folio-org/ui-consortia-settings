@@ -26,3 +26,4 @@
 * [UICONSET-136](https://issues.folio.org/browse/UICONSET-136) Replicate assigned users functionality on permission sets.
 * [UICONSET-138](https://issues.folio.org/browse/UICONSET-138) Upgrade `React` to `v18`
 * [UICONSET-137](https://issues.folio.org/browse/UICONSET-137) Update `Node.js` to `v18`s in GitHub Actions.
+* [UICONSET-112](https://issues.folio.org/browse/UICONSET-112) Allow a user to delete shared settings in the `<ConsortiaControlledVocabulary>`.
