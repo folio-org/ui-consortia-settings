@@ -39,6 +39,7 @@ const PERMISSIONS = {
   delete: 'inventory-storage.statistical-codes.item.delete',
   update: 'inventory-storage.statistical-codes.item.put',
 };
+const UNIQUE_FIELDS = [FIELDS_MAP.name, FIELDS_MAP.code];
 
 const formatStatisticalCodeTypeId = (statisticalCodeTypes) => (item) => {
   const record = Array.isArray(statisticalCodeTypes)
@@ -90,6 +91,7 @@ export const StatisticalCodes = () => {
       itemTemplate={DEFAULT_ITEM_TEMPLATE}
       readOnlyFields={READONLY_FIELDS}
       sortby={FIELDS_MAP.code}
+      uniqueFields={UNIQUE_FIELDS}
       validate={validate}
       visibleFields={VISIBLE_FIELDS}
     />

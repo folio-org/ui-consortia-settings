@@ -16,6 +16,7 @@ const FIELDS_MAP = {
   lastUpdated: 'lastUpdated',
 };
 const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
+const UNIQUE_FIELDS = [FIELDS_MAP.name];
 const READONLY_FIELDS = [FIELDS_MAP.source];
 const COLUMN_MAPPING = {
   [FIELDS_MAP.name]: <FormattedMessage id="ui-inventory.name" />,
@@ -43,6 +44,7 @@ export const InstanceNoteTypes = () => {
       translations={TRANSLATIONS}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}
       readOnlyFields={READONLY_FIELDS}
+      uniqueFields={UNIQUE_FIELDS}
       visibleFields={VISIBLE_FIELDS}
     />
   );

@@ -1,4 +1,4 @@
-import { sortBy } from 'lodash/fp';
+import { flow, sortBy } from 'lodash/fp';
 import { stringify } from 'query-string';
 import { useQuery } from 'react-query';
 
@@ -59,10 +59,21 @@ export const useSettings = (params = {}, options = {}) => {
         tenants: selectedMembers.map(({ id }) => id),
       };
 
-      return initPublicationRequest(publication)
-        .then(hydrateSharedRecords(records, squashSharedSetting))
-        .then(sortBy([sortby || 'name', 'tenantId']))
-        .catch(throwErrorResponse);
+      try {
+        const { publicationErrors, ...response } = await initPublicationRequest(publication);
+
+        const entries = flow(
+          hydrateSharedRecords(records, squashSharedSetting),
+          sortBy([sortby || 'name', 'tenantId']),
+        )(response);
+
+        return {
+          entries,
+          errors: publicationErrors,
+        };
+      } catch (error) {
+        return throwErrorResponse(error);
+      }
     },
     {
       enabled,
@@ -73,8 +84,8 @@ export const useSettings = (params = {}, options = {}) => {
 
   return {
     isFetching,
-    entries: data || DEFAULT_DATA,
+    entries: data?.entries || DEFAULT_DATA,
     refetch,
-    totalRecords: data?.length,
+    totalRecords: data?.entries?.length,
   };
 };

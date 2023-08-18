@@ -22,4 +22,5 @@
 * [UICONSET-59](https://issues.folio.org/browse/UICONSET-59) Consortia manager - Save/edit permissions set and assign users.
 * [UICONSET-111](https://issues.folio.org/browse/UICONSET-111) Apply publish coordinator to consortium member setting requests (without shared settings).
 * [UICONSET-113](https://issues.folio.org/browse/UICONSET-113) Allow a user to share settings in the `<ConsortiaControlledVocabulary>`.
+* [UICONSET-49](https://issues.folio.org/browse/UICONSET-49) Display a toast message about lack of permissions for members when loading settings in the consortium members.
 * [UICONSET-136](https://issues.folio.org/browse/UICONSET-136) Replicate assigned users functionality on permission sets.

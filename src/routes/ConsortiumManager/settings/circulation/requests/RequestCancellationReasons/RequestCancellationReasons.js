@@ -31,6 +31,7 @@ const PERMISSIONS = {
   delete: 'circulation-storage.cancellation-reasons.item.delete',
   update: 'circulation-storage.cancellation-reasons.item.put',
 };
+const UNIQUE_FIELDS = [FIELDS_MAP.name];
 
 const actionSuppression = {
   edit: () => false,
@@ -51,6 +52,7 @@ export const RequestCancellationReasons = () => {
       records="cancellationReasons"
       translations={TRANSLATIONS}
       actionSuppression={actionSuppression}
+      uniqueFields={UNIQUE_FIELDS}
       visibleFields={VISIBLE_FIELDS}
     />
   );

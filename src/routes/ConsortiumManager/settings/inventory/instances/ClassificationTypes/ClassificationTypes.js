@@ -34,6 +34,7 @@ const PERMISSIONS = {
   delete: 'inventory-storage.classification-types.item.delete',
   update: 'inventory-storage.classification-types.item.put',
 };
+const UNIQUE_FIELDS = [FIELDS_MAP.name];
 
 export const ClassificationTypes = () => {
   const intl = useIntl();
@@ -51,6 +52,7 @@ export const ClassificationTypes = () => {
       itemTemplate={DEFAULT_ITEM_TEMPLATE}
       actionSuppression={actionSuppression}
       readOnlyFields={READONLY_FIELDS}
+      uniqueFields={UNIQUE_FIELDS}
       visibleFields={VISIBLE_FIELDS}
     />
   );

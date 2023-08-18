@@ -15,6 +15,7 @@ const FIELDS_MAP = {
   lastUpdated: 'lastUpdated',
 };
 const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
+const UNIQUE_FIELDS = [FIELDS_MAP.name];
 const COLUMN_MAPPING = {
   [FIELDS_MAP.name]: <FormattedMessage id="ui-inventory.loanType" />,
 };
@@ -39,6 +40,7 @@ export const LoanTypes = () => {
       records="loantypes"
       translations={TRANSLATIONS}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}
+      uniqueFields={UNIQUE_FIELDS}
       visibleFields={VISIBLE_FIELDS}
     />
   );
