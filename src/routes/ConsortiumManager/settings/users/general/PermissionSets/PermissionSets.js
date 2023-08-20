@@ -145,6 +145,7 @@ export const PermissionSets = (props) => {
         post: 'perms.permissions.item.post',
         delete: 'perms.permissions.item.delete',
       }}
+      tenantId={activeMember}
     >
       <Switch>
         <Route exact path={PERMISSION_SET_ROUTES.COMPARE} component={PermissionSetsCompare} />

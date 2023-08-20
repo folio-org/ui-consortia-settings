@@ -7,6 +7,7 @@ jest.unmock('@folio/stripes/components');
 jest.mock('./IfConsortiumPermission', () => ({
   IfConsortiumPermission: jest.fn(({ children }) => <>{children}</>),
 }));
+jest.mock('./AssignedUsers', () => jest.fn(() => <div>AssignedUsers</div>));
 
 const renderPermissionSetDetails = (props) => renderWithRouter(<PermissionSetDetails {...props} />);
 const STRIPES = {
@@ -69,6 +70,7 @@ const props = {
   },
   intl: {},
   stripes: STRIPES,
+  tenantId: 'mobius',
 };
 
 describe('PermissionSetDetails component', () => {

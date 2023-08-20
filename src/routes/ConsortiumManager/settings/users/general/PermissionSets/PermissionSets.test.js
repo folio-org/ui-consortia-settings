@@ -23,8 +23,9 @@ jest.mock('@folio/stripes-acq-components', () => ({
   useShowCallout: jest.fn(),
 }));
 
-jest.mock('./../../../../../../temp/IfConsortiumPermission', () => ({
+jest.mock('../../../../../../temp', () => ({
   IfConsortiumPermission: jest.fn(({ children }) => <>{children}</>),
+  PermissionSetDetails: jest.fn(() => <div>PermissionSetDetails</div>),
 }));
 
 jest.mock('../../../../../../hooks', () => ({
@@ -43,6 +44,7 @@ const defaultProps = {
     path: '/perms',
   },
   stripes: buildStripesObject(),
+  tenantId: 'mobius',
 };
 
 const permissions = [
@@ -92,14 +94,11 @@ describe('PermissionsSets', () => {
     });
   });
 
-  it('should render a permission set details', () => {
+  it('should render a permission set details', async () => {
     renderPermissionsSet();
 
-    userEvent.click(screen.getByText(permissions[0].displayName));
-
-    expect(screen.getByText('ui-users.permissions.permissionSetName'));
-    expect(screen.getByText('ui-users.description'));
-    expect(screen.getByText('ui-users.permissions.assignedPermissions'));
+    userEvent.click(screen.getByText(permissions[1].displayName));
+    expect(screen.getByText('PermissionSetDetails')).toBeInTheDocument();
   });
 
   it('should handle selected member change', () => {
