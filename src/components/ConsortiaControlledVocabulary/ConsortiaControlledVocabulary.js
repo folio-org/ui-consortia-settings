@@ -104,6 +104,7 @@ export const ConsortiaControlledVocabulary = ({
     hasPerm,
     permissionNamesMap,
     selectedMembers,
+    setSelectMembersDisabled,
     isFetching: isContextDataFetching,
   } = useConsortiumManagerContext();
 
@@ -111,6 +112,12 @@ export const ConsortiaControlledVocabulary = ({
   const primaryField = primaryFieldProp || visibleFieldsProp[0];
   const sortby = sortbyProp || primaryField;
   const allMembersLabel = intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.all' });
+
+  const onStatusChange = useCallback((_prevStatus, currStatus) => {
+    const isEditing = currStatus.some(({ editing }) => Boolean(editing));
+
+    setSelectMembersDisabled(isEditing);
+  }, [setSelectMembersDisabled]);
 
   const handleSettingsLoading = useCallback(({ errors }) => {
     if (errors?.length) {
@@ -441,6 +448,7 @@ export const ConsortiaControlledVocabulary = ({
             onUpdate={onUpdate}
             onDelete={onDelete}
             onSubmit={noop}
+            onStatusChange={onStatusChange}
             validate={validateSync}
             {...props}
             uniqueField={UNIQUE_FIELD_KEY}
