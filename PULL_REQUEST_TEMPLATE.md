@@ -27,13 +27,26 @@
  developers *work* with your solution in the future.
 -->
 
-#### TODOS and Open Questions
+## Screenshots
 <!-- OPTIONAL
+ One picture is literally worth a thousand words. When the feature is
+ an interaction, an animated GIF or video is best. Most of the time it helps to
+ include "before" and "after" screenshots to quickly demonstrate the
+ value of the feature.
+
+ Here are some great tools to help you record gifs:
+
+ Windows: https://getsharex.com/
+ Mac: https://gifox.io/
+-->
+
+<!-- OPTIONAL
+#### TODOS and Open Questions
 - [ ] Use GitHub checklists. When solved, check the box and explain the answer.
 -->
 
-## Learning
 <!-- OPTIONAL
+## Learning
   Help out not only your reviewer, but also your fellow developer!
   Sometimes there are key pieces of information that you used to come up
   with your solution. Don't let all that hard work go to waste! A
