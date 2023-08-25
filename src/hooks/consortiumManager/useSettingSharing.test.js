@@ -77,7 +77,7 @@ describe('useSettingSharing', () => {
 
       useOkapiKy.mockReturnValue(kyMock);
 
-      const { result, waitFor } = renderHook(() => useSettingSharing({ path }), { wrapper });
+      const { result } = renderHook(() => useSettingSharing({ path }), { wrapper });
       const pcResults = await result.current.deleteSharedSetting({ entry: setting });
 
       await waitFor(() => !result.current.isLoading);
