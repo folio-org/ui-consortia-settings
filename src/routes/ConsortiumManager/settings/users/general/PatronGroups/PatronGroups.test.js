@@ -1,5 +1,5 @@
-import userEvent from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 
 import { ConsortiaControlledVocabularyWrapper } from 'helpers';
 import { wrapConsortiaControlledVocabularyDescribe } from 'helpers/wrapConsortiaControlledVocabularyDescribe';
@@ -61,9 +61,9 @@ wrapConsortiaControlledVocabularyDescribe({ entries })('PatronGroups', ({ mutati
   it('should validate row inputs', async () => {
     renderPatronGroups();
 
-    userEvent.click(screen.getByText('stripes-core.button.new'));
-    userEvent.type(screen.getByPlaceholderText('expirationOffsetInDays'), '-1');
-    userEvent.click(screen.getByText('stripes-core.button.save'));
+    await userEvent.click(screen.getByText('stripes-core.button.new'));
+    await userEvent.type(screen.getByPlaceholderText('expirationOffsetInDays'), '-1');
+    await userEvent.click(screen.getByText('stripes-core.button.save'));
 
     expect(mutations.createEntry).not.toHaveBeenCalled();
     expect(await screen.findByText('stripes-core.label.missingRequiredField')).toBeInTheDocument();

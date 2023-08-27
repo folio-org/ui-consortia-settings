@@ -52,7 +52,7 @@ describe('useUserTenantsPermissions', () => {
   it('should send a publish coordinator request to get user permissions in the provided tenants', async () => {
     const { result } = renderHook(() => useUserTenantsPermissions({ userId, tenants }), { wrapper });
 
-    await waitFor(() => !result.current.isFetching);
+    await waitFor(() => expect(result.current.isFetching).toBeFalsy());
 
     expect(initPublicationRequest).toHaveBeenCalledWith({
       method: 'GET',

@@ -32,7 +32,7 @@ describe('useCurrentConsortium', () => {
   it('should fetch consortia', async () => {
     const { result } = renderHook(() => useCurrentConsortium(), { wrapper });
 
-    await waitFor(() => !result.current.isLoading);
+    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
 
     expect(result.current.consortium).toEqual(consortium);
   });
