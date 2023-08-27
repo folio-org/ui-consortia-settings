@@ -169,8 +169,8 @@
     "button.confirm": "Confirmar",
     "consortiumManager.modal.confirmShare.all.heading": "Confirmar o compartilhamento para todos",
     "consortiumManager.modal.confirmShare.all.message": "Tem certeza de que deseja compartilhar {term} com <b>TODOS</b> membros?",
-    "consortiumManager.error.forbiddenMembers": "You do not have permissions at one or more members: <b>{members}</b>",
-    "consortiumManager.modal.confirmCreate.heading": "Confirm member libraries",
-    "consortiumManager.modal.confirmCreate.message": "<b>{term}</b> will be saved for the member libraries:",
-    "validation.error.entry.duplicate": "{field} is already in use at one or more member libraries."
+    "consortiumManager.error.forbiddenMembers": "Você não tem permissões em um ou mais membros: <b> {members} </b>",
+    "consortiumManager.modal.confirmCreate.heading": "Confirmar bibliotecas membros",
+    "consortiumManager.modal.confirmCreate.message": "<b> {term} </b> será salvo para as bibliotecas membros:",
+    "validation.error.entry.duplicate": "{field} já está em uso em uma ou mais bibliotecas membros."
 }
