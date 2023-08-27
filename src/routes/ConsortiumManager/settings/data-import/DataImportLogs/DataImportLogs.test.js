@@ -1,14 +1,14 @@
-import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
 
+import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 import { useShowCallout } from '@folio/stripes-acq-components';
 
-import { jobExecutions } from '../../../../../../test/jest/fixtures';
-import { ConsortiumManagerContextProviderMock } from '../../../../../../test/jest/helpers';
+import { jobExecutions } from 'fixtures';
+import { ConsortiumManagerContextProviderMock } from 'helpers';
 import { useDataImportLogs } from '../hooks';
 import { DataImportLogs } from './DataImportLogs';
 

@@ -1,7 +1,8 @@
-import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-import { consortium } from '../../../test/jest/fixtures';
+import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
+
+import { consortium } from 'fixtures';
 import { useCurrentConsortium } from '../../hooks';
 import ConsortiumSettings from './ConsortiumSettings';
 

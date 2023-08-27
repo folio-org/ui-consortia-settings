@@ -1,11 +1,12 @@
-import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
 
-import { useTenantPermissions } from './useTenantPermissions';
+import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
 import { useTenantKy } from '../useTenantKy';
+import { useTenantPermissions } from './useTenantPermissions';
 
 jest.mock('../useTenantKy', () => ({
   ...jest.requireActual('../useTenantKy'),

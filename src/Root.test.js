@@ -1,11 +1,11 @@
-import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import { Router } from 'react-router-dom';
 
+import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 import { useStripes } from '@folio/stripes/core';
 
-import { affiliations } from '../test/jest/fixtures';
+import { affiliations } from 'fixtures';
 import { MODULE_ROOT_ROUTE } from './constants';
 import {
   useUserAffiliations,

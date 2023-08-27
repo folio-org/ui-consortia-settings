@@ -1,8 +1,9 @@
-import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
+
+import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import { tenants as tenantsMock } from 'fixtures';
 import { ConsortiumManagerContextProviderMock } from 'helpers';

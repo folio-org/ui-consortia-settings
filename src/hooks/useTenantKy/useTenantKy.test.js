@@ -1,5 +1,4 @@
 import { renderHook } from '@folio/jest-config-stripes/testing-library/react';
-
 import { useOkapiKy } from '@folio/stripes/core';
 
 import { OKAPI_TENANT_HEADER } from '../../constants';

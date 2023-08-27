@@ -2,11 +2,11 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
-import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
+import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { consortium } from '../../../test/jest/fixtures';
+import { consortium } from 'fixtures';
 import { useCurrentConsortium } from './useCurrentConsortium';
 
 const queryClient = new QueryClient();

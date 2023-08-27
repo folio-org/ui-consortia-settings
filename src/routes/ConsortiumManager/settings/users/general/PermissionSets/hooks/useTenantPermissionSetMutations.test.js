@@ -1,8 +1,9 @@
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
+
+import { renderHook } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useTenantPermissionSetMutations } from './useTenantPermissionSetMutations';
 import { useTenantKy } from '../../../../../../../hooks';

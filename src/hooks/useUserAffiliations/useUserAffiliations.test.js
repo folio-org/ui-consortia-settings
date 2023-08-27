@@ -1,4 +1,3 @@
-import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import {
   QueryClient,
   QueryClientProvider,
@@ -6,9 +5,10 @@ import {
 
 import '@folio/stripes-acq-components/test/jest/__mock__';
 
+import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { useStripes } from '@folio/stripes/core';
 
-import { tenants } from '../../../test/jest/fixtures';
+import { tenants } from 'fixtures';
 import { fetchConsortiumUserTenants } from '../../services';
 import { useUserAffiliations } from './useUserAffiliations';
 

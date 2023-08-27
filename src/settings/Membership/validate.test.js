@@ -1,4 +1,5 @@
 import { FormattedMessage } from 'react-intl';
+
 import {
   MAX_CODE_LENGTH,
   MAX_NAME_LENGTH,

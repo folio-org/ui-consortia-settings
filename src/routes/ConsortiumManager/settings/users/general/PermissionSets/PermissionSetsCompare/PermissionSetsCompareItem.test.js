@@ -1,13 +1,11 @@
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { render, screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { render, screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { useShowCallout } from '@folio/stripes-acq-components';
 
 import { tenants } from 'fixtures';
-import {
-  ConsortiumManagerContextProviderMock,
-} from 'helpers';
+import { ConsortiumManagerContextProviderMock } from 'helpers';
 import { useTenantPermissions } from '../../../../../../../hooks';
 import { PermissionSetsCompareItem } from './PermissionSetsCompareItem';
 import { COMPARE_ITEM_NAME } from './constants';

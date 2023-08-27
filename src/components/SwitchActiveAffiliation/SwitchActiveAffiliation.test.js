@@ -1,12 +1,10 @@
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 import { updateTenant } from '@folio/stripes/core';
 
-import {
-  tenants,
-} from '../../../test/jest/fixtures';
+import { tenants } from 'fixtures';
 import { useUserAffiliations } from '../../hooks';
 import { SwitchActiveAffiliation } from './SwitchActiveAffiliation';
 
