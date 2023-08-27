@@ -49,11 +49,11 @@ wrapConsortiaControlledVocabularyDescribe({ entries })('InstanceStatusTypes', ()
   });
 
   describe('validation', () => {
-    it('should validate required fields', () => {
+    it('should validate required fields', async () => {
       renderInstanceStatusTypes();
 
-      userEvent.click(screen.getByText('stripes-core.button.new'));
-      userEvent.click(screen.getByText('stripes-core.button.save'));
+      await userEvent.click(screen.getByText('stripes-core.button.new'));
+      await userEvent.click(screen.getByText('stripes-core.button.save'));
 
       expect(screen.getAllByText('stripes-core.label.missingRequiredField')).toHaveLength(2);
     });

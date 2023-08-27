@@ -1,6 +1,5 @@
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { render, screen, waitForElementToBeRemoved } from '@folio/jest-config-stripes/testing-library/react';
-
+import { render, screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 
 import { tenants } from 'fixtures';
@@ -83,15 +82,13 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
     it('should handle new record creation', async () => {
       renderConsortiaControlledVocabulary();
 
-      userEvent.click(await screen.findByText('stripes-core.button.new'));
-      userEvent.type(await screen.findByPlaceholderText('foo'), 'New');
-      userEvent.type(await screen.findByPlaceholderText('bar'), 'Record');
-      userEvent.click(await screen.findByText('stripes-core.button.save'));
+      await userEvent.click(await screen.findByText('stripes-core.button.new'));
+      await userEvent.type(await screen.findByPlaceholderText('foo'), 'New');
+      await userEvent.type(await screen.findByPlaceholderText('bar'), 'Record');
+      await userEvent.click(await screen.findByText('stripes-core.button.save'));
 
-      const confirmBtn = await screen.findByText('ui-consortia-settings.button.confirm');
-
-      userEvent.click(confirmBtn);
-      await waitForElementToBeRemoved(confirmBtn);
+      await userEvent.click(await screen.findByText('ui-consortia-settings.button.confirm'));
+      await waitFor(() => expect(screen.queryByText('ui-consortia-settings.button.confirm')).not.toBeInTheDocument());
 
       expect(mutations.createEntry).toHaveBeenCalledWith({
         entry: {
@@ -105,13 +102,13 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
     it('should handle record update', async () => {
       renderConsortiaControlledVocabulary();
 
-      userEvent.click(screen.getAllByLabelText('stripes-components.editThisItem')[0]);
+      await userEvent.click(screen.getAllByLabelText('stripes-components.editThisItem')[0]);
 
       const input = await screen.findByPlaceholderText('foo');
 
-      userEvent.clear(input);
-      userEvent.type(input, 'Updated');
-      userEvent.click(await screen.findByText('stripes-core.button.save'));
+      await userEvent.clear(input);
+      await userEvent.type(input, 'Updated');
+      await userEvent.click(await screen.findByText('stripes-core.button.save'));
 
       expect(mutations.updateEntry).toHaveBeenCalledWith({
         entry: {
@@ -124,15 +121,13 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
     it('should handle record deletion', async () => {
       renderConsortiaControlledVocabulary();
 
-      userEvent.click(screen.getAllByLabelText('stripes-components.deleteThisItem')[0]);
+      await userEvent.click(screen.getAllByLabelText('stripes-components.deleteThisItem')[0]);
 
       // Confirmation modal
       expect(screen.getByText('ui-app.termWillBeDeleted')).toBeInTheDocument();
 
-      const confirmDeleteBtn = screen.getByText('stripes-core.button.delete');
-
-      userEvent.click(confirmDeleteBtn);
-      await waitForElementToBeRemoved(confirmDeleteBtn);
+      await userEvent.click(await screen.findByText('stripes-core.button.delete'));
+      await waitFor(() => expect(screen.queryByText('stripes-core.button.delete')).not.toBeInTheDocument());
 
       expect(mutations.deleteEntry).toHaveBeenCalledWith({ entry: response[records][0] });
     });
@@ -142,16 +137,14 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
     it('should handle new record sharing', async () => {
       renderConsortiaControlledVocabulary();
 
-      userEvent.click(await screen.findByText('stripes-core.button.new'));
-      userEvent.type(await screen.findByPlaceholderText('foo'), 'New');
-      userEvent.type(await screen.findByPlaceholderText('bar'), 'Record');
-      userEvent.click(await screen.findByText('ui-consortia-settings.share'));
-      userEvent.click(await screen.findByText('stripes-core.button.save'));
+      await userEvent.click(await screen.findByText('stripes-core.button.new'));
+      await userEvent.type(await screen.findByPlaceholderText('foo'), 'New');
+      await userEvent.type(await screen.findByPlaceholderText('bar'), 'Record');
+      await userEvent.click(await screen.findByText('ui-consortia-settings.share'));
+      await userEvent.click(await screen.findByText('stripes-core.button.save'));
 
-      const confirmBtn = await screen.findByText('ui-consortia-settings.button.confirm');
-
-      userEvent.click(confirmBtn);
-      await waitForElementToBeRemoved(confirmBtn);
+      await userEvent.click(await screen.findByText('ui-consortia-settings.button.confirm'));
+      await waitFor(() => expect(screen.queryByText('ui-consortia-settings.button.confirm')).not.toBeInTheDocument());
 
       expect(sharing.upsertSharedSetting).toHaveBeenCalledWith({
         entry: {
@@ -166,8 +159,8 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
     it('should handle the absence of a primary field value', async () => {
       renderConsortiaControlledVocabulary();
 
-      userEvent.click(await screen.findByText('stripes-core.button.new'));
-      userEvent.click(await screen.findByText('stripes-core.button.save'));
+      await userEvent.click(await screen.findByText('stripes-core.button.new'));
+      await userEvent.click(await screen.findByText('stripes-core.button.save'));
 
       expect(screen.getByText('stripes-core.label.missingRequiredField')).toBeInTheDocument();
     });
@@ -176,14 +169,12 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
       mutations.deleteEntry.mockClear().mockRejectedValue({ status: 422 });
       renderConsortiaControlledVocabulary();
 
-      userEvent.click(screen.getAllByLabelText('stripes-components.deleteThisItem')[0]);
+      await userEvent.click(screen.getAllByLabelText('stripes-components.deleteThisItem')[0]);
 
       expect(screen.getByText('ui-app.termWillBeDeleted')).toBeInTheDocument();
 
-      const confirmDeleteBtn = screen.getByText('stripes-core.button.delete');
-
-      userEvent.click(confirmDeleteBtn);
-      await waitForElementToBeRemoved(confirmDeleteBtn);
+      await userEvent.click(await screen.findByText('stripes-core.button.delete'));
+      await waitFor(() => expect(screen.queryByText('stripes-core.button.delete')).not.toBeInTheDocument());
 
       expect(screen.getByText('ui-app.cannotDeleteTermMessage')).toBeInTheDocument();
     });

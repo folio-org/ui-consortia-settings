@@ -1,7 +1,7 @@
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter, withRouter } from 'react-router-dom';
 
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 import {
   useModules,
   useStripes,
@@ -98,7 +98,7 @@ describe('ConsortiumManager', () => {
   it.each(AVAILABLE_SETTINGS.map(module => [module]))('should render \'%s\' settings pane', async (name) => {
     renderConsortiumManager();
 
-    userEvent.click(screen.getByText(name));
+    await userEvent.click(screen.getByText(name));
 
     expect(await screen.findByText(settingsLabelsMap[name])).toBeInTheDocument();
   });

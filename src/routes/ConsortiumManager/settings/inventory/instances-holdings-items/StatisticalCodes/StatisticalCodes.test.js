@@ -52,11 +52,11 @@ wrapConsortiaControlledVocabularyDescribe({ entries })('StatisticalCodes', () =>
   });
 
   describe('validation', () => {
-    it('should validate if a department code field is filled in', () => {
+    it('should validate if a department code field is filled in', async () => {
       renderStatisticalCodes();
 
-      userEvent.click(screen.getByText('stripes-core.button.new'));
-      userEvent.click(screen.getByText('stripes-core.button.save'));
+      await userEvent.click(screen.getByText('stripes-core.button.new'));
+      await userEvent.click(screen.getByText('stripes-core.button.save'));
 
       expect(screen.getAllByText('stripes-core.label.missingRequiredField').length).toBeGreaterThan(0);
     });

@@ -1,9 +1,12 @@
-import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
 
+import {
+  renderHook,
+  waitFor,
+} from '@folio/jest-config-stripes/testing-library/react';
 import {
   ASC_DIRECTION,
   LIMIT_PARAMETER,
@@ -54,7 +57,7 @@ describe('useDataExportLogs', () => {
     const tenantId = 'college';
     const { result } = renderHook(() => useDataExportLogs({ tenantId }), { wrapper });
 
-    await waitFor(() => !result.current.isLoading);
+    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
 
     expect(result.current.jobExecutions).toEqual(jobExecutions);
     expect(kyMock.get).toHaveBeenCalledWith(`${DATA_EXPORT_API}/job-executions`, expect.objectContaining({}));
@@ -66,7 +69,7 @@ describe('useDataExportLogs', () => {
     const sorting = { sortingField: EXPORT_JOB_LOG_COLUMNS.status, sortingDirection: ASC_DIRECTION };
     const { result } = renderHook(() => useDataExportLogs({ tenantId, pagination, sorting }), { wrapper });
 
-    await waitFor(() => !result.current.isLoading);
+    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
 
     const {
       limit,

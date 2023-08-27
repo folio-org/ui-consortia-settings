@@ -49,11 +49,11 @@ wrapConsortiaControlledVocabularyDescribe({ entries })('ContributorTypes', () =>
   });
 
   describe('validation', () => {
-    it('should validate required fields', () => {
+    it('should validate required fields', async () => {
       renderContributorTypes();
 
-      userEvent.click(screen.getByText('stripes-core.button.new'));
-      userEvent.click(screen.getByText('stripes-core.button.save'));
+      await userEvent.click(screen.getByText('stripes-core.button.new'));
+      await userEvent.click(screen.getByText('stripes-core.button.save'));
 
       expect(screen.getAllByText('stripes-core.label.missingRequiredField')).toHaveLength(2);
     });

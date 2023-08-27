@@ -1,10 +1,13 @@
-import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { parse } from 'query-string';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
 
+import {
+  renderHook,
+  waitFor,
+} from '@folio/jest-config-stripes/testing-library/react';
 import {
   ASC_DIRECTION,
   LIMIT_PARAMETER,
@@ -56,7 +59,7 @@ describe('useDataImportLogs', () => {
     const tenantId = 'college';
     const { result } = renderHook(() => useDataImportLogs({ tenantId }), { wrapper });
 
-    await waitFor(() => !result.current.isLoading);
+    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
 
     expect(result.current.jobExecutions).toEqual(jobExecutions);
     expect(kyMock.get).toHaveBeenCalledWith(`${METADATA_PROVIDER_API}/jobExecutions`, expect.objectContaining({}));
@@ -68,7 +71,7 @@ describe('useDataImportLogs', () => {
     const sorting = { sortingField: 'testField', sortingDirection: ASC_DIRECTION };
     const { result } = renderHook(() => useDataImportLogs({ tenantId, pagination, sorting }), { wrapper });
 
-    await waitFor(() => !result.current.isLoading);
+    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
 
     const {
       limit,

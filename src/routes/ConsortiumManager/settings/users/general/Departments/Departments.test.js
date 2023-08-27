@@ -61,21 +61,21 @@ wrapConsortiaControlledVocabularyDescribe({ entries })('Departments', () => {
     it.each([
       ['name'],
       ['code'],
-    ])('should validate a department %s uniqueness', (fieldName) => {
+    ])('should validate a department %s uniqueness', async (fieldName) => {
       renderDepartments();
 
-      userEvent.click(screen.getByText('stripes-core.button.new'));
-      userEvent.type(screen.getByPlaceholderText(fieldName), entries[0][fieldName]);
-      userEvent.click(screen.getByText('stripes-core.button.save'));
+      await userEvent.click(screen.getByText('stripes-core.button.new'));
+      await userEvent.type(screen.getByPlaceholderText(fieldName), entries[0][fieldName]);
+      await userEvent.click(screen.getByText('stripes-core.button.save'));
 
       expect(screen.getByText('ui-consortia-settings.validation.error.entry.duplicate')).toBeInTheDocument();
     });
 
-    it('should validate if a department code field is filled in', () => {
+    it('should validate if a department code field is filled in', async () => {
       renderDepartments();
 
-      userEvent.click(screen.getByText('stripes-core.button.new'));
-      userEvent.click(screen.getByText('stripes-core.button.save'));
+      await userEvent.click(screen.getByText('stripes-core.button.new'));
+      await userEvent.click(screen.getByText('stripes-core.button.save'));
 
       expect(screen.getByText('ui-users.settings.departments.code.required')).toBeInTheDocument();
     });

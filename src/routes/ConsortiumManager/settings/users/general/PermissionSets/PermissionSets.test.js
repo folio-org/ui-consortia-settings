@@ -1,7 +1,7 @@
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 import { useShowCallout } from '@folio/stripes-acq-components';
 
 import { tenants } from 'fixtures';
@@ -10,8 +10,11 @@ import {
   buildStripesObject,
 } from 'helpers';
 import { useTenantPermissions } from '../../../../../../hooks';
+import {
+  PERMISSION_SET_ROUTES,
+  TENANT_ID_SEARCH_PARAMS,
+} from './constants';
 import { PermissionSets } from './PermissionSets';
-import { PERMISSION_SET_ROUTES, TENANT_ID_SEARCH_PARAMS } from './constants';
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -97,14 +100,14 @@ describe('PermissionsSets', () => {
   it('should render a permission set details', async () => {
     renderPermissionsSet();
 
-    userEvent.click(screen.getByText(permissions[1].displayName));
+    await userEvent.click(screen.getByText(permissions[1].displayName));
     expect(screen.getByText('PermissionSetDetails')).toBeInTheDocument();
   });
 
-  it('should handle selected member change', () => {
+  it('should handle selected member change', async () => {
     renderPermissionsSet();
 
-    userEvent.click(screen.getByText(tenants[4].name));
+    await userEvent.click(screen.getByText(tenants[4].name));
 
     expect(defaultProps.history.push).toHaveBeenCalled();
   });
@@ -115,11 +118,11 @@ describe('PermissionsSets', () => {
     const actionMenu = screen.getByTestId('permission-sets-actions-dropdown');
 
     expect(actionMenu).toBeInTheDocument();
-    userEvent.click(actionMenu);
+    await userEvent.click(actionMenu);
     const compareButton = container.querySelector('#clickable-compare-permissions');
 
     expect(compareButton).toBeInTheDocument();
-    userEvent.click(compareButton);
+    await userEvent.click(compareButton);
     expect(defaultProps.history.push).toHaveBeenCalledWith(`${PERMISSION_SET_ROUTES.COMPARE}?${TENANT_ID_SEARCH_PARAMS}=${tenants[3].id}`);
   });
 
