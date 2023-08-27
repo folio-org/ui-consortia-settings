@@ -2,7 +2,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
@@ -30,7 +30,7 @@ describe('useCurrentConsortium', () => {
   });
 
   it('should fetch consortia', async () => {
-    const { result, waitFor } = renderHook(() => useCurrentConsortium(), { wrapper });
+    const { result } = renderHook(() => useCurrentConsortium(), { wrapper });
 
     await waitFor(() => !result.current.isLoading);
 

@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@folio/jest-config-stripes/testing-library/react';
 
 import { tenants } from '../../../../../test/jest/fixtures';
 import { ConsortiumManagerContextProviderMock } from '../../../../../test/jest/helpers';

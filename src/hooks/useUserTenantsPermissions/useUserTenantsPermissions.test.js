@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import {
   QueryClient,
   QueryClientProvider,
@@ -50,7 +50,7 @@ describe('useUserTenantsPermissions', () => {
   });
 
   it('should send a publish coordinator request to get user permissions in the provided tenants', async () => {
-    const { result, waitFor } = renderHook(() => useUserTenantsPermissions({ userId, tenants }), { wrapper });
+    const { result } = renderHook(() => useUserTenantsPermissions({ userId, tenants }), { wrapper });
 
     await waitFor(() => !result.current.isFetching);
 

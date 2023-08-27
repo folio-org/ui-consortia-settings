@@ -1,4 +1,4 @@
-import { cleanup, renderHook } from '@testing-library/react-hooks';
+import { cleanup, renderHook } from '@folio/jest-config-stripes/testing-library/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { get } from 'lodash';
 

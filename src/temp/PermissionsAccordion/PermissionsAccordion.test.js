@@ -112,7 +112,7 @@ describe('PermissionsAccordion', () => {
         renderPermissionsAccordion();
 
         expect(screen.queryByText('PermissionsModal')).not.toBeInTheDocument();
-        userEvent.click(screen.getByText('ui-users.permissions.addPermission'));
+        await userEvent.click(screen.getByText('ui-users.permissions.addPermission'));
         expect(await screen.findByText('PermissionsModal')).toBeInTheDocument();
       });
     });
@@ -123,7 +123,7 @@ describe('PermissionsAccordion', () => {
 
         const unassignAllButton = await screen.findByRole('button', { name: 'ui-users.permissions.unassignAllPermissions' });
 
-        userEvent.click(unassignAllButton);
+        await userEvent.click(unassignAllButton);
 
         expect(await screen.findByText('ui-users.permissions.modal.unassignAll.header')).toBeInTheDocument();
       });
@@ -144,11 +144,11 @@ describe('PermissionsAccordion', () => {
 
           const unassignAllButton = await screen.findByRole('button', { name: 'ui-users.permissions.unassignAllPermissions' });
 
-          userEvent.click(unassignAllButton);
+          await userEvent.click(unassignAllButton);
 
           const confirmButton = await screen.findByRole('button', { name: 'ui-users.yes' });
 
-          userEvent.click(confirmButton);
+          await userEvent.click(confirmButton);
 
           expect(changeFormMock).toHaveBeenCalled();
         });
@@ -160,11 +160,11 @@ describe('PermissionsAccordion', () => {
 
           const unassignAllButton = await screen.findByRole('button', { name: 'ui-users.permissions.unassignAllPermissions' });
 
-          userEvent.click(unassignAllButton);
+          await userEvent.click(unassignAllButton);
 
           const cancelButton = await screen.findByRole('button', { name: 'ui-users.no' });
 
-          userEvent.click(cancelButton);
+          await userEvent.click(cancelButton);
 
           await waitForElementToBeRemoved(() => screen.getByText('ui-users.permissions.modal.unassignAll.header'));
 

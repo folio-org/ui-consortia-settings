@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import {
   QueryClient,
   QueryClientProvider,
@@ -40,9 +40,9 @@ describe('useTenantPermissions', () => {
 
   it('should fetch tenant-related permissions', async () => {
     const tenantId = 'diku';
-    const { result, waitFor } = renderHook(() => useTenantPermissions({ tenantId }), { wrapper });
+    const { result } = renderHook(() => useTenantPermissions({ tenantId }), { wrapper });
 
-    await waitFor(() => !result.current.isLoading);
+    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
 
     expect(result.current.permissions).toEqual(permissions);
   });

@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import {
   QueryClient,
   QueryClientProvider,
@@ -52,7 +52,7 @@ describe('useDataExportLogs', () => {
 
   it('should fetch user\'s consortium affiliations by user\'s id', async () => {
     const tenantId = 'college';
-    const { result, waitFor } = renderHook(() => useDataExportLogs({ tenantId }), { wrapper });
+    const { result } = renderHook(() => useDataExportLogs({ tenantId }), { wrapper });
 
     await waitFor(() => !result.current.isLoading);
 
@@ -64,7 +64,7 @@ describe('useDataExportLogs', () => {
     const tenantId = 'university';
     const pagination = { [LIMIT_PARAMETER]: 200, [OFFSET_PARAMETER]: 300 };
     const sorting = { sortingField: EXPORT_JOB_LOG_COLUMNS.status, sortingDirection: ASC_DIRECTION };
-    const { result, waitFor } = renderHook(() => useDataExportLogs({ tenantId, pagination, sorting }), { wrapper });
+    const { result } = renderHook(() => useDataExportLogs({ tenantId, pagination, sorting }), { wrapper });
 
     await waitFor(() => !result.current.isLoading);
 

@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import {
   QueryClient,
   QueryClientProvider,
@@ -65,7 +65,7 @@ describe('useSettings', () => {
   });
 
   it('should send a publish coordinator request to get settings', async () => {
-    const { result, waitFor } = renderHook(() => useSettings({ path, records }), { wrapper });
+    const { result } = renderHook(() => useSettings({ path, records }), { wrapper });
 
     await waitFor(() => !result.current.isFetching);
 
@@ -73,7 +73,7 @@ describe('useSettings', () => {
   });
 
   it('should hydrate settings with \'tenantId\' and \'shared\' values', async () => {
-    const { result, waitFor } = renderHook(() => useSettings({ path, records }), { wrapper });
+    const { result } = renderHook(() => useSettings({ path, records }), { wrapper });
 
     await waitFor(() => !result.current.isFetching);
 

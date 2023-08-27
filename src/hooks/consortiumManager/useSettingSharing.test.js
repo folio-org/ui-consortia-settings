@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import {
   QueryClient,
   QueryClientProvider,
@@ -52,7 +52,7 @@ describe('useSettingSharing', () => {
 
       useOkapiKy.mockReturnValue(kyMock);
 
-      const { result, waitFor } = renderHook(() => useSettingSharing({ path }), { wrapper });
+      const { result } = renderHook(() => useSettingSharing({ path }), { wrapper });
       const pcResults = await result.current.upsertSharedSetting({ entry: setting });
 
       await waitFor(() => !result.current.isLoading);
