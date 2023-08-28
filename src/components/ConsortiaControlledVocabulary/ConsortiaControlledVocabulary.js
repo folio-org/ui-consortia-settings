@@ -11,6 +11,7 @@ import {
 import {
   memo,
   useCallback,
+  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
@@ -107,6 +108,10 @@ export const ConsortiaControlledVocabulary = ({
     setSelectMembersDisabled,
     isFetching: isContextDataFetching,
   } = useConsortiumManagerContext();
+
+  useEffect(() => {
+    setSelectMembersDisabled(false);
+  }, []);
 
   const panesetId = `${PANESET_PREFIX}${id}`;
   const primaryField = primaryFieldProp || visibleFieldsProp[0];
