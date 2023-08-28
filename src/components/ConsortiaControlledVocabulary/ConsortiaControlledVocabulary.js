@@ -334,8 +334,9 @@ export const ConsortiaControlledVocabulary = ({
       });
     })
       .then(refetch)
+      .finally(() => setSelectMembersDisabled(false))
       .catch(skipAborted);
-  }, [onShare, handleCreateEntry, refetch, showSuccessCallout]);
+  }, [onShare, handleCreateEntry, refetch, setSelectMembersDisabled, showSuccessCallout]);
 
   const onUpdate = useCallback(async (hydratedEntry) => {
     const entry = dehydrateEntry(hydratedEntry);
@@ -350,8 +351,9 @@ export const ConsortiaControlledVocabulary = ({
       });
     })
       .then(refetch)
+      .finally(() => setSelectMembersDisabled(false))
       .catch(skipAborted);
-  }, [onShare, refetch, showSuccessCallout, updateEntry]);
+  }, [onShare, refetch, setSelectMembersDisabled, showSuccessCallout, updateEntry]);
 
   const handleDeleteEntry = useCallback((hydratedEntry) => {
     const entry = dehydrateEntry(hydratedEntry);
