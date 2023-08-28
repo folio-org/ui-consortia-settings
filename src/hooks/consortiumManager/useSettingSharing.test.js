@@ -71,5 +71,29 @@ describe('useSettingSharing', () => {
       expect(getPublicationDetails).toHaveBeenCalledWith(pcId, expect.objectContaining({}));
       expect(pcResults).toEqual(pcPublicationResults);
     });
+
+    it('should send DELETE request to sharing settings API to initiate PC request', async () => {
+      const kyMock = getKyMock({ [PC_SHARE_DETAILS_KEYS.delete]: pcId });
+
+      useOkapiKy.mockReturnValue(kyMock);
+
+      const { result } = renderHook(() => useSettingSharing({ path }), { wrapper });
+      const pcResults = await result.current.deleteSharedSetting({ entry: setting });
+
+      await waitFor(() => !result.current.isLoading);
+
+      expect(kyMock).toHaveBeenCalledWith(
+        expect.stringContaining(SETTINGS_SHARING_API),
+        expect.objectContaining({
+          method: HTTP_METHODS.DELETE,
+          json: expect.objectContaining({
+            settingId: setting.id,
+            url: path,
+          }),
+        }),
+      );
+      expect(getPublicationDetails).toHaveBeenCalledWith(pcId, expect.objectContaining({}));
+      expect(pcResults).toEqual(pcPublicationResults);
+    });
   });
 });

@@ -18,7 +18,6 @@ import { usePublishCoordinator } from '../usePublishCoordinator';
 export const PC_SHARE_DETAILS_KEYS = {
   create: 'createSettingsPCId',
   update: 'updateSettingsPCId',
-  // TODO: adjust with BE (MODCON-71)
   delete: 'pcId',
 };
 
@@ -87,12 +86,10 @@ export const useSettingSharing = ({ path }, options = {}) => {
     mutationFn: ({ entry }) => {
       const request = {
         settingId: entry.id,
-        url: `${path}/${entry.id}`,
+        url: path,
       };
 
-      // TODO: implement deletion of a shared setting
-      // return initSettingSharingRequest(request, { method: HTTP_METHODS.DELETE });
-      return Promise.reject(new Error('Not implemented yet' + JSON.stringify(request)));
+      return initSettingSharingRequest(request, { method: HTTP_METHODS.DELETE });
     },
   });
 

@@ -51,7 +51,7 @@ export const useSettings = (params = {}, options = {}) => {
   } = useQuery(
     queryKey,
     async () => {
-      if (!selectedMembers?.length) return DEFAULT_DATA;
+      if (!selectedMembers?.length) return {};
 
       const publication = {
         url: `${path}?${stringify(searchParams)}`,
