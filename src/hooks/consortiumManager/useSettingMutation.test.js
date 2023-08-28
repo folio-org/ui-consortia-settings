@@ -1,9 +1,9 @@
-import { renderHook } from '@testing-library/react-hooks';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
 
+import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { useOkapiKy } from '@folio/stripes/core';
 
 import { tenants } from 'fixtures';
@@ -50,7 +50,7 @@ describe('useSettingMutation', () => {
 
   describe('Members local settings', () => {
     it('should send POST request to create settings in the provided tenants', async () => {
-      const { result, waitFor } = renderHook(() => useSettingMutation({ path }), { wrapper });
+      const { result } = renderHook(() => useSettingMutation({ path }), { wrapper });
 
       await result.current.createEntry({ entry: localHydratedSetting, tenants });
       await waitFor(() => !result.current.isLoading);
@@ -67,7 +67,7 @@ describe('useSettingMutation', () => {
       ['updateEntry', kyMock.put, [`${path}/${setting.id}`, { json: setting }]],
       ['deleteEntry', kyMock.delete, [`${path}/${setting.id}`]],
     ])('should handle \'%s\' mutation', async (fnName, mockedFn, args) => {
-      const { result, waitFor } = renderHook(() => useSettingMutation({ path }), { wrapper });
+      const { result } = renderHook(() => useSettingMutation({ path }), { wrapper });
 
       const mutationFn = result.current[fnName];
 

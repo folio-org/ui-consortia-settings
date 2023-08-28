@@ -24,3 +24,5 @@
 * [UICONSET-113](https://issues.folio.org/browse/UICONSET-113) Allow a user to share settings in the `<ConsortiaControlledVocabulary>`.
 * [UICONSET-49](https://issues.folio.org/browse/UICONSET-49) Display a toast message about lack of permissions for members when loading settings in the consortium members.
 * [UICONSET-136](https://issues.folio.org/browse/UICONSET-136) Replicate assigned users functionality on permission sets.
+* [UICONSET-138](https://issues.folio.org/browse/UICONSET-138) Upgrade `React` to `v18`
+* [UICONSET-137](https://issues.folio.org/browse/UICONSET-137) Update `Node.js` to `v18`s in GitHub Actions.

@@ -1,11 +1,15 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { MemoryRouter, useLocation, useHistory } from 'react-router-dom';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
 
+import {
+  render,
+  screen,
+  waitFor,
+} from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { Paneset } from '@folio/stripes/components';
 import { useStripes } from '@folio/stripes/core';
 import { useShowCallout } from '@folio/stripes-acq-components';
@@ -166,9 +170,9 @@ describe('ConsortiumPermissionsSetForm', () => {
 
     const input = container.querySelector('#input-permission-title');
 
-    userEvent.type(input, permissionName);
+    await userEvent.type(input, permissionName);
     expect(input.value).toBe(permissionName);
-    userEvent.click(screen.getByText('ui-users.saveAndClose'));
+    await userEvent.click(screen.getByText('ui-users.saveAndClose'));
 
     expect(onSave).toHaveBeenCalledWith({ 'displayName': permissionName });
     await waitFor(() => expect(showCalloutMock).toHaveBeenCalledWith(expect.objectContaining({ type: 'success' })));
@@ -180,7 +184,7 @@ describe('ConsortiumPermissionsSetForm', () => {
     const cancelButton = screen.getByText('ui-users.cancel');
 
     expect(cancelButton).toBeInTheDocument();
-    userEvent.click(cancelButton);
+    await userEvent.click(cancelButton);
 
     expect(historyMock.push).toHaveBeenCalledWith({
       pathname: PERMISSION_SET_ROUTES.PERMISSION_SETS,
@@ -204,9 +208,9 @@ describe('ConsortiumPermissionsSetForm', () => {
 
     expect(deleteButton).toBeInTheDocument();
 
-    userEvent.click(deleteButton);
+    await userEvent.click(deleteButton);
     await waitFor(() => expect(screen.getByRole('button', { name: /confirm/ })).toBeDefined());
-    userEvent.click(screen.getByRole('button', { name: /confirm/ }));
+    await userEvent.click(screen.getByRole('button', { name: /confirm/ }));
 
     expect(onRemove).toHaveBeenCalled();
     await waitFor(() => expect(showCalloutMock).toHaveBeenCalledWith({
@@ -230,9 +234,9 @@ describe('ConsortiumPermissionsSetForm', () => {
 
     const input = container.querySelector('#input-permission-title');
 
-    userEvent.type(input, permissionName);
+    await userEvent.type(input, permissionName);
     expect(input.value).toBe(expectedPermissionName);
-    userEvent.click(screen.getByText('ui-users.saveAndClose'));
+    await userEvent.click(screen.getByText('ui-users.saveAndClose'));
 
     expect(onSave).toHaveBeenCalledWith({ 'displayName': expectedPermissionName, 'id': initialValues.id });
     await waitFor(() => expect(showCalloutMock).toHaveBeenCalledWith(expect.objectContaining({ type: 'success' })));

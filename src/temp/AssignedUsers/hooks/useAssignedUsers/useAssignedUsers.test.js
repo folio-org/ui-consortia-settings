@@ -1,5 +1,4 @@
-import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import {
   QueryClient,
   QueryClientProvider,
@@ -7,7 +6,11 @@ import {
 
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { GROUPS_API, PERMISSIONS_API, USERS_API } from '../../constants';
+import {
+  GROUPS_API,
+  PERMISSIONS_API,
+  USERS_API,
+} from '../../constants';
 import { batchRequest } from '../utils';
 import useAssignedUsers from './useAssignedUsers';
 
@@ -73,7 +76,8 @@ describe('useAssignedUsers', () => {
       tenantId: mockTenantId,
     }), { wrapper });
 
-    await waitFor(() => !result.current.isLoading);
+    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
+
     expect(result.current.users).toHaveLength(0);
   });
 
@@ -88,7 +92,8 @@ describe('useAssignedUsers', () => {
       tenantId: mockTenantId,
     }), { wrapper });
 
-    await waitFor(() => !result.current.isLoading);
+    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
+
     expect(result.current.users).toHaveLength(2);
   });
 });

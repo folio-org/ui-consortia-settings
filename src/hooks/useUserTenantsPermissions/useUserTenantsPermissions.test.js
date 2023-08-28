@@ -1,8 +1,9 @@
-import { renderHook } from '@testing-library/react-hooks';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
+
+import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import { tenants as tenantsMock } from 'fixtures';
 import { ConsortiumManagerContextProviderMock } from 'helpers';
@@ -50,9 +51,9 @@ describe('useUserTenantsPermissions', () => {
   });
 
   it('should send a publish coordinator request to get user permissions in the provided tenants', async () => {
-    const { result, waitFor } = renderHook(() => useUserTenantsPermissions({ userId, tenants }), { wrapper });
+    const { result } = renderHook(() => useUserTenantsPermissions({ userId, tenants }), { wrapper });
 
-    await waitFor(() => !result.current.isFetching);
+    await waitFor(() => expect(result.current.isFetching).toBeFalsy());
 
     expect(initPublicationRequest).toHaveBeenCalledWith({
       method: 'GET',

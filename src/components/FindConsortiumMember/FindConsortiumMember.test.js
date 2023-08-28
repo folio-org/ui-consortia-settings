@@ -1,7 +1,7 @@
-import userEvent from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 
-import { tenants } from '../../../test/jest/fixtures';
+import { tenants } from 'fixtures';
 import { FindConsortiumMember } from './FindConsortiumMember';
 
 const defaultProps = {
@@ -32,7 +32,7 @@ describe('FindConsortiumMember', () => {
   describe('Modal', () => {
     beforeEach(async () => {
       renderFindConsortiumMember();
-      userEvent.click(await screen.findByRole('button', { name: 'ui-consortia-settings.consortiumManager.findMember.trigger.label' }));
+      await userEvent.click(await screen.findByRole('button', { name: 'ui-consortia-settings.consortiumManager.findMember.trigger.label' }));
     });
 
     it('should render find record modal', async () => {
@@ -40,13 +40,13 @@ describe('FindConsortiumMember', () => {
     });
 
     it('should close modal when \'Cancel\' button was clicked', async () => {
-      userEvent.click(await screen.findByText('stripes-core.button.cancel'));
+      await userEvent.click(await screen.findByText('stripes-core.button.cancel'));
 
       expect(screen.queryByText('ui-consortia-settings.consortiumManager.findMember.modal.title')).not.toBeInTheDocument();
     });
 
     it('should handle selected records when \'Save & close\' button was clicked', async () => {
-      userEvent.click(await screen.findByText('stripes-components.saveAndClose'));
+      await userEvent.click(await screen.findByText('stripes-components.saveAndClose'));
 
       expect(defaultProps.selectRecords).toHaveBeenCalled();
     });
@@ -55,19 +55,19 @@ describe('FindConsortiumMember', () => {
       it('should filter results by search query', async () => {
         expect(await screen.findAllByRole('row')).toHaveLength(tenants.length + 1);
 
-        userEvent.type(await screen.findByLabelText('ui-consortia-settings.consortiumManager.findMember.modal.aria.search'), tenants[0].name);
-        userEvent.click(await screen.findByText('stripes-acq-components.search'));
+        await userEvent.type(await screen.findByLabelText('ui-consortia-settings.consortiumManager.findMember.modal.aria.search'), tenants[0].name);
+        await userEvent.click(await screen.findByText('stripes-acq-components.search'));
 
         expect(await screen.findAllByRole('row')).toHaveLength(2);
       });
 
       it('should reset filters when \'Reset all\' button was clicked', async () => {
-        userEvent.type(await screen.findByLabelText('ui-consortia-settings.consortiumManager.findMember.modal.aria.search'), 'Community');
-        userEvent.click(await screen.findByText('stripes-acq-components.search'));
+        await userEvent.type(await screen.findByLabelText('ui-consortia-settings.consortiumManager.findMember.modal.aria.search'), 'Community');
+        await userEvent.click(await screen.findByText('stripes-acq-components.search'));
 
         expect(await screen.findAllByRole('row')).toHaveLength(3);
 
-        userEvent.click(await screen.findByTestId('reset-button'));
+        await userEvent.click(await screen.findByTestId('reset-button'));
 
         expect(await screen.findAllByRole('row')).toHaveLength(tenants.length + 1);
       });

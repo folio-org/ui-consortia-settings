@@ -1,13 +1,11 @@
-import userEvent from '@testing-library/user-event';
-import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { render, screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { useShowCallout } from '@folio/stripes-acq-components';
 
 import { tenants } from 'fixtures';
-import {
-  ConsortiumManagerContextProviderMock,
-} from 'helpers';
+import { ConsortiumManagerContextProviderMock } from 'helpers';
 import { useTenantPermissions } from '../../../../../../../hooks';
 import { PermissionSetsCompareItem } from './PermissionSetsCompareItem';
 import { COMPARE_ITEM_NAME } from './constants';
@@ -89,8 +87,8 @@ describe('PermissionSetsCompareItem', () => {
 
     renderComponent({ setPermissionsToCompare });
 
-    userEvent.click(screen.getByText(selectedMemberOptions[0].label));
-    userEvent.click(screen.getByText(permissions[0].displayName));
+    await userEvent.click(screen.getByText(selectedMemberOptions[0].label));
+    await userEvent.click(screen.getByText(permissions[0].displayName));
 
     await waitFor(() => expect(setPermissionsToCompare).toHaveBeenCalledWith(
       [permissions[0].subPermissions[0].displayName],
@@ -103,8 +101,8 @@ describe('PermissionSetsCompareItem', () => {
 
     const { container } = renderComponent({ setPermissionsToCompare, permissionsToCompare: ['Unique test permission'] });
 
-    userEvent.click(screen.getByText(selectedMemberOptions[0].label));
-    userEvent.click(screen.getByText(permissions[0].displayName));
+    await userEvent.click(screen.getByText(selectedMemberOptions[0].label));
+    await userEvent.click(screen.getByText(permissions[0].displayName));
 
     await waitFor(() => expect(setPermissionsToCompare).toHaveBeenCalledWith(
       [permissions[0].subPermissions[0].displayName],

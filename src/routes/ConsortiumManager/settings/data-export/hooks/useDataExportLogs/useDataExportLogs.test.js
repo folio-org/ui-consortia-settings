@@ -1,9 +1,12 @@
-import { renderHook } from '@testing-library/react-hooks';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
 
+import {
+  renderHook,
+  waitFor,
+} from '@folio/jest-config-stripes/testing-library/react';
 import {
   ASC_DIRECTION,
   LIMIT_PARAMETER,
@@ -52,9 +55,9 @@ describe('useDataExportLogs', () => {
 
   it('should fetch user\'s consortium affiliations by user\'s id', async () => {
     const tenantId = 'college';
-    const { result, waitFor } = renderHook(() => useDataExportLogs({ tenantId }), { wrapper });
+    const { result } = renderHook(() => useDataExportLogs({ tenantId }), { wrapper });
 
-    await waitFor(() => !result.current.isLoading);
+    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
 
     expect(result.current.jobExecutions).toEqual(jobExecutions);
     expect(kyMock.get).toHaveBeenCalledWith(`${DATA_EXPORT_API}/job-executions`, expect.objectContaining({}));
@@ -64,9 +67,9 @@ describe('useDataExportLogs', () => {
     const tenantId = 'university';
     const pagination = { [LIMIT_PARAMETER]: 200, [OFFSET_PARAMETER]: 300 };
     const sorting = { sortingField: EXPORT_JOB_LOG_COLUMNS.status, sortingDirection: ASC_DIRECTION };
-    const { result, waitFor } = renderHook(() => useDataExportLogs({ tenantId, pagination, sorting }), { wrapper });
+    const { result } = renderHook(() => useDataExportLogs({ tenantId, pagination, sorting }), { wrapper });
 
-    await waitFor(() => !result.current.isLoading);
+    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
 
     const {
       limit,

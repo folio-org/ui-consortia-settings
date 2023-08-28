@@ -1,21 +1,21 @@
-import { renderHook } from '@testing-library/react-hooks';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
 
+import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { useOkapiKy } from '@folio/stripes/core';
 
 import { pcPublicationResults } from 'fixtures';
+import {
+  HTTP_METHODS,
+  SETTINGS_SHARING_API,
+} from '../../constants';
 import { usePublishCoordinator } from '../usePublishCoordinator';
 import {
   PC_SHARE_DETAILS_KEYS,
   useSettingSharing,
 } from './useSettingSharing';
-import {
-  HTTP_METHODS,
-  SETTINGS_SHARING_API,
-} from '../../constants';
 
 jest.mock('../usePublishCoordinator', () => ({
   usePublishCoordinator: jest.fn(),
@@ -52,7 +52,7 @@ describe('useSettingSharing', () => {
 
       useOkapiKy.mockReturnValue(kyMock);
 
-      const { result, waitFor } = renderHook(() => useSettingSharing({ path }), { wrapper });
+      const { result } = renderHook(() => useSettingSharing({ path }), { wrapper });
       const pcResults = await result.current.upsertSharedSetting({ entry: setting });
 
       await waitFor(() => !result.current.isLoading);

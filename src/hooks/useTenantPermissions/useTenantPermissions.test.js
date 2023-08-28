@@ -1,11 +1,12 @@
-import { renderHook } from '@testing-library/react-hooks';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
 
-import { useTenantPermissions } from './useTenantPermissions';
+import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
 import { useTenantKy } from '../useTenantKy';
+import { useTenantPermissions } from './useTenantPermissions';
 
 jest.mock('../useTenantKy', () => ({
   ...jest.requireActual('../useTenantKy'),
@@ -40,9 +41,9 @@ describe('useTenantPermissions', () => {
 
   it('should fetch tenant-related permissions', async () => {
     const tenantId = 'diku';
-    const { result, waitFor } = renderHook(() => useTenantPermissions({ tenantId }), { wrapper });
+    const { result } = renderHook(() => useTenantPermissions({ tenantId }), { wrapper });
 
-    await waitFor(() => !result.current.isLoading);
+    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
 
     expect(result.current.permissions).toEqual(permissions);
   });

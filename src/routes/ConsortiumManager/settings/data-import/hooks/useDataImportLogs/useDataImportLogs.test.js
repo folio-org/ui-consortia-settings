@@ -1,10 +1,13 @@
-import { renderHook } from '@testing-library/react-hooks';
 import { parse } from 'query-string';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
 
+import {
+  renderHook,
+  waitFor,
+} from '@folio/jest-config-stripes/testing-library/react';
 import {
   ASC_DIRECTION,
   LIMIT_PARAMETER,
@@ -54,9 +57,9 @@ describe('useDataImportLogs', () => {
 
   it('should fetch user\'s consortium affiliations by user\'s id', async () => {
     const tenantId = 'college';
-    const { result, waitFor } = renderHook(() => useDataImportLogs({ tenantId }), { wrapper });
+    const { result } = renderHook(() => useDataImportLogs({ tenantId }), { wrapper });
 
-    await waitFor(() => !result.current.isLoading);
+    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
 
     expect(result.current.jobExecutions).toEqual(jobExecutions);
     expect(kyMock.get).toHaveBeenCalledWith(`${METADATA_PROVIDER_API}/jobExecutions`, expect.objectContaining({}));
@@ -66,9 +69,9 @@ describe('useDataImportLogs', () => {
     const tenantId = 'university';
     const pagination = { [LIMIT_PARAMETER]: 200, [OFFSET_PARAMETER]: 300 };
     const sorting = { sortingField: 'testField', sortingDirection: ASC_DIRECTION };
-    const { result, waitFor } = renderHook(() => useDataImportLogs({ tenantId, pagination, sorting }), { wrapper });
+    const { result } = renderHook(() => useDataImportLogs({ tenantId, pagination, sorting }), { wrapper });
 
-    await waitFor(() => !result.current.isLoading);
+    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
 
     const {
       limit,

@@ -1,6 +1,6 @@
 import { updateUser } from '@folio/stripes/core';
 
-import { tenants } from '../../test/jest/fixtures';
+import { tenants } from 'fixtures';
 import {
   fetchConsortiaCentralTenant,
   fetchConsortium,

@@ -1,5 +1,5 @@
-import userEvent from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 
 import { ConsortiaControlledVocabularyWrapper } from 'helpers';
 import { wrapConsortiaControlledVocabularyDescribe } from 'helpers/wrapConsortiaControlledVocabularyDescribe';
@@ -49,11 +49,11 @@ wrapConsortiaControlledVocabularyDescribe({ entries })('ContributorTypes', () =>
   });
 
   describe('validation', () => {
-    it('should validate required fields', () => {
+    it('should validate required fields', async () => {
       renderContributorTypes();
 
-      userEvent.click(screen.getByText('stripes-core.button.new'));
-      userEvent.click(screen.getByText('stripes-core.button.save'));
+      await userEvent.click(screen.getByText('stripes-core.button.new'));
+      await userEvent.click(screen.getByText('stripes-core.button.save'));
 
       expect(screen.getAllByText('stripes-core.label.missingRequiredField')).toHaveLength(2);
     });

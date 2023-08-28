@@ -1,4 +1,3 @@
-import { renderHook } from '@testing-library/react-hooks';
 import {
   QueryClient,
   QueryClientProvider,
@@ -6,9 +5,10 @@ import {
 
 import '@folio/stripes-acq-components/test/jest/__mock__';
 
+import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { useStripes } from '@folio/stripes/core';
 
-import { tenants } from '../../../test/jest/fixtures';
+import { tenants } from 'fixtures';
 import { fetchConsortiumUserTenants } from '../../services';
 import { useUserAffiliations } from './useUserAffiliations';
 
@@ -53,9 +53,9 @@ describe('useUserAffiliations', () => {
   it('should fetch user\'s consortium affiliations by user\'s id', async () => {
     const userId = 'usedId';
     const stripes = useStripes();
-    const { result, waitFor } = renderHook(() => useUserAffiliations({ userId }), { wrapper });
+    const { result } = renderHook(() => useUserAffiliations({ userId }), { wrapper });
 
-    await waitFor(() => !result.current.isLoading);
+    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
 
     expect(fetchConsortiumUserTenants).toHaveBeenCalledWith(
       stripes,

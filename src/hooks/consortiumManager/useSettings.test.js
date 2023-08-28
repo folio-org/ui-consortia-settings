@@ -1,9 +1,9 @@
-import { renderHook } from '@testing-library/react-hooks';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
 
+import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { useStripes } from '@folio/stripes/core';
 
 import {
@@ -14,9 +14,9 @@ import {
   buildStripesObject,
   ConsortiumManagerContextProviderMock,
 } from 'helpers';
+import { RECORD_SOURCE } from '../../constants';
 import { usePublishCoordinator } from '../usePublishCoordinator';
 import { useSettings } from './useSettings';
-import { RECORD_SOURCE } from '../../constants';
 
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
@@ -65,7 +65,7 @@ describe('useSettings', () => {
   });
 
   it('should send a publish coordinator request to get settings', async () => {
-    const { result, waitFor } = renderHook(() => useSettings({ path, records }), { wrapper });
+    const { result } = renderHook(() => useSettings({ path, records }), { wrapper });
 
     await waitFor(() => !result.current.isFetching);
 
@@ -73,7 +73,7 @@ describe('useSettings', () => {
   });
 
   it('should hydrate settings with \'tenantId\' and \'shared\' values', async () => {
-    const { result, waitFor } = renderHook(() => useSettings({ path, records }), { wrapper });
+    const { result } = renderHook(() => useSettings({ path, records }), { wrapper });
 
     await waitFor(() => !result.current.isFetching);
 

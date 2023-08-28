@@ -1,12 +1,10 @@
-import userEvent from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 import { updateTenant } from '@folio/stripes/core';
 
-import {
-  tenants,
-} from '../../../test/jest/fixtures';
+import { tenants } from 'fixtures';
 import { useUserAffiliations } from '../../hooks';
 import { SwitchActiveAffiliation } from './SwitchActiveAffiliation';
 
@@ -72,11 +70,11 @@ describe('SwitchActiveAffiliation', () => {
     expect(screen.getByText('ui-consortia-settings.button.saveAndClose')).toBeInTheDocument();
   });
 
-  it('should change active affiliation', () => {
+  it('should change active affiliation', async () => {
     renderSwitchActiveAffiliation();
 
-    userEvent.click(screen.getByText(tenants[2].name));
-    userEvent.click(screen.getByText('ui-consortia-settings.button.saveAndClose'));
+    await userEvent.click(screen.getByText(tenants[2].name));
+    await userEvent.click(screen.getByText('ui-consortia-settings.button.saveAndClose'));
 
     expect(updateTenant).toHaveBeenCalledWith(
       defaultProps.stripes.okapi,

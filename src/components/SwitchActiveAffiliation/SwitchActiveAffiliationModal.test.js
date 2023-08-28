@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 
-import { tenants } from '../../../test/jest/fixtures';
+import { tenants } from 'fixtures';
 import { SwitchActiveAffiliationModal } from './SwitchActiveAffiliationModal';
 
 const defaultProps = {

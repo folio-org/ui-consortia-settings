@@ -1,10 +1,11 @@
-import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+
+import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 
 import {
   consortium,
   tenants,
-} from '../../../test/jest/fixtures';
+} from 'fixtures';
 import Membership from './Membership';
 
 jest.mock('@folio/stripes-smart-components/lib/ControlledVocab', () => jest.fn().mockReturnValue('ControlledVocab'));

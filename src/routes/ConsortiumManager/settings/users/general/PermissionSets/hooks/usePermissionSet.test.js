@@ -1,6 +1,7 @@
-import { cleanup, renderHook } from '@testing-library/react-hooks';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { get } from 'lodash';
+
+import { cleanup, renderHook } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useTenantKy } from '../../../../../../../hooks';
 import { usePermissionSet } from './usePermissionSet';
