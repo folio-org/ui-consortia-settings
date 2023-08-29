@@ -11,6 +11,7 @@ import {
 import {
   memo,
   useCallback,
+  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
@@ -107,6 +108,10 @@ export const ConsortiaControlledVocabulary = ({
     setSelectMembersDisabled,
     isFetching: isContextDataFetching,
   } = useConsortiumManagerContext();
+
+  useEffect(() => {
+    setSelectMembersDisabled(false);
+  }, []);
 
   const panesetId = `${PANESET_PREFIX}${id}`;
   const primaryField = primaryFieldProp || visibleFieldsProp[0];
@@ -334,6 +339,7 @@ export const ConsortiaControlledVocabulary = ({
       });
     })
       .then(refetch)
+      .finally(() => setSelectMembersDisabled(false))
       .catch(skipAborted);
   }, [onShare, handleCreateEntry, refetch, showSuccessCallout]);
 
@@ -350,6 +356,7 @@ export const ConsortiaControlledVocabulary = ({
       });
     })
       .then(refetch)
+      .finally(() => setSelectMembersDisabled(false))
       .catch(skipAborted);
   }, [onShare, refetch, showSuccessCallout, updateEntry]);
 
