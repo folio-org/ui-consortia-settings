@@ -13,8 +13,8 @@ import {
 } from '@folio/stripes/core';
 
 import {
+  useCurrentUserTenantsPermissions,
   useUserAffiliations,
-  useUserTenantsPermissions,
 } from '../hooks';
 
 const DEFAULT_SELECTED_MEMBERS = [];
@@ -50,13 +50,13 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
   );
 
   const {
-    permissionNames,
+    tenantsPermissions,
     isFetching: isPermissionsFetching,
-  } = useUserTenantsPermissions({ userId, tenants: selectedMembers?.map(({ id }) => id) });
+  } = useCurrentUserTenantsPermissions({ tenants: selectedMembers?.map(({ id }) => id) });
 
   const isFetching = isPermissionsFetching || isAffiliationsFetching;
 
-  const permissionNamesMap = useMemo(() => Object.entries(permissionNames).reduce((acc, [tenant, perms]) => {
+  const permissionNamesMap = useMemo(() => Object.entries(tenantsPermissions).reduce((acc, [tenant, perms]) => {
     acc[tenant] = perms.reduce((_acc, perm) => {
       _acc[perm] = true;
 
@@ -64,7 +64,7 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
     }, {});
 
     return acc;
-  }, {}), [permissionNames]);
+  }, {}), [tenantsPermissions]);
 
   const hasPerm = useCallback((tenantIds, permissions) => {
     const tenants = (Array.isArray(tenantIds) ? tenantIds : [tenantIds]).filter(Boolean);

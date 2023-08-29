@@ -8,8 +8,8 @@ import { useStripes } from '@folio/stripes/core';
 import { affiliations } from 'fixtures';
 import { MODULE_ROOT_ROUTE } from './constants';
 import {
+  useCurrentUserTenantsPermissions,
   useUserAffiliations,
-  useUserTenantsPermissions,
 } from './hooks';
 import Root from './Root';
 
@@ -19,8 +19,8 @@ jest.mock('@folio/stripes/core', () => ({
   updateUser: jest.fn(),
 }));
 jest.mock('./hooks', () => ({
+  useCurrentUserTenantsPermissions: jest.fn(),
   useUserAffiliations: jest.fn(),
-  useUserTenantsPermissions: jest.fn(),
 }));
 jest.mock('./settings', () => jest.fn(() => 'ConsortiumSettings'));
 jest.mock('./routes', () => ({
@@ -63,7 +63,7 @@ describe('Root', () => {
 
       return { affiliations };
     });
-    useUserTenantsPermissions.mockClear().mockReturnValue({ permissionNames: [] });
+    useCurrentUserTenantsPermissions.mockClear().mockReturnValue({ tenantsPermissions: {} });
   });
 
   afterAll(() => {

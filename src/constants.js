@@ -6,6 +6,7 @@ export const OKAPI_TOKEN_HEADER = 'X-Okapi-Token';
 
 /* APIs */
 export const ALTERNATIVE_TITLE_TYPES_API = 'alternative-title-types';
+export const BL_USERS_API = 'bl-users';
 export const CANCELLATION_REASONS_API = 'cancellation-reason-storage/cancellation-reasons';
 export const CLASSIFICATION_TYPES_API = 'classification-types';
 export const CONFIGURATIONS_API = 'configurations';

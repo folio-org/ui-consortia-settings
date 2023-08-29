@@ -9,7 +9,7 @@ import { tenants as tenantsMock } from 'fixtures';
 import { ConsortiumManagerContextProviderMock } from 'helpers';
 import { PERMISSION_USERS_API } from '../../constants';
 import { usePublishCoordinator } from '../usePublishCoordinator';
-import { useUserTenantsPermissions } from './useUserTenantsPermissions';
+import { useCurrentUserTenantsPermissions } from './useCurrentUserTenantsPermissions';
 
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
@@ -33,25 +33,25 @@ const wrapper = ({ children }) => (
 
 const userId = 'userId';
 const tenants = tenantsMock.slice(3).map(({ id }) => id);
-const permissionNames = ['post', 'put', 'delete'];
+const permissions = ['post', 'put', 'delete'];
 const response = {
   publicationResults: tenantsMock.map(({ id }) => ({
     tenantId: id,
-    response: { permissionNames },
+    response: { permissions },
     statusCode: 200,
   })),
 };
 
 const initPublicationRequest = jest.fn();
 
-describe('useUserTenantsPermissions', () => {
+describe('useCurrentUserTenantsPermissions', () => {
   beforeEach(() => {
     initPublicationRequest.mockClear().mockResolvedValue(response);
     usePublishCoordinator.mockClear().mockReturnValue(({ initPublicationRequest }));
   });
 
   it('should send a publish coordinator request to get user permissions in the provided tenants', async () => {
-    const { result } = renderHook(() => useUserTenantsPermissions({ userId, tenants }), { wrapper });
+    const { result } = renderHook(() => useCurrentUserTenantsPermissions({ userId, tenants }), { wrapper });
 
     await waitFor(() => expect(result.current.isFetching).toBeFalsy());
 
@@ -60,8 +60,8 @@ describe('useUserTenantsPermissions', () => {
       tenants,
       url: expect.stringContaining(`${PERMISSION_USERS_API}/${userId}/permissions`),
     });
-    expect(result.current.permissionNames).toEqual(expect.objectContaining(
-      tenants.reduce((acc, tenantId) => ({ ...acc, [tenantId]: permissionNames }), {}),
+    expect(result.current.tenantsPermissions).toEqual(expect.objectContaining(
+      tenants.reduce((acc, tenantId) => ({ ...acc, [tenantId]: permissions }), {}),
     ));
   });
 });
