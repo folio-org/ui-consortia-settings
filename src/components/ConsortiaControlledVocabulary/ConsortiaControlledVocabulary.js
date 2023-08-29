@@ -341,7 +341,7 @@ export const ConsortiaControlledVocabulary = ({
       .then(refetch)
       .finally(() => setSelectMembersDisabled(false))
       .catch(skipAborted);
-  }, [onShare, handleCreateEntry, refetch, setSelectMembersDisabled, showSuccessCallout]);
+  }, [onShare, handleCreateEntry, refetch, showSuccessCallout]);
 
   const onUpdate = useCallback(async (hydratedEntry) => {
     const entry = dehydrateEntry(hydratedEntry);
@@ -358,7 +358,7 @@ export const ConsortiaControlledVocabulary = ({
       .then(refetch)
       .finally(() => setSelectMembersDisabled(false))
       .catch(skipAborted);
-  }, [onShare, refetch, setSelectMembersDisabled, showSuccessCallout, updateEntry]);
+  }, [onShare, refetch, showSuccessCallout, updateEntry]);
 
   const handleDeleteEntry = useCallback((hydratedEntry) => {
     const entry = dehydrateEntry(hydratedEntry);
