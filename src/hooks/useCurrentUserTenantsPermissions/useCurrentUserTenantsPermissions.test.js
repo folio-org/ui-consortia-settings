@@ -7,7 +7,7 @@ import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/
 
 import { tenants as tenantsMock } from 'fixtures';
 import { ConsortiumManagerContextProviderMock } from 'helpers';
-import { PERMISSION_USERS_API } from '../../constants';
+import { BL_USERS_API } from '../../constants';
 import { usePublishCoordinator } from '../usePublishCoordinator';
 import { useCurrentUserTenantsPermissions } from './useCurrentUserTenantsPermissions';
 
@@ -31,13 +31,12 @@ const wrapper = ({ children }) => (
   </QueryClientProvider>
 );
 
-const userId = 'userId';
 const tenants = tenantsMock.slice(3).map(({ id }) => id);
 const permissions = ['post', 'put', 'delete'];
 const response = {
   publicationResults: tenantsMock.map(({ id }) => ({
     tenantId: id,
-    response: { permissions },
+    response: { permissions: { permissions } },
     statusCode: 200,
   })),
 };
@@ -58,7 +57,7 @@ describe('useCurrentUserTenantsPermissions', () => {
     expect(initPublicationRequest).toHaveBeenCalledWith({
       method: 'GET',
       tenants,
-      url: expect.stringContaining(`${PERMISSION_USERS_API}/${userId}/permissions`),
+      url: expect.stringContaining(`${BL_USERS_API}/_self`),
     });
     expect(result.current.tenantsPermissions).toEqual(expect.objectContaining(
       tenants.reduce((acc, tenantId) => ({ ...acc, [tenantId]: permissions }), {}),
