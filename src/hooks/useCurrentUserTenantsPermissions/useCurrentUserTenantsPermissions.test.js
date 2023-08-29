@@ -50,7 +50,7 @@ describe('useCurrentUserTenantsPermissions', () => {
   });
 
   it('should send a publish coordinator request to get user permissions in the provided tenants', async () => {
-    const { result } = renderHook(() => useCurrentUserTenantsPermissions({ userId, tenants }), { wrapper });
+    const { result } = renderHook(() => useCurrentUserTenantsPermissions({ tenants }), { wrapper });
 
     await waitFor(() => expect(result.current.isFetching).toBeFalsy());
 
