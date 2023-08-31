@@ -166,11 +166,11 @@
     "consortiumManager.members.permissionSets.create.permissionSet.contentLabel": "创建权限集",
     "consortiumManager.members.permissionSets.remove.permissionSet.success": "权限集<strong> {permissionName} </strong>已成功<strong>删除</strong> 。",
     "consortiumManager.members.permissionSets.save.permissionSet.success": "权限集<strong> {permissionName} </strong>已成功<strong>保存</strong> 。",
-    "button.confirm": "Confirm",
-    "consortiumManager.modal.confirmShare.all.heading": "Confirm share to all",
-    "consortiumManager.modal.confirmShare.all.message": "Are you sure you want to share {term} with <b>ALL</b> members?",
-    "consortiumManager.error.forbiddenMembers": "You do not have permissions at one or more members: <b>{members}</b>",
-    "consortiumManager.modal.confirmCreate.heading": "Confirm member libraries",
-    "consortiumManager.modal.confirmCreate.message": "<b>{term}</b> will be saved for the member libraries:",
-    "validation.error.entry.duplicate": "{field} is already in use at one or more member libraries."
+    "button.confirm": "确认",
+    "consortiumManager.modal.confirmShare.all.heading": "确认分享给所有人",
+    "consortiumManager.modal.confirmShare.all.message": "确定要与<b>所有</b>成员共享{term}吗？",
+    "consortiumManager.error.forbiddenMembers": "您对一名或多名成员没有权限： <b> {members} </b>",
+    "consortiumManager.modal.confirmCreate.heading": "确认成员馆",
+    "consortiumManager.modal.confirmCreate.message": "<b> {term} </b>将为成员馆保存：",
+    "validation.error.entry.duplicate": "{field}已在一个或多个成员图书馆使用。"
 }
