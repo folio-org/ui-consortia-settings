@@ -106,12 +106,15 @@ export const ConsortiaControlledVocabulary = ({
     permissionNamesMap,
     selectedMembers,
     setSelectMembersDisabled,
+    membersObserver,
     isFetching: isContextDataFetching,
   } = useConsortiumManagerContext();
 
   useEffect(() => {
-    setSelectMembersDisabled(false);
+    membersObserver.notify(false);
   }, []);
+
+  console.log('I rendner')
 
   const panesetId = `${PANESET_PREFIX}${id}`;
   const primaryField = primaryFieldProp || visibleFieldsProp[0];
@@ -121,8 +124,8 @@ export const ConsortiaControlledVocabulary = ({
   const onStatusChange = useCallback((_prevStatus, currStatus) => {
     const isEditing = currStatus.some(({ editing }) => Boolean(editing));
 
-    setSelectMembersDisabled(isEditing);
-  }, [setSelectMembersDisabled]);
+    membersObserver.notify(isEditing);
+  }, [membersObserver]);
 
   const handleSettingsLoading = useCallback(({ errors }) => {
     if (errors?.length) {

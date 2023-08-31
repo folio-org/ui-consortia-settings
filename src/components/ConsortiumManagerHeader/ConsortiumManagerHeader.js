@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -13,12 +13,19 @@ import css from './ConsortiumManagerHeader.css';
 
 export const ConsortiumManagerHeader = () => {
   const paneTitleRef = useRef();
+  const [selectMembersDisabled, setSelectMembersDisabled] = useState(false);
   const {
     affiliations,
     selectedMembers,
     selectMembers,
-    selectMembersDisabled,
+    membersObserver,
   } = useConsortiumManagerContext();
+
+  useEffect(() => {
+    membersObserver.subscribe(setSelectMembersDisabled);
+  }, []);
+
+  console.log(selectMembersDisabled)
 
   const records = useMemo(() => (
     affiliations.map(({ tenantId, tenantName }) => ({ id: tenantId, name: tenantName }))

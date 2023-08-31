@@ -5,6 +5,7 @@ import {
   useContext,
   useMemo,
   useState,
+  useRef,
 } from 'react';
 
 import {
@@ -21,11 +22,28 @@ const DEFAULT_SELECTED_MEMBERS = [];
 
 export const ConsortiumManagerContext = createContext();
 
+function observer() {
+  const observers = [];
+
+  const subscribe = (cb) => {
+    observers.push(cb);
+  };
+
+  const notify = (...rest) => observers.forEach(cb => cb(...rest));
+
+  return {
+    subscribe,
+    notify,
+  };
+}
+
 export const ConsortiumManagerContextProvider = ({ children }) => {
   const stripes = useStripes();
   const [selectMembersDisabled, setSelectMembersDisabled] = useState();
   const selectedMembers = stripes?.user?.user?.selectedConsortiumMembers;
   const userId = stripes?.user?.user?.id;
+
+  const membersObserver = useRef(observer());
 
   const selectMembers = useCallback(async (members) => {
     await updateUser(stripes.store, {
@@ -84,6 +102,7 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
     selectedMembers: selectedMembers || DEFAULT_SELECTED_MEMBERS,
     selectMembers,
     selectMembersDisabled,
+    membersObserver: membersObserver.current,
     setSelectMembersDisabled,
   }), [
     affiliations,
