@@ -79,10 +79,10 @@
     "consortiumManager.controlledVocab.contributorTypes.deleteEntry": "Excluir tipo de colaborador",
     "consortiumManager.controlledVocab.contributorTypes.termDeleted": "O tipo de colaborador <b>{term}</b> foi <b>excluído</b> com sucesso.",
     "consortiumManager.controlledVocab.contributorTypes.termWillBeDeleted": "O tipo de colaborador <b> {term} </b> será <b> excluído </b> .",
-    "consortiumManager.controlledVocab.departments.cannotDeleteTermHeader": "Não é possível deletar o departamento",
+    "consortiumManager.controlledVocab.departments.cannotDeleteTermHeader": "Não é possível excluir o departamento",
     "consortiumManager.controlledVocab.departments.cannotDeleteTermMessage": "Este departamento não pode ser excluído, pois está em uso por um ou mais registros.",
     "consortiumManager.controlledVocab.departments.deleteEntry": "Excluir departamento",
-    "consortiumManager.controlledVocab.departments.termDeleted": "O departamento <b> {term} </b> foi <b> excluído </b> com sucesso.",
+    "consortiumManager.controlledVocab.departments.termDeleted": "O departamento <b>{term}</b> foi <b>excluído</b> com sucesso.",
     "consortiumManager.controlledVocab.departments.termWillBeDeleted": "O departamento <b>{term}</b> será <b>excluído</b>.",
     "consortiumManager.controlledVocab.formats.cannotDeleteTermHeader": "Não é possível excluir o formato",
     "consortiumManager.controlledVocab.formats.cannotDeleteTermMessage": "Este formato não pode ser excluído, pois está em uso por um ou mais registros.",
@@ -169,8 +169,8 @@
     "button.confirm": "Confirmar",
     "consortiumManager.modal.confirmShare.all.heading": "Confirmar o compartilhamento para todos",
     "consortiumManager.modal.confirmShare.all.message": "Tem certeza de que deseja compartilhar {term} com <b>TODOS</b> membros?",
-    "consortiumManager.error.forbiddenMembers": "You do not have permissions at one or more members: <b>{members}</b>",
-    "consortiumManager.modal.confirmCreate.heading": "Confirm member libraries",
-    "consortiumManager.modal.confirmCreate.message": "<b>{term}</b> will be saved for the member libraries:",
-    "validation.error.entry.duplicate": "{field} is already in use at one or more member libraries."
+    "consortiumManager.error.forbiddenMembers": "Você não tem permissões em um ou mais membros: <b> {members} </b>",
+    "consortiumManager.modal.confirmCreate.heading": "Confirmar bibliotecas membros",
+    "consortiumManager.modal.confirmCreate.message": "<b> {term} </b> será salvo para as bibliotecas membros:",
+    "validation.error.entry.duplicate": "{field} já está em uso em uma ou mais bibliotecas membros."
 }
