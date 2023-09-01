@@ -1,8 +1,10 @@
 import { ConsortiumManagerContext } from '../../../src/contexts';
+import { EventEmitter } from '../../../src/utils';
 import { affiliations, tenants } from '../fixtures';
 
 const defaultContext = {
   affiliations,
+  eventEmitterRef: { current: new EventEmitter() },
   hasPerm: jest.fn(() => true),
   permissionNamesMap: tenants.reduce((acc, { id }) => ({
     ...acc,
@@ -14,8 +16,6 @@ const defaultContext = {
   }), {}),
   selectedMembers: tenants.slice(3),
   selectMembers: jest.fn(),
-  selectMembersDisabled: false,
-  setSelectMembersDisabled: jest.fn(),
 };
 
 export const ConsortiumManagerContextProviderMock = ({ children, context = defaultContext }) => (

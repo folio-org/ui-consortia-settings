@@ -13,6 +13,7 @@ import {
 } from 'fixtures';
 import { buildStripesObject } from 'helpers';
 import { ConsortiumManagerContext } from '../../contexts';
+import { EventEmitter } from '../../utils';
 import { ConsortiumManager } from './ConsortiumManager';
 import { AVAILABLE_SETTINGS } from './constants';
 
@@ -37,6 +38,7 @@ jest.mock('./settings/users/general', () => ({
 const defaultProps = {};
 const context = {
   affiliations,
+  eventEmitterRef: { current: new EventEmitter() },
   selectedMembers: tenants.slice(3),
   selectMembers: jest.fn(),
   selectMembersDisabled: false,
