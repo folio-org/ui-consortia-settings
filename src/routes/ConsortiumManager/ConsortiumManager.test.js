@@ -13,7 +13,6 @@ import {
 } from 'fixtures';
 import { buildStripesObject } from 'helpers';
 import { ConsortiumManagerContext } from '../../contexts';
-import { EventEmitter } from '../../utils';
 import { ConsortiumManager } from './ConsortiumManager';
 import { AVAILABLE_SETTINGS } from './constants';
 
@@ -23,6 +22,7 @@ jest.mock('@folio/stripes/core', () => ({
   useStripes: jest.fn(),
 }));
 jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
   useTenantPermissions: jest.fn(() => ({ permissions: [], isLoading: false, isFetching: false })),
 }));
 jest.mock('./settings/data-export/hooks', () => ({
