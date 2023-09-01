@@ -1,10 +1,8 @@
 import { ConsortiumManagerContext } from '../../../src/contexts';
-import { EventEmitter } from '../../../src/utils';
 import { affiliations, tenants } from '../fixtures';
 
 const defaultContext = {
   affiliations,
-  eventEmitterRef: { current: new EventEmitter() },
   hasPerm: jest.fn(() => true),
   permissionNamesMap: tenants.reduce((acc, { id }) => ({
     ...acc,

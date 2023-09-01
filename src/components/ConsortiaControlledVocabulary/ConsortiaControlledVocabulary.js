@@ -36,6 +36,7 @@ import {
   UNIQUE_FIELD_KEY,
 } from '../../constants';
 import { useConsortiumManagerContext } from '../../contexts';
+import { useEventEmitter } from '../../hooks';
 import {
   useSettings,
   useSettingMutation,
@@ -102,10 +103,10 @@ export const ConsortiaControlledVocabulary = ({
   const paneTitleRef = useRef();
   const showCallout = useShowCallout();
   const stripes = useStripes();
+  const eventEmitter = useEventEmitter();
   const [activeDialog, setActiveDialog] = useState(null);
 
   const {
-    eventEmitterRef,
     hasPerm,
     permissionNamesMap,
     selectedMembers,
@@ -114,7 +115,7 @@ export const ConsortiaControlledVocabulary = ({
 
   useEffect(() => {
     return () => {
-      eventEmitterRef.current.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, false);
+      eventEmitter.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, false);
     }
   }, []);
 
@@ -126,7 +127,7 @@ export const ConsortiaControlledVocabulary = ({
   const onStatusChange = useCallback((_prevStatus, currStatus) => {
     const isEditing = currStatus.some(({ editing }) => Boolean(editing));
 
-    eventEmitterRef.current.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, isEditing);
+    eventEmitter.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, isEditing);
   }, []);
 
   const handleSettingsLoading = useCallback(({ errors }) => {
@@ -344,7 +345,7 @@ export const ConsortiaControlledVocabulary = ({
       });
     })
       .then(refetch)
-      .finally(() => eventEmitterRef.current.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, false))
+      .finally(() => eventEmitter.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, false))
       .catch(skipAborted);
   }, [onShare, handleCreateEntry, refetch, showSuccessCallout]);
 
@@ -361,7 +362,7 @@ export const ConsortiaControlledVocabulary = ({
       });
     })
       .then(refetch)
-      .finally(() => eventEmitterRef.current.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, false))
+      .finally(() => eventEmitter.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, false))
       .catch(skipAborted);
   }, [onShare, refetch, showSuccessCallout, updateEntry]);
 

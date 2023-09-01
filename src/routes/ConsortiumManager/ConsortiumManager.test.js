@@ -38,7 +38,6 @@ jest.mock('./settings/users/general', () => ({
 const defaultProps = {};
 const context = {
   affiliations,
-  eventEmitterRef: { current: new EventEmitter() },
   selectedMembers: tenants.slice(3),
   selectMembers: jest.fn(),
   selectMembersDisabled: false,

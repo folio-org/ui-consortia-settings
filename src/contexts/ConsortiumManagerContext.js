@@ -4,7 +4,6 @@ import {
   useCallback,
   useContext,
   useMemo,
-  useRef,
 } from 'react';
 
 import {
@@ -16,7 +15,6 @@ import {
   useCurrentUserTenantsPermissions,
   useUserAffiliations,
 } from '../hooks';
-import { EventEmitter } from '../utils';
 
 const DEFAULT_SELECTED_MEMBERS = [];
 
@@ -24,7 +22,6 @@ export const ConsortiumManagerContext = createContext();
 
 export const ConsortiumManagerContextProvider = ({ children }) => {
   const stripes = useStripes();
-  const eventEmitterRef = useRef(new EventEmitter());
   const selectedMembers = stripes?.user?.user?.selectedConsortiumMembers;
   const userId = stripes?.user?.user?.id;
 
@@ -79,7 +76,6 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
 
   const contextValue = useMemo(() => ({
     affiliations,
-    eventEmitterRef: eventEmitterRef,
     hasPerm,
     isFetching,
     permissionNamesMap,
