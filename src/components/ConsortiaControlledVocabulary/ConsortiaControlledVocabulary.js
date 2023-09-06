@@ -31,8 +31,12 @@ import {
   useUsersBatch,
 } from '@folio/stripes-acq-components';
 
-import { UNIQUE_FIELD_KEY } from '../../constants';
+import {
+  EVENT_EMITTER_EVENTS,
+  UNIQUE_FIELD_KEY,
+} from '../../constants';
 import { useConsortiumManagerContext } from '../../contexts';
+import { useEventEmitter } from '../../hooks';
 import {
   useSettings,
   useSettingMutation,
@@ -99,18 +103,20 @@ export const ConsortiaControlledVocabulary = ({
   const paneTitleRef = useRef();
   const showCallout = useShowCallout();
   const stripes = useStripes();
+  const eventEmitter = useEventEmitter();
   const [activeDialog, setActiveDialog] = useState(null);
 
   const {
     hasPerm,
     permissionNamesMap,
     selectedMembers,
-    setSelectMembersDisabled,
     isFetching: isContextDataFetching,
   } = useConsortiumManagerContext();
 
   useEffect(() => {
-    setSelectMembersDisabled(false);
+    return () => {
+      eventEmitter.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, false);
+    }
   }, []);
 
   const panesetId = `${PANESET_PREFIX}${id}`;
@@ -121,8 +127,8 @@ export const ConsortiaControlledVocabulary = ({
   const onStatusChange = useCallback((_prevStatus, currStatus) => {
     const isEditing = currStatus.some(({ editing }) => Boolean(editing));
 
-    setSelectMembersDisabled(isEditing);
-  }, [setSelectMembersDisabled]);
+    eventEmitter.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, isEditing);
+  }, []);
 
   const handleSettingsLoading = useCallback(({ errors }) => {
     if (errors?.length) {
@@ -339,7 +345,7 @@ export const ConsortiaControlledVocabulary = ({
       });
     })
       .then(refetch)
-      .finally(() => setSelectMembersDisabled(false))
+      .finally(() => eventEmitter.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, false))
       .catch(skipAborted);
   }, [onShare, handleCreateEntry, refetch, showSuccessCallout]);
 
@@ -356,7 +362,7 @@ export const ConsortiaControlledVocabulary = ({
       });
     })
       .then(refetch)
-      .finally(() => setSelectMembersDisabled(false))
+      .finally(() => eventEmitter.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, false))
       .catch(skipAborted);
   }, [onShare, refetch, showSuccessCallout, updateEntry]);
 

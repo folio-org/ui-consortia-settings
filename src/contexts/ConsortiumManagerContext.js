@@ -4,7 +4,6 @@ import {
   useCallback,
   useContext,
   useMemo,
-  useState,
 } from 'react';
 
 import {
@@ -23,7 +22,6 @@ export const ConsortiumManagerContext = createContext();
 
 export const ConsortiumManagerContextProvider = ({ children }) => {
   const stripes = useStripes();
-  const [selectMembersDisabled, setSelectMembersDisabled] = useState();
   const selectedMembers = stripes?.user?.user?.selectedConsortiumMembers;
   const userId = stripes?.user?.user?.id;
 
@@ -83,16 +81,12 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
     permissionNamesMap,
     selectedMembers: selectedMembers || DEFAULT_SELECTED_MEMBERS,
     selectMembers,
-    selectMembersDisabled,
-    setSelectMembersDisabled,
   }), [
     affiliations,
     hasPerm,
     isFetching,
     permissionNamesMap,
     selectMembers,
-    selectMembersDisabled,
-    selectedMembers,
   ]);
 
   return (

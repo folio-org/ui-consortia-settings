@@ -89,3 +89,7 @@ export const HTTP_METHODS = {
 };
 
 export const UNIQUE_FIELD_KEY = '__key__';
+
+export const EVENT_EMITTER_EVENTS = {
+  DISABLE_SELECT_MEMBERS: 'disable-consortium-manager-members-selection',
+};

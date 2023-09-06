@@ -14,8 +14,6 @@ const defaultContext = {
   }), {}),
   selectedMembers: tenants.slice(3),
   selectMembers: jest.fn(),
-  selectMembersDisabled: false,
-  setSelectMembersDisabled: jest.fn(),
 };
 
 export const ConsortiumManagerContextProviderMock = ({ children, context = defaultContext }) => (

@@ -22,6 +22,7 @@ jest.mock('@folio/stripes/core', () => ({
   useStripes: jest.fn(),
 }));
 jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
   useTenantPermissions: jest.fn(() => ({ permissions: [], isLoading: false, isFetching: false })),
 }));
 jest.mock('./settings/data-export/hooks', () => ({
