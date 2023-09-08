@@ -5,10 +5,11 @@ import { Router } from 'react-router-dom';
 import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 import { useStripes } from '@folio/stripes/core';
 
-import { affiliations } from 'fixtures';
+import { affiliations, tenants } from 'fixtures';
 import { MODULE_ROOT_ROUTE } from './constants';
 import {
   useCurrentUserTenantsPermissions,
+  useMembersSelection,
   useUserAffiliations,
 } from './hooks';
 import Root from './Root';
@@ -19,6 +20,7 @@ jest.mock('@folio/stripes/core', () => ({
   updateUser: jest.fn(),
 }));
 jest.mock('./hooks', () => ({
+  useMembersSelection: jest.fn(),
   useCurrentUserTenantsPermissions: jest.fn(),
   useUserAffiliations: jest.fn(),
 }));
@@ -64,6 +66,11 @@ describe('Root', () => {
       return { affiliations };
     });
     useCurrentUserTenantsPermissions.mockClear().mockReturnValue({ tenantsPermissions: {} });
+    useMembersSelection.mockClear().mockReturnValue({
+      members: tenants,
+      initMembersSelection: jest.fn(),
+      updateMembersSelection: jest.fn(),
+    });
   });
 
   afterAll(() => {

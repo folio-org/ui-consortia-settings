@@ -36,8 +36,8 @@ export const ConsortiumManagerHeader = () => {
 
     return () => {
       eventEmitter.off(eventType, callback);
-    }
-  }, []);
+    };
+  }, [eventEmitter]);
 
   const records = useMemo(() => (
     affiliations.map(({ tenantId, tenantName }) => ({ id: tenantId, name: tenantName }))
