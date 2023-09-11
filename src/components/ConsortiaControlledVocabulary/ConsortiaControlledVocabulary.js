@@ -9,7 +9,6 @@ import {
   upperFirst,
 } from 'lodash';
 import {
-  memo,
   useCallback,
   useEffect,
   useLayoutEffect,
@@ -25,7 +24,6 @@ import {
   Pane,
   Paneset,
 } from '@folio/stripes/components';
-import { EditableList } from '@folio/stripes/smart-components';
 import {
   useShowCallout,
   useUsersBatch,
@@ -43,6 +41,7 @@ import {
   useSettingSharing,
 } from '../../hooks/consortiumManager';
 import { translationsShape } from '../../shapes';
+import { ConsortiaEditableList } from '../ConsortiaEditableList';
 import {
   ACTION_TYPES,
   DIALOG_TYPES,
@@ -70,11 +69,8 @@ const showForbiddenMembersCallout = (callout, members) => {
   });
 };
 
-const CREATE_BUTTON_LABEL = <FormattedMessage id="stripes-core.button.new" />;
 // Used in a translation to indicate a plural value.
 const SHARED_MEMBERS_COUNT = Number.MAX_SAFE_INTEGER;
-
-const EditableListMemoized = memo(EditableList);
 
 export const ConsortiaControlledVocabulary = ({
   actionSuppression: actionSuppressionProp,
@@ -97,7 +93,7 @@ export const ConsortiaControlledVocabulary = ({
   uniqueFields,
   validate,
   visibleFields: visibleFieldsProp,
-  ...props
+  itemTemplate,
 }) => {
   const intl = useIntl();
   const paneTitleRef = useRef();
@@ -116,8 +112,8 @@ export const ConsortiaControlledVocabulary = ({
   useEffect(() => {
     return () => {
       eventEmitter.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, false);
-    }
-  }, []);
+    };
+  }, [eventEmitter]);
 
   const panesetId = `${PANESET_PREFIX}${id}`;
   const primaryField = primaryFieldProp || visibleFieldsProp[0];
@@ -128,7 +124,7 @@ export const ConsortiaControlledVocabulary = ({
     const isEditing = currStatus.some(({ editing }) => Boolean(editing));
 
     eventEmitter.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, isEditing);
-  }, []);
+  }, [eventEmitter]);
 
   const handleSettingsLoading = useCallback(({ errors }) => {
     if (errors?.length) {
@@ -347,7 +343,7 @@ export const ConsortiaControlledVocabulary = ({
       .then(refetch)
       .finally(() => eventEmitter.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, false))
       .catch(skipAborted);
-  }, [onShare, handleCreateEntry, refetch, showSuccessCallout]);
+  }, [eventEmitter, onShare, handleCreateEntry, refetch, showSuccessCallout]);
 
   const onUpdate = useCallback(async (hydratedEntry) => {
     const entry = dehydrateEntry(hydratedEntry);
@@ -364,7 +360,7 @@ export const ConsortiaControlledVocabulary = ({
       .then(refetch)
       .finally(() => eventEmitter.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, false))
       .catch(skipAborted);
-  }, [onShare, refetch, showSuccessCallout, updateEntry]);
+  }, [eventEmitter, onShare, refetch, showSuccessCallout, updateEntry]);
 
   const handleDeleteEntry = useCallback((hydratedEntry) => {
     const entry = dehydrateEntry(hydratedEntry);
@@ -444,13 +440,12 @@ export const ConsortiaControlledVocabulary = ({
         id="consortia-controlled-vocabulary-pane"
       >
         {isLoading ? <Loading /> : (
-          <EditableListMemoized
-            formType="final-form"
+          <ConsortiaEditableList
             label={label}
-            createButtonLabel={CREATE_BUTTON_LABEL}
             contentData={entries}
             totalCount={totalRecords}
             fieldComponents={fieldComponents}
+            itemTemplate={itemTemplate}
             formatter={formatter}
             columnMapping={columnMapping}
             readOnlyFields={readOnlyFields}
@@ -460,11 +455,8 @@ export const ConsortiaControlledVocabulary = ({
             onCreate={onCreate}
             onUpdate={onUpdate}
             onDelete={onDelete}
-            onSubmit={noop}
             onStatusChange={onStatusChange}
             validate={validateSync}
-            {...props}
-            uniqueField={UNIQUE_FIELD_KEY}
           />
         )}
         {activeDialog}
@@ -517,4 +509,5 @@ ConsortiaControlledVocabulary.propTypes = {
   uniqueFields: PropTypes.arrayOf(PropTypes.string),
   validate: PropTypes.func,
   visibleFields: PropTypes.arrayOf(PropTypes.string),
+  itemTemplate: PropTypes.object,
 };

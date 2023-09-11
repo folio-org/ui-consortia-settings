@@ -125,7 +125,8 @@
           "module.consortia-settings.enabled",
           "consortia.publications.item.get",
           "consortia.publications.item.post",
-          "consortia.publications-results.item.get"
+          "consortia.publications-results.item.get",
+          "users.collection.get"
         ],
         "visible": true
       },

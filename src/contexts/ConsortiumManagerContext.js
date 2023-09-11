@@ -7,12 +7,12 @@ import {
 } from 'react';
 
 import {
-  updateUser,
   useStripes,
 } from '@folio/stripes/core';
 
 import {
   useCurrentUserTenantsPermissions,
+  useMembersSelection,
   useUserAffiliations,
 } from '../hooks';
 
@@ -22,36 +22,27 @@ export const ConsortiumManagerContext = createContext();
 
 export const ConsortiumManagerContextProvider = ({ children }) => {
   const stripes = useStripes();
-  const selectedMembers = stripes?.user?.user?.selectedConsortiumMembers;
   const userId = stripes?.user?.user?.id;
 
-  const selectMembers = useCallback(async (members) => {
-    await updateUser(stripes.store, {
-      selectedConsortiumMembers: members,
-    });
-  }, [stripes.store]);
-
-  const initSelectedMembers = useCallback(async (data) => {
-    if (!selectedMembers) {
-      await selectMembers(
-        data.map(({ tenantId, tenantName }) => ({ id: tenantId, name: tenantName })),
-      );
-    }
-  }, [selectedMembers, selectMembers]);
+  const {
+    members,
+    initMembersSelection,
+    updateMembersSelection,
+  } = useMembersSelection();
 
   const {
     affiliations,
     isFetching: isAffiliationsFetching,
   } = useUserAffiliations(
     { userId },
-    { onSuccess: initSelectedMembers },
+    { onSuccess: initMembersSelection },
   );
 
   const {
     tenantsPermissions,
     isFetching: isPermissionsFetching,
   } = useCurrentUserTenantsPermissions({
-    tenants: selectedMembers?.map(({ id }) => id),
+    tenants: members?.map(({ id }) => id),
     expandPermissions: true,
   });
 
@@ -79,14 +70,15 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
     hasPerm,
     isFetching,
     permissionNamesMap,
-    selectedMembers: selectedMembers || DEFAULT_SELECTED_MEMBERS,
-    selectMembers,
+    selectedMembers: members || DEFAULT_SELECTED_MEMBERS,
+    selectMembers: updateMembersSelection,
   }), [
+    members,
     affiliations,
     hasPerm,
     isFetching,
     permissionNamesMap,
-    selectMembers,
+    updateMembersSelection,
   ]);
 
   return (
