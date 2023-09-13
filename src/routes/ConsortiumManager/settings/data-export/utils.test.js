@@ -17,7 +17,7 @@ describe('getExportJobLogsListResultsFormatter', () => {
     const result3 = formatter[EXPORT_JOB_LOG_COLUMNS.errors](record3);
 
     // Assert based on the expected error messages for each scenario
-    expect(result1).toBe('5');
+    expect(result1).toBe(5);
     expect(result2).toBe('ui-consortia-settings.duplicatesWithOthers'); // Replace 'formattedError' with the expected error message
     expect(result3).toBe('ui-consortia-settings.duplicates'); // Replace 'formattedError' with the expected error message
   });
