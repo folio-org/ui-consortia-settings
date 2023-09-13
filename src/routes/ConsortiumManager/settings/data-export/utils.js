@@ -17,9 +17,18 @@ export const getExportJobLogsListResultsFormatter = ({ intl }) => ({
       case failedSrs === 0 && failedOther > 0:
         return `${failedOther}`;
       case failedSrs > 0 && failedOther > 0:
-        return `${failedOther}, ${failedSrs} duplicates`;
+        return intl.formatMessage({
+          id: 'ui-consortia-settings.duplicatesWithOthers',
+        }, {
+          failedOther,
+          failedSrs,
+        });
       case failedSrs > 0 && failedOther === 0:
-        return `${failedSrs} duplicates`;
+        return intl.formatMessage({
+          id: 'ui-consortia-settings.duplicates',
+        }, {
+          failedSrs,
+        });
       default:
         return '';
     }
