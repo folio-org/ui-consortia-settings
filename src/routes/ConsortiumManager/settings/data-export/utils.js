@@ -8,8 +8,31 @@ export const getExportJobLogsListResultsFormatter = ({ intl }) => ({
   [EXPORT_JOB_LOG_COLUMNS.fileName]: record => record.exportedFiles?.[0]?.fileName,
   [EXPORT_JOB_LOG_COLUMNS.status]: record => intl.formatMessage({ id: `ui-data-export.jobStatus.${camelCase(record.status)}` }),
   [EXPORT_JOB_LOG_COLUMNS.runBy]: record => getFullName({ personal: record.runBy }).trim(),
-  [EXPORT_JOB_LOG_COLUMNS.totalRecords]: record => record.progress?.total,
-  [EXPORT_JOB_LOG_COLUMNS.errors]: record => record.progress?.failed || '',
+  [EXPORT_JOB_LOG_COLUMNS.totalRecords]: record => intl.formatNumber(record.progress?.total),
+  [EXPORT_JOB_LOG_COLUMNS.errors]: record => {
+    const failedSrs = record.progress?.failed?.duplicatedSrs;
+    const failedOther = record.progress?.failed?.otherFailed;
+
+    switch (true) {
+      case failedSrs === 0 && failedOther > 0:
+        return failedOther;
+      case failedSrs > 0 && failedOther > 0:
+        return intl.formatMessage({
+          id: 'ui-consortia-settings.duplicatesWithOthers',
+        }, {
+          failedOther,
+          failedSrs,
+        });
+      case failedSrs > 0 && failedOther === 0:
+        return intl.formatMessage({
+          id: 'ui-consortia-settings.duplicates',
+        }, {
+          failedSrs,
+        });
+      default:
+        return '';
+    }
+  },
   [EXPORT_JOB_LOG_COLUMNS.exported]: record => record.progress?.exported || '',
 });
 

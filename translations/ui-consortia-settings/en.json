@@ -12,6 +12,9 @@
 
   "code": "Code",
 
+  "duplicatesWithOthers": "{failedOther}, {failedSrs} duplicates",
+  "duplicates": "{failedSrs} duplicates",
+
   "consortiumManager.all": "All",
   "consortiumManager.controlledVocab.column.memberLibraries": "Member libraries",
   "consortiumManager.controlledVocab.common.termCreated": "<b>{term}</b> was successfully <b>created</b> for <b>{members}</b> {count, select, 1 {library} other {libraries}}.",
@@ -118,7 +121,7 @@
   "consortiumManager.controlledVocab.URLrelationship.deleteEntry": "Delete URL relationship term",
   "consortiumManager.controlledVocab.URLrelationship.termDeleted": "The URL relationship term <b>{term}</b> was successfully <b>deleted</b>.",
   "consortiumManager.controlledVocab.URLrelationship.termWillBeDeleted": "The URL relationship term <b>{term}</b> will be <b>deleted</b>.",
-  
+
   "consortiumManager.error.forbiddenMembers": "You do not have permissions at one or more members: <b>{members}</b>",
 
   "consortiumManager.findMember.trigger.label": "Select members",
