@@ -15,25 +15,25 @@ export const getExportJobLogsListResultsFormatter = ({ intl }) => ({
 
     switch (true) {
       case failedSrs === 0 && failedOther > 0:
-        return failedOther;
+        return intl.formatNumber(failedOther);
       case failedSrs > 0 && failedOther > 0:
         return intl.formatMessage({
           id: 'ui-consortia-settings.duplicatesWithOthers',
         }, {
-          failedOther,
-          failedSrs,
+          failedOther: intl.formatNumber(failedOther),
+          failedSrs: intl.formatNumber(failedSrs),
         });
       case failedSrs > 0 && failedOther === 0:
         return intl.formatMessage({
           id: 'ui-consortia-settings.duplicates',
         }, {
-          failedSrs,
+          failedSrs: intl.formatNumber(failedSrs),
         });
       default:
         return '';
     }
   },
-  [EXPORT_JOB_LOG_COLUMNS.exported]: record => record.progress?.exported || '',
+  [EXPORT_JOB_LOG_COLUMNS.exported]: record => intl.formatNumber(record.progress?.exported) || '',
 });
 
 export const getExportJobLogsSortMap = ({ sortingDirection }) => ({
