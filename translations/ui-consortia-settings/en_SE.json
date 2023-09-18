@@ -172,5 +172,7 @@
     "consortiumManager.error.forbiddenMembers": "You do not have permissions at one or more members: <b>{members}</b>",
     "consortiumManager.modal.confirmCreate.heading": "Confirm member libraries",
     "consortiumManager.modal.confirmCreate.message": "<b>{term}</b> will be saved for the member libraries:",
-    "validation.error.entry.duplicate": "{field} is already in use at one or more member libraries."
+    "validation.error.entry.duplicate": "{field} is already in use at one or more member libraries.",
+    "duplicatesWithOthers": "{failedOther}, {failedSrs} duplicates",
+    "duplicates": "{failedSrs} duplicates"
 }
