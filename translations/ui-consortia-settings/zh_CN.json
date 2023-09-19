@@ -172,5 +172,7 @@
     "consortiumManager.error.forbiddenMembers": "您对一名或多名成员没有权限： <b> {members} </b>",
     "consortiumManager.modal.confirmCreate.heading": "确认成员馆",
     "consortiumManager.modal.confirmCreate.message": "<b> {term} </b>将为成员馆保存：",
-    "validation.error.entry.duplicate": "{field}已在一个或多个成员图书馆使用。"
+    "validation.error.entry.duplicate": "{field}已在一个或多个成员图书馆使用。",
+    "duplicatesWithOthers": "{failedOther}, {failedSrs} duplicates",
+    "duplicates": "{failedSrs} duplicates"
 }

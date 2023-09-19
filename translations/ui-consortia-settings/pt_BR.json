@@ -160,7 +160,7 @@
     "consortiumManager.controlledVocab.URLrelationship.termDeleted": "O termo de relacionamento de URL <b> {term} </b> foi <b> excluído </b> com sucesso.",
     "consortiumManager.controlledVocab.URLrelationship.termWillBeDeleted": "O termo de relacionamento de URL <b> {term} </b> será <b> excluído </b> .",
     "validation.error.maxLength": "O comprimento não deve ter mais de {length} caracteres.",
-    "validation.error.minLength": "O comprimento não deve ser menor que {comprimento} caracteres.",
+    "validation.error.minLength": "O comprimento não deve ser menor que {length} caracteres.",
     "validation.error.mismatchLength": "O comprimento deve ser {length, plural, one {# caracter} other {# caracteres}}.",
     "consortiumManager.members.permissionSets.create.permissionSet.error": "O conjunto de permissões não foi salvo com sucesso. {error}",
     "consortiumManager.members.permissionSets.create.permissionSet.contentLabel": "Criar conjunto de permissões",
@@ -172,5 +172,7 @@
     "consortiumManager.error.forbiddenMembers": "Você não tem permissões em um ou mais membros: <b> {members} </b>",
     "consortiumManager.modal.confirmCreate.heading": "Confirmar bibliotecas membros",
     "consortiumManager.modal.confirmCreate.message": "<b> {term} </b> será salvo para as bibliotecas membros:",
-    "validation.error.entry.duplicate": "{field} já está em uso em uma ou mais bibliotecas membros."
+    "validation.error.entry.duplicate": "{field} já está em uso em uma ou mais bibliotecas membros.",
+    "duplicatesWithOthers": "{failedOther}, {failedSrs} duplicatas",
+    "duplicates": "{failedSrs} duplicatas"
 }
