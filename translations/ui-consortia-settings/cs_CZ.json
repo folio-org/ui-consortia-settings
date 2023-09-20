@@ -172,5 +172,7 @@
     "consortiumManager.error.forbiddenMembers": "Nemáte oprávnění u jednoho nebo více členů: <b>{members}</b>",
     "consortiumManager.modal.confirmCreate.heading": "Potvrdit členské knihovny",
     "consortiumManager.modal.confirmCreate.message": "<b>{term}</b> bude uložen pro členské knihovny:",
-    "validation.error.entry.duplicate": "{field} se již používá v jedné nebo více členských knihovnách."
+    "validation.error.entry.duplicate": "{field} se již používá v jedné nebo více členských knihovnách.",
+    "duplicatesWithOthers": "{failedOther}, {failedSrs} duplicates",
+    "duplicates": "{failedSrs} duplicates"
 }
