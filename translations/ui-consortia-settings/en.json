@@ -11,9 +11,9 @@
   "errors.permissionsRequired": "User does not have required permissions.",
 
   "code": "Code",
-
-  "duplicatesWithOthers": "{failedOther}, {failedSrs} duplicates",
-  "duplicates": "{failedSrs} duplicates",
+  
+  "duplicatesWithOthers": "{failedOther}, {failedSrs} duplicate(s)",
+  "duplicates": "{failedSrs} duplicate(s)",
 
   "consortiumManager.all": "All",
   "consortiumManager.controlledVocab.column.memberLibraries": "Member libraries",
