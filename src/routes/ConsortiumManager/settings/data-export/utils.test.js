@@ -3,7 +3,10 @@ import {EXPORT_JOB_LOG_COLUMNS} from "./constants";
 import {useIntl} from "react-intl";
 
 describe('getExportJobLogsListResultsFormatter', () => {
-  const intl = useIntl()
+  const intl = {
+    formatNumber: jest.fn(arg=>  Number(arg)),
+    formatMessage: jest.fn(({id})=> id)
+  }
 
   it('formats the errors correctly', () => {
     const formatter = getExportJobLogsListResultsFormatter({ intl });
