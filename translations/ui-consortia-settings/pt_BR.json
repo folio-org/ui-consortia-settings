@@ -173,6 +173,7 @@
     "consortiumManager.modal.confirmCreate.heading": "Confirmar bibliotecas membros",
     "consortiumManager.modal.confirmCreate.message": "<b> {term} </b> será salvo para as bibliotecas membros:",
     "validation.error.entry.duplicate": "{field} já está em uso em uma ou mais bibliotecas membros.",
-    "duplicatesWithOthers": "{failedOther}, {failedSrs} duplicatas",
-    "duplicates": "{failedSrs} duplicatas"
+    "duplicatesWithOthers": "{failedOther}, {failedSrs} duplicata(s)",
+    "duplicates": "{failedSrs} duplicata(s)",
+    "settings.membership.error.codeLacksLength": "The code must not be shorter than {count} characters alphanumeric."
 }
