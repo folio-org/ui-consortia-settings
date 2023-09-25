@@ -29,3 +29,4 @@
 * [UICONSET-112](https://issues.folio.org/browse/UICONSET-112) Allow a user to delete shared settings in the `<ConsortiaControlledVocabulary>`.
 * [UICONSET-139](https://issues.folio.org/browse/UICONSET-139) Consortia-settings: format numbers in "totalRecords" columns.
 * [UICONSET-142](https://issues.folio.org/browse/UICONSET-142) Consortia-settings: format numbers in "Exported" and "Failed" columns.
+* [UICONSET-144](https://issues.folio.org/browse/UICONSET-144) Update characters limits of consortia member `code`.

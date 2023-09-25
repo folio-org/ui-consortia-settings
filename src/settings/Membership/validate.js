@@ -1,13 +1,14 @@
 import { FormattedMessage } from 'react-intl';
 
 import {
-  validateLength,
   validateMaxLength,
+  validateMinLength,
   validateUniqueness,
 } from '../../components/ConsortiaControlledVocabulary/validators';
 import {
   MAX_NAME_LENGTH,
   MAX_CODE_LENGTH,
+  MIN_CODE_LENGTH,
 } from './constants';
 
 const validateMaxNameLength = (value = '') => (
@@ -24,13 +25,22 @@ const validateMaxNameLength = (value = '') => (
 );
 
 const validateCodeLength = (value = '') => (
-  validateLength({
+  validateMaxLength({
     value,
     length: MAX_CODE_LENGTH,
     message: (
       <FormattedMessage
         id="ui-consortia-settings.settings.membership.error.codeExceedsLength"
         values={{ count: MAX_CODE_LENGTH }}
+      />
+    ),
+  }) || validateMinLength({
+    value,
+    length: MIN_CODE_LENGTH,
+    message: (
+      <FormattedMessage
+        id="ui-consortia-settings.settings.membership.error.codeLacksLength"
+        values={{ count: MIN_CODE_LENGTH }}
       />
     ),
   })
