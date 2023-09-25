@@ -13,10 +13,10 @@
     "settings.membership.list.termWillBeDeleted": "The member <b>{term}</b> will be <b>deleted.</b>",
     "settings.membership.objectLabel": "Address",
     "settings.membership.error.duplicate": "Name cannot be saved. This name is already in use in the consortium",
-    "settings.membership.error.nameExceedsLength": "Tenant name must not be longer than {count} characters",
+    "settings.membership.error.nameExceedsLength": "Tenant name must not be longer than {count} characters.",
     "permission.settings.membership.view": "Settings (Consortia): Can view consortia membership",
     "permission.settings.membership.edit": "Settings (Consortia): Can view and edit consortia membership",
-    "settings.membership.error.codeExceedsLength": "The code must be {count} character alphanumeric.",
+    "settings.membership.error.codeExceedsLength": "The code must not be longer than {count} characters alphanumeric.",
     "settings.membership.error.duplicate.code": "The code must be unique.",
     "settings.membership.list.tenantCode": "Code",
     "affiliation.primary.suffix": "(Primary)",
@@ -173,6 +173,7 @@
     "consortiumManager.modal.confirmCreate.heading": "Confirm member libraries",
     "consortiumManager.modal.confirmCreate.message": "<b>{term}</b> will be saved for the member libraries:",
     "validation.error.entry.duplicate": "{field} is already in use at one or more member libraries.",
-    "duplicatesWithOthers": "{failedOther}, {failedSrs} duplicates",
-    "duplicates": "{failedSrs} duplicates"
+    "duplicatesWithOthers": "{failedOther}, {failedSrs} duplicate(s)",
+    "duplicates": "{failedSrs} duplicate(s)",
+    "settings.membership.error.codeLacksLength": "The code must not be shorter than {count} characters alphanumeric."
 }
