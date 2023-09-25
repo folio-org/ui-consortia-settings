@@ -158,8 +158,9 @@
   "settings.section.general": "General",
 
   "settings.membership.error.duplicate": "Name cannot be saved. This name is already in use in the consortium",
-  "settings.membership.error.nameExceedsLength": "Tenant name must not be longer than {count} characters",
-  "settings.membership.error.codeExceedsLength": "The code must be {count} character alphanumeric.",
+  "settings.membership.error.nameExceedsLength": "Tenant name must not be longer than {count} characters.",
+  "settings.membership.error.codeExceedsLength": "The code must not be longer than {count} characters alphanumeric.",
+  "settings.membership.error.codeLacksLength": "The code must not be shorter than {count} characters alphanumeric.",
   "settings.membership.error.duplicate.code": "The code must be unique.",
   "settings.membership.heading": "Addresses",
   "settings.membership.label": "Membership",
