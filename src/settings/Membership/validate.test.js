@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   MAX_CODE_LENGTH,
   MAX_NAME_LENGTH,
+  MIN_CODE_LENGTH,
 } from './constants';
 import { validate } from './validate';
 
@@ -39,8 +40,19 @@ describe('validate', () => {
     expect(errors.name).toBeUndefined();
   });
 
+  it('should return min length error message for the code field', () => {
+    const errors = validate({ code: '1' }, 1, items);
+
+    expect(errors.code).toEqual(
+      <FormattedMessage
+        id="ui-consortia-settings.settings.membership.error.codeLacksLength"
+        values={{ count: MIN_CODE_LENGTH }}
+      />,
+    );
+  });
+
   it('should return max length error message for the code field', () => {
-    const errors = validate({ code: '1234' }, 1, items);
+    const errors = validate({ code: '123456' }, 1, items);
 
     expect(errors.code).toEqual(
       <FormattedMessage
