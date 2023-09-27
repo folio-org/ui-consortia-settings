@@ -87,6 +87,9 @@ export const useSettingSharing = ({ path }, options = {}) => {
       const request = {
         settingId: entry.id,
         url: path,
+        payload: {
+          ...entry,
+        },
       };
 
       return initSettingSharingRequest(request, { method: HTTP_METHODS.DELETE });
