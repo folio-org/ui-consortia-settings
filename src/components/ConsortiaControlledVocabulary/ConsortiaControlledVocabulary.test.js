@@ -1,10 +1,16 @@
+import omit from 'lodash/omit';
+
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { render, screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 
-import { tenants } from 'fixtures';
+import {
+  pcPublicationResults,
+  tenants,
+} from 'fixtures';
 import { ConsortiaControlledVocabularyWrapper } from 'helpers';
 import { wrapConsortiaControlledVocabularyDescribe } from 'helpers/wrapConsortiaControlledVocabularyDescribe';
+import { UNIQUE_FIELD_KEY } from '../../constants';
 import { useSettings } from '../../hooks/consortiumManager';
 import { ConsortiaControlledVocabulary } from './ConsortiaControlledVocabulary';
 
@@ -15,9 +21,11 @@ const records = 'items';
 const response = {
   [records]: [
     {
+      [UNIQUE_FIELD_KEY]: '1',
       id: 'test-id-1',
       foo: 'foo-1',
       bar: 'bar-1',
+      shared: false,
       metadata: {
         createdDate: '2023-06-08T13:09:04.109+00:00',
         createdByUserId: 'a87c71a3-e931-42b8-9b6a-508208a30234',
@@ -26,9 +34,24 @@ const response = {
       },
     },
     {
+      [UNIQUE_FIELD_KEY]: '2',
       id: 'test-id-2',
       foo: 'foo-2',
       bar: 'bar-2',
+      shared: false,
+      metadata: {
+        createdDate: '2023-06-08T13:09:04.109+00:00',
+        createdByUserId: 'a87c71a3-e931-42b8-9b6a-508208a30234',
+        updatedDate: '2023-06-26T11:38:15.335+00:00',
+        updatedByUserId: 'ff96b580-4206-4957-8b5d-7bdbc3d192f9',
+      },
+    },
+    {
+      [UNIQUE_FIELD_KEY]: '3',
+      id: 'test-id-3',
+      foo: 'foo-3',
+      bar: 'bar-3',
+      shared: true,
       metadata: {
         createdDate: '2023-06-08T13:09:04.109+00:00',
         createdByUserId: 'a87c71a3-e931-42b8-9b6a-508208a30234',
@@ -60,6 +83,8 @@ const defaultProps = {
     'lastUpdated',
   ],
 };
+
+const dehydrateEntry = (entry) => omit(entry, ['shared', UNIQUE_FIELD_KEY]);
 
 const renderConsortiaControlledVocabulary = (props = {}) => render(
   <ConsortiaControlledVocabulary
@@ -112,7 +137,7 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
 
       expect(mutations.updateEntry).toHaveBeenCalledWith({
         entry: {
-          ...response[records][0],
+          ...dehydrateEntry(response[records][0]),
           foo: 'Updated',
         },
       });
@@ -129,7 +154,48 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
       await userEvent.click(await screen.findByText('stripes-core.button.delete'));
       await waitFor(() => expect(screen.queryByText('stripes-core.button.delete')).not.toBeInTheDocument());
 
-      expect(mutations.deleteEntry).toHaveBeenCalledWith({ entry: response[records][0] });
+      expect(mutations.deleteEntry).toHaveBeenCalledWith({ entry: dehydrateEntry(response[records][0]) });
+    });
+
+    describe('Shared record deletion', () => {
+      it('should handle shared record deletion - success', async () => {
+        renderConsortiaControlledVocabulary();
+
+        const btns = await screen.findAllByLabelText('stripes-components.deleteThisItem');
+
+        await userEvent.click(btns[2]);
+        await waitFor(() => expect(screen.getByText('ui-app.termWillBeDeleted')).toBeInTheDocument());
+        await userEvent.click(await screen.findByText('stripes-core.button.delete'));
+        await waitFor(() => expect(screen.queryByText('stripes-core.button.delete')).not.toBeInTheDocument());
+
+        expect(sharing.deleteSharedSetting).toHaveBeenCalledWith({ entry: dehydrateEntry(response[records][2]) });
+        expect(callout).toHaveBeenCalledWith({
+          messageId: 'ui-app.termDeleted',
+          values: expect.objectContaining({
+            count: 1,
+            term: response[records][2].foo,
+          })
+        });
+      });
+
+      it('should handle shared record deletion - partial failure', async () => {
+        sharing.deleteSharedSetting.mockResolvedValue({
+          ...pcPublicationResults,
+          publicationErrors: [{ tenantId: 'another', }],
+        });
+
+        renderConsortiaControlledVocabulary();
+
+        const btns = await screen.findAllByLabelText('stripes-components.deleteThisItem');
+
+        await userEvent.click(btns[2]);
+        await waitFor(() => expect(screen.getByText('ui-app.termWillBeDeleted')).toBeInTheDocument());
+        await userEvent.click(await screen.findByText('stripes-core.button.delete'));
+        await waitFor(() => expect(screen.queryByText('stripes-core.button.delete')).not.toBeInTheDocument());
+
+        expect(sharing.deleteSharedSetting).toHaveBeenCalledWith({ entry: dehydrateEntry(response[records][2]) });
+        expect(callout).toHaveBeenCalledWith(expect.objectContaining({ type: 'error' }));
+      });
     });
   });
 

@@ -40,5 +40,6 @@ export const pcPublicationResults = {
       statusCode: 200,
     },
   ],
+  publicationErrors: [],
   totalRecords: 2,
 };
