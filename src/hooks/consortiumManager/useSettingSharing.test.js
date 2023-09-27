@@ -89,6 +89,7 @@ describe('useSettingSharing', () => {
           json: expect.objectContaining({
             settingId: setting.id,
             url: path,
+            payload: setting,
           }),
         }),
       );

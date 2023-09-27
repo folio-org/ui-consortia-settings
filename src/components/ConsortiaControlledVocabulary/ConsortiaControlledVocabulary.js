@@ -69,6 +69,16 @@ const showForbiddenMembersCallout = (callout, members) => {
   });
 };
 
+const getMembersNamesString = (selectedMembers, members) => {
+  return members.reduce((acc, { tenantId }) => {
+    const memberName = selectedMembers.find(({ id: _id }) => tenantId === _id)?.name;
+
+    acc.push(memberName);
+
+    return acc;
+  }, []).join(', ');
+}
+
 // Used in a translation to indicate a plural value.
 const SHARED_MEMBERS_COUNT = Number.MAX_SAFE_INTEGER;
 
@@ -131,15 +141,10 @@ export const ConsortiaControlledVocabulary = ({
       const [forbiddenMembers, otherErrors] = partition(errors, ({ response }) => response?.startsWith('403'));
 
       if (forbiddenMembers.length) {
-        const members = forbiddenMembers.reduce((acc, { tenantId }) => {
-          const memberName = selectedMembers.find(({ id: _id }) => tenantId === _id)?.name;
-
-          acc.push(memberName);
-
-          return acc;
-        }, []).join(', ');
-
-        showForbiddenMembersCallout(showCallout, members);
+        showForbiddenMembersCallout(
+          showCallout,
+          getMembersNamesString(selectedMembers, forbiddenMembers),
+        );
       }
 
       if (otherErrors.length) {
@@ -362,18 +367,65 @@ export const ConsortiaControlledVocabulary = ({
       .catch(skipAborted);
   }, [eventEmitter, onShare, refetch, showSuccessCallout, updateEntry]);
 
+  const onDeleteLocalEntry = useCallback((entry) => {
+    return deleteEntry({ entry })
+      .then((res) => {
+        showSuccessCallout({
+          actionType: ACTION_TYPES.delete,
+          entry,
+        });
+      });
+  }, []);
+
+  const onDeleteSharedEntry = useCallback((entry) => {
+    return deleteSharedSetting({ entry })
+      .then((res) => {
+        const { publicationErrors, publicationResults } = res;
+        
+        if (publicationErrors.length) {
+          const term = entry[primaryField];
+          const processedMembers = getMembersNamesString(selectedMembers, publicationResults);
+          const message = (
+            <span>
+              <FormattedMessage
+                tagName="p"
+                id="ui-consortia-settings.consortiumManager.error.share.partialFailure"
+                values={{ term, members: getMembersNamesString(selectedMembers, publicationErrors) }}
+                
+              />
+              
+              {Boolean(publicationResults.length) && (
+                <FormattedMessage
+                  tagName="p"
+                  id="ui-consortia-settings.consortiumManager.controlledVocab.common.termDeleted"
+                  values={{
+                    term,
+                    members: processedMembers,
+                    count: processedMembers.length,
+                  }}
+                />
+              )}
+            </span>
+          );
+
+          showCallout({
+            message,
+            type: 'error',
+          });
+        } else {
+          showSuccessCallout({
+            actionType: ACTION_TYPES.delete,
+            entry,
+          });
+        }
+      });
+  }, [primaryField, selectedMembers]);
+
   const handleDeleteEntry = useCallback((hydratedEntry) => {
     const entry = dehydrateEntry(hydratedEntry);
-    const deletePromise = hydratedEntry.shared
-      ? deleteSharedSetting({ entry })
-      : deleteEntry({ entry });
+    const deleteHandler = hydratedEntry.shared ? onDeleteSharedEntry : onDeleteLocalEntry;
 
-    return deletePromise.then(() => {
-      showSuccessCallout({
-        actionType: ACTION_TYPES.delete,
-        entry,
-      });
-    })
+    return deleteHandler(entry)
       .then(refetch)
       .catch(() => buildDialog({ type: DIALOG_TYPES.itemInUse }));
   }, [buildDialog, deleteEntry, deleteSharedSetting, refetch, showSuccessCallout]);

@@ -5,6 +5,7 @@ import {
   useUsersBatch,
 } from '@folio/stripes-acq-components';
 
+import { pcPublicationResults } from 'fixtures'; 
 import {
   useSettings,
   useSettingMutation,
@@ -70,8 +71,8 @@ export const wrapConsortiaControlledVocabularyDescribe = ({
       mutationsMock.createEntry.mockClear();
       mutationsMock.updateEntry.mockClear();
       mutationsMock.deleteEntry.mockClear();
-      sharingMock.deleteSharedSetting.mockClear();
-      sharingMock.upsertSharedSetting.mockClear();
+      sharingMock.deleteSharedSetting.mockClear().mockResolvedValue(pcPublicationResults);
+      sharingMock.upsertSharedSetting.mockClear().mockResolvedValue(pcPublicationResults);
       useSettings.mockClear().mockReturnValue(entriesMock);
       useSettingMutation.mockClear().mockReturnValue(mutationsMock);
       useSettingSharing.mockClear().mockReturnValue(sharingMock);

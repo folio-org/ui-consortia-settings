@@ -123,6 +123,7 @@
   "consortiumManager.controlledVocab.URLrelationship.termWillBeDeleted": "The URL relationship term <b>{term}</b> will be <b>deleted</b>.",
 
   "consortiumManager.error.forbiddenMembers": "You do not have permissions at one or more members: <b>{members}</b>",
+  "consortiumManager.error.share.partialFailure": "<b>{term}</b> could <b>not</b> be <b>deleted</b> from members: <b>{members}</b>, so the source has been changed to\u00a0<b>local</b>.",
 
   "consortiumManager.findMember.trigger.label": "Select members",
   "consortiumManager.findMember.modal.aria.search": "Search members",
