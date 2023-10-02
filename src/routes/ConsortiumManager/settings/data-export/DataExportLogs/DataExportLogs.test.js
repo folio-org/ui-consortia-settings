@@ -27,10 +27,10 @@ jest.mock('@folio/stripes-data-transfer-components', () => ({
   useJobLogsListFormatter: jest.fn(),
 }));
 
-jest.mock('../utils', ()=>({
+jest.mock('../utils', () => ({
   ...jest.requireActual('../utils'),
   getExportJobLogsListResultsFormatter: jest.fn(),
-}))
+}));
 
 jest.mock('../hooks', () => ({
   ...jest.requireActual('../hooks'),

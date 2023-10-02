@@ -5,7 +5,7 @@ import {
   useUsersBatch,
 } from '@folio/stripes-acq-components';
 
-import { pcPublicationResults } from 'fixtures'; 
+import { pcPublicationResults } from 'fixtures';
 import {
   useSettings,
   useSettingMutation,

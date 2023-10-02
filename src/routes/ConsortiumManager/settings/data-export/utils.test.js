@@ -1,12 +1,11 @@
-import {getExportJobLogsListResultsFormatter} from './utils'
-import {EXPORT_JOB_LOG_COLUMNS} from "./constants";
-import {useIntl} from "react-intl";
+import { getExportJobLogsListResultsFormatter } from './utils';
+import { EXPORT_JOB_LOG_COLUMNS } from './constants';
 
 describe('getExportJobLogsListResultsFormatter', () => {
   const intl = {
-    formatNumber: jest.fn(arg=>  Number(arg)),
-    formatMessage: jest.fn(({id})=> id)
-  }
+    formatNumber: jest.fn(arg => Number(arg)),
+    formatMessage: jest.fn(({ id }) => id),
+  };
 
   it('formats the errors correctly', () => {
     const formatter = getExportJobLogsListResultsFormatter({ intl });
@@ -25,4 +24,3 @@ describe('getExportJobLogsListResultsFormatter', () => {
     expect(result3).toBe('ui-consortia-settings.duplicates'); // Replace 'formattedError' with the expected error message
   });
 });
-
