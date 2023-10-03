@@ -77,7 +77,7 @@ const getMembersNamesString = (selectedMembers, members) => {
 
     return acc;
   }, []).join(', ');
-}
+};
 
 // Used in a translation to indicate a plural value.
 const SHARED_MEMBERS_COUNT = Number.MAX_SAFE_INTEGER;
@@ -297,6 +297,50 @@ export const ConsortiaControlledVocabulary = ({
     });
   }, [allMembersLabel, primaryField, selectedMembers, showCallout, translations]);
 
+  const handleResolvedActionResults = useCallback(({
+    actionType,
+    entry,
+    results,
+  }) => {
+    const { publicationErrors, publicationResults } = results;
+
+    // Publish coordinator response might be successful for some tenants and failed for others.
+    if (publicationErrors?.length) {
+      const translationKeysMap = {
+        [ACTION_TYPES.create]: ['termCreated', 'create'],
+        [ACTION_TYPES.update]: ['termUpdated', 'update'],
+        [ACTION_TYPES.delete]: ['termDeleted', 'delete'],
+      };
+      const [partialSuccessKey, partialFailureKey] = translationKeysMap[actionType];
+      const term = entry[primaryField];
+      const processedMembers = getMembersNamesString(selectedMembers, publicationResults);
+      const message = (
+        <span>
+          <FormattedMessage
+            tagName="p"
+            id={`ui-consortia-settings.consortiumManager.error.publishCoordinator.partialFailure.${partialFailureKey}`}
+            values={{ term, members: getMembersNamesString(selectedMembers, publicationErrors) }}
+          />
+          {Boolean(publicationResults.length) && (
+            <FormattedMessage
+              tagName="p"
+              id={`ui-consortia-settings.consortiumManager.controlledVocab.common.${partialSuccessKey}`}
+              values={{
+                term,
+                members: processedMembers,
+                count: processedMembers.length,
+              }}
+            />
+          )}
+        </span>
+      );
+
+      showCallout({ message, type: 'error' });
+    } else {
+      showSuccessCallout({ actionType, entry });
+    }
+  }, [primaryField, selectedMembers, showCallout, showSuccessCallout]);
+
   const onShare = useCallback((entryToShare) => {
     const initEntryValue = entries.find(_entry => _entry[UNIQUE_FIELD_KEY] === entryToShare[UNIQUE_FIELD_KEY]);
     const entry = dehydrateEntry(omit(entryToShare, 'tenantId'));
@@ -339,16 +383,17 @@ export const ConsortiaControlledVocabulary = ({
       ? onShare(entry)
       : handleCreateEntry({ entry });
 
-    return createPromise.then(() => {
-      showSuccessCallout({
+    return createPromise.then((results) => {
+      handleResolvedActionResults({
         actionType: ACTION_TYPES.create,
         entry: hydratedEntry,
+        results,
       });
     })
       .then(refetch)
       .finally(() => eventEmitter.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, false))
       .catch(skipAborted);
-  }, [eventEmitter, onShare, handleCreateEntry, refetch, showSuccessCallout]);
+  }, [eventEmitter, onShare, handleCreateEntry, handleResolvedActionResults, refetch]);
 
   const onUpdate = useCallback(async (hydratedEntry) => {
     const entry = dehydrateEntry(hydratedEntry);
@@ -356,79 +401,33 @@ export const ConsortiaControlledVocabulary = ({
       ? onShare(entry)
       : updateEntry({ entry });
 
-    return updatePromise.then(() => {
-      showSuccessCallout({
+    return updatePromise.then((results) => {
+      handleResolvedActionResults({
         actionType: ACTION_TYPES.update,
         entry: hydratedEntry,
+        results,
       });
     })
       .then(refetch)
       .finally(() => eventEmitter.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, false))
       .catch(skipAborted);
-  }, [eventEmitter, onShare, refetch, showSuccessCallout, updateEntry]);
-
-  const onDeleteLocalEntry = useCallback((entry) => {
-    return deleteEntry({ entry })
-      .then((res) => {
-        showSuccessCallout({
-          actionType: ACTION_TYPES.delete,
-          entry,
-        });
-      });
-  }, []);
-
-  const onDeleteSharedEntry = useCallback((entry) => {
-    return deleteSharedSetting({ entry })
-      .then((res) => {
-        const { publicationErrors, publicationResults } = res;
-        
-        if (publicationErrors.length) {
-          const term = entry[primaryField];
-          const processedMembers = getMembersNamesString(selectedMembers, publicationResults);
-          const message = (
-            <span>
-              <FormattedMessage
-                tagName="p"
-                id="ui-consortia-settings.consortiumManager.error.share.partialFailure"
-                values={{ term, members: getMembersNamesString(selectedMembers, publicationErrors) }}
-                
-              />
-              
-              {Boolean(publicationResults.length) && (
-                <FormattedMessage
-                  tagName="p"
-                  id="ui-consortia-settings.consortiumManager.controlledVocab.common.termDeleted"
-                  values={{
-                    term,
-                    members: processedMembers,
-                    count: processedMembers.length,
-                  }}
-                />
-              )}
-            </span>
-          );
-
-          showCallout({
-            message,
-            type: 'error',
-          });
-        } else {
-          showSuccessCallout({
-            actionType: ACTION_TYPES.delete,
-            entry,
-          });
-        }
-      });
-  }, [primaryField, selectedMembers]);
+  }, [eventEmitter, handleResolvedActionResults, onShare, refetch, updateEntry]);
 
   const handleDeleteEntry = useCallback((hydratedEntry) => {
     const entry = dehydrateEntry(hydratedEntry);
-    const deleteHandler = hydratedEntry.shared ? onDeleteSharedEntry : onDeleteLocalEntry;
+    const deleteHandler = hydratedEntry.shared ? deleteSharedSetting : deleteEntry;
 
-    return deleteHandler(entry)
+    return deleteHandler({ entry })
+      .then((results) => {
+        handleResolvedActionResults({
+          actionType: ACTION_TYPES.delete,
+          entry,
+          results,
+        });
+      })
       .then(refetch)
       .catch(() => buildDialog({ type: DIALOG_TYPES.itemInUse }));
-  }, [buildDialog, deleteEntry, deleteSharedSetting, refetch, showSuccessCallout]);
+  }, [buildDialog, deleteEntry, deleteSharedSetting, handleResolvedActionResults, refetch]);
 
   const onDelete = useCallback((uniqueFieldValue) => {
     const entryToDelete = entries.find(entry => entry[UNIQUE_FIELD_KEY] === uniqueFieldValue);

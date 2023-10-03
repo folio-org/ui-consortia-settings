@@ -174,14 +174,14 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
           values: expect.objectContaining({
             count: 1,
             term: response[records][2].foo,
-          })
+          }),
         });
       });
 
       it('should handle shared record deletion - partial failure', async () => {
         sharing.deleteSharedSetting.mockResolvedValue({
           ...pcPublicationResults,
-          publicationErrors: [{ tenantId: 'another', }],
+          publicationErrors: [{ tenantId: 'another' }],
         });
 
         renderConsortiaControlledVocabulary();
