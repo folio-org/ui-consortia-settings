@@ -8,6 +8,7 @@ import {
   HoldingsNoteTypes,
   HoldingsTypes,
 } from './holdings';
+import { CallNumberTypes } from './holdings-items';
 import {
   AlternativeTitleTypes,
   ClassificationTypes,
@@ -157,6 +158,17 @@ const sections = [
         label: <FormattedMessage id="ui-inventory.URLrelationship" />,
         component: URLRelationships,
         perm: 'ui-inventory.settings.electronic-access-relationships',
+      },
+    ],
+  },
+  {
+    label: <FormattedMessage id="ui-inventory.holdingsItems" />,
+    pages: [
+      {
+        route: 'call-number-types',
+        label: <FormattedMessage id="ui-inventory.callNumberTypes" />,
+        component: CallNumberTypes,
+        perm: 'ui-inventory.settings.call-number-types',
       },
     ],
   },
