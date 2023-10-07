@@ -175,5 +175,13 @@
     "validation.error.entry.duplicate": "{field} is already in use at one or more member libraries.",
     "duplicatesWithOthers": "{failedOther}, {failedSrs} duplicate(s)",
     "duplicates": "{failedSrs} duplicate(s)",
-    "settings.membership.error.codeLacksLength": "The code must not be shorter than {count} characters alphanumeric."
+    "settings.membership.error.codeLacksLength": "The code must not be shorter than {count} characters alphanumeric.",
+    "consortiumManager.error.publishCoordinator.partialFailure.create": "<b>{term}</b> was <b>not created</b> for members: <b>{members}</b>.",
+    "consortiumManager.error.publishCoordinator.partialFailure.delete": "<b>{term}</b> could <b>not</b> be <b>deleted</b> from members: <b>{members}</b>, so the source has been changed to <b>local</b>.",
+    "consortiumManager.error.publishCoordinator.partialFailure.update": "<b>{term}</b> was <b>not updated</b> for members: <b>{members}</b>.",
+    "consortiumManager.controlledVocab.callNumberTypes.cannotDeleteTermHeader": "Cannot delete the call number type",
+    "consortiumManager.controlledVocab.callNumberTypes.cannotDeleteTermMessage": "This call number type cannot be deleted, as it is in use by one or more records.",
+    "consortiumManager.controlledVocab.callNumberTypes.deleteEntry": "Delete call number type",
+    "consortiumManager.controlledVocab.callNumberTypes.termDeleted": "The call number type <b>{term}</b> was successfully <b>deleted</b>.",
+    "consortiumManager.controlledVocab.callNumberTypes.termWillBeDeleted": "The call number type <b>{term}</b> will be <b>deleted</b>."
 }
