@@ -175,5 +175,13 @@
     "validation.error.entry.duplicate": "{field} is already in use at one or more member libraries.",
     "duplicatesWithOthers": "{failedOther}, {failedSrs} duplicate(s)",
     "duplicates": "{failedSrs} duplicate(s)",
-    "settings.membership.error.codeLacksLength": "The code must not be shorter than {count} characters alphanumeric."
+    "settings.membership.error.codeLacksLength": "The code must not be shorter than {count} characters alphanumeric.",
+    "consortiumManager.error.publishCoordinator.partialFailure.create": "<b>{term}</b> was <b>not created</b> for members: <b>{members}</b>.",
+    "consortiumManager.error.publishCoordinator.partialFailure.delete": "<b>{term}</b> could <b>not</b> be <b>deleted</b> from members: <b>{members}</b>, so the source has been changed to <b>local</b>.",
+    "consortiumManager.error.publishCoordinator.partialFailure.update": "<b>{term}</b> was <b>not updated</b> for members: <b>{members}</b>.",
+    "consortiumManager.controlledVocab.callNumberTypes.cannotDeleteTermHeader": "Nie można usunąć tego typu sygnatury",
+    "consortiumManager.controlledVocab.callNumberTypes.cannotDeleteTermMessage": "Ten typ sygnatury nie można być usunięty, ponieważ jest on używany przez jeden lub więcej rekordów.",
+    "consortiumManager.controlledVocab.callNumberTypes.deleteEntry": "Usuń typ sygnatury",
+    "consortiumManager.controlledVocab.callNumberTypes.termDeleted": "Typ sygnatury <b>{term}</b> został pomyślnie <b>usunięty</b>.",
+    "consortiumManager.controlledVocab.callNumberTypes.termWillBeDeleted": "Typ sygnatury <b>{term}</b> będzie <b>usunięty</b>."
 }
