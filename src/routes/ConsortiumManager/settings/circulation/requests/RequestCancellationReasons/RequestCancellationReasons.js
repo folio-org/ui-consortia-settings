@@ -1,6 +1,5 @@
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { Label } from '@folio/stripes/components';
 import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 
 import { ConsortiaControlledVocabulary } from '../../../../../../components';
