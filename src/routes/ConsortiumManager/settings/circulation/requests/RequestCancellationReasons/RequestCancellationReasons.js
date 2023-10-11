@@ -1,6 +1,5 @@
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { Label } from '@folio/stripes/components';
 import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 
 import { ConsortiaControlledVocabulary } from '../../../../../../components';
@@ -17,11 +16,7 @@ const FIELDS_MAP = {
 };
 const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
 const COLUMN_MAPPING = {
-  [FIELDS_MAP.name]: (
-    <Label required>
-      <FormattedMessage id="ui-circulation.settings.cancelReasons.labelShort" />
-    </Label>
-  ),
+  [FIELDS_MAP.name]: <FormattedMessage id="ui-circulation.settings.cancelReasons.labelShort" />,
   [FIELDS_MAP.description]: <FormattedMessage id="ui-circulation.settings.cancelReasons.descriptionInternal" />,
   [FIELDS_MAP.publicDescription]: <FormattedMessage id="ui-circulation.settings.cancelReasons.descriptionPublic" />,
 };
