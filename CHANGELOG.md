@@ -32,3 +32,4 @@
 * [UICONSET-144](https://issues.folio.org/browse/UICONSET-144) Update characters limits of consortia member `code`.
 * [UICONSET-143](https://issues.folio.org/browse/UICONSET-143) Display toast message when deletion was failed for some members.
 * [UICONSET-44](https://issues.folio.org/browse/UICONSET-44) Implement consortium manager settings for "Call number types".
+* [UICONSET-146](https://issues.folio.org/browse/UICONSET-146) Remove the asterisk from the "Cancel reason" column label.
