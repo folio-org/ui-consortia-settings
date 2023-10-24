@@ -1,6 +1,8 @@
 # Change history for ui-consortia-settings
 
-## 1.1.0 (IN PROGRESS)
+## 1.0.1 (IN PROGRESS)
+
+* [UICONSET-148](https://issues.folio.org/browse/UICONSET-148) Fix "Manage permissions sets" through "Consortium Manager" fails due to different Okapi token
 
 ## [1.0.0](https://github.com/folio-org/ui-consortia-settings/tree/v1.0.0) (2023-10-13)
 
