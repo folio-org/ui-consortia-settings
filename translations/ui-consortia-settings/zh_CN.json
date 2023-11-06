@@ -176,12 +176,12 @@
     "duplicatesWithOthers": "{failedOther} 、 {failedSrs}重复",
     "duplicates": "{failedSrs}重复",
     "settings.membership.error.codeLacksLength": "本代码不得短于{count}个字母数字字符。",
-    "consortiumManager.error.publishCoordinator.partialFailure.create": "<b>{term}</b> was <b>not created</b> for members: <b>{members}</b>.",
-    "consortiumManager.error.publishCoordinator.partialFailure.delete": "<b>{term}</b> could <b>not</b> be <b>deleted</b> from members: <b>{members}</b>, so the source has been changed to <b>local</b>.",
-    "consortiumManager.error.publishCoordinator.partialFailure.update": "<b>{term}</b> was <b>not updated</b> for members: <b>{members}</b>.",
-    "consortiumManager.controlledVocab.callNumberTypes.cannotDeleteTermHeader": "Cannot delete the call number type",
-    "consortiumManager.controlledVocab.callNumberTypes.cannotDeleteTermMessage": "This call number type cannot be deleted, as it is in use by one or more records.",
-    "consortiumManager.controlledVocab.callNumberTypes.deleteEntry": "Delete call number type",
-    "consortiumManager.controlledVocab.callNumberTypes.termDeleted": "The call number type <b>{term}</b> was successfully <b>deleted</b>.",
-    "consortiumManager.controlledVocab.callNumberTypes.termWillBeDeleted": "The call number type <b>{term}</b> will be <b>deleted</b>."
+    "consortiumManager.error.publishCoordinator.partialFailure.create": "<b> {term} </b> <b>未为成员创建</b> ： <b> {members} </b> 。",
+    "consortiumManager.error.publishCoordinator.partialFailure.delete": "无法<b>从成员</b> {<b>members}</b> 中删除 <b>{term}</b>，因此源已更改为<b>本地</b>。",
+    "consortiumManager.error.publishCoordinator.partialFailure.update": "成员的<b> {term} </b> <b>未更新</b> ： <b> {members} </b> 。",
+    "consortiumManager.controlledVocab.callNumberTypes.cannotDeleteTermHeader": "无法删除本索书号类型",
+    "consortiumManager.controlledVocab.callNumberTypes.cannotDeleteTermMessage": "此索书号类型无法删除，因为它已被一条或多条记录使用。",
+    "consortiumManager.controlledVocab.callNumberTypes.deleteEntry": "删除索书号类型",
+    "consortiumManager.controlledVocab.callNumberTypes.termDeleted": "索书号类型<b> {term} </b>已成功<b>删除</b> 。",
+    "consortiumManager.controlledVocab.callNumberTypes.termWillBeDeleted": "索书号类型<b> {term} </b>将被<b>删除</b> 。"
 }
