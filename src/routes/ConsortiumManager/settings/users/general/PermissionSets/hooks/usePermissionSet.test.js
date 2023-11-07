@@ -1,15 +1,9 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { get } from 'lodash';
 
-import { cleanup, renderHook } from '@folio/jest-config-stripes/testing-library/react';
+import { cleanup, renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useTenantKy } from '../../../../../../../hooks';
 import { usePermissionSet } from './usePermissionSet';
-
-jest.mock('lodash', () => ({
-  ...jest.requireActual('lodash'),
-  get: jest.fn((data) => (data.length ? data[0] : {})),
-}));
 
 jest.mock('../../../../../../../hooks', () => ({
   ...jest.requireActual('../../../../../../../hooks'),
@@ -22,7 +16,7 @@ const permissions = [mockPermission];
 
 const kyMock = {
   get: jest.fn(() => ({
-    json: () => ({ permissions, isLoading: false }),
+    json: () => Promise.resolve({ permissions, isLoading: false }),
   })),
 };
 
@@ -43,7 +37,7 @@ describe('usePermissionSet', () => {
       .mockClear()
       .mockReturnValue({
         get: jest.fn(() => ({
-          json: () => ({ permissions: [], isLoading: false }),
+          json: () => Promise.resolve({ permissions: [], isLoading: false }),
         })),
       });
 
@@ -52,11 +46,12 @@ describe('usePermissionSet', () => {
       tenantId: 'diku',
     }), { wrapper });
 
+    await waitFor(() => expect(result.current.isFetching).toBeFalsy());
+
     expect(result.current.permissionsSet).toEqual({});
   });
 
-  it('should return selected permission set', () => {
-    get.mockClear().mockReturnValue(mockPermission);
+  it('should return selected permission set', async () => {
     useTenantKy
       .mockClear()
       .mockReturnValue(kyMock);
@@ -65,6 +60,8 @@ describe('usePermissionSet', () => {
       permissionSetId: 'perm-id',
       tenantId: 'diku',
     }), { wrapper });
+
+    await waitFor(() => expect(result.current.isFetching).toBeFalsy());
 
     expect(result.current.permissionsSet).toEqual(mockPermission);
   });
