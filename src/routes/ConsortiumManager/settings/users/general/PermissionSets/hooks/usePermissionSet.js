@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { get } from 'lodash';
 
@@ -8,6 +9,8 @@ import { useTenantKy } from '../../../../../../../hooks';
 const DEFAULT_DATA = {};
 
 export const usePermissionSet = ({ permissionSetId, tenantId, options = {} }) => {
+  const [, setReady] = useState(false);
+
   const ky = useTenantKy({ tenantId });
   const [namespace] = useNamespace({ key: 'view-permission-set' });
 
@@ -18,16 +21,22 @@ export const usePermissionSet = ({ permissionSetId, tenantId, options = {} }) =>
   };
 
   const {
-    isLoading,
-    data = {},
+    isFetching: isLoading,
+    data = DEFAULT_DATA,
   } = useQuery(
-    [namespace],
+    [namespace, permissionSetId],
     ({ signal }) => ky.get('perms/permissions', { searchParams, signal }).json(),
     {
       enabled: Boolean(tenantId && permissionSetId),
       ...options,
     },
   );
+
+  useEffect(() => {
+    if (!isLoading) {
+      setReady(true);
+    }
+  }, [isLoading]);
 
   const permissionsSet = get(data, 'permissions[0]', DEFAULT_DATA);
 

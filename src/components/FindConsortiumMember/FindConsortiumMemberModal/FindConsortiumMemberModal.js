@@ -144,6 +144,7 @@ export const FindConsortiumMemberModal = ({
       id="find-consortium-member-modal"
       contentClass={css.modalContent}
       dismissible
+      enforceFocus={false}
       footer={footer}
       label={<FormattedMessage id="ui-consortia-settings.consortiumManager.findMember.modal.title" />}
       onClose={onClose}
@@ -171,6 +172,7 @@ export const FindConsortiumMemberModal = ({
         )}
 
         <ResultsPane
+          autosize
           title={<FormattedMessage id="ui-consortia-settings.consortiumManager.findMember.modal.results.title" />}
           subTitle={(
             <FormattedMessage
@@ -184,20 +186,26 @@ export const FindConsortiumMemberModal = ({
           isFiltersOpened={isFiltersVisible}
           padContent
         >
-          <MessageBanner type="warning">
-            <FormattedMessage id="ui-consortia-settings.consortiumManager.findMember.modal.results.warning" />
-          </MessageBanner>
-          <FrontendSortingMCL
-            id="find-consortium-member-list"
-            columnIdPrefix="consortium-manager"
-            columnMapping={columnMapping}
-            contentData={contentData}
-            columnWidths={MEMBERS_COLUMN_WIDTHS}
-            formatter={formatter}
-            sortedColumn={MEMBERS_COLUMN_NAMES.name}
-            sorters={sorters}
-            visibleColumns={MEMBERS_VISIBLE_COLUMNS}
-          />
+          {({ height, width }) => (
+            <>
+              <MessageBanner type="warning">
+                <FormattedMessage id="ui-consortia-settings.consortiumManager.findMember.modal.results.warning" />
+              </MessageBanner>
+              <FrontendSortingMCL
+                id="find-consortium-member-list"
+                columnIdPrefix="consortium-manager"
+                columnMapping={columnMapping}
+                contentData={contentData}
+                columnWidths={MEMBERS_COLUMN_WIDTHS}
+                formatter={formatter}
+                sortedColumn={MEMBERS_COLUMN_NAMES.name}
+                sorters={sorters}
+                visibleColumns={MEMBERS_VISIBLE_COLUMNS}
+                height={height - 55}
+                width={width}
+              />
+            </>
+          )}
         </ResultsPane>
       </Paneset>
     </Modal>
