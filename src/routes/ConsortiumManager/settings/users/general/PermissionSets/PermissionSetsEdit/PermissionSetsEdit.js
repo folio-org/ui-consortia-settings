@@ -1,13 +1,15 @@
 import { useMemo } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import { useIntl } from 'react-intl';
 
-import { Loading } from '@folio/stripes/components';
+import { Layer, LoadingView } from '@folio/stripes/components';
 
 import { ConsortiumPermissionsSetForm } from '../ConsortiumPermissionsSetForm';
 import { usePermissionSet, useTenantPermissionSetMutations } from '../hooks';
 import { TENANT_ID_SEARCH_PARAMS } from '../constants';
 
 export const PermissionSetsEdit = () => {
+  const intl = useIntl();
   const location = useLocation();
   const params = useParams();
   const tenantId = useMemo(() => new URLSearchParams(location.search).get(TENANT_ID_SEARCH_PARAMS), [location.search]);
@@ -23,7 +25,15 @@ export const PermissionSetsEdit = () => {
   const onRemove = () => removePermissionSet(permissionSetId);
 
   if (isLoading) {
-    return <Loading />;
+    return (
+      <Layer
+        isOpen
+        inRootSet
+        contentLabel={intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.members.permissionSets.create.permissionSet.contentLabel' })}
+      >
+        <LoadingView />
+      </Layer>
+    );
   }
 
   return (
