@@ -2,6 +2,8 @@
 
 ## 1.1.0 (IN PROGRESS)
 
+* Permissions are not rendered in edit permission set form. Refs UICONSET-150.
+
 ## [1.0.1](https://github.com/folio-org/ui-consortia-settings/tree/v1.0.1) (2023-11-07)
 [Full Changelog](https://github.com/folio-org/ui-orders/compare/v1.0.0...v1.0.1)
 

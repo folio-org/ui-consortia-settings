@@ -11,7 +11,7 @@
   "errors.permissionsRequired": "User does not have required permissions.",
 
   "code": "Code",
-  
+
   "duplicatesWithOthers": "{failedOther}, {failedSrs} duplicate(s)",
   "duplicates": "{failedSrs} duplicate(s)",
 
@@ -153,7 +153,7 @@
   "consortiumManager.members.permissionSets.compare.permissionSet.placeholder": "Select Permission set",
   "consortiumManager.members.permissionSets.compare.permissionSet.empty": "No items to show",
   "consortiumManager.members.permissionSets.create.permissionSet.error": "The permission set was not successfully saved. {error}",
-  "consortiumManager.members.permissionSets.create.permissionSet.contentLabel": "Create permission set",
+  "consortiumManager.members.permissionSets.create.permissionSet.contentLabel": "Permissions set form",
   "consortiumManager.members.permissionSets.remove.permissionSet.success": "The permission set <strong>{permissionName}</strong> was successfully <strong>deleted</strong>.",
   "consortiumManager.members.permissionSets.save.permissionSet.success": "The permission set <strong>{permissionName}</strong> was successfully <strong>saved</strong>.",
 
