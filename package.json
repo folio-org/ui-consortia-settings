@@ -1,6 +1,6 @@
 {
   "name": "@folio/consortia-settings",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Consortia settings",
   "main": "src/index.js",
   "repository": {
