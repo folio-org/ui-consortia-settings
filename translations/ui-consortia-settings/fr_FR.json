@@ -163,7 +163,7 @@
     "validation.error.minLength": "Length should not be less than {length} characters.",
     "validation.error.mismatchLength": "Length should be {length, plural, one {# character} other {# characters}}.",
     "consortiumManager.members.permissionSets.create.permissionSet.error": "The permission set was not successfully saved. {error}",
-    "consortiumManager.members.permissionSets.create.permissionSet.contentLabel": "Create permission set",
+    "consortiumManager.members.permissionSets.create.permissionSet.contentLabel": "Permissions set form",
     "consortiumManager.members.permissionSets.remove.permissionSet.success": "The permission set <strong>{permissionName}</strong> was successfully <strong>deleted</strong>.",
     "consortiumManager.members.permissionSets.save.permissionSet.success": "The permission set <strong>{permissionName}</strong> was successfully <strong>saved</strong>.",
     "button.confirm": "Confirm",
