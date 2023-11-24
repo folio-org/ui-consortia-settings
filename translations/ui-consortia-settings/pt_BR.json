@@ -163,7 +163,7 @@
     "validation.error.minLength": "O comprimento não deve ser menor que {length} caracteres.",
     "validation.error.mismatchLength": "O comprimento deve ser {length, plural, one {# caracter} other {# caracteres}}.",
     "consortiumManager.members.permissionSets.create.permissionSet.error": "O conjunto de permissões não foi salvo com sucesso. {error}",
-    "consortiumManager.members.permissionSets.create.permissionSet.contentLabel": "Criar conjunto de permissões",
+    "consortiumManager.members.permissionSets.create.permissionSet.contentLabel": "Formulário de conjunto de permissões",
     "consortiumManager.members.permissionSets.remove.permissionSet.success": "O conjunto de permissões <strong> {permissionName} </strong> foi <strong> excluído </strong> com sucesso.",
     "consortiumManager.members.permissionSets.save.permissionSet.success": "O conjunto de permissões <strong> {permissionName} </strong> foi <strong> salvo </strong> com sucesso.",
     "button.confirm": "Confirmar",
