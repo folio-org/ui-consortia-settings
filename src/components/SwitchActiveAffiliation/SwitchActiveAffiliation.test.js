@@ -2,7 +2,11 @@ import { MemoryRouter } from 'react-router-dom';
 
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
-import { updateTenant } from '@folio/stripes/core';
+import {
+  updateTenant,
+  useModules,
+  getEventHandler,
+} from '@folio/stripes/core';
 
 import { tenants } from 'fixtures';
 import { useUserAffiliations } from '../../hooks';
@@ -19,7 +23,8 @@ jest.mock('../../utils', () => ({
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
   updateTenant: jest.fn(),
-  useModules: jest.fn(() => ({ app: [{ route: '/' }], settings: [] })),
+  useModules: jest.fn(),
+  getEventHandler: jest.fn(),
 }));
 
 const defaultProps = {
@@ -60,6 +65,16 @@ describe('SwitchActiveAffiliation', () => {
         isFetching: false,
         affiliations,
       });
+
+    getEventHandler.mockClear();
+
+    useModules
+      .mockClear()
+      .mockReturnValue({
+        app: [{ route: '/' }],
+        settings: [],
+        handler: [],
+      });
   });
 
   it('should render \'Switch active affiliation\' modal', () => {
@@ -80,5 +95,35 @@ describe('SwitchActiveAffiliation', () => {
       defaultProps.stripes.okapi,
       tenants[2].id,
     );
+  });
+
+  describe('when user selects another affiliation', () => {
+    it('should notify all "handler" modules', async () => {
+      useModules.mockReturnValue({
+        handler: [
+          { module: '@folio/marc-authority' },
+          { module: '@folio/inventory' },
+        ],
+      });
+
+      renderSwitchActiveAffiliation();
+
+      await userEvent.click(screen.getByText(tenants[2].name));
+      await userEvent.click(screen.getByText('ui-consortia-settings.button.saveAndClose'));
+
+      expect(getEventHandler).toHaveBeenNthCalledWith(
+        1,
+        'SWITCH_ACTIVE_AFFILIATION',
+        defaultProps.stripes,
+        { module: '@folio/marc-authority' },
+      );
+
+      expect(getEventHandler).toHaveBeenNthCalledWith(
+        2,
+        'SWITCH_ACTIVE_AFFILIATION',
+        defaultProps.stripes,
+        { module: '@folio/inventory' },
+      );
+    });
   });
 });
