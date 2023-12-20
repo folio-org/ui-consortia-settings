@@ -12,6 +12,7 @@ import {
   stripesShape,
   updateTenant,
   useModules,
+  getEventHandler,
 } from '@folio/stripes/core';
 import { useToggle } from '@folio/stripes-acq-components';
 
@@ -54,6 +55,12 @@ export const SwitchActiveAffiliation = ({ stripes }) => {
     window.location.href = path;
   }, [modules, location.pathname]);
 
+  const notifyModules = useCallback(() => {
+    modules.handler.forEach(module => {
+      getEventHandler('SWITCH_ACTIVE_AFFILIATION', stripes, module);
+    });
+  }, [modules, stripes]);
+
   const onSubmit = useCallback(async () => {
     const affiliation = affiliations.find(({ tenantId }) => tenantId === activeAffiliation);
 
@@ -61,9 +68,10 @@ export const SwitchActiveAffiliation = ({ stripes }) => {
 
     await updateTenant(stripes.okapi, affiliation.tenantId);
 
+    notifyModules();
     resetCurrentModule();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeAffiliation, affiliations, toggleSubmit, resetCurrentModule]);
+  }, [activeAffiliation, affiliations, toggleSubmit, resetCurrentModule, notifyModules]);
 
   return (
     <SwitchActiveAffiliationModal

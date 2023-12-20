@@ -2,6 +2,8 @@
 
 ## 1.1.0 (IN PROGRESS)
 
+* [UICONSET-156](https://issues.folio.org/browse/UICONSET-156) Create an event on affiliation change for listeners in other modules.
+
 ## [1.0.2](https://github.com/folio-org/ui-consortia-settings/tree/v1.0.2) (2023-11-21)
 [Full Changelog](https://github.com/folio-org/ui-orders/compare/v1.0.1...v1.0.2)
 
