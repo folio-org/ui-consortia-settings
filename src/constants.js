@@ -1,4 +1,4 @@
-import { stripes as stripesConfig } from '../package';
+import packageConfig from '../package';
 
 export const CONTENT_TYPE_HEADER = 'Content-Type';
 export const OKAPI_TENANT_HEADER = 'X-Okapi-Tenant';
@@ -40,7 +40,7 @@ export const STATISTICAL_CODE_TYPES_API = 'statistical-code-types';
 export const STATISTICAL_CODES_API = 'statistical-codes';
 /*  */
 
-export const MODULE_ROOT_ROUTE = stripesConfig.route;
+export const MODULE_ROOT_ROUTE = packageConfig.stripes.route;
 
 export const PACKAGE_SCOPE_REGEX = /^@[a-z\d][\w-.]{0,214}\//;
 export const UUID_REGEX = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;
