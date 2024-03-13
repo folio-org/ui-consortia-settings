@@ -38,11 +38,11 @@ export const getExportJobLogsListResultsFormatter = ({ intl }) => ({
 
 export const getExportJobLogsSortMap = ({ sortingDirection }) => ({
   [EXPORT_JOB_LOG_COLUMNS.status]: 'status',
-  [EXPORT_JOB_LOG_COLUMNS.totalRecords]: 'progress.total/number',
-  [EXPORT_JOB_LOG_COLUMNS.exported]: 'progress.exported/number',
-  [EXPORT_JOB_LOG_COLUMNS.errors]: 'progress.failed/number',
+  [EXPORT_JOB_LOG_COLUMNS.totalRecords]: 'total/number',
+  [EXPORT_JOB_LOG_COLUMNS.exported]: 'exported/number',
+  [EXPORT_JOB_LOG_COLUMNS.errors]: 'failed/number',
   [EXPORT_JOB_LOG_COLUMNS.jobProfileName]: 'jobProfileName',
   [EXPORT_JOB_LOG_COLUMNS.completedDate]: 'completedDate',
-  [EXPORT_JOB_LOG_COLUMNS.runBy]: `runBy.firstName/sort.${sortingDirection} runBy.lastName`,
-  [EXPORT_JOB_LOG_COLUMNS.hrId]: 'hrId/number',
+  [EXPORT_JOB_LOG_COLUMNS.runBy]: `runByFirstName/sort.${sortingDirection} runByLastName`,
+  [EXPORT_JOB_LOG_COLUMNS.hrId]: 'hrid/number',
 });
