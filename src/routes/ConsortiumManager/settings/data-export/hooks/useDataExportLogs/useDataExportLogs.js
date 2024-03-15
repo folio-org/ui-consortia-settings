@@ -43,7 +43,7 @@ export const useDataExportLogs = (params = {}, options = {}) => {
     query: [
       `status=(${JOB_LOGS_QUERY_VALUE})`,
       sortingQuery,
-      sorting.sortingField !== EXPORT_JOB_LOG_COLUMNS.totalRecords ? 'progress.total/number' : '',
+      sorting.sortingField !== EXPORT_JOB_LOG_COLUMNS.totalRecords ? 'total/number' : '',
     ].filter(Boolean).join(' '),
   };
 
