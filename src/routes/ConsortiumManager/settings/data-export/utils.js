@@ -10,8 +10,8 @@ export const getExportJobLogsListResultsFormatter = ({ intl }) => ({
   [EXPORT_JOB_LOG_COLUMNS.runBy]: record => getFullName({ personal: record.runBy }).trim(),
   [EXPORT_JOB_LOG_COLUMNS.totalRecords]: record => intl.formatNumber(record.progress?.total),
   [EXPORT_JOB_LOG_COLUMNS.errors]: record => {
-    const failedSrs = record.progress?.failed?.duplicatedSrs;
-    const failedOther = record.progress?.failed?.otherFailed;
+    const failedSrs = record.progress?.duplicatedSrs;
+    const failedOther = record.progress?.failed;
 
     switch (true) {
       case failedSrs === 0 && failedOther > 0:
