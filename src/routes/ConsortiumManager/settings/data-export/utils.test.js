@@ -10,9 +10,9 @@ describe('getExportJobLogsListResultsFormatter', () => {
   it('formats the errors correctly', () => {
     const formatter = getExportJobLogsListResultsFormatter({ intl });
     // Test cases for different error scenarios
-    const record1 = { progress: { failed: { duplicatedSrs: 0, otherFailed: 5 } } };
-    const record2 = { progress: { failed: { duplicatedSrs: 3, otherFailed: 5 } } };
-    const record3 = { progress: { failed: { duplicatedSrs: 3, otherFailed: 0 } } };
+    const record1 = { progress: { failed: 5, duplicatedSrs: 0 } };
+    const record2 = { progress: { failed: 5, duplicatedSrs: 3 } };
+    const record3 = { progress: { failed: 0, duplicatedSrs: 3 } };
 
     const result1 = formatter[EXPORT_JOB_LOG_COLUMNS.errors](record1);
     const result2 = formatter[EXPORT_JOB_LOG_COLUMNS.errors](record2);
