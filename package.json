@@ -42,7 +42,7 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@folio/stripes-acq-components": "~5.0.0",
+    "@folio/stripes-acq-components": "~5.1.0",
     "@folio/stripes-data-transfer-components": "^6.0.0",
     "@rehooks/local-storage": "^2.4.4",
     "dom-helpers": "^3.4.0",
