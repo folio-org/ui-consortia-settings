@@ -51,7 +51,7 @@
     "consortiumManager.members.permissionSets.compare.member.placeholder": "Seleccionar miembro",
     "consortiumManager.members.permissionSets.compare.permissionSet": "Conjunto de permisos",
     "consortiumManager.members.permissionSets.compare.permissionSet.placeholder": "Seleccionar conjunto de permisos",
-    "consortiumManager.members.permissionSets.compare.permissionSet.empty": "No hay artículos que mostrar",
+    "consortiumManager.members.permissionSets.compare.permissionSet.empty": "No hay ítems que mostrar",
     "consortiumManager.all": "Todos",
     "consortiumManager.controlledVocab.column.memberLibraries": "Bibliotecas miembros",
     "consortiumManager.controlledVocab.common.termCreated": "<b>{term}</b> ha sido <b>creado</b> con éxito para <b>{members}</b> {count, select, 1 {library} other {libraries}}.",
