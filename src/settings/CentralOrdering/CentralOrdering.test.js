@@ -24,10 +24,11 @@ const renderCentralOrderingSettings = () => render(
 
 const mockRefetch = jest.fn();
 const mockKy = {
+  post: jest.fn((_url, { data }) => ({
+    json: () => Promise.resolve(data),
+  })),
   put: jest.fn((_url, { data }) => ({
-    json() {
-      return Promise.resolve(data);
-    },
+    json: () => Promise.resolve(data),
   })),
 };
 const mockData = { id: 'setting-id' };
@@ -68,7 +69,16 @@ describe('CentralOrdering', () => {
     expect(screen.getByText('LoadingPane')).toBeInTheDocument();
   });
 
-  it('should handle central ordering settings submit', async () => {
+  it('should handle central ordering settings create', async () => {
+    renderCentralOrderingSettings();
+
+    await user.click(await screen.findByRole('checkbox', { name: 'ui-consortia-settings.settings.centralOrdering.checkbox.label' }));
+    await user.click(await screen.findByRole('button', { name: 'stripes-core.button.save' }));
+
+    expect(mockKy.post).toHaveBeenCalled();
+  });
+
+  it('should handle central ordering settings update', async () => {
     useCentralOrderingSettings
       .mockClear()
       .mockReturnValue({
