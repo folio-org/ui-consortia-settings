@@ -59,7 +59,7 @@ describe('BankingInformationSettings component', () => {
 
   it('should render "Loading" component when settings are loading', () => {
     useCentralOrderingSettings.mockReturnValue({
-      isLoading: true,
+      isFetching: true,
       enabled: false,
     });
 
@@ -73,7 +73,7 @@ describe('BankingInformationSettings component', () => {
       .mockClear()
       .mockReturnValue({
         data: mockData,
-        isLoading: false,
+        isFetching: false,
         enabled: true,
         refetch: mockRefetch,
       });
