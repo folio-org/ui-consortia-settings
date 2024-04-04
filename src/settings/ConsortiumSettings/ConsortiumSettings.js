@@ -34,7 +34,7 @@ const sections = [
         component: CentralOrdering,
         label: <FormattedMessage id="ui-consortia-settings.settings.centralOrdering.label" />,
         route: 'central-ordering',
-        // perm: 'ui-consortia-settings.settings.networkOrdering.view',
+        perm: 'ui-consortia-settings.settings.networkOrdering.view',
       },
     ],
   },
