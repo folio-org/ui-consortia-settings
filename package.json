@@ -1,6 +1,6 @@
 {
   "name": "@folio/consortia-settings",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Consortia settings",
   "main": "src/index.js",
   "repository": {
@@ -88,6 +88,7 @@
     "okapiInterfaces": {
       "consortia": "1.0",
       "data-export": "5.0",
+      "orders-storage.settings": "1.0",
       "permissions": "5.6",
       "source-manager-job-executions": "3.2"
     },
@@ -186,6 +187,26 @@
         "subPermissions": [
           "ui-consortia-settings.settings.membership.view",
           "consortia.tenants.item.put"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-consortia-settings.settings.networkOrdering.view",
+        "displayName": "Settings (Consortia): Can view network ordering",
+        "subPermissions": [
+          "settings.consortia-settings.enabled",
+          "orders-storage.settings.collection.get",
+          "orders-storage.settings.item.get"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-consortia-settings.settings.networkOrdering.edit",
+        "displayName": "Settings (Consortia): Can view and edit network ordering",
+        "subPermissions": [
+          "ui-consortia-settings.settings.networkOrdering.view",
+          "orders-storage.settings.item.post",
+          "orders-storage.settings.item.put"
         ],
         "visible": true
       }

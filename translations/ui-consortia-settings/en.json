@@ -3,6 +3,8 @@
 
   "affiliation.primary.suffix": "(Primary)",
 
+  "document.settings.title": "Consortium manager settings",
+
   "button.confirm": "Confirm",
   "button.saveAndClose": "Save & close",
 
@@ -164,6 +166,12 @@
 
   "settings.heading": "Network settings",
   "settings.section.general": "General",
+  "settings.section.networkOrdering": "Network ordering",
+
+  "settings.centralOrdering.label": "Central ordering",
+  "settings.centralOrdering.checkbox.label": "Allow user to select locations from other affiliations for central orders",
+  "settings.centralOrdering.submit.success": "Central ordering setting was successfully updated",
+  "settings.centralOrdering.submit.error.generic": "Central ordering setting update failed",
 
   "settings.membership.error.duplicate": "Name cannot be saved. This name is already in use in the consortium",
   "settings.membership.error.nameExceedsLength": "Tenant name must not be longer than {count} characters.",
@@ -199,5 +207,7 @@
   "permission.consortium-manager.edit": "Consortium manager: Can create, edit and remove settings",
   "permission.consortium-manager.share": "Consortium manager: Can share settings to all members",
   "permission.settings.membership.view": "Settings (Consortia): Can view consortia membership",
-  "permission.settings.membership.edit": "Settings (Consortia): Can view and edit consortia membership"
+  "permission.settings.membership.edit": "Settings (Consortia): Can view and edit consortia membership",
+  "permission.settings.networkOrdering.view": "Settings (Consortia): Can view network ordering",
+  "permission.settings.networkOrdering.edit": "Settings (Consortia): Can view and edit network ordering"
 }

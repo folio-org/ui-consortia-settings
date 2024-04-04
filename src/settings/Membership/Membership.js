@@ -3,7 +3,10 @@ import { useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { flow } from 'lodash';
 
-import { stripesConnect } from '@folio/stripes/core';
+import {
+  stripesConnect,
+  TitleManager,
+} from '@folio/stripes/core';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import {
   baseManifest,
@@ -38,24 +41,30 @@ const Membership = ({
   if (consortium.isLoading) return <LoadingPane paneTitle={paneTitle} />;
 
   return (
-    <ControlledVocab
-      id="consortia-membership"
-      actionSuppressor={actionSuppressor}
-      canCreate={false}
-      stripes={stripes}
-      mutator={mutator}
-      resources={resources}
-      readOnlyFields={READONLY_FIELDS}
-      baseUrl={`consortia/${consortium.id}/tenants`}
-      records="tenants"
-      label={paneTitle}
-      objectLabel={intl.formatMessage({ id: 'ui-consortia-settings.settings.membership.objectLabel' })}
-      translations={getControlledVocabTranslations('ui-consortia-settings.settings.membership.list')}
-      columnMapping={COLUMN_MAPPING}
-      hiddenFields={HIDDEN_FILEDS}
-      visibleFields={VISIBLE_FIELDS}
-      validate={validate}
-    />
+    <>
+      <TitleManager
+        page={intl.formatMessage({ id: 'ui-consortia-settings.document.settings.title' })}
+        record={intl.formatMessage({ id: 'ui-consortia-settings.settings.membership.label' })}
+      />
+      <ControlledVocab
+        id="consortia-membership"
+        actionSuppressor={actionSuppressor}
+        canCreate={false}
+        stripes={stripes}
+        mutator={mutator}
+        resources={resources}
+        readOnlyFields={READONLY_FIELDS}
+        baseUrl={`consortia/${consortium.id}/tenants`}
+        records="tenants"
+        label={paneTitle}
+        objectLabel={intl.formatMessage({ id: 'ui-consortia-settings.settings.membership.objectLabel' })}
+        translations={getControlledVocabTranslations('ui-consortia-settings.settings.membership.list')}
+        columnMapping={COLUMN_MAPPING}
+        hiddenFields={HIDDEN_FILEDS}
+        visibleFields={VISIBLE_FIELDS}
+        validate={validate}
+      />
+    </>
   );
 };
 
