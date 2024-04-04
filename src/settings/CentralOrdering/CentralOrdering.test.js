@@ -9,7 +9,7 @@ import { CentralOrdering } from './CentralOrdering';
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
-  Loading: () => <div>Loading</div>,
+  LoadingPane: () => <div>LoadingPane</div>,
 }));
 
 jest.mock('@folio/stripes-acq-components', () => ({
@@ -32,7 +32,7 @@ const mockKy = {
 };
 const mockData = { id: 'setting-id' };
 
-describe('BankingInformationSettings component', () => {
+describe('CentralOrdering', () => {
   beforeEach(() => {
     mockKy.put.mockClear();
     useCentralOrderingSettings
@@ -65,7 +65,7 @@ describe('BankingInformationSettings component', () => {
 
     renderCentralOrderingSettings();
 
-    expect(screen.getByText('Loading')).toBeInTheDocument();
+    expect(screen.getByText('LoadingPane')).toBeInTheDocument();
   });
 
   it('should handle central ordering settings submit', async () => {
