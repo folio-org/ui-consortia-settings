@@ -183,5 +183,13 @@
     "consortiumManager.controlledVocab.callNumberTypes.cannotDeleteTermMessage": "Este tipo de número de chamada não pode ser excluído, pois está em uso por um ou mais registros.",
     "consortiumManager.controlledVocab.callNumberTypes.deleteEntry": "Excluir tipo de número de chamada",
     "consortiumManager.controlledVocab.callNumberTypes.termDeleted": "O tipo de número de chamada <b>{term}</b> foi <b>excluído</b> com sucesso.",
-    "consortiumManager.controlledVocab.callNumberTypes.termWillBeDeleted": "O tipo de número de chamada <b>{term}</b> será <b>excluído</b>."
+    "consortiumManager.controlledVocab.callNumberTypes.termWillBeDeleted": "O tipo de número de chamada <b>{term}</b> será <b>excluído</b>.",
+    "document.settings.title": "Configurações do gerenciador de consórcios",
+    "settings.section.networkOrdering": "Pedido de rede",
+    "settings.centralOrdering.label": "Pedido central",
+    "settings.centralOrdering.checkbox.label": "Permitir que o usuário selecione locais de outras afiliações para pedidos centrais",
+    "settings.centralOrdering.submit.success": "A configuração de pedido central foi atualizada com sucesso",
+    "settings.centralOrdering.submit.error.generic": "Falha na atualização da configuração de pedido central",
+    "permission.settings.networkOrdering.view": "Configurações (Consórcios): Pode visualizar o pedido de rede",
+    "permission.settings.networkOrdering.edit": "Configurações (Consórcios): Pode visualizar e editar o pedido de rede"
 }

@@ -183,5 +183,13 @@
     "consortiumManager.controlledVocab.callNumberTypes.cannotDeleteTermMessage": "Ten typ sygnatury nie można być usunięty, ponieważ jest on używany przez jeden lub więcej rekordów.",
     "consortiumManager.controlledVocab.callNumberTypes.deleteEntry": "Usuń typ sygnatury",
     "consortiumManager.controlledVocab.callNumberTypes.termDeleted": "Typ sygnatury <b>{term}</b> został pomyślnie <b>usunięty</b>.",
-    "consortiumManager.controlledVocab.callNumberTypes.termWillBeDeleted": "Typ sygnatury <b>{term}</b> będzie <b>usunięty</b>."
+    "consortiumManager.controlledVocab.callNumberTypes.termWillBeDeleted": "Typ sygnatury <b>{term}</b> będzie <b>usunięty</b>.",
+    "document.settings.title": "Consortium manager settings",
+    "settings.section.networkOrdering": "Network ordering",
+    "settings.centralOrdering.label": "Central ordering",
+    "settings.centralOrdering.checkbox.label": "Allow user to select locations from other affiliations for central orders",
+    "settings.centralOrdering.submit.success": "Central ordering setting was successfully updated",
+    "settings.centralOrdering.submit.error.generic": "Central ordering setting update failed",
+    "permission.settings.networkOrdering.view": "Settings (Consortia): Can view network ordering",
+    "permission.settings.networkOrdering.edit": "Settings (Consortia): Can view and edit network ordering"
 }

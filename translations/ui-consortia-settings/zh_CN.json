@@ -183,5 +183,13 @@
     "consortiumManager.controlledVocab.callNumberTypes.cannotDeleteTermMessage": "此索书号类型无法删除，因为它已被一条或多条记录使用。",
     "consortiumManager.controlledVocab.callNumberTypes.deleteEntry": "删除索书号类型",
     "consortiumManager.controlledVocab.callNumberTypes.termDeleted": "索书号类型<b> {term} </b>已成功<b>删除</b> 。",
-    "consortiumManager.controlledVocab.callNumberTypes.termWillBeDeleted": "索书号类型<b> {term} </b>将被<b>删除</b> 。"
+    "consortiumManager.controlledVocab.callNumberTypes.termWillBeDeleted": "索书号类型<b> {term} </b>将被<b>删除</b> 。",
+    "document.settings.title": "Consortium manager settings",
+    "settings.section.networkOrdering": "Network ordering",
+    "settings.centralOrdering.label": "Central ordering",
+    "settings.centralOrdering.checkbox.label": "Allow user to select locations from other affiliations for central orders",
+    "settings.centralOrdering.submit.success": "Central ordering setting was successfully updated",
+    "settings.centralOrdering.submit.error.generic": "Central ordering setting update failed",
+    "permission.settings.networkOrdering.view": "Settings (Consortia): Can view network ordering",
+    "permission.settings.networkOrdering.edit": "Settings (Consortia): Can view and edit network ordering"
 }
