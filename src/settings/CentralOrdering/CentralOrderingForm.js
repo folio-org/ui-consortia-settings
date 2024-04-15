@@ -19,7 +19,10 @@ import {
   PaneHeader,
   Row,
 } from '@folio/stripes/components';
-import { TitleManager } from '@folio/stripes/core';
+import {
+  TitleManager,
+  useStripes,
+} from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
 
 const CentralOrderingForm = ({
@@ -29,6 +32,7 @@ const CentralOrderingForm = ({
 }) => {
   const intl = useIntl();
   const paneTitleRef = useRef();
+  const stripes = useStripes();
 
   const handlePaneFocus = useCallback(() => {
     return paneTitleRef.current?.focus();
@@ -78,6 +82,7 @@ const CentralOrderingForm = ({
             label={<FormattedMessage id="ui-consortia-settings.settings.centralOrdering.checkbox.label" />}
             name="enabled"
             type="checkbox"
+            disabled={!stripes.hasPerm('ui-consortia-settings.settings.networkOrdering.edit')}
           />
         </Col>
       </Row>
