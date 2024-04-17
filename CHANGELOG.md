@@ -3,6 +3,7 @@
 ## 2.0.0 (IN PROGRESS)
 
 * [UICONSET-152](https://folio-org.atlassian.net/browse/UICONSET-152) *BREAKING* Implement settings for central ordering across consortium.
+* [UICONSET-172](https://folio-org.atlassian.net/browse/UICONSET-172) Downloading Files from Consortia Manager
 
 ## [1.1.0](https://github.com/folio-org/ui-consortia-settings/tree/v1.1.0) (2024-03-20)
 [Full Changelog](https://github.com/folio-org/ui-orders/compare/v1.0.2...v1.1.0)
