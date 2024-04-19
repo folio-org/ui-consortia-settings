@@ -44,7 +44,7 @@ const downloadExportFile = async (record, ky) => {
   }
 };
 
-const getFileNameField = (record, ky) => {
+export const getFileNameField = (record, ky) => {
   const fileName = get(record.exportedFiles, '0.fileName');
 
   return (
