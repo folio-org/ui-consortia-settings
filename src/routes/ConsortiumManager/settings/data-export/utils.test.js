@@ -83,6 +83,23 @@ describe('fileUtils', () => {
       expect(ky.get).toHaveBeenCalledWith('data-export/job-executions/123/download/456');
     });
   });
+
+  it('throws an error when response is not successful', async () => {
+    const jobLog = { id: '123', exportedFiles: [{ fileId: '456' }] };
+
+    const ky = {
+      get: jest.fn(),
+    };
+
+    ky.get.mockResolvedValueOnce({ ok: false, statusText: 'Not Found' });
+
+    try {
+      await getFileLink(jobLog, ky);
+      expect(true).toBe(false); // This line should not be reached
+    } catch (error) {
+      expect(error).toEqual({ ok: false, statusText: 'Not Found' });
+    }
+  });
 });
 
 describe('getFileNameField', () => {
