@@ -1,5 +1,11 @@
-import {downloadFileByLink, getExportJobLogsListResultsFormatter, getFileLink} from './utils';
+import {
+  downloadFileByLink,
+  getExportJobLogsListResultsFormatter,
+  getFileLink,
+  getFileNameField
+} from './utils';
 import { EXPORT_JOB_LOG_COLUMNS } from './constants';
+import {render} from "@folio/jest-config-stripes/testing-library/react";
 
 describe('getExportJobLogsListResultsFormatter', () => {
   const intl = {
@@ -76,5 +82,40 @@ describe('fileUtils', () => {
       expect(link).toBe(expectedLink);
       expect(ky.get).toHaveBeenCalledWith('data-export/job-executions/123/download/456');
     });
+  });
+});
+
+describe('getFileNameField', () => {
+  const recordWithExportedProgress = {
+    exportedFiles: [{ fileName: 'example.txt' }],
+    progress: { exported: true }
+  };
+
+  const recordWithoutExportedProgress = {
+    exportedFiles: [{ fileName: 'example.txt' }],
+    progress: { exported: false }
+  };
+
+  const kyMock = jest.fn(); // Mock the ky function if needed
+
+  it('renders TextLink component when record.progress.exported is true', () => {
+    const { getByTestId } = render(
+      getFileNameField(recordWithExportedProgress, kyMock)
+    );
+
+    const textLinkElement = getByTestId('text-link');
+
+    expect(textLinkElement).toBeInTheDocument();
+    expect(textLinkElement).toHaveTextContent('example.txt');
+  });
+
+  it('renders span element when record.progress.exported is false', () => {
+    const { getByText } = render(
+      getFileNameField(recordWithoutExportedProgress, kyMock)
+    );
+
+    const spanElement = getByText('example.txt');
+
+    expect(spanElement).toBeInTheDocument();
   });
 });
