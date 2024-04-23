@@ -4,6 +4,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import {
   AppIcon,
+  useOkapiKy,
 } from '@folio/stripes/core';
 import {
   Loading,
@@ -40,6 +41,7 @@ import css from './DataExportLogs.css';
 
 export const DataExportLogs = () => {
   const intl = useIntl();
+  const ky = useOkapiKy();
   const showCallout = useShowCallout();
 
   const {
@@ -96,7 +98,7 @@ export const DataExportLogs = () => {
     columnWidths: EXPORT_JOB_LOG_COLUMNS_WIDTHS,
     columnMapping: EXPORT_JOB_LOG_COLUMN_MAPPING,
   });
-  const formatter = useJobLogsListFormatter(getExportJobLogsListResultsFormatter({ intl }));
+  const formatter = useJobLogsListFormatter(getExportJobLogsListResultsFormatter({ intl, ky }));
   const listProps = useMemo(() => ({
     ...jobLogsProperties,
     formatter,

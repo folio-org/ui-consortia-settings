@@ -20,6 +20,7 @@ jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
   useModules: jest.fn(),
   useStripes: jest.fn(),
+  useOkapiKy: jest.fn(),
 }));
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
@@ -33,6 +34,11 @@ jest.mock('./settings/data-import/hooks', () => ({
 }));
 jest.mock('./settings/users/general', () => ({
   PermissionSets: jest.fn(() => 'PermissionSets'),
+}));
+
+jest.mock('./settings/data-export/utils', () => ({
+  ...jest.requireActual('./settings/data-export/utils'),
+  getExportJobLogsListResultsFormatter: jest.fn(),
 }));
 
 const defaultProps = {};
@@ -97,7 +103,7 @@ describe('ConsortiumManager', () => {
   });
 
   it.each(AVAILABLE_SETTINGS.map(module => [module]))('should render \'%s\' settings pane', async (name) => {
-    renderConsortiumManager();
+    await renderConsortiumManager();
 
     await userEvent.click(screen.getByText(name));
 

@@ -1,11 +1,68 @@
 import camelCase from 'lodash/camelCase';
+import { get } from 'lodash';
 
+import { TextLink } from '@folio/stripes/components';
 import { getFullName } from '@folio/stripes/util';
 
 import { EXPORT_JOB_LOG_COLUMNS } from './constants';
 
-export const getExportJobLogsListResultsFormatter = ({ intl }) => ({
-  [EXPORT_JOB_LOG_COLUMNS.fileName]: record => record.exportedFiles?.[0]?.fileName,
+export const downloadFileByLink = (fileName, downloadLink) => {
+  if (!fileName || !downloadLink) return;
+
+  const elem = window.document.createElement('a');
+
+  elem.href = downloadLink;
+  elem.download = fileName;
+  elem.style.display = 'none';
+  document.body.appendChild(elem);
+
+  elem.click();
+
+  document.body.removeChild(elem);
+};
+
+export const getFileLink = async (jobLog, ky) => {
+  const response = await ky.get(`data-export/job-executions/${jobLog.id}/download/${jobLog.exportedFiles[0].fileId}`);
+
+  if (!response.ok) {
+    throw response;
+  }
+
+  const { link } = await response.json();
+
+  return link;
+};
+
+const downloadExportFile = async (record, ky) => {
+  try {
+    const fileName = get(record.exportedFiles, '0.fileName');
+    const downloadLink = await getFileLink(record, ky);
+
+    downloadFileByLink(fileName, downloadLink);
+  } catch (error) {
+    console.error(error); // eslint-disable-line no-console
+  }
+};
+
+export const getFileNameField = (record, ky) => {
+  const fileName = get(record.exportedFiles, '0.fileName');
+
+  return (
+    record.progress?.exported ? (
+      <TextLink
+        onClick={() => downloadExportFile(record, ky)}
+        data-testid="text-link"
+      >
+        {fileName}
+      </TextLink>
+    ) : (
+      <span>{fileName}</span>
+    )
+  );
+};
+
+export const getExportJobLogsListResultsFormatter = ({ intl, ky }) => ({
+  [EXPORT_JOB_LOG_COLUMNS.fileName]: record => getFileNameField(record, ky),
   [EXPORT_JOB_LOG_COLUMNS.status]: record => intl.formatMessage({ id: `ui-data-export.jobStatus.${camelCase(record.status)}` }),
   [EXPORT_JOB_LOG_COLUMNS.runBy]: record => getFullName({ personal: record.runBy }).trim(),
   [EXPORT_JOB_LOG_COLUMNS.totalRecords]: record => intl.formatNumber(record.progress?.total),
