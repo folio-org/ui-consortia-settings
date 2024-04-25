@@ -106,7 +106,7 @@ export const getExportJobLogsListResultsFormatter = ({ intl, ky, formatTime }) =
     }
   },
   [EXPORT_JOB_LOG_COLUMNS.exported]: record => intl.formatNumber(record.progress?.exported) || '',
-  startedDate: getStartedDateDateFormatter(formatTime),
+  [EXPORT_JOB_LOG_COLUMNS.startedDate]: getStartedDateDateFormatter(formatTime),
 });
 
 export const getExportJobLogsSortMap = ({ sortingDirection }) => ({
