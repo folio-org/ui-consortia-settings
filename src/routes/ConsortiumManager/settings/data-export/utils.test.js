@@ -2,7 +2,7 @@ import {
   downloadFileByLink,
   getExportJobLogsListResultsFormatter,
   getFileLink,
-  getFileNameField
+  getFileNameField, getStartedDateDateFormatter
 } from './utils';
 import { EXPORT_JOB_LOG_COLUMNS } from './constants';
 import {render} from "@folio/jest-config-stripes/testing-library/react";
@@ -136,3 +136,21 @@ describe('getFileNameField', () => {
     expect(spanElement).toBeInTheDocument();
   });
 });
+
+describe('getStartedDateDateFormatter', () => {
+  const sampleRecord = {
+    startedDate: new Date('2023-02-15'), // Assuming a Date object
+  };
+
+  const dateFormatter = getStartedDateDateFormatter((date, options) => {
+    return new Intl.DateTimeFormat('en-US', options).format(date);
+  });
+
+  it('should format startedDate correctly', () => {
+    const formattedDate = dateFormatter(sampleRecord);
+
+    const expectedFormattedDate = '2/15/2023';
+
+    expect(formattedDate).toEqual(expectedFormattedDate);
+  });
+})

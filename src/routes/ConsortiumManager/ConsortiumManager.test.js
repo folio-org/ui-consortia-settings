@@ -22,6 +22,11 @@ jest.mock('@folio/stripes/core', () => ({
   useStripes: jest.fn(),
   useOkapiKy: jest.fn(),
 }));
+
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  useFormatTime: jest.fn(),
+}))
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useTenantPermissions: jest.fn(() => ({ permissions: [], isLoading: false, isFetching: false })),

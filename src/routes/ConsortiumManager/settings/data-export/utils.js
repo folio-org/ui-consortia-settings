@@ -6,6 +6,21 @@ import { getFullName } from '@folio/stripes/util';
 
 import { EXPORT_JOB_LOG_COLUMNS } from './constants';
 
+export const getStartedDateDateFormatter = format => {
+  return record => {
+    const { startedDate } = record;
+
+    return format(
+      startedDate,
+      {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+      },
+    );
+  };
+};
+
 export const downloadFileByLink = (fileName, downloadLink) => {
   if (!fileName || !downloadLink) return;
 
@@ -61,7 +76,7 @@ export const getFileNameField = (record, ky) => {
   );
 };
 
-export const getExportJobLogsListResultsFormatter = ({ intl, ky }) => ({
+export const getExportJobLogsListResultsFormatter = ({ intl, ky, formatTime }) => ({
   [EXPORT_JOB_LOG_COLUMNS.fileName]: record => getFileNameField(record, ky),
   [EXPORT_JOB_LOG_COLUMNS.status]: record => intl.formatMessage({ id: `ui-data-export.jobStatus.${camelCase(record.status)}` }),
   [EXPORT_JOB_LOG_COLUMNS.runBy]: record => getFullName({ personal: record.runBy }).trim(),
@@ -91,6 +106,7 @@ export const getExportJobLogsListResultsFormatter = ({ intl, ky }) => ({
     }
   },
   [EXPORT_JOB_LOG_COLUMNS.exported]: record => intl.formatNumber(record.progress?.exported) || '',
+  [EXPORT_JOB_LOG_COLUMNS.startedDate]: getStartedDateDateFormatter(formatTime),
 });
 
 export const getExportJobLogsSortMap = ({ sortingDirection }) => ({
