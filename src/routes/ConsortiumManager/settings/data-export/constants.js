@@ -15,6 +15,7 @@ export const EXPORT_JOB_LOG_COLUMNS = {
   errors: 'errors',
   exported: 'exported',
   status: 'status',
+  startedDate: 'startedDate',
 };
 
 export const EXPORT_JOB_LOG_VISIBLE_COLUMNS = [
@@ -27,6 +28,7 @@ export const EXPORT_JOB_LOG_VISIBLE_COLUMNS = [
   EXPORT_JOB_LOG_COLUMNS.completedDate,
   EXPORT_JOB_LOG_COLUMNS.runBy,
   EXPORT_JOB_LOG_COLUMNS.hrId,
+  EXPORT_JOB_LOG_COLUMNS.startedDate,
 ];
 
 export const EXPORT_JOB_LOG_COLUMN_MAPPING = {
@@ -34,6 +36,7 @@ export const EXPORT_JOB_LOG_COLUMN_MAPPING = {
   [EXPORT_JOB_LOG_COLUMNS.totalRecords]: 'ui-data-export.total',
   [EXPORT_JOB_LOG_COLUMNS.errors]: 'ui-data-export.failed',
   [EXPORT_JOB_LOG_COLUMNS.exported]: 'ui-data-export.exported',
+  [EXPORT_JOB_LOG_COLUMNS.startedDate]: 'ui-data-export.startedDate',
 };
 
 export const EXPORT_JOB_LOG_COLUMNS_WIDTHS = {
