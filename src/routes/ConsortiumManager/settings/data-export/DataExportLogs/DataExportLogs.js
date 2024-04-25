@@ -11,6 +11,7 @@ import {
   Pane,
   PaneBackLink,
   Selection,
+  useFormatTime,
 } from '@folio/stripes/components';
 import {
   PrevNextPagination,
@@ -42,6 +43,7 @@ export const DataExportLogs = () => {
   const intl = useIntl();
   const ky = useOkapiKy();
   const showCallout = useShowCallout();
+  const formatTime = useFormatTime();
 
   const {
     activeMember,
@@ -97,7 +99,7 @@ export const DataExportLogs = () => {
     columnWidths: EXPORT_JOB_LOG_COLUMNS_WIDTHS,
     columnMapping: EXPORT_JOB_LOG_COLUMN_MAPPING,
   });
-  const formatter = useJobLogsListFormatter(getExportJobLogsListResultsFormatter({ intl, ky }));
+  const formatter = useJobLogsListFormatter(getExportJobLogsListResultsFormatter({ intl, ky, formatTime }));
   const listProps = useMemo(() => ({
     ...jobLogsProperties,
     formatter,
