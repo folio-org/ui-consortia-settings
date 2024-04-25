@@ -6,7 +6,7 @@ import { getFullName } from '@folio/stripes/util';
 
 import { EXPORT_JOB_LOG_COLUMNS } from './constants';
 
-const getStartedDateDateFormatter = format => {
+export const getStartedDateDateFormatter = format => {
   return record => {
     const { startedDate } = record;
 

@@ -37,6 +37,11 @@ jest.mock('../hooks', () => ({
   useDataExportLogs: jest.fn(),
 }));
 
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  useFormatTime: jest.fn(),
+}))
+
 const defaultProps = {};
 
 const queryClient = new QueryClient();
