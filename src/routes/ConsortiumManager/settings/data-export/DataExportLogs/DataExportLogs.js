@@ -22,7 +22,7 @@ import {
 } from '@folio/stripes-data-transfer-components';
 
 import { MODULE_ROOT_ROUTE } from '../../../../../constants';
-import { useMemberSelection } from "../../../hooks";
+import { useMemberSelection } from '../../../hooks';
 import {
   DEFAULT_PAGINATION,
   DEFAULT_SORTING,
@@ -34,7 +34,7 @@ import {
 } from '../constants';
 import { useDataExportLogs } from '../hooks';
 import { getExportJobLogsListResultsFormatter } from '../utils';
-import { useTenantKy } from "../../../../../hooks";
+import { useTenantKy } from '../../../../../hooks';
 
 import css from './DataExportLogs.css';
 
