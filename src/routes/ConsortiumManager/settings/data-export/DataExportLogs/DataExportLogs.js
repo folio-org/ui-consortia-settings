@@ -12,7 +12,7 @@ import {
   Pane,
   PaneBackLink,
   Selection,
-  useFormatTime,
+  useTimeFormatter,
 } from '@folio/stripes/components';
 import {
   PrevNextPagination,
@@ -44,7 +44,7 @@ export const DataExportLogs = () => {
   const intl = useIntl();
   const ky = useOkapiKy();
   const showCallout = useShowCallout();
-  const formatTime = useFormatTime();
+  const formatTime = useTimeFormatter();
 
   const {
     activeMember,
