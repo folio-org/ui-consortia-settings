@@ -39,7 +39,7 @@ jest.mock('../hooks', () => ({
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
-  useFormatTime: jest.fn(),
+  useTimeFormatter: jest.fn(),
 }))
 
 const defaultProps = {};
