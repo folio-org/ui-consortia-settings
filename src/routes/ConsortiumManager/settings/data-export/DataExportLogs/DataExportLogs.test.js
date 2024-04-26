@@ -42,6 +42,10 @@ jest.mock('@folio/stripes/components', () => ({
   useTimeFormatter: jest.fn(),
 }))
 
+jest.mock('../../../../../hooks', () => ({
+  useTenantKy: jest.fn()
+}))
+
 const defaultProps = {};
 
 const queryClient = new QueryClient();

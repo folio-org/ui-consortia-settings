@@ -2,10 +2,7 @@ import { isNil, noop } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import {
-  AppIcon,
-  useOkapiKy,
-} from '@folio/stripes/core';
+import { AppIcon } from '@folio/stripes/core';
 import {
   Loading,
   MultiColumnList,
@@ -25,7 +22,7 @@ import {
 } from '@folio/stripes-data-transfer-components';
 
 import { MODULE_ROOT_ROUTE } from '../../../../../constants';
-import { useMemberSelection } from '../../../hooks';
+import { useMemberSelection } from "../../../hooks";
 import {
   DEFAULT_PAGINATION,
   DEFAULT_SORTING,
@@ -37,12 +34,12 @@ import {
 } from '../constants';
 import { useDataExportLogs } from '../hooks';
 import { getExportJobLogsListResultsFormatter } from '../utils';
+import { useTenantKy } from "../../../../../hooks";
 
 import css from './DataExportLogs.css';
 
 export const DataExportLogs = () => {
   const intl = useIntl();
-  const ky = useOkapiKy();
   const showCallout = useShowCallout();
   const formatTime = useTimeFormatter();
 
@@ -51,6 +48,7 @@ export const DataExportLogs = () => {
     membersOptions,
     setActiveMember,
   } = useMemberSelection();
+  const ky = useTenantKy({tenantId: activeMember});
 
   const [
     sortingField,

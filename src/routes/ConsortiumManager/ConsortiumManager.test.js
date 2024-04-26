@@ -20,7 +20,6 @@ jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
   useModules: jest.fn(),
   useStripes: jest.fn(),
-  useOkapiKy: jest.fn(),
 }));
 
 jest.mock('@folio/stripes/components', () => ({
@@ -30,6 +29,7 @@ jest.mock('@folio/stripes/components', () => ({
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useTenantPermissions: jest.fn(() => ({ permissions: [], isLoading: false, isFetching: false })),
+  useTenantKy: jest.fn()
 }));
 jest.mock('./settings/data-export/hooks', () => ({
   useDataExportLogs: jest.fn(() => ({ jobExecutions: [], isLoading: false, isFetching: false })),
