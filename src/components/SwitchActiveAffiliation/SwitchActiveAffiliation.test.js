@@ -82,14 +82,14 @@ describe('SwitchActiveAffiliation', () => {
 
     expect(screen.getByText('ui-consortia-settings.switchActiveAffiliation.modal.heading')).toBeInTheDocument();
     expect(screen.getByText('ui-consortia-settings.switchActiveAffiliation.modal.select.label')).toBeInTheDocument();
-    expect(screen.getByText('ui-consortia-settings.button.saveAndClose')).toBeInTheDocument();
+    expect(screen.getByText(/saveAndClose/)).toBeInTheDocument();
   });
 
   it('should change active affiliation', async () => {
     renderSwitchActiveAffiliation();
 
     await userEvent.click(screen.getByText(tenants[2].name));
-    await userEvent.click(screen.getByText('ui-consortia-settings.button.saveAndClose'));
+    await userEvent.click(screen.getByText(/saveAndClose/));
 
     expect(updateTenant).toHaveBeenCalledWith(
       defaultProps.stripes.okapi,
@@ -109,7 +109,7 @@ describe('SwitchActiveAffiliation', () => {
       renderSwitchActiveAffiliation();
 
       await userEvent.click(screen.getByText(tenants[2].name));
-      await userEvent.click(screen.getByText('ui-consortia-settings.button.saveAndClose'));
+      await userEvent.click(screen.getByText(/saveAndClose/));
 
       expect(getEventHandler).toHaveBeenNthCalledWith(
         1,
