@@ -7,3 +7,7 @@
 .logsList {
   flex: auto;
 }
+
+.pointer {
+  cursor: pointer;
+}
