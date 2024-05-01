@@ -6,7 +6,6 @@
   "document.settings.title": "Consortium manager settings",
 
   "button.confirm": "Confirm",
-  "button.saveAndClose": "Save & close",
 
   "errors.jobs.load.common": "Could not load jobs data.",
   "errors.permissionSets.load.common": "Could not load permission sets.",

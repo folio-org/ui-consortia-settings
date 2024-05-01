@@ -172,7 +172,7 @@ describe('ConsortiumPermissionsSetForm', () => {
 
     await userEvent.type(input, permissionName);
     expect(input.value).toBe(permissionName);
-    await userEvent.click(screen.getByText('ui-users.saveAndClose'));
+    await userEvent.click(screen.getByText(/saveAndClose/));
 
     expect(onSave).toHaveBeenCalledWith({ 'displayName': permissionName });
     await waitFor(() => expect(showCalloutMock).toHaveBeenCalledWith(expect.objectContaining({ type: 'success' })));
@@ -236,7 +236,7 @@ describe('ConsortiumPermissionsSetForm', () => {
 
     await userEvent.type(input, permissionName);
     expect(input.value).toBe(expectedPermissionName);
-    await userEvent.click(screen.getByText('ui-users.saveAndClose'));
+    await userEvent.click(screen.getByText(/saveAndClose/));
 
     expect(onSave).toHaveBeenCalledWith({ 'displayName': expectedPermissionName, 'id': initialValues.id });
     await waitFor(() => expect(showCalloutMock).toHaveBeenCalledWith(expect.objectContaining({ type: 'success' })));

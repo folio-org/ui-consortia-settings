@@ -28,7 +28,7 @@ export const SwitchActiveAffiliationModal = ({
         disabled={isLoading}
         marginBottom0
       >
-        <FormattedMessage id="ui-consortia-settings.button.saveAndClose" />
+        <FormattedMessage id="stripes-components.saveAndClose" />
       </Button>
       <Button
         onClick={toggle}
