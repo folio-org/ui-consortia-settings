@@ -20,7 +20,6 @@
     "settings.membership.error.duplicate.code": "Kód musí být jedinečný.",
     "settings.membership.list.tenantCode": "Kód",
     "affiliation.primary.suffix": "(Hlavní)",
-    "button.saveAndClose": "Uložit a zavřít",
     "switchActiveAffiliation.userDropdown.label": "Přepnout aktivní pobočku",
     "switchActiveAffiliation.modal.heading": "Vybrat pobočku",
     "switchActiveAffiliation.modal.select.label": "Členové konsorcia",

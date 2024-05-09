@@ -20,7 +20,6 @@
     "settings.membership.error.duplicate.code": "代码必须唯一。",
     "settings.membership.list.tenantCode": "代码",
     "affiliation.primary.suffix": "（主要的）",
-    "button.saveAndClose": "保存并关闭",
     "switchActiveAffiliation.userDropdown.label": "切换激活的隶属关系",
     "switchActiveAffiliation.modal.heading": "选择隶属关系",
     "switchActiveAffiliation.modal.select.label": "联盟成员",

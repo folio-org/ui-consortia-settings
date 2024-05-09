@@ -20,7 +20,6 @@
     "settings.membership.error.duplicate.code": "El código debe ser único.",
     "settings.membership.list.tenantCode": "Código",
     "affiliation.primary.suffix": "(Primaria)",
-    "button.saveAndClose": "Guardar y cerrar",
     "switchActiveAffiliation.userDropdown.label": "Cambiar de afiliación activa",
     "switchActiveAffiliation.modal.heading": "Seleccione afiliación",
     "switchActiveAffiliation.modal.select.label": "Miembros del consorcio",
