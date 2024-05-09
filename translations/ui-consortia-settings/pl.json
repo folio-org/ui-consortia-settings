@@ -20,7 +20,6 @@
     "settings.membership.error.duplicate.code": "The code must be unique.",
     "settings.membership.list.tenantCode": "Kod",
     "affiliation.primary.suffix": "(Primary)",
-    "button.saveAndClose": "Zapisz i zamknij",
     "switchActiveAffiliation.userDropdown.label": "Switch active affiliation",
     "switchActiveAffiliation.modal.heading": "Wybierz afiliację",
     "switchActiveAffiliation.modal.select.label": "Członkowie konsorcjum",
