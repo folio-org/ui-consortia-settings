@@ -169,6 +169,8 @@
 
   "settings.centralOrdering.label": "Central ordering",
   "settings.centralOrdering.checkbox.label": "Allow user to select locations from other affiliations for central orders",
+  "settings.centralOrdering.alert.message": "In this version of FOLIO, once activated this setting cannot be disabled.",
+  "settings.centralOrdering.confirmModal.message": "Are you sure you would like to activate this functionality?",
   "settings.centralOrdering.submit.success": "Central ordering setting was successfully updated",
   "settings.centralOrdering.submit.error.generic": "Central ordering setting update failed",
 
