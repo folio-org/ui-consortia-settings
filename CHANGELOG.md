@@ -5,6 +5,7 @@
 * [UICONSET-152](https://folio-org.atlassian.net/browse/UICONSET-152) *BREAKING* Implement settings for central ordering across consortium.
 * [UICONSET-172](https://folio-org.atlassian.net/browse/UICONSET-172) Downloading Files from Consortia Manager
 * [UICONSET-163](https://folio-org.atlassian.net/browse/UICONSET-163) UX consistency: Use Save & close button label stripes-component translation key - all UI modules
+* [UICONSET-178](https://folio-org.atlassian.net/browse/UICONSET-178) Confirmation modal for enabling the central ordering setting across the consortium.
 
 ## [1.1.0](https://github.com/folio-org/ui-consortia-settings/tree/v1.1.0) (2024-03-20)
 [Full Changelog](https://github.com/folio-org/ui-orders/compare/v1.0.2...v1.1.0)

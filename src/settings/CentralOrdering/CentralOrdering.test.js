@@ -32,6 +32,15 @@ const mockKy = {
   })),
 };
 const mockData = { id: 'setting-id' };
+const confirmModalMessageRegEx = /alert.message .*confirmModal.message/;
+
+const handleConfirmModal = (confirm = true) => {
+  return user.click(screen.getByRole('button', { name: confirm ? /confirm/ : /cancel/ }));
+}
+
+const findCentralOrderingCheckbox = () => {
+ return screen.findByRole('checkbox', { name: /checkbox.label/ });
+}
 
 describe('CentralOrdering', () => {
   beforeEach(() => {
@@ -51,8 +60,8 @@ describe('CentralOrdering', () => {
   it('should display pane headings', () => {
     renderCentralOrderingSettings();
 
-    const paneTitle = screen.getByText('ui-consortia-settings.settings.centralOrdering.label');
-    const checkboxLabel = screen.getByText('ui-consortia-settings.settings.centralOrdering.checkbox.label');
+    const paneTitle = screen.getByText(/centralOrdering.label/);
+    const checkboxLabel = screen.getByText(/checkbox.label/);
 
     expect(paneTitle).toBeInTheDocument();
     expect(checkboxLabel).toBeInTheDocument();
@@ -72,13 +81,56 @@ describe('CentralOrdering', () => {
   it('should handle central ordering settings create', async () => {
     renderCentralOrderingSettings();
 
-    await user.click(await screen.findByRole('checkbox', { name: 'ui-consortia-settings.settings.centralOrdering.checkbox.label' }));
-    await user.click(await screen.findByRole('button', { name: 'stripes-core.button.save' }));
+    await user.click(await findCentralOrderingCheckbox());
+    expect(await screen.findByText(confirmModalMessageRegEx)).toBeInTheDocument();
 
+    await handleConfirmModal();
+    expect(await findCentralOrderingCheckbox()).toBeChecked();
+
+    await user.click(await screen.findByRole('button', { name: /save/ }));
     expect(mockKy.post).toHaveBeenCalled();
   });
 
   it('should handle central ordering settings update', async () => {
+    useCentralOrderingSettings
+      .mockClear()
+      .mockReturnValue({
+        data: mockData,
+        isFetching: false,
+        enabled: false,
+        refetch: mockRefetch,
+      });
+
+    renderCentralOrderingSettings();
+
+    await user.click(await findCentralOrderingCheckbox());
+    expect(await screen.findByText(confirmModalMessageRegEx)).toBeInTheDocument();
+
+    await handleConfirmModal();
+    expect(await findCentralOrderingCheckbox()).toBeChecked();
+
+    await user.click(await screen.findByRole('button', { name: /save/ }));
+    expect(mockKy.put).toHaveBeenCalled();
+  });
+
+  it('should NOT be checked if a user cancel confirmation modal', async () => {
+    useCentralOrderingSettings
+      .mockClear()
+      .mockReturnValue({
+        data: mockData,
+        isFetching: false,
+        enabled: false,
+        refetch: mockRefetch,
+      });
+
+    renderCentralOrderingSettings();
+
+    await user.click(await findCentralOrderingCheckbox());
+    await handleConfirmModal(false);
+    expect(await findCentralOrderingCheckbox()).not.toBeChecked();
+  });
+
+  it('should disable checkbox when central ordering is enabled', async () => {
     useCentralOrderingSettings
       .mockClear()
       .mockReturnValue({
@@ -90,9 +142,9 @@ describe('CentralOrdering', () => {
 
     renderCentralOrderingSettings();
 
-    await user.click(await screen.findByRole('checkbox', { name: 'ui-consortia-settings.settings.centralOrdering.checkbox.label' }));
-    await user.click(await screen.findByRole('button', { name: 'stripes-core.button.save' }));
+    const checkbox = await findCentralOrderingCheckbox();
 
-    expect(mockKy.put).toHaveBeenCalled();
+    expect(checkbox).toBeChecked();
+    expect(checkbox).toBeDisabled();
   });
 });
