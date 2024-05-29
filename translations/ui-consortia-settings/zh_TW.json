@@ -190,5 +190,7 @@
     "settings.centralOrdering.submit.success": "中央訂購設定已成功更新",
     "settings.centralOrdering.submit.error.generic": "中央訂購設定更新失敗",
     "permission.settings.networkOrdering.view": "設定（聯盟）：可以查看網路訂購",
-    "permission.settings.networkOrdering.edit": "設定（聯盟）：可以檢視和編輯網路訂購"
+    "permission.settings.networkOrdering.edit": "設定（聯盟）：可以檢視和編輯網路訂購",
+    "settings.centralOrdering.alert.message": "In this version of FOLIO, once activated this setting cannot be disabled.",
+    "settings.centralOrdering.confirmModal.message": "Are you sure you would like to activate this functionality?"
 }

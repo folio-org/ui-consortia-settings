@@ -1,7 +1,7 @@
 {
     "meta.title": "Konsorcjum",
     "settings.heading": "Ustawienia sieci",
-    "settings.section.general": "General",
+    "settings.section.general": "Ogólne",
     "settings.membership.heading": "Addresses",
     "settings.membership.label": "Membership",
     "settings.membership.list.cannotDeleteTermHeader": "Cannot delete the member",
@@ -19,7 +19,7 @@
     "settings.membership.error.codeExceedsLength": "The code must not be longer than {count} characters alphanumeric.",
     "settings.membership.error.duplicate.code": "The code must be unique.",
     "settings.membership.list.tenantCode": "Kod",
-    "affiliation.primary.suffix": "(Primary)",
+    "affiliation.primary.suffix": "(Główny)",
     "switchActiveAffiliation.userDropdown.label": "Switch active affiliation",
     "switchActiveAffiliation.modal.heading": "Wybierz afiliację",
     "switchActiveAffiliation.modal.select.label": "Członkowie konsorcjum",
@@ -190,5 +190,7 @@
     "settings.centralOrdering.submit.success": "Central ordering setting was successfully updated",
     "settings.centralOrdering.submit.error.generic": "Central ordering setting update failed",
     "permission.settings.networkOrdering.view": "Settings (Consortia): Can view network ordering",
-    "permission.settings.networkOrdering.edit": "Settings (Consortia): Can view and edit network ordering"
+    "permission.settings.networkOrdering.edit": "Settings (Consortia): Can view and edit network ordering",
+    "settings.centralOrdering.alert.message": "In this version of FOLIO, once activated this setting cannot be disabled.",
+    "settings.centralOrdering.confirmModal.message": "Are you sure you would like to activate this functionality?"
 }

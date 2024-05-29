@@ -190,5 +190,7 @@
     "settings.centralOrdering.submit.success": "Nastavení centrálního objednávání bylo úspěšně aktualizováno",
     "settings.centralOrdering.submit.error.generic": "Aktualizace nastavení centrálního objednávání se nezdařila",
     "permission.settings.networkOrdering.view": "Nastavení (Konsorcia): Může zobrazit síťové uspořádání",
-    "permission.settings.networkOrdering.edit": "Nastavení (Konsorcia): Může prohlížet a upravovat síťové uspořádání"
+    "permission.settings.networkOrdering.edit": "Nastavení (Konsorcia): Může prohlížet a upravovat síťové uspořádání",
+    "settings.centralOrdering.alert.message": "V této verzi FOLIO nelze toto nastavení po aktivaci zakázat.",
+    "settings.centralOrdering.confirmModal.message": "Opravdu chcete tuto funkci aktivovat?"
 }

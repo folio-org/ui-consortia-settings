@@ -190,5 +190,7 @@
     "settings.centralOrdering.submit.success": "A configuração de pedido central foi atualizada com sucesso",
     "settings.centralOrdering.submit.error.generic": "Falha na atualização da configuração de pedido central",
     "permission.settings.networkOrdering.view": "Configurações (Consórcios): Pode visualizar o pedido de rede",
-    "permission.settings.networkOrdering.edit": "Configurações (Consórcios): Pode visualizar e editar o pedido de rede"
+    "permission.settings.networkOrdering.edit": "Configurações (Consórcios): Pode visualizar e editar o pedido de rede",
+    "settings.centralOrdering.alert.message": "Nesta versão do FOLIO, uma vez ativada, essa configuração não pode ser desabilitada.",
+    "settings.centralOrdering.confirmModal.message": "Tem certeza de que gostaria de ativar essa funcionalidade?"
 }
