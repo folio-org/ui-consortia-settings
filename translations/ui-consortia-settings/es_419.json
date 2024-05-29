@@ -190,5 +190,7 @@
     "settings.centralOrdering.submit.success": "Central ordering setting was successfully updated",
     "settings.centralOrdering.submit.error.generic": "Central ordering setting update failed",
     "permission.settings.networkOrdering.view": "Settings (Consortia): Can view network ordering",
-    "permission.settings.networkOrdering.edit": "Settings (Consortia): Can view and edit network ordering"
+    "permission.settings.networkOrdering.edit": "Settings (Consortia): Can view and edit network ordering",
+    "settings.centralOrdering.alert.message": "In this version of FOLIO, once activated this setting cannot be disabled.",
+    "settings.centralOrdering.confirmModal.message": "¿Está seguro de que desea activar esta función?"
 }
