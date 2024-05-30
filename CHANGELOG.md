@@ -6,6 +6,7 @@
 * [UICONSET-172](https://folio-org.atlassian.net/browse/UICONSET-172) Downloading Files from Consortia Manager
 * [UICONSET-163](https://folio-org.atlassian.net/browse/UICONSET-163) UX consistency: Use Save & close button label stripes-component translation key - all UI modules
 * [UICONSET-178](https://folio-org.atlassian.net/browse/UICONSET-178) Confirmation modal for enabling the central ordering setting across the consortium.
+* [UICONSET-180](https://folio-org.atlassian.net/browse/UICONSET-180) Update network ordering permission set to include publications permissions.
 
 ## [1.1.0](https://github.com/folio-org/ui-consortia-settings/tree/v1.1.0) (2024-03-20)
 [Full Changelog](https://github.com/folio-org/ui-orders/compare/v1.0.2...v1.1.0)
@@ -17,7 +18,7 @@
 ## [1.0.2](https://github.com/folio-org/ui-consortia-settings/tree/v1.0.2) (2023-11-21)
 [Full Changelog](https://github.com/folio-org/ui-orders/compare/v1.0.1...v1.0.2)
 
-* Permissions are not rendered in edit permission set form. Refs UICONSET-150.
+* [UICONSET-150](https://issues.folio.org/browse/UICONSET-150) Permissions are not rendered in edit permission set form.
 
 ## [1.0.1](https://github.com/folio-org/ui-consortia-settings/tree/v1.0.1) (2023-11-07)
 [Full Changelog](https://github.com/folio-org/ui-orders/compare/v1.0.0...v1.0.1)

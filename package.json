@@ -120,13 +120,21 @@
         "visible": false
       },
       {
+        "permissionName": "ui-consortia-settings.publications.execute",
+        "displayName": "Consortia: Execute publications requests",
+        "subPermissions": [
+          "consortia.publications.item.get",
+          "consortia.publications.item.post",
+          "consortia.publications-results.item.get"
+        ],
+        "visible": false
+      },
+      {
         "permissionName": "ui-consortia-settings.consortium-manager.view",
         "displayName": "Consortium manager: Can view existing settings",
         "subPermissions": [
           "module.consortia-settings.enabled",
-          "consortia.publications.item.get",
-          "consortia.publications.item.post",
-          "consortia.publications-results.item.get",
+          "ui-consortia-settings.publications.execute",
           "users.collection.get"
         ],
         "visible": true
@@ -195,6 +203,7 @@
         "displayName": "Settings (Consortia): Can view network ordering",
         "subPermissions": [
           "settings.consortia-settings.enabled",
+          "ui-consortia-settings.publications.execute",
           "orders-storage.settings.collection.get",
           "orders-storage.settings.item.get"
         ],
