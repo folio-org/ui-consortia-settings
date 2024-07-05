@@ -4,9 +4,12 @@ import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { render, screen, logDOM } from '@folio/jest-config-stripes/testing-library/react';
 
 import {
-  useAuthorizationRoles,
   useRoleCapabilities,
   useRoleCapabilitySets,
+} from '@folio/stripes-authorization-components';
+
+import {
+  useAuthorizationRoles,
 } from '../../../../../../hooks';
 import { tenants } from 'fixtures';
 import { COMPARE_ITEM_NAME } from '../../../users/general/PermissionSets/PermissionSetsCompare/constants';
@@ -17,11 +20,15 @@ import {groupedRoleCapabilitiesByType, groupedRoleCapabilitySetsByType} from '..
 
 jest.mock('../../../../../../hooks', () => {
   return {
-    useRoleCapabilitySets: jest.fn(),
-    useRoleCapabilities: jest.fn(),
     useAuthorizationRoles: jest.fn(),
   };
 });
+
+jest.mock('@folio/stripes-authorization-components', ()=> ({
+  ...jest.requireActual('@folio/stripes-authorization-components'),
+  useRoleCapabilities: jest.fn(),
+  useRoleCapabilitySets: jest.fn(),
+}))
 
 const selectedMemberOptions = tenants.filter((el, index)=> index < 3).map(({ name, id }) => ({ value: id, label: name }));
 

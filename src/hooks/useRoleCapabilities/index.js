@@ -1,1 +1,0 @@
-export { useRoleCapabilities } from './useRoleCapabilities';

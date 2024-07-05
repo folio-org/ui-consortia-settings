@@ -19,12 +19,12 @@ import {
 
 import {
   CapabilitiesSection,
+  useRoleCapabilities,
+  useRoleCapabilitySets,
 } from '@folio/stripes-authorization-components';
 
 import {
   useAuthorizationRoles,
-  useRoleCapabilities,
-  useRoleCapabilitySets,
 } from '../../../../../../hooks';
 
 export const CapabilitiesCompareItem = ({
