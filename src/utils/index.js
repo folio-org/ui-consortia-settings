@@ -6,4 +6,3 @@ export { getModuleName } from './getModuleName';
 export { hydrateSharedRecords } from './hydrateSharedRecords';
 export { isSettingShared } from './isSettingShared';
 export { throwErrorResponse } from './throwErrorResponse';
-export * from './capabilties';
