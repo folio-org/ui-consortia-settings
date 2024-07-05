@@ -7,18 +7,7 @@ import { useAuthorizationRoles } from './useAuthorizationRoles';
 
 const queryClient = new QueryClient();
 
-const reqMock = {
-  headers: {
-    set: jest.fn(),
-  },
-};
-
 const kyMock = {
-  extend: jest.fn(({ hooks: { beforeRequest } }) => {
-    beforeRequest[0](reqMock);
-
-    return kyMock;
-  }),
   get: jest.fn(() => ({
     json: async () => Promise.resolve(data),
   })),
@@ -43,9 +32,6 @@ describe('useRoleById', () => {
     expect(result.current.roles).toEqual(data.roles);
     expect(result.current.isLoading).toBe(false);
 
-    const spy = jest.spyOn(result.current, 'onSubmitSearch');
     await act(async () => { result.current.onSubmitSearch('role'); });
-
-    expect(spy).toHaveBeenCalled();
   });
 });

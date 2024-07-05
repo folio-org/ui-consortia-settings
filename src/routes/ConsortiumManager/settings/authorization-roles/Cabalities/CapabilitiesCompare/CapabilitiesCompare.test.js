@@ -4,7 +4,7 @@ import { render, screen } from '@folio/jest-config-stripes/testing-library/react
 import { Paneset } from '@folio/stripes/components';
 
 import { ConsortiumManagerContextProviderMock } from 'helpers';
-import {CapabilitiesCompare} from "./CapablitiesCompare";
+import {CapabilitiesCompare} from './CapablitiesCompare';
 
 const wrapper = ({ children }) => (
   <MemoryRouter>

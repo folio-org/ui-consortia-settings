@@ -1,4 +1,4 @@
-import { render, within, screen, logDOM } from '@folio/jest-config-stripes/testing-library/react';
+import { render, within, screen } from '@folio/jest-config-stripes/testing-library/react';
 
 import { affiliations } from 'fixtures/affiliations';
 import { AffiliationSelection } from './AffiliationSelection';
@@ -25,7 +25,6 @@ describe('AffiliationSelection', () => {
   it('should render affiliation select with provided options', () => {
     renderAffiliationSelection();
 
-    logDOM();
     expect(
       within(screen.getByRole('button', { name : /Mineral Area College/ }))
         .getByText(affiliations[2].tenantName),

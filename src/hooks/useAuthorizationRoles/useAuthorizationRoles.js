@@ -1,14 +1,12 @@
 import { useQuery } from 'react-query';
-
-import { useNamespace, useStripes } from '@folio/stripes/core';
-
 import { useEffect, useState } from 'react';
-import { useTenantKy } from '../useTenantKy';
+
+import {useNamespace, useOkapiKy, useStripes} from '@folio/stripes/core';
 
 const ROLES_ENDPOINT = (limit) => `roles?limit=${limit}&query=cql.allRecords=1 sortby name`;
 
 export const useAuthorizationRoles = (tenantId) => {
-  const ky = useTenantKy({ tenantId });
+  const ky = useOkapiKy({ tenant: tenantId });
   const [namespace] = useNamespace();
   const stripes = useStripes();
   const [searchTerm, setSearchTerm] = useState('');

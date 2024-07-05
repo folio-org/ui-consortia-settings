@@ -9,11 +9,11 @@ import {
   useRoleCapabilitySets,
 } from '../../../../../../hooks';
 import { tenants } from 'fixtures';
-import { COMPARE_ITEM_NAME } from "../../../users/general/PermissionSets/PermissionSetsCompare/constants";
+import { COMPARE_ITEM_NAME } from '../../../users/general/PermissionSets/PermissionSetsCompare/constants';
 
-import {ConsortiumManagerContextProviderMock} from "../../../../../../../test/jest/helpers";
-import {CapabilitiesCompareItem} from "./CapabilitiesCompareItem";
-import {groupedRoleCapabilitiesByType, groupedRoleCapabilitySetsByType} from "../../../../../../../test/jest/fixtures";
+import {ConsortiumManagerContextProviderMock} from '../../../../../../../test/jest/helpers';
+import {CapabilitiesCompareItem} from './CapabilitiesCompareItem';
+import {groupedRoleCapabilitiesByType, groupedRoleCapabilitySetsByType} from '../../../../../../../test/jest/fixtures';
 
 jest.mock('../../../../../../hooks', () => {
   return {

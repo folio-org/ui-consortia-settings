@@ -14,7 +14,7 @@ import {
 } from '@folio/stripes/core';
 
 import { useRoleCapabilitySets } from './useRoleCapabilitySets';
-import { capabilitiesSetsData } from "../../../test/jest/fixtures/capabilities";
+import { capabilitiesSetsData } from '../../../test/jest/fixtures';
 
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
@@ -69,19 +69,7 @@ const expectedGroupedRoleCapabilitiesByType = {
     },
   ],
 };
-
-const reqMock = {
-  headers: {
-    set: jest.fn(),
-  },
-};
-
 const kyMock = {
-  extend: jest.fn(({ hooks: { beforeRequest } }) => {
-    beforeRequest[0](reqMock);
-
-    return kyMock;
-  }),
   get: jest.fn(() => ({
     json: async () => Promise.resolve(capabilitiesSetsData),
   })),

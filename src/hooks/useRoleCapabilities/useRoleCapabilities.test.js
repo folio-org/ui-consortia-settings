@@ -14,7 +14,7 @@ import {
 } from '@folio/stripes/core';
 
 import { useRoleCapabilities } from './useRoleCapabilities';
-import { capabilitiesData } from "../../../test/jest/fixtures";
+import { capabilitiesData } from '../../../test/jest/fixtures';
 
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
@@ -22,12 +22,6 @@ jest.mock('@folio/stripes/core', () => ({
   useStripes: jest.fn(),
   useNamespace: jest.fn().mockReturnValue('roles'),
 }));
-
-const reqMock = {
-  headers: {
-    set: jest.fn(),
-  },
-};
 
 const queryClient = new QueryClient();
 const wrapper = ({ children }) => (
@@ -37,11 +31,6 @@ const wrapper = ({ children }) => (
 );
 
 const kyMock = {
-  extend: jest.fn(({ hooks: { beforeRequest } }) => {
-    beforeRequest[0](reqMock);
-
-    return kyMock;
-  }),
   get: jest.fn(() => ({
     json: async () => Promise.resolve(capabilitiesData),
   })),

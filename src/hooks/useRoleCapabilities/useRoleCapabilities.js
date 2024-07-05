@@ -7,11 +7,10 @@ import {
 import { useMemo } from 'react';
 
 import {
-  useNamespace,
+  useNamespace, useOkapiKy,
   useStripes,
 } from '@folio/stripes/core';
 
-import { useTenantKy } from '../useTenantKy';
 import { CAPABILITIES_LIMIT } from '../../constants';
 import { getCapabilitiesGroupedByTypeAndResource } from '../../utils';
 
@@ -19,7 +18,7 @@ export const useRoleCapabilities = (roleId, tenantId, expand = false, options = 
   const { enabled = true, ...otherOptions } = options;
   const stripes = useStripes();
   const installedApplications = Object?.keys(stripes.discovery.applications);
-  const ky = useTenantKy({ tenantId });
+  const ky = useOkapiKy({ tenant: tenantId });
   const [namespace] = useNamespace({ key: 'role-capabilities-list' });
 
   const { data, isSuccess } = useQuery({
