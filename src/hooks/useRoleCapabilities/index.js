@@ -1,0 +1,1 @@
+export { useRoleCapabilities } from './useRoleCapabilities';

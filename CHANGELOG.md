@@ -7,6 +7,7 @@
 * [UICONSET-163](https://folio-org.atlassian.net/browse/UICONSET-163) UX consistency: Use Save & close button label stripes-component translation key - all UI modules
 * [UICONSET-178](https://folio-org.atlassian.net/browse/UICONSET-178) Confirmation modal for enabling the central ordering setting across the consortium.
 * [UICONSET-180](https://folio-org.atlassian.net/browse/UICONSET-180) Update network ordering permission set to include publications permissions.
+* [UICONSET-166](https://folio-org.atlassian.net/browse/UICONSET-166) Compare Authorization Role capabilities in full screen view.
 
 ## [1.1.0](https://github.com/folio-org/ui-consortia-settings/tree/v1.1.0) (2024-03-20)
 [Full Changelog](https://github.com/folio-org/ui-orders/compare/v1.0.2...v1.1.0)

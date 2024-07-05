@@ -6,3 +6,6 @@ export { usePublishCoordinator } from './usePublishCoordinator';
 export { useTenantKy } from './useTenantKy';
 export { useTenantPermissions } from './useTenantPermissions';
 export { useUserAffiliations } from './useUserAffiliations';
+export { useAuthorizationRoles } from './useAuthorizationRoles';
+export { useRoleCapabilities } from './useRoleCapabilities';
+export { useRoleCapabilitySets } from './useRoleCapabilitySets';
