@@ -1,5 +1,5 @@
-import { useQuery } from 'react-query';
 import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 
 import {useNamespace, useOkapiKy, useStripes} from '@folio/stripes/core';
 
