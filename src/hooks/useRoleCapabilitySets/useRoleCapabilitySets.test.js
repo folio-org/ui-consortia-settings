@@ -14,11 +14,13 @@ import {
 } from '@folio/stripes/core';
 
 import { useRoleCapabilitySets } from './useRoleCapabilitySets';
+import { capabilitiesSetsData } from "../../../test/jest/fixtures/capabilities";
 
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
   useOkapiKy: jest.fn(),
   useStripes: jest.fn(),
+  useNamespace: jest.fn().mockReturnValue('roles-sets'),
 }));
 
 const queryClient = new QueryClient();
@@ -28,65 +30,6 @@ const wrapper = ({ children }) => (
   </QueryClientProvider>
 );
 
-const data = {
-  'totalRecords': 3,
-  'capabilitySets': [
-    {
-      id: 'data-capability-id',
-      name: 'capability_roles.manage',
-      description: 'Manage Roles',
-      resource: 'Capability Roles',
-      action: 'manage',
-      applicationId: 'app-platform-minimal-0.0.4',
-      permissions: [
-        'ui-role-capabilities.manage',
-        'role-capabilities.collection.post',
-        'role-capabilities.collection.get',
-      ],
-      type: 'data',
-      metadata: {
-        createdDate: '2023-07-14T15:32:15.56000:00',
-        modifiedDate: '2023-07-14T15:32:15.561+00:00',
-      },
-    },
-    {
-      id: 'settings-capability-id',
-      name: 'capability_roles.manage',
-      description: 'Manage Roles',
-      resource: 'Capability Roles',
-      action: 'manage',
-      applicationId: 'app-platform-minimal-0.0.4',
-      permissions: [
-        'ui-role-capabilities.manage',
-        'role-capabilities.collection.post',
-        'role-capabilities.collection.get',
-      ],
-      type: 'settings',
-      metadata: {
-        createdDate: '2023-07-14T15:32:15.560+00:00',
-        modifiedDate: '2023-07-14T15:32:15.561+00:00',
-      },
-    },
-    {
-      id: 'procedural-capability-id',
-      name: 'capability_roles.manage',
-      description: 'Manage Roles',
-      resource: 'Capability Roles',
-      action: 'manage',
-      applicationId: 'app-platform-minimal-0.0.4',
-      permissions: [
-        'ui-role-capabilities.manage',
-        'role-capabilities.collection.post',
-        'role-capabilities.collection.get',
-      ],
-      type: 'procedural',
-      metadata: {
-        createdDate: '2023-07-14T15:32:15.560+00:00',
-        modifiedDate: '2023-07-14T15:32:15.561+00:00',
-      },
-    },
-  ],
-};
 
 const expectedInitialRoleCapabilitySetsSelectedMap = {
   'data-capability-id': true,
@@ -127,21 +70,32 @@ const expectedGroupedRoleCapabilitiesByType = {
   ],
 };
 
+const reqMock = {
+  headers: {
+    set: jest.fn(),
+  },
+};
+
+const kyMock = {
+  extend: jest.fn(({ hooks: { beforeRequest } }) => {
+    beforeRequest[0](reqMock);
+
+    return kyMock;
+  }),
+  get: jest.fn(() => ({
+    json: async () => Promise.resolve(capabilitiesSetsData),
+  })),
+};
+
 describe('useRoleCapabilitySets', () => {
   beforeAll(() => {
     cleanup();
     jest.clearAllMocks();
   });
-  const mockGet = jest.fn(() => ({
-    json: () => Promise.resolve(data),
-  }));
 
   beforeEach(() => {
     queryClient.clear();
-    mockGet.mockClear();
-    useOkapiKy.mockClear().mockReturnValue({
-      get: mockGet,
-    });
+    useOkapiKy.mockClear().mockReturnValue(kyMock);
     useStripes.mockClear().mockReturnValue({
       discovery: {
         applications: {
@@ -157,7 +111,7 @@ describe('useRoleCapabilitySets', () => {
   });
 
   it('fetches role capability sets', async () => {
-    const { result } = renderHook(() => useRoleCapabilitySets(1), { wrapper });
+    const { result } = renderHook(() => useRoleCapabilitySets(1, 1), { wrapper });
 
     await act(() => result.current.isSuccess);
 

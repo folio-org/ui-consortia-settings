@@ -85,6 +85,7 @@ const settingsLabelsMap = {
   'data-import': 'ui-data-import.meta.title',
   inventory: 'ui-inventory.inventory.label',
   users: 'ui-users.settings.label',
+  ['authorization-roles']: 'ui-authorization-roles.meta.title'
 };
 
 describe('ConsortiumManager', () => {

@@ -8,7 +8,7 @@ import { CapabilitiesCompare } from './Cabalities/CapabilitiesCompare/Capablitie
 
 const sections = [
   {
-    label: <FormattedMessage id="ui-authorization-roles.meta.title" />,
+    label: <FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles" />,
     pages: [
       {
         route: 'capabilities',

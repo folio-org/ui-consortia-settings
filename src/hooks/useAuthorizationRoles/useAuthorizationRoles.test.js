@@ -6,6 +6,24 @@ import { useOkapiKy } from '@folio/stripes/core';
 import { useAuthorizationRoles } from './useAuthorizationRoles';
 
 const queryClient = new QueryClient();
+
+const reqMock = {
+  headers: {
+    set: jest.fn(),
+  },
+};
+
+const kyMock = {
+  extend: jest.fn(({ hooks: { beforeRequest } }) => {
+    beforeRequest[0](reqMock);
+
+    return kyMock;
+  }),
+  get: jest.fn(() => ({
+    json: async () => Promise.resolve(data),
+  })),
+};
+
 const wrapper = ({ children }) => (
   <QueryClientProvider client={queryClient}>
     {children}
@@ -14,16 +32,8 @@ const wrapper = ({ children }) => (
 
 const data = { roles: [{ id: '1', name: 'role-1' }, { id: '2', name: 'role-2' }, { id: '3', name: 'role-3' }] };
 describe('useRoleById', () => {
-  const mockGet = jest.fn(() => ({
-    json: () => Promise.resolve(data),
-  }));
-
   beforeEach(() => {
-    queryClient.clear();
-    mockGet.mockClear();
-    useOkapiKy.mockClear().mockReturnValue({
-      get: mockGet,
-    });
+    useOkapiKy.mockClear().mockReturnValue(kyMock);
   });
 
   it('fetches authorization roles', async () => {

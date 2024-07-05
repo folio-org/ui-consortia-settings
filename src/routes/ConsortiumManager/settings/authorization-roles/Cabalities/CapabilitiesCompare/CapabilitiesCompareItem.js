@@ -16,6 +16,7 @@ import {
   Selection,
   EmptyMessage,
 } from '@folio/stripes/components';
+
 import {
   CapabilitiesSection,
 } from '@folio/stripes-authorization-components';

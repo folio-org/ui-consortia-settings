@@ -13,7 +13,7 @@ import {
   Paneset,
 } from '@folio/stripes/components';
 
-import { CapabilitiesCompareItem } from './CabalitiesCompareItem';
+import { CapabilitiesCompareItem } from './CapabilitiesCompareItem';
 import { useConsortiumManagerContext } from '../../../../../../contexts';
 import { COMPARE_ITEM_NAME } from '../../../users/general/PermissionSets/PermissionSetsCompare/constants';
 import { TENANT_ID_SEARCH_PARAMS } from '../../../users/general/PermissionSets/constants';
