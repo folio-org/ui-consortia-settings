@@ -10,6 +10,7 @@ export const SETTINGS = {
   dataImport: 'data-import',
   inventory: 'inventory',
   users: 'users',
+  roles: 'authorization-roles'
 };
 
 export const AVAILABLE_SETTINGS = [
@@ -18,6 +19,7 @@ export const AVAILABLE_SETTINGS = [
   SETTINGS.dataImport,
   SETTINGS.inventory,
   SETTINGS.users,
+  SETTINGS.roles
 ];
 
 export const SETTINGS_ROUTES = AVAILABLE_SETTINGS.reduce((acc, curr) => {

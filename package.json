@@ -44,6 +44,7 @@
   "dependencies": {
     "@folio/stripes-acq-components": "~5.1.0",
     "@folio/stripes-data-transfer-components": "^6.0.0",
+    "@folio/stripes-authorization-components": "^1.0.0",
     "@rehooks/local-storage": "^2.4.4",
     "dom-helpers": "^3.4.0",
     "final-form": "^4.20.9",

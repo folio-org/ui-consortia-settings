@@ -5,7 +5,6 @@ import { TextLink } from '@folio/stripes/components';
 import { getFullName } from '@folio/stripes/util';
 
 import { EXPORT_JOB_LOG_COLUMNS } from './constants';
-import css from './DataExportLogs/DataExportLogs.css'
 
 export const getStartedDateDateFormatter = format => {
   return record => {
@@ -65,14 +64,12 @@ export const getFileNameField = (record, ky) => {
 
   return (
     record.progress?.exported ? (
-      <div className={css.pointer}>
-        <TextLink
-          onClick={() => downloadExportFile(record, ky)}
-          data-testid="text-link"
-        >
-          {fileName}
-        </TextLink>
-      </div>
+      <TextLink
+        onClick={() => downloadExportFile(record, ky)}
+        data-testid="text-link"
+      >
+        {fileName}
+      </TextLink>
     ) : (
       <span>{fileName}</span>
     )

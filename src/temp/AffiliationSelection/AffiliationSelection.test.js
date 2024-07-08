@@ -1,4 +1,4 @@
-import { render, within } from '@folio/jest-config-stripes/testing-library/react';
+import { render, within, screen } from '@folio/jest-config-stripes/testing-library/react';
 
 import { affiliations } from 'fixtures/affiliations';
 import { AffiliationSelection } from './AffiliationSelection';
@@ -26,14 +26,14 @@ describe('AffiliationSelection', () => {
     renderAffiliationSelection();
 
     expect(
-      within(document.getElementById('test-affiliations-select'))
+      within(screen.getByRole('button', { name : /Mineral Area College/ }))
         .getByText(affiliations[2].tenantName),
     ).toBeInTheDocument();
+
     affiliations.forEach(({ tenantName, isPrimary }) => {
-      expect(
-        within(document.getElementById('sl-test-affiliations-select'))
-          .getByText(isPrimary ? `${tenantName} ui-users.affiliations.primary.label` : tenantName),
-      ).toBeInTheDocument();
+      screen.getAllByText(isPrimary ? `${tenantName} ui-users.affiliations.primary.label` : tenantName).forEach((el) => {
+        expect(el).toBeInTheDocument();
+      });
     });
   });
 });

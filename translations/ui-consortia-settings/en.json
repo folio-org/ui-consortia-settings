@@ -13,6 +13,13 @@
 
   "code": "Code",
 
+  "consortiumManager.members.authorizationsRoles": "Authorization roles",
+  "consortiumManager.members.authorizationsRoles.compare": "Compare roles",
+  "consortiumManager.members.authorizationsRoles.compare.roles": "Authorization roles",
+  "consortiumManager.members.authorizationsRoles.compare.placeholder": "Select authorization role",
+  "consortiumManager.members.authorizationsRoles.capabilities": "Capabilities",
+  "consortiumManager.members.authorizationsRoles.capabilitiesSets": "Capabilities sets",
+
   "duplicatesWithOthers": "{failedOther}, {failedSrs} duplicate(s)",
   "duplicates": "{failedSrs} duplicate(s)",
 
@@ -21,6 +28,8 @@
   "consortiumManager.controlledVocab.common.termCreated": "<b>{term}</b> was successfully <b>created</b> for <b>{members}</b> {count, select, 1 {library} other {libraries}}.",
   "consortiumManager.controlledVocab.common.termDeleted": "<b>{term}</b> was successfully <b>deleted</b> for <b>{members}</b> {count, select, 1 {library} other {libraries}}.",
   "consortiumManager.controlledVocab.common.termUpdated": "<b>{term}</b> was successfully <b>updated</b> for <b>{members}</b> {count, select, 1 {library} other {libraries}}.",
+  "consortiumManager.members.authorizationsRoles.capabilities.empty": "No capabilities found",
+  "consortiumManager.members.authorizationsRoles.capabilitiesSets.empty": "No capabilities sets found",
 
   "consortiumManager.controlledVocab.alternativeTitleTypes.cannotDeleteTermHeader": "Cannot delete the alternative title type",
   "consortiumManager.controlledVocab.alternativeTitleTypes.cannotDeleteTermMessage": "This alternative title type cannot be deleted, as it is in use by one or more records.",

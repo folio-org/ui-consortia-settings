@@ -38,6 +38,7 @@ export const PUBLICATIONS_API = 'publications';
 export const SETTINGS_SHARING_API = 'sharing/settings';
 export const STATISTICAL_CODE_TYPES_API = 'statistical-code-types';
 export const STATISTICAL_CODES_API = 'statistical-codes';
+export const CAPABILITIES_LIMIT = 5000;
 /*  */
 
 export const MODULE_ROOT_ROUTE = packageConfig.stripes.route;
