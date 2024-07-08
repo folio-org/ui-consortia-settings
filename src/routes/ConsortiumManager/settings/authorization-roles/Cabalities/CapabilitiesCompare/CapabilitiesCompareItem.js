@@ -111,6 +111,7 @@ export const CapabilitiesCompareItem = ({
               capabilities={groupedRoleCapabilitiesByType}
               readOnly
               capabilitiesToCompare={rolesToCompare.capabilities}
+              isNeedToCompare
             />
             :
             <EmptyMessage>
@@ -128,6 +129,7 @@ export const CapabilitiesCompareItem = ({
               readOnly
               capabilities={groupedRoleCapabilitySetsByType}
               capabilitiesToCompare={rolesToCompare.capabilitiesSets}
+              isNeedToCompare
             />
             :
             <EmptyMessage>
