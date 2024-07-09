@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { FormattedMessage, FormattedDate } from 'react-intl';
 import { useParams } from 'react-router-dom';
 
@@ -15,7 +15,6 @@ import {
   PaneMenu,
   Paneset,
   Selection,
-  TextLink,
 } from '@folio/stripes/components';
 import {
   RoleDetails,
@@ -24,6 +23,11 @@ import {
 } from '@folio/stripes-authorization-components';
 
 import { useMemberSelection } from '../../hooks';
+import { 
+  COLUMN_MAPPING, 
+  VISIBLE_COLUMNS,
+} from './constants';
+import { getResultsFormatter } from './utils';
 
 export const AuthorizationRolesViewPage = ({ path }) => {
   const { id: roleId } = useParams();
@@ -76,15 +80,7 @@ export const AuthorizationRolesViewPage = ({ path }) => {
     onSubmitSearch(searchTerm);
   };
 
-  const resultsFormatter = {
-    name: (item) => <TextLink to={`${path}/${item.id}`}>{item.name}</TextLink>,
-    updatedBy: (item) => (item.metadata?.modifiedBy || <NoValue />),
-    updated: (item) => (item.metadata?.modifiedDate ? (
-      <FormattedDate value={item.metadata?.modifiedDate} />
-    ) : (
-      <NoValue />
-    )),
-  };
+  const resultsFormatter = useMemo(() => getResultsFormatter(path), [path]);
 
   return (
     <Paneset>
@@ -94,9 +90,7 @@ export const AuthorizationRolesViewPage = ({ path }) => {
         renderHeader={() => (
           <PaneHeader
             lastMenu={lastMenu}
-            paneTitle={
-              <FormattedMessage id="ui-authorization-roles.meta.title" />
-            }
+            paneTitle={<FormattedMessage id="ui-authorization-roles.meta.title" />}
           />
         )}
         actionMenu={lastMenu}
@@ -116,22 +110,11 @@ export const AuthorizationRolesViewPage = ({ path }) => {
           onSubmit={handleSearchSubmit}
         />
         <MultiColumnList
-          columnMapping={{
-            name: <FormattedMessage id="ui-authorization-roles.columns.name" />,
-            description: (
-              <FormattedMessage id="ui-authorization-roles.columns.description" />
-            ),
-            updated: (
-              <FormattedMessage id="ui-authorization-roles.columns.updatedDate" />
-            ),
-            updatedBy: (
-              <FormattedMessage id="ui-authorization-roles.columns.updatedBy" />
-            ),
-          }}
+          columnMapping={COLUMN_MAPPING}
           contentData={roles}
           formatter={resultsFormatter}
           loading={isLoading}
-          visibleColumns={['name', 'description', 'updated', 'updatedBy']}
+          visibleColumns={VISIBLE_COLUMNS}
         />
       </Pane>
       {roleId && <RoleDetails roleId={roleId} path={path} />}
