@@ -23,7 +23,7 @@ const renderComponent = (props = {}) => render(
   { wrapper },
 );
 
-jest.mock('./CapabilitiesCompareItem', () => ({
+jest.mock('../CapabilitiesCompareItem', () => ({
   CapabilitiesCompareItem: () => <span>CapabilitiesCompareItem</span>,
 }));
 
