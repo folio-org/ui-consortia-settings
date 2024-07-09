@@ -1,0 +1,1 @@
+export { CapabilitiesCompareItem } from './CapabilitiesCompareItem';

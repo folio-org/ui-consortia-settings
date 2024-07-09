@@ -5,21 +5,21 @@ import { PaneBackLink } from '@folio/stripes/components';
 import { MODULE_ROOT_ROUTE } from '../../constants';
 
 export const SETTINGS = {
+  authorizationRoles: 'authorization-roles',
   circulation: 'circulation',
   dataExport: 'data-export',
   dataImport: 'data-import',
   inventory: 'inventory',
   users: 'users',
-  roles: 'authorization-roles'
 };
 
 export const AVAILABLE_SETTINGS = [
+  SETTINGS.authorizationRoles,
   SETTINGS.circulation,
   SETTINGS.dataExport,
   SETTINGS.dataImport,
   SETTINGS.inventory,
   SETTINGS.users,
-  SETTINGS.roles
 ];
 
 export const SETTINGS_ROUTES = AVAILABLE_SETTINGS.reduce((acc, curr) => {

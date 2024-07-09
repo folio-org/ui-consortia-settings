@@ -3,8 +3,14 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { useLocation } from 'react-router-dom';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
+import {
+  useLocation,
+  useHistory,
+} from 'react-router-dom';
 
 import {
   Layer,
@@ -13,13 +19,15 @@ import {
   Paneset,
 } from '@folio/stripes/components';
 
-import { CapabilitiesCompareItem } from './CapabilitiesCompareItem';
+import { AUTHORIZATION_ROLES_ROUTE } from '../../../../../../constants';
 import { useConsortiumManagerContext } from '../../../../../../contexts';
-import { COMPARE_ITEM_NAME } from '../../../users/general/PermissionSets/PermissionSetsCompare/constants';
 import { TENANT_ID_SEARCH_PARAMS } from '../../../users/general/PermissionSets/constants';
+import { COMPARE_ITEM_NAME } from '../../../users/general/PermissionSets/PermissionSetsCompare/constants';
+import { CapabilitiesCompareItem } from '../CapabilitiesCompareItem';
 
 export const CapabilitiesCompare = () => {
   const { search } = useLocation();
+  const history = useHistory();
   const intl = useIntl();
   const initialSelectedMemberId = useMemo(() => new URLSearchParams(search).get(TENANT_ID_SEARCH_PARAMS), [search]);
   const [rolesToCompare, setRolesToCompare] = useState({
@@ -43,6 +51,8 @@ export const CapabilitiesCompare = () => {
     });
   }, [rolesToCompare]);
 
+  const onClose = () => history.push(AUTHORIZATION_ROLES_ROUTE);
+
   return (
     <Layer
       isOpen
@@ -54,6 +64,8 @@ export const CapabilitiesCompare = () => {
         noOverflow
         renderHeader={() => (
           <PaneHeader
+            dismissible
+            onClose={onClose}
             paneTitle={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.compare" />}
           />
         )}

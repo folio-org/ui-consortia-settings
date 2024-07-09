@@ -1,38 +1,26 @@
-import { FormattedMessage } from 'react-intl';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+} from 'react-router-dom';
 
-import { stripesShape } from '@folio/stripes/core';
-import { Settings } from '@folio/stripes/smart-components';
+import { RoleCreate, RoleEdit } from '@folio/stripes-authorization-components';
 
-import { MODULE_ROOT_ROUTE } from '../../../../constants';
-import { CapabilitiesCompare } from './Cabalities/CapabilitiesCompare/CapablitiesCompare';
+import { AUTHORIZATION_ROLES_ROUTE } from '../../../../constants';
+import { AuthorizationRolesViewPage } from './AuthorizationRolesViewPage';
+import { CapabilitiesCompare } from './Capabilities';
 
-const sections = [
-  {
-    label: <FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles" />,
-    pages: [
-      {
-        route: 'capabilities',
-        label: <FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.compare" />,
-        component: CapabilitiesCompare,
-        // perm: 'ui-authorization-roles.permission.settings.admin',
-      },
-    ],
-  },
-];
-
-const AuthorizationRolesSettings = (props) => {
+const AuthorizationRolesSettings = () => {
   return (
-    <Settings
-      {...props}
-      sections={sections}
-      paneTitle={<FormattedMessage id="ui-authorization-roles.meta.title" />}
-      paneBackLink={MODULE_ROOT_ROUTE}
-    />
+    <Router>
+      <Switch>
+        <Route exact path={`${AUTHORIZATION_ROLES_ROUTE}/compare`} component={CapabilitiesCompare} />
+        <Route exact path={`${AUTHORIZATION_ROLES_ROUTE}/create`} render={() => <RoleCreate path={AUTHORIZATION_ROLES_ROUTE} />} />
+        <Route exact path={`${AUTHORIZATION_ROLES_ROUTE}/:id/edit`} render={() => <RoleEdit path={AUTHORIZATION_ROLES_ROUTE} />} />
+        <Route path={`${AUTHORIZATION_ROLES_ROUTE}/:id?`} render={() => <AuthorizationRolesViewPage path={AUTHORIZATION_ROLES_ROUTE} />} />
+      </Switch>
+    </Router>
   );
-};
-
-AuthorizationRolesSettings.propTypes = {
-  stripes: stripesShape.isRequired,
 };
 
 export default AuthorizationRolesSettings;
