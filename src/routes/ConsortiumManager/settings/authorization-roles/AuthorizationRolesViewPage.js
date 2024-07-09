@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useMemo, useState } from 'react';
-import { FormattedMessage, FormattedDate } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { useParams } from 'react-router-dom';
 
 import {
@@ -9,7 +9,6 @@ import {
   DropdownMenu,
   Icon,
   MultiColumnList,
-  NoValue,
   Pane,
   PaneHeader,
   PaneMenu,
@@ -23,8 +22,8 @@ import {
 } from '@folio/stripes-authorization-components';
 
 import { useMemberSelection } from '../../hooks';
-import { 
-  COLUMN_MAPPING, 
+import {
+  COLUMN_MAPPING,
   VISIBLE_COLUMNS,
 } from './constants';
 import { getResultsFormatter } from './utils';

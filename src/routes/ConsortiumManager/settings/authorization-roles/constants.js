@@ -1,3 +1,5 @@
+import { FormattedMessage } from 'react-intl';
+
 export const COLUMN_NAMES = {
   description: 'description',
   name: 'name',
