@@ -7,9 +7,9 @@ import {
 } from '@folio/jest-config-stripes/testing-library/react';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import {
+  useAuthorizationRoles,
   useRoleCapabilities,
   useRoleCapabilitySets,
-  useAuthorizationRoles,
 } from '@folio/stripes-authorization-components';
 
 import { 

@@ -42,7 +42,7 @@ export const AuthorizationRolesViewPage = ({ path }) => {
 
   const lastMenu = (
     <Dropdown
-      label={<FormattedMessage id="ui-consortia-settings.button.actions" />}
+      label={<FormattedMessage id="stripes-components.paneMenuActionsToggleLabel" />}
       buttonProps={{ buttonStyle: 'primary', marginBottom0: true }}
     >
       <DropdownMenu>
@@ -54,7 +54,7 @@ export const AuthorizationRolesViewPage = ({ path }) => {
             to={`${path}/create`}
           >
             <Icon size="small" icon="plus-sign">
-              <FormattedMessage id="ui-consortia-settings.button.new" />
+              <FormattedMessage id="stripes-components.button.new" />
             </Icon>
           </Button>
         </PaneMenu>
