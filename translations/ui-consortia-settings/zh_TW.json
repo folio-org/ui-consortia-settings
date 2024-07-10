@@ -192,5 +192,13 @@
     "permission.settings.networkOrdering.view": "設定（聯盟）：可以查看網路訂購",
     "permission.settings.networkOrdering.edit": "設定（聯盟）：可以檢視和編輯網路訂購",
     "settings.centralOrdering.alert.message": "In this version of FOLIO, once activated this setting cannot be disabled.",
-    "settings.centralOrdering.confirmModal.message": "Are you sure you would like to activate this functionality?"
+    "settings.centralOrdering.confirmModal.message": "Are you sure you would like to activate this functionality?",
+    "consortiumManager.members.authorizationsRoles": "Authorization roles",
+    "consortiumManager.members.authorizationsRoles.compare": "Compare roles",
+    "consortiumManager.members.authorizationsRoles.compare.roles": "Authorization roles",
+    "consortiumManager.members.authorizationsRoles.compare.placeholder": "Select authorization role",
+    "consortiumManager.members.authorizationsRoles.capabilities": "Capabilities",
+    "consortiumManager.members.authorizationsRoles.capabilitiesSets": "Capabilities sets",
+    "consortiumManager.members.authorizationsRoles.capabilities.empty": "No capabilities found",
+    "consortiumManager.members.authorizationsRoles.capabilitiesSets.empty": "No capabilities sets found"
 }
