@@ -48,7 +48,7 @@ export const DataExportLogs = () => {
     membersOptions,
     setActiveMember,
   } = useMemberSelection();
-  const ky = useTenantKy({tenantId: activeMember});
+  const ky = useTenantKy({ tenantId: activeMember });
 
   const [
     sortingField,

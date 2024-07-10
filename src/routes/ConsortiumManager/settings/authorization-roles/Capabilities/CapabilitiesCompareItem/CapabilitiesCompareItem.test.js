@@ -1,33 +1,31 @@
 import { MemoryRouter } from 'react-router-dom';
 
+import { 
+  render, 
+  screen, 
+  logDOM,
+} from '@folio/jest-config-stripes/testing-library/react';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { render, screen, logDOM } from '@folio/jest-config-stripes/testing-library/react';
-
 import {
+  useAuthorizationRoles,
   useRoleCapabilities,
   useRoleCapabilitySets,
 } from '@folio/stripes-authorization-components';
 
-import {
-  useAuthorizationRoles,
-} from '../../../../../../hooks';
-import { tenants } from 'fixtures';
+import { 
+  tenants, 
+  groupedRoleCapabilitiesByType, 
+  groupedRoleCapabilitySetsByType,
+} from 'fixtures';
+import {ConsortiumManagerContextProviderMock} from 'helpers';
 import { COMPARE_ITEM_NAME } from '../../../users/general/PermissionSets/PermissionSetsCompare/constants';
-
-import {ConsortiumManagerContextProviderMock} from '../../../../../../../test/jest/helpers';
 import {CapabilitiesCompareItem} from './CapabilitiesCompareItem';
-import {groupedRoleCapabilitiesByType, groupedRoleCapabilitySetsByType} from '../../../../../../../test/jest/fixtures';
-
-jest.mock('../../../../../../hooks', () => {
-  return {
-    useAuthorizationRoles: jest.fn(),
-  };
-});
 
 jest.mock('@folio/stripes-authorization-components', ()=> ({
   ...jest.requireActual('@folio/stripes-authorization-components'),
   useRoleCapabilities: jest.fn(),
   useRoleCapabilitySets: jest.fn(),
+  useAuthorizationRoles: jest.fn(),
 }))
 
 const selectedMemberOptions = tenants.filter((el, index)=> index < 3).map(({ name, id }) => ({ value: id, label: name }));
@@ -93,4 +91,4 @@ describe('CapabilitiesCompareItem', () => {
       expect(role).toBeInTheDocument()
     })
   });
-})
+});

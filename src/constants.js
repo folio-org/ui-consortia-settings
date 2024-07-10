@@ -42,6 +42,7 @@ export const CAPABILITIES_LIMIT = 5000;
 /*  */
 
 export const MODULE_ROOT_ROUTE = packageConfig.stripes.route;
+export const AUTHORIZATION_ROLES_ROUTE = `${MODULE_ROOT_ROUTE}/authorization-roles`;
 
 export const PACKAGE_SCOPE_REGEX = /^@[a-z\d][\w-.]{0,214}\//;
 export const UUID_REGEX = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;

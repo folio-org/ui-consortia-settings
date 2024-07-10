@@ -95,7 +95,8 @@
     },
     "stripesDeps": [
       "@folio/stripes-acq-components",
-      "@folio/stripes-data-transfer-components"
+      "@folio/stripes-data-transfer-components",
+      "@folio/stripes-authorization-components"
     ],
     "links": {
       "userDropdown": [

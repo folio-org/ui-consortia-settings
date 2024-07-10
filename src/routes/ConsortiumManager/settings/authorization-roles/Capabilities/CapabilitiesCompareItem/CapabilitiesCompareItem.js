@@ -1,3 +1,4 @@
+import PropTypes, { object } from 'prop-types';
 import {
   useEffect,
   useMemo,
@@ -8,7 +9,6 @@ import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
-import PropTypes, { object } from 'prop-types';
 
 import {
   Accordion,
@@ -16,16 +16,12 @@ import {
   Selection,
   EmptyMessage,
 } from '@folio/stripes/components';
-
 import {
   CapabilitiesSection,
+  useAuthorizationRoles,
   useRoleCapabilities,
   useRoleCapabilitySets,
 } from '@folio/stripes-authorization-components';
-
-import {
-  useAuthorizationRoles,
-} from '../../../../../../hooks';
 
 export const CapabilitiesCompareItem = ({
   columnName,
@@ -121,7 +117,7 @@ export const CapabilitiesCompareItem = ({
         </Accordion>
         <Accordion
           closedByDefault
-          label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.capabilitiesSets" /> }
+          label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.capabilitiesSets" />}
         >
           {capabilitySetsTotalCount ?
             <CapabilitiesSection
