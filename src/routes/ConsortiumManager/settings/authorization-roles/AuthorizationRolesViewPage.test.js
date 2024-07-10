@@ -44,7 +44,7 @@ jest.mock('../../hooks', () => ({
   useMemberSelection: jest.fn().mockReturnValue({
     activeMember: 'activeMember',
     membersOptions: [{ value: 'value', label: 'label' }],
-    setActiveMember: 'setActiveMember',
+    setActiveMember: jest.fn(),
   }),
 }));
 
