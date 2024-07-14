@@ -192,5 +192,13 @@
     "permission.settings.networkOrdering.view": "Settings (Consortia): Can view network ordering",
     "permission.settings.networkOrdering.edit": "Settings (Consortia): Can view and edit network ordering",
     "settings.centralOrdering.alert.message": "In this version of FOLIO, once activated this setting cannot be disabled.",
-    "settings.centralOrdering.confirmModal.message": "¿Está seguro de que desea activar esta función?"
+    "settings.centralOrdering.confirmModal.message": "¿Está seguro de que desea activar esta función?",
+    "consortiumManager.members.authorizationsRoles": "Authorization roles",
+    "consortiumManager.members.authorizationsRoles.compare": "Compare roles",
+    "consortiumManager.members.authorizationsRoles.compare.roles": "Authorization roles",
+    "consortiumManager.members.authorizationsRoles.compare.placeholder": "Select authorization role",
+    "consortiumManager.members.authorizationsRoles.capabilities": "Capabilities",
+    "consortiumManager.members.authorizationsRoles.capabilitiesSets": "Capabilities sets",
+    "consortiumManager.members.authorizationsRoles.capabilities.empty": "No capabilities found",
+    "consortiumManager.members.authorizationsRoles.capabilitiesSets.empty": "No capabilities sets found"
 }
