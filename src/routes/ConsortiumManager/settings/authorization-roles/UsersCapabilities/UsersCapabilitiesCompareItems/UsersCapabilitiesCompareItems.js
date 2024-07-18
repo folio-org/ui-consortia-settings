@@ -18,7 +18,7 @@ import {
 } from '@folio/stripes/components';
 import {
   CapabilitiesSection,
-  useAuthorizationRoles, useCapabilities,
+  useAuthorizationRoles,
   useRoleCapabilities,
   useRoleCapabilitySets,
   useUsers,
@@ -39,10 +39,6 @@ export const UsersCapabilitiesCompareItems = ({
 
   const { roles, isLoading } = useAuthorizationRoles(selectedMemberId);
   const { users, isLoading: isLoadingUsers } = useUsers(roles?.map(i => i.metadata.updatedByUserId));
-
-  const { capabilitiesList } = useCapabilities();
-
-  console.log(capabilitiesList);
 
   const availableRoles = useMemo(() => {
     return roles.filter(i => i.metadata.updatedByUserId === selectedUserId).map((el) => {
