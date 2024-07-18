@@ -19,10 +19,11 @@ import {
 import {
   CapabilitiesSection,
   useAuthorizationRoles,
-  useRoleCapabilities,
-  useRoleCapabilitySets,
-  useUsers,
+  useUserCapabilities,
+  useUserCapabilitiesSets,
+  useUserRolesByUserIds,
 } from '@folio/stripes-authorization-components';
+import { useUsers } from '../../../../../../hooks/useUsers/useUsers';
 
 export const UsersCapabilitiesCompareItems = ({
   columnName,
@@ -32,25 +33,26 @@ export const UsersCapabilitiesCompareItems = ({
   initialSelectedMemberId,
 }) => {
   const intl = useIntl();
-  const [selectedRoleId, setSelectedRoleId] = useState(initialSelectedMemberId);
-  const [selectedMemberId, setSelectedMemberId] = useState('');
+  const [selectedRoleId, setSelectedRoleId] = useState('');
+  const [selectedMemberId, setSelectedMemberId] = useState(initialSelectedMemberId);
   const [selectedUserId, setSelectedUserId] = useState('');
   const isMounted = useRef(false);
 
+  const { users, isFetching } = useUsers(selectedMemberId);
+  const { userRolesResponse } = useUserRolesByUserIds([selectedUserId]);
   const { roles, isLoading } = useAuthorizationRoles(selectedMemberId);
-  const { users, isLoading: isLoadingUsers } = useUsers(roles?.map(i => i.metadata.updatedByUserId));
 
   const availableRoles = useMemo(() => {
-    return roles.filter(i => i.metadata.updatedByUserId === selectedUserId).map((el) => {
+    return roles.filter(role => userRolesResponse.some(userRole => userRole.roleId === role.id)).map((el) => {
       return ({
         value: el.id,
         label: el.name,
       });
     });
-  }, [roles, selectedUserId]);
+  }, [roles, userRolesResponse]);
 
   const availableUsers = useMemo(() => {
-    return Object.values(users).map((el) => {
+    return users.map((el) => {
       return ({
         value: el.id,
         label: el.username,
@@ -59,24 +61,24 @@ export const UsersCapabilitiesCompareItems = ({
   }, [users]);
 
   const {
-    groupedRoleCapabilitySetsByType,
+    groupedUserCapabilitySetsByType,
     capabilitySetsTotalCount,
     isSuccess: isSuccessCapabilitiesSet,
-    initialRoleCapabilitySetsSelectedMap,
-  } = useRoleCapabilitySets(selectedRoleId, selectedMemberId);
+    initialUserCapabilitySetsSelectedMap,
+  } = useUserCapabilitiesSets(selectedUserId, selectedMemberId, selectedRoleId);
 
   const {
     capabilitiesTotalCount,
     isSuccess: isSuccessCapabilities,
     initialRoleCapabilitiesSelectedMap,
     groupedRoleCapabilitiesByType,
-  } = useRoleCapabilities(selectedRoleId, selectedMemberId);
+  } = useUserCapabilities(selectedUserId, selectedMemberId, selectedRoleId);
 
   useEffect(() => {
     if (isMounted.current && isSuccessCapabilitiesSet && isSuccessCapabilities) {
       setRolesToCompare({
         capabilities: groupedRoleCapabilitiesByType,
-        capabilitiesSets: groupedRoleCapabilitySetsByType,
+        capabilitiesSets: groupedUserCapabilitySetsByType,
       }, columnName);
     } else {
       isMounted.current = true;
@@ -85,7 +87,12 @@ export const UsersCapabilitiesCompareItems = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedRoleId, columnName, capabilitiesTotalCount, capabilitySetsTotalCount]);
 
-  const isCapabilitySetSelected = (capabilitySetId) => !!initialRoleCapabilitySetsSelectedMap[capabilitySetId];
+  const handleUserChange = (value) => {
+    setSelectedUserId(value);
+    setSelectedRoleId('');
+  };
+
+  const isCapabilitySetSelected = (capabilitySetId) => !!initialUserCapabilitySetsSelectedMap[capabilitySetId];
   const isCapabilitySelected = (capabilityId) => !!initialRoleCapabilitiesSelectedMap[capabilityId];
 
   return (
@@ -100,9 +107,9 @@ export const UsersCapabilitiesCompareItems = ({
       />
       <Selection
         name="users"
-        onChange={setSelectedUserId}
+        onChange={handleUserChange}
         dataOptions={availableUsers}
-        loading={isLoadingUsers}
+        loading={isFetching}
         value={selectedUserId}
         placeholder={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.permissionSets.compare.user.placeholder" />}
         label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.permissionSets.compare.user" />}
@@ -144,7 +151,7 @@ export const UsersCapabilitiesCompareItems = ({
             <CapabilitiesSection
               isCapabilitySelected={isCapabilitySetSelected}
               readOnly
-              capabilities={groupedRoleCapabilitySetsByType}
+              capabilities={groupedUserCapabilitySetsByType}
               capabilitiesToCompare={rolesToCompare.capabilitiesSets}
               isNeedToCompare
             />
