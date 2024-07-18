@@ -70,6 +70,18 @@ export const AuthorizationRolesViewPage = ({ path }) => {
             </Icon>
           </Button>
         </PaneMenu>
+        <PaneMenu>
+          <Button
+            id="clickable-compare-permissions"
+            to={`${path}/compareUsers`}
+            buttonStyle="dropdownItem"
+            marginBottom0
+          >
+            <Icon size="small" icon="transfer">
+              <FormattedMessage id="ui-consortia-settings.consortiumManager.members.action.compareUsers" />
+            </Icon>
+          </Button>
+        </PaneMenu>
       </DropdownMenu>
     </Dropdown>
   );
