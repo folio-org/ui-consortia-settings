@@ -3,7 +3,6 @@ import { MemoryRouter } from 'react-router-dom';
 import {
   render,
   screen,
-  logDOM,
 } from '@folio/jest-config-stripes/testing-library/react';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import {
@@ -42,11 +41,11 @@ const roles =  [{ id: '1', name: 'role-1', metadata: {updatedByUserId: '11'} }, 
 const users = {
   11: {
     id: '11',
-    userName: 'Admin1'
+    username: 'Admin1'
   },
   22: {
     id: '22',
-    userName: 'Admin2'
+    username: 'Admin2'
   }
 }
 
@@ -97,8 +96,9 @@ describe('UsersCapabilitiesCompareItems', () => {
 
     renderComponent({ setRolesToCompare });
 
+    await userEvent.click(screen.getByText(users["11"].username))
+
     await userEvent.click(screen.getByText(selectedMemberOptions[0].label));
-    logDOM();
     await userEvent.click(screen.getByText(roles[0].name));
 
     screen.getAllByText('Capability Roles').forEach(role => {
