@@ -70,14 +70,14 @@ export const UsersCapabilitiesCompareItems = ({
   const {
     capabilitiesTotalCount,
     isSuccess: isSuccessCapabilities,
-    initialRoleCapabilitiesSelectedMap,
-    groupedRoleCapabilitiesByType,
+    initialUserCapabilitiesSelectedMap,
+    groupedUserCapabilitiesByType,
   } = useUserCapabilities(selectedUserId, selectedMemberId, selectedRoleId);
 
   useEffect(() => {
     if (isMounted.current && isSuccessCapabilitiesSet && isSuccessCapabilities) {
       setRolesToCompare({
-        capabilities: groupedRoleCapabilitiesByType,
+        capabilities: groupedUserCapabilitiesByType,
         capabilitiesSets: groupedUserCapabilitySetsByType,
       }, columnName);
     } else {
@@ -93,7 +93,7 @@ export const UsersCapabilitiesCompareItems = ({
   };
 
   const isCapabilitySetSelected = (capabilitySetId) => !!initialUserCapabilitySetsSelectedMap[capabilitySetId];
-  const isCapabilitySelected = (capabilityId) => !!initialRoleCapabilitiesSelectedMap[capabilityId];
+  const isCapabilitySelected = (capabilityId) => !!initialUserCapabilitiesSelectedMap[capabilityId];
 
   return (
     <div>
@@ -132,7 +132,7 @@ export const UsersCapabilitiesCompareItems = ({
           {capabilitiesTotalCount ?
             <CapabilitiesSection
               isCapabilitySelected={isCapabilitySelected}
-              capabilities={groupedRoleCapabilitiesByType}
+              capabilities={groupedUserCapabilitiesByType}
               readOnly
               capabilitiesToCompare={rolesToCompare.capabilities}
               isNeedToCompare
