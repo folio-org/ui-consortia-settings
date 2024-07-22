@@ -17,10 +17,11 @@ import {
   groupedRoleCapabilitiesByType,
   groupedRoleCapabilitySetsByType,
 } from 'fixtures';
-import {ConsortiumManagerContextProviderMock} from 'helpers';
+import { ConsortiumManagerContextProviderMock } from 'helpers';
+
 import { COMPARE_ITEM_NAME } from '../../../users/general/PermissionSets/PermissionSetsCompare/constants';
-import {UsersCapabilitiesCompareItems} from "./UsersCapabilitiesCompareItems";
-import {useUsers} from "../../../../../../hooks/useUsers/useUsers";
+import { UsersCapabilitiesCompareItems } from './UsersCapabilitiesCompareItems';
+import  { useUsers } from '../../../../../../hooks';
 
 jest.mock('@folio/stripes-authorization-components', ()=> ({
   ...jest.requireActual('@folio/stripes-authorization-components'),

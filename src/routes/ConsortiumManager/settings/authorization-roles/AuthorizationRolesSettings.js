@@ -9,7 +9,7 @@ import { RoleCreate, RoleEdit } from '@folio/stripes-authorization-components';
 import { AUTHORIZATION_ROLES_ROUTE } from '../../../../constants';
 import { AuthorizationRolesViewPage } from './AuthorizationRolesViewPage';
 import { CapabilitiesCompare } from './Capabilities';
-import { UsersCapabilitiesCompare } from './UsersCapabilities/UsersCapabilitiesCompare';
+import { UsersCapabilitiesCompare } from './UsersCapabilities';
 
 const AuthorizationRolesSettings = () => {
   return (

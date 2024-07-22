@@ -1,6 +1,9 @@
 import { MemoryRouter } from 'react-router-dom';
 
-import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  render,
+  screen
+} from '@folio/jest-config-stripes/testing-library/react';
 import { Paneset } from '@folio/stripes/components';
 
 import { ConsortiumManagerContextProviderMock } from 'helpers';

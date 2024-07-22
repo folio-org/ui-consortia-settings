@@ -20,10 +20,10 @@ import {
   CapabilitiesSection,
   useAuthorizationRoles,
   useUserCapabilities,
-  useUserCapabilitiesSets,
   useUserRolesByUserIds,
 } from '@folio/stripes-authorization-components';
-import { useUsers } from '../../../../../../hooks/useUsers/useUsers';
+import { useUsers } from '../../../../../../hooks';
+
 
 export const UsersCapabilitiesCompareItems = ({
   columnName,
@@ -61,13 +61,6 @@ export const UsersCapabilitiesCompareItems = ({
   }, [users]);
 
   const {
-    groupedUserCapabilitySetsByType,
-    capabilitySetsTotalCount,
-    isSuccess: isSuccessCapabilitiesSet,
-    initialUserCapabilitySetsSelectedMap,
-  } = useUserCapabilitiesSets(selectedUserId, selectedMemberId, selectedRoleId);
-
-  const {
     capabilitiesTotalCount,
     isSuccess: isSuccessCapabilities,
     initialUserCapabilitiesSelectedMap,
@@ -75,24 +68,22 @@ export const UsersCapabilitiesCompareItems = ({
   } = useUserCapabilities(selectedUserId, selectedMemberId, selectedRoleId);
 
   useEffect(() => {
-    if (isMounted.current && isSuccessCapabilitiesSet && isSuccessCapabilities) {
+    if (isMounted.current && isSuccessCapabilities) {
       setRolesToCompare({
         capabilities: groupedUserCapabilitiesByType,
-        capabilitiesSets: groupedUserCapabilitySetsByType,
       }, columnName);
     } else {
       isMounted.current = true;
     }
     // adding `setRolesToCompare` as dependency will cause to infinite update loop
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedRoleId, columnName, capabilitiesTotalCount, capabilitySetsTotalCount]);
+  }, [selectedRoleId, columnName, capabilitiesTotalCount]);
 
   const handleUserChange = (value) => {
     setSelectedUserId(value);
     setSelectedRoleId('');
   };
 
-  const isCapabilitySetSelected = (capabilitySetId) => !!initialUserCapabilitySetsSelectedMap[capabilitySetId];
   const isCapabilitySelected = (capabilityId) => !!initialUserCapabilitiesSelectedMap[capabilityId];
 
   return (
@@ -140,24 +131,6 @@ export const UsersCapabilitiesCompareItems = ({
             :
             <EmptyMessage>
               <FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.capabilities.empty" />
-            </EmptyMessage>
-          }
-        </Accordion>
-        <Accordion
-          closedByDefault
-          label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.capabilitiesSets" />}
-        >
-          {capabilitySetsTotalCount ?
-            <CapabilitiesSection
-              isCapabilitySelected={isCapabilitySetSelected}
-              readOnly
-              capabilities={groupedUserCapabilitySetsByType}
-              capabilitiesToCompare={rolesToCompare.capabilitiesSets}
-              isNeedToCompare
-            />
-            :
-            <EmptyMessage>
-              <FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.capabilitiesSets.empty" />
             </EmptyMessage>
           }
         </Accordion>

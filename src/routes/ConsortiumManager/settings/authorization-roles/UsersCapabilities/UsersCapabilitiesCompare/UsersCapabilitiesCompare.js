@@ -26,9 +26,10 @@ import { COMPARE_ITEM_NAME } from '../../../users/general/PermissionSets/Permiss
 import { UsersCapabilitiesCompareItems } from '../UsersCapabilitiesCompareItems';
 
 export const UsersCapabilitiesCompare = () => {
-  const { search } = useLocation();
   const history = useHistory();
+  const { search } = useLocation();
   const intl = useIntl();
+
   const initialSelectedMemberId = useMemo(() => new URLSearchParams(search).get(TENANT_ID_SEARCH_PARAMS), [search]);
   const [rolesToCompare, setRolesToCompare] = useState({
     [COMPARE_ITEM_NAME.LEFT_COLUMN]: [],
@@ -36,10 +37,6 @@ export const UsersCapabilitiesCompare = () => {
   });
 
   const { selectedMembers } = useConsortiumManagerContext();
-
-  const members = useMemo(() => {
-    return selectedMembers.map(({ id, name }) => ({ value: id, label: name }));
-  }, [selectedMembers]);
 
   const handleRolesToCompare = useCallback((roles, columnName) => {
     setRolesToCompare({
@@ -50,6 +47,10 @@ export const UsersCapabilitiesCompare = () => {
       },
     });
   }, [rolesToCompare]);
+
+  const members = useMemo(() => {
+    return selectedMembers.map(({ id, name }) => ({ value: id, label: name }));
+  }, [selectedMembers]);
 
   const onClose = () => history.push(AUTHORIZATION_ROLES_ROUTE);
 

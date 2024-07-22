@@ -2,11 +2,15 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
+import { useOkapiKy } from "@folio/stripes/core";
 
-import {act, renderHook, waitFor} from '@folio/jest-config-stripes/testing-library/react';
+import {
+  act,
+  renderHook,
+  waitFor
+} from '@folio/jest-config-stripes/testing-library/react';
 
 import { useUsers } from './useUsers';
-import { useOkapiKy } from "@folio/stripes/core";
 
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
