@@ -2,8 +2,8 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
-import { useOkapiKy } from "@folio/stripes/core";
 
+import { useOkapiKy } from "@folio/stripes/core";
 import {
   act,
   renderHook,

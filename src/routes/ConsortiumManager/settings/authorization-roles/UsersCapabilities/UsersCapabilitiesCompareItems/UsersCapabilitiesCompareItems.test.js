@@ -48,7 +48,11 @@ const userRolesResponse = [{
   }
 ]
 
-const roles =  [{ id: '1', name: 'role-1' }, { id: '2', name: 'role-2' }, { id: '3', name: 'role-3' }];
+const roles =  [
+  { id: '1', name: 'role-1' },
+  { id: '2', name: 'role-2' },
+  { id: '3', name: 'role-3' }
+];
 const users = [
   {
     id: '1',

@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 
 import { useNamespace, useOkapiKy } from '@folio/stripes/core';
 
-export const useUsers = ({tenant = ''}) => {
+export const useUsers = ({ tenant = '' }) => {
   const [namespaceKey] = useNamespace({ key: 'relatedUsers' });
   const ky = useOkapiKy({ tenant });
   const [users, setUsers] = useState([]);

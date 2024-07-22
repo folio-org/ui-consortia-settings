@@ -22,8 +22,8 @@ import {
   useUserCapabilities,
   useUserRolesByUserIds,
 } from '@folio/stripes-authorization-components';
-import { useUsers } from '../../../../../../hooks';
 
+import { useUsers } from '../../../../../../hooks';
 
 export const UsersCapabilitiesCompareItems = ({
   columnName,
