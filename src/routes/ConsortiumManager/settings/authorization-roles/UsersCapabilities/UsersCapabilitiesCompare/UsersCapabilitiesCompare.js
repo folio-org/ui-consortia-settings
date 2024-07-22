@@ -67,7 +67,7 @@ export const UsersCapabilitiesCompare = () => {
           <PaneHeader
             dismissible
             onClose={onClose}
-            paneTitle={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.compare" />}
+            paneTitle={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.users.compare" />}
           />
         )}
         padContent={false}
