@@ -38,7 +38,7 @@ export const UsersCapabilitiesCompareItems = ({
   const [selectedUserId, setSelectedUserId] = useState('');
   const isMounted = useRef(false);
 
-  const { users, isFetching } = useUsers(selectedMemberId);
+  const { users, isFetching } = useUsers({ tenant: selectedMemberId });
   const { userRolesResponse } = useUserRolesByUserIds([selectedUserId]);
   const { roles, isLoading } = useAuthorizationRoles(selectedMemberId);
 
