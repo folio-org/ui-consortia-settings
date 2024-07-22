@@ -18,7 +18,7 @@ const AuthorizationRolesSettings = () => {
         <Route exact path={`${AUTHORIZATION_ROLES_ROUTE}/compare`} component={CapabilitiesCompare} />
         <Route exact path={`${AUTHORIZATION_ROLES_ROUTE}/create`} render={() => <RoleCreate path={AUTHORIZATION_ROLES_ROUTE} />} />
         <Route exact path={`${AUTHORIZATION_ROLES_ROUTE}/:id/edit`} render={() => <RoleEdit path={AUTHORIZATION_ROLES_ROUTE} />} />
-        <Route exact path={`${AUTHORIZATION_ROLES_ROUTE}/compareUsers`} component={UsersCapabilitiesCompare} />
+        <Route exact path={`${AUTHORIZATION_ROLES_ROUTE}/compare-users`} component={UsersCapabilitiesCompare} />
         <Route path={`${AUTHORIZATION_ROLES_ROUTE}/:id?`} render={() => <AuthorizationRolesViewPage path={AUTHORIZATION_ROLES_ROUTE} />} />
       </Switch>
     </Router>

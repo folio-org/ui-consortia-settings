@@ -73,7 +73,7 @@ export const AuthorizationRolesViewPage = ({ path }) => {
         <PaneMenu>
           <Button
             id="clickable-compare-permissions"
-            to={`${path}/compareUsers`}
+            to={`${path}/compare-users`}
             buttonStyle="dropdownItem"
             marginBottom0
           >

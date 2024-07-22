@@ -3,6 +3,8 @@ import { useQuery } from 'react-query';
 
 import { useNamespace, useOkapiKy } from '@folio/stripes/core';
 
+import {USERS_LIMIT} from "../../constants";
+
 export const useUsers = ({ tenant = '' }) => {
   const [namespaceKey] = useNamespace({ key: 'relatedUsers' });
   const ky = useOkapiKy({ tenant });
@@ -10,7 +12,12 @@ export const useUsers = ({ tenant = '' }) => {
 
   const { data, isFetching, isSuccess } = useQuery({
       queryKey: [namespaceKey, tenant],
-      queryFn: () => ky.get('users').json(),
+      queryFn: () => ky.get('users',
+        {
+          searchParams: {
+            limit: USERS_LIMIT
+          }
+        }).json(),
     });
 
   useEffect(() => {
