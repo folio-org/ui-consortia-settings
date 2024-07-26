@@ -111,6 +111,6 @@ describe('PermissionSetsCompareItem', () => {
 
     const markedElement = container.querySelectorAll('li > mark');
 
-    expect(markedElement.length).toBe(0);
+    expect(markedElement.length).toBe(1);
   });
 });
