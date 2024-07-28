@@ -70,6 +70,7 @@ export const PUBLISH_COORDINATOR_STATUSES = {
 };
 
 export const CONTROLLED_VOCAB_LIMIT = 2000;
+export const USERS_LIMIT = 2000;
 
 export const RECORD_SOURCE = {
   CONSORTIUM: 'consortium',
