@@ -1,5 +1,6 @@
-import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
 
+import { renderWithRouter } from 'helpers';
 import { useMemberSelection } from '../../hooks';
 import AuthorizationPoliciesSettings from './AuthorizationPoliciesSettings';
 
@@ -26,7 +27,7 @@ describe('AuthorizationPoliciesSettings', () => {
   });
 
   it('should render the component', () => {
-    render(<AuthorizationPoliciesSettings {...props} />);
+    renderWithRouter(<AuthorizationPoliciesSettings {...props} />);
 
     expect(screen.getByLabelText('Member 1')).toBeInTheDocument();
     expect(screen.getByText('Member 2')).toBeInTheDocument();
