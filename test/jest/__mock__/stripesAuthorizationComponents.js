@@ -13,10 +13,9 @@ jest.mock('@folio/stripes-authorization-components', () => ({
         },
       },
     ],
+    refetch: jest.fn(),
   }),
   useUsers: jest.fn().mockReturnValue({
     users: [],
   }),
-  PolicyDetails: jest.fn(() => <div data-testid="mock-policy-details">Policy details pane</div>),
-  SearchForm: jest.fn(),
 }));
