@@ -5,6 +5,7 @@ import { PaneBackLink } from '@folio/stripes/components';
 import { MODULE_ROOT_ROUTE } from '../../constants';
 
 export const SETTINGS = {
+  authorizationPolicies: 'authorization-policies',
   authorizationRoles: 'authorization-roles',
   circulation: 'circulation',
   dataExport: 'data-export',
@@ -14,6 +15,7 @@ export const SETTINGS = {
 };
 
 export const AVAILABLE_SETTINGS = [
+  SETTINGS.authorizationPolicies,
   SETTINGS.authorizationRoles,
   SETTINGS.circulation,
   SETTINGS.dataExport,
