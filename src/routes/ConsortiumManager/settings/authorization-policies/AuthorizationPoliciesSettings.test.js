@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useMemberSelection } from '../../hooks';
 import AuthorizationPoliciesSettings from './AuthorizationPoliciesSettings';
@@ -14,7 +14,7 @@ describe('AuthorizationPoliciesSettings', () => {
     { value: 'member1', label: 'Member 1' },
     { value: 'member2', label: 'Member 2' },
   ];
-  
+
   const setActiveMember = jest.fn();
 
   beforeEach(() => {
