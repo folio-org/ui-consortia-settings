@@ -1,5 +1,8 @@
-import { useState } from 'react';
-import { FormattedMessage, FormattedDate } from 'react-intl';
+import {
+  useMemo,
+  useState,
+} from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import {
   useAuthorizationPolicies,
@@ -10,17 +13,19 @@ import {
 import {
   Button,
   MultiColumnList,
-  NoValue,
   Pane,
   PaneHeader,
   PaneMenu,
   Paneset,
   Selection,
-  TextLink,
 } from '@folio/stripes/components';
-import { getFullName } from '@folio/stripes/util';
 
 import { useMemberSelection } from '../../hooks';
+import {
+  COLUMN_MAPPING,
+  getResultsFormatter,
+  VISIBLE_COLUMNS,
+} from './constanta';
 
 const AuthorizationPoliciesSettings = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -54,17 +59,7 @@ const AuthorizationPoliciesSettings = () => {
     refetch();
   };
 
-  const resultsFormatter = {
-    name: (item) => <TextLink>{item.name}</TextLink>,
-    updatedBy: (item) => (item.metadata.updatedByUserId ? getFullName(users[item.metadata.updatedByUserId]) : (
-      <NoValue />
-    )),
-    updated: (item) => (item.metadata.updatedDate ? (
-      <FormattedDate value={item.metadata.updatedDate} />
-    ) : (
-      <NoValue />
-    )),
-  };
+  const formatter = useMemo(() => getResultsFormatter({ users }), [users]);
 
   return (
     <Paneset>
@@ -94,29 +89,21 @@ const AuthorizationPoliciesSettings = () => {
           searchLabelId="ui-consortia-settings.authorizationPolicy.search"
         />
         <MultiColumnList
-          columnMapping={{
-            name: (
-              <FormattedMessage id="ui-consortia-settings.authorizationPolicy.columns.name" />
-            ),
-            description: (
-              <FormattedMessage id="ui-consortia-settings.authorizationPolicy.columns.description" />
-            ),
-            updated: (
-              <FormattedMessage id="ui-consortia-settings.authorizationPolicy.columns.updatedDate" />
-            ),
-            updatedBy: (
-              <FormattedMessage id="ui-consortia-settings.authorizationPolicy.columns.updatedBy" />
-            ),
-          }}
+          columnMapping={COLUMN_MAPPING}
           contentData={policies}
-          formatter={resultsFormatter}
+          formatter={formatter}
           selectedRow={selectedRow}
           onRowClick={onRowClick}
           loading={isLoading}
-          visibleColumns={['name', 'description', 'updated', 'updatedBy']}
+          visibleColumns={VISIBLE_COLUMNS}
         />
       </Pane>
-      {selectedRow && <PolicyDetails policy={selectedRow} onClose={() => setSelectedRow(null)} />}
+      {selectedRow && (
+        <PolicyDetails
+          policy={selectedRow}
+          onClose={() => setSelectedRow(null)}
+        />
+      )}
     </Paneset>
   );
 };
