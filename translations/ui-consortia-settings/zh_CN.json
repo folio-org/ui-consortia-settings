@@ -193,12 +193,12 @@
     "permission.settings.networkOrdering.edit": "设置（联盟）：可查看和编辑网络订购",
     "settings.centralOrdering.alert.message": "在此版本的 FOLIO 中，此设置一旦激活就无法禁用。",
     "settings.centralOrdering.confirmModal.message": "确定要激活此功能吗？",
-    "consortiumManager.members.authorizationsRoles": "Authorization roles",
-    "consortiumManager.members.authorizationsRoles.compare": "Compare roles",
-    "consortiumManager.members.authorizationsRoles.compare.roles": "Authorization roles",
-    "consortiumManager.members.authorizationsRoles.compare.placeholder": "Select authorization role",
-    "consortiumManager.members.authorizationsRoles.capabilities": "Capabilities",
-    "consortiumManager.members.authorizationsRoles.capabilitiesSets": "Capabilities sets",
-    "consortiumManager.members.authorizationsRoles.capabilities.empty": "No capabilities found",
-    "consortiumManager.members.authorizationsRoles.capabilitiesSets.empty": "No capabilities sets found"
+    "consortiumManager.members.authorizationsRoles": "授权角色",
+    "consortiumManager.members.authorizationsRoles.compare": "比较角色",
+    "consortiumManager.members.authorizationsRoles.compare.roles": "授权角色",
+    "consortiumManager.members.authorizationsRoles.compare.placeholder": "选择授权角色",
+    "consortiumManager.members.authorizationsRoles.capabilities": "能力",
+    "consortiumManager.members.authorizationsRoles.capabilitiesSets": "能力设置",
+    "consortiumManager.members.authorizationsRoles.capabilities.empty": "未找到任何能力",
+    "consortiumManager.members.authorizationsRoles.capabilitiesSets.empty": "未找到能力设置"
 }

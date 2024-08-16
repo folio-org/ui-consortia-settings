@@ -194,11 +194,11 @@
     "settings.centralOrdering.alert.message": "V této verzi FOLIO nelze toto nastavení po aktivaci zakázat.",
     "settings.centralOrdering.confirmModal.message": "Opravdu chcete tuto funkci aktivovat?",
     "consortiumManager.members.authorizationsRoles": "Autorizační role",
-    "consortiumManager.members.authorizationsRoles.compare": "Compare roles",
+    "consortiumManager.members.authorizationsRoles.compare": "Porovnat role",
     "consortiumManager.members.authorizationsRoles.compare.roles": "Autorizační role",
-    "consortiumManager.members.authorizationsRoles.compare.placeholder": "Select authorization role",
+    "consortiumManager.members.authorizationsRoles.compare.placeholder": "Vybrat autorizační roli",
     "consortiumManager.members.authorizationsRoles.capabilities": "Schopnosti",
-    "consortiumManager.members.authorizationsRoles.capabilitiesSets": "Capabilities sets",
-    "consortiumManager.members.authorizationsRoles.capabilities.empty": "No capabilities found",
-    "consortiumManager.members.authorizationsRoles.capabilitiesSets.empty": "No capabilities sets found"
+    "consortiumManager.members.authorizationsRoles.capabilitiesSets": "Sady schopností",
+    "consortiumManager.members.authorizationsRoles.capabilities.empty": "Nebyly nalezeny žádné schopnosti",
+    "consortiumManager.members.authorizationsRoles.capabilitiesSets.empty": "Nebyly nalezeny žádné sady schopností"
 }
