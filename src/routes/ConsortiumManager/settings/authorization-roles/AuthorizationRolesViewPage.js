@@ -21,7 +21,7 @@ import {
   useAuthorizationRoles,
 } from '@folio/stripes-authorization-components';
 
-import { useMemberSelection } from '../../hooks';
+import { useMemberSelectionContext } from '../../MemberSelectionContext';
 import {
   COLUMN_MAPPING,
   VISIBLE_COLUMNS,
@@ -36,7 +36,7 @@ export const AuthorizationRolesViewPage = ({ path }) => {
     activeMember,
     membersOptions,
     setActiveMember,
-  } = useMemberSelection();
+  } = useMemberSelectionContext();
 
   const { roles, isLoading, onSubmitSearch } = useAuthorizationRoles(activeMember);
 
@@ -116,7 +116,13 @@ export const AuthorizationRolesViewPage = ({ path }) => {
           visibleColumns={VISIBLE_COLUMNS}
         />
       </Pane>
-      {roleId && <RoleDetails roleId={roleId} path={path} />}
+      {roleId && (
+        <RoleDetails
+          tenantId={activeMember}
+          roleId={roleId}
+          path={path}
+        />
+      )}
     </Paneset>
   );
 };
