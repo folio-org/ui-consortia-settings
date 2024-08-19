@@ -39,12 +39,12 @@ describe('AuthorizationPoliciesSettings', () => {
 
     renderWithRouter(<AuthorizationPoliciesSettings {...props} />);
 
-    const searchInput = screen.getByLabelText('stripes-authorization-components.search');
+    const searchInput = screen.getByLabelText('ui-consortia-settings.authorizationPolicy.search');
 
     expect(searchInput).toBeInTheDocument();
     await userEvent.type(searchInput, searchQuery);
-    await userEvent.click(screen.getByRole('button', { name: 'stripes-authorization-components.search' }));
+    await userEvent.click(screen.getByRole('button', { name: 'ui-consortia-settings.authorizationPolicy.search' }));
 
-    expect(screen.getByLabelText('stripes-authorization-components.search')).toHaveDisplayValue(searchQuery);
+    expect(screen.getByLabelText('ui-consortia-settings.authorizationPolicy.search')).toHaveDisplayValue(searchQuery);
   });
 });
