@@ -86,6 +86,7 @@ const settingsLabelsMap = {
   inventory: 'ui-inventory.inventory.label',
   users: 'ui-users.settings.label',
   'authorization-roles': 'authorization-roles',
+  'authorization-policies': 'authorization-policies',
 };
 
 describe('ConsortiumManager', () => {
