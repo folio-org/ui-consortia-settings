@@ -10,14 +10,18 @@ import {
 } from '@folio/jest-config-stripes/testing-library/react';
 import { useAuthorizationRoles } from '@folio/stripes-authorization-components';
 
-import AuthorizationRolesSettings from './AuthorizationRolesSettings';
+import { useMemberSelectionContext } from '../../MemberSelectionContext';
+import { AuthorizationRolesSettings } from './AuthorizationRolesSettings';
 
 jest.mock('@folio/stripes-authorization-components', () => ({
   RoleCreate: () => <div>RoleCreate</div>,
   RoleEdit: () => <div>RoleEdit</div>,
   useAuthorizationRoles: jest.fn(),
 }));
-
+jest.mock('../../MemberSelectionContext', () => ({
+  ...jest.requireActual('../../MemberSelectionContext'),
+  useMemberSelectionContext: jest.fn(),
+}));
 jest.mock('./AuthorizationRolesViewPage', () => ({
   AuthorizationRolesViewPage: () => <div>AuthorizationRolesViewPage</div>,
 }));
@@ -40,12 +44,16 @@ const renderComponent = () => render(<AuthorizationRolesSettings />, { wrapper }
 
 describe('AuthorizationRolesSettings', () => {
   beforeEach(() => {
+    useMemberSelectionContext
+      .mockClear()
+      .mockReturnValue({ activeMember: 'central' });
     useAuthorizationRoles.mockClear().mockReturnValue({
       roles: [],
       isLoading: false,
       onSubmitSearch: jest.fn(),
     });
   });
+
   it('should display authorization roles page', async () => {
     window.location.pathname = 'consortia-settings/authorization-roles';
     renderComponent();

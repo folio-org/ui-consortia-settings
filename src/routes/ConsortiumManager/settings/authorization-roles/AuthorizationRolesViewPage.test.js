@@ -9,14 +9,17 @@ import {
 import { Paneset } from '@folio/stripes/components';
 
 import { ConsortiumManagerContextProviderMock } from 'helpers';
+import { MemberSelectionContextProvider } from '../../MemberSelectionContext';
 import { AuthorizationRolesViewPage } from './AuthorizationRolesViewPage';
 
 const wrapper = ({ children }) => (
   <MemoryRouter>
     <ConsortiumManagerContextProviderMock>
-      <Paneset>
-        {children}
-      </Paneset>
+      <MemberSelectionContextProvider>
+        <Paneset>
+          {children}
+        </Paneset>
+      </MemberSelectionContextProvider>
     </ConsortiumManagerContextProviderMock>
   </MemoryRouter>
 );
@@ -38,14 +41,6 @@ jest.mock('@folio/stripes-authorization-components', () => ({
       <button type="submit" onClick={onSubmit}>ui-authorization-roles.search</button>
     </div>
   ),
-}));
-
-jest.mock('../../hooks', () => ({
-  useMemberSelection: jest.fn().mockReturnValue({
-    activeMember: 'activeMember',
-    membersOptions: [{ value: 'value', label: 'label' }],
-    setActiveMember: jest.fn(),
-  }),
 }));
 
 const mockRoles = [
