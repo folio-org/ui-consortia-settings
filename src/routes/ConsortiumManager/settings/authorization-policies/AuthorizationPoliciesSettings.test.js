@@ -36,6 +36,7 @@ describe('AuthorizationPoliciesSettings', () => {
 
   it('should call `handleSearchSubmit` on click search button', async () => {
     const searchQuery = 'test';
+
     renderWithRouter(<AuthorizationPoliciesSettings {...props} />);
 
     const searchInput = screen.getByLabelText('stripes-authorization-components.search');

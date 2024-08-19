@@ -23,9 +23,9 @@ import {
 import { useMemberSelection } from '../../hooks';
 import {
   COLUMN_MAPPING,
-  getResultsFormatter,
   VISIBLE_COLUMNS,
-} from './constanta';
+} from './constants';
+import { getResultsFormatter } from './utils';
 
 const AuthorizationPoliciesSettings = () => {
   const [searchTerm, setSearchTerm] = useState('');
