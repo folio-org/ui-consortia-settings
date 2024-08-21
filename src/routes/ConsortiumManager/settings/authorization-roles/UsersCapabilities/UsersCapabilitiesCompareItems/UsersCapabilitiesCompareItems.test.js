@@ -9,31 +9,31 @@ import {
   useAuthorizationRoles,
   useUserCapabilities,
   useUserCapabilitiesSets,
-  useUserRolesByUserIds
+  useUserRolesByUserIds,
 } from '@folio/stripes-authorization-components';
 
 import {
-  tenants,
   groupedRoleCapabilitiesByType,
   groupedRoleCapabilitySetsByType,
+  tenants,
 } from 'fixtures';
 import { ConsortiumManagerContextProviderMock } from 'helpers';
 
 import { COMPARE_ITEM_NAME } from '../../../users/general/PermissionSets/PermissionSetsCompare/constants';
+import { useUsers } from '../../../../../../hooks';
 import { UsersCapabilitiesCompareItems } from './UsersCapabilitiesCompareItems';
-import  { useUsers } from '../../../../../../hooks';
 
-jest.mock('@folio/stripes-authorization-components', ()=> ({
+jest.mock('@folio/stripes-authorization-components', () => ({
   ...jest.requireActual('@folio/stripes-authorization-components'),
   useUserCapabilities: jest.fn(),
   useUserCapabilitiesSets: jest.fn(),
   useAuthorizationRoles: jest.fn(),
   useUserRolesByUserIds: jest.fn(),
-}))
+}));
 
 jest.mock('../../../../../../hooks/useUsers/useUsers');
 
-const selectedMemberOptions = tenants.filter((el, index)=> index < 3).map(({ name, id }) => ({ value: id, label: name }));
+const selectedMemberOptions = tenants.filter((el, index) => index < 3).map(({ name, id }) => ({ value: id, label: name }));
 
 const defaultProps = {
   rolesToCompare: [],
@@ -43,26 +43,26 @@ const defaultProps = {
 };
 
 const userRolesResponse = [{
-    roleId: '1',
-    userId: '1',
-  }
-]
+  roleId: '1',
+  userId: '1',
+},
+];
 
-const roles =  [
+const roles = [
   { id: '1', name: 'role-1' },
   { id: '2', name: 'role-2' },
-  { id: '3', name: 'role-3' }
+  { id: '3', name: 'role-3' },
 ];
 const users = [
   {
     id: '1',
-    username: 'Admin1'
+    username: 'Admin1',
   },
-   {
+  {
     id: '2',
-    username: 'Admin2'
-  }
-]
+    username: 'Admin2',
+  },
+];
 
 const wrapper = ({ children }) => (
   <MemoryRouter>
@@ -86,21 +86,20 @@ describe('UsersCapabilitiesCompareItems', () => {
       roles,
     });
     useUsers.mockClear().mockReturnValue({
-      users
-    })
+      users,
+    });
     useUserRolesByUserIds.mockClear().mockReturnValue({
-      userRolesResponse
-    })
+      userRolesResponse,
+    });
     useUserCapabilitiesSets.mockClear().mockReturnValue({
-        groupedUserCapabilitySetsByType: groupedRoleCapabilitySetsByType,
-        initialUserCapabilitySetsSelectedMap: 1,
-        capabilitySetsTotalCount: 2
-      }
-    );
+      groupedUserCapabilitySetsByType: groupedRoleCapabilitySetsByType,
+      initialUserCapabilitySetsSelectedMap: 1,
+      capabilitySetsTotalCount: 2,
+    });
     useUserCapabilities.mockClear().mockReturnValue({
       groupedUserCapabilitiesByType: groupedRoleCapabilitiesByType,
       initialUserCapabilitiesSelectedMap: 1,
-      capabilitiesTotalCount: 2
+      capabilitiesTotalCount: 2,
     });
   });
 
@@ -114,13 +113,13 @@ describe('UsersCapabilitiesCompareItems', () => {
 
     renderComponent({ setRolesToCompare });
 
-    await userEvent.click(screen.getByText(users[0].username))
+    await userEvent.click(screen.getByText(users[0].username));
 
     await userEvent.click(screen.getByText(selectedMemberOptions[0].label));
     await userEvent.click(screen.getByText(roles[0].name));
 
     screen.getAllByText('Capability Roles').forEach(role => {
-      expect(role).toBeInTheDocument()
-    })
+      expect(role).toBeInTheDocument();
+    });
   });
 });

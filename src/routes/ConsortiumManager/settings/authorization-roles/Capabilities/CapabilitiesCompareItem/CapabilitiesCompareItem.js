@@ -23,15 +23,16 @@ import {
   useRoleCapabilitySets,
 } from '@folio/stripes-authorization-components';
 
+import { onFilter } from '../../utils';
+
 export const CapabilitiesCompareItem = ({
   columnName,
   members,
   rolesToCompare,
   setRolesToCompare,
-  initialSelectedMemberId,
 }) => {
   const intl = useIntl();
-  const [selectedRoleId, setSelectedRoleId] = useState(initialSelectedMemberId);
+  const [selectedRoleId, setSelectedRoleId] = useState('');
   const [selectedMemberId, setSelectedMemberId] = useState('');
   const isMounted = useRef(false);
 
@@ -69,9 +70,17 @@ export const CapabilitiesCompareItem = ({
     } else {
       isMounted.current = true;
     }
-    // adding `setRolesToCompare` as dependency will cause to infinite update loop
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedRoleId, columnName, capabilitiesTotalCount, capabilitySetsTotalCount]);
+  }, [
+    selectedRoleId,
+    columnName,
+    groupedRoleCapabilitiesByType,
+    capabilitySetsTotalCount,
+    selectedMemberId,
+    isSuccessCapabilitiesSet,
+    isSuccessCapabilities,
+    groupedRoleCapabilitySetsByType,
+  ]);
 
   const isCapabilitySetSelected = (capabilitySetId) => !!initialRoleCapabilitySetsSelectedMap[capabilitySetId];
   const isCapabilitySelected = (capabilityId) => !!initialRoleCapabilitiesSelectedMap[capabilityId];
@@ -85,6 +94,7 @@ export const CapabilitiesCompareItem = ({
         placeholder={intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.members.permissionSets.compare.member.placeholder' })}
         dataOptions={members}
         onChange={setSelectedMemberId}
+        onFilter={onFilter}
       />
       <Selection
         name="authorization-role"
@@ -93,8 +103,10 @@ export const CapabilitiesCompareItem = ({
         placeholder={intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.members.authorizationsRoles.compare.placeholder' })}
         dataOptions={availableRoles}
         value={selectedRoleId}
+        disabled={!selectedMemberId}
         onChange={setSelectedRoleId}
         loading={isLoading}
+        onFilter={onFilter}
       />
       <AccordionSet>
         <Accordion
@@ -147,7 +159,6 @@ CapabilitiesCompareItem.propTypes = {
   )),
   setRolesToCompare: PropTypes.func,
   columnName: PropTypes.string.isRequired,
-  initialSelectedMemberId: PropTypes.string,
   members: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,

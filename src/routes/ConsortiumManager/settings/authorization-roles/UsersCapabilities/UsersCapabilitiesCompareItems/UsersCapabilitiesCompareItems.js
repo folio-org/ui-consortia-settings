@@ -13,8 +13,8 @@ import {
 import {
   Accordion,
   AccordionSet,
-  Selection,
   EmptyMessage,
+  Selection,
 } from '@folio/stripes/components';
 import {
   CapabilitiesSection,
@@ -24,17 +24,17 @@ import {
 } from '@folio/stripes-authorization-components';
 
 import { useUsers } from '../../../../../../hooks';
+import { onFilter } from '../../utils';
 
 export const UsersCapabilitiesCompareItems = ({
   columnName,
   members,
   rolesToCompare,
   setRolesToCompare,
-  initialSelectedMemberId,
 }) => {
   const intl = useIntl();
   const [selectedRoleId, setSelectedRoleId] = useState('');
-  const [selectedMemberId, setSelectedMemberId] = useState(initialSelectedMemberId);
+  const [selectedMemberId, setSelectedMemberId] = useState('');
   const [selectedUserId, setSelectedUserId] = useState('');
   const isMounted = useRef(false);
 
@@ -77,7 +77,12 @@ export const UsersCapabilitiesCompareItems = ({
     }
     // adding `setRolesToCompare` as dependency will cause to infinite update loop
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedRoleId, columnName, capabilitiesTotalCount]);
+  }, [
+    selectedRoleId,
+    columnName,
+    capabilitiesTotalCount,
+    isSuccessCapabilities,
+  ]);
 
   const handleUserChange = (value) => {
     setSelectedUserId(value);
@@ -95,6 +100,7 @@ export const UsersCapabilitiesCompareItems = ({
         placeholder={intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.members.permissionSets.compare.member.placeholder' })}
         dataOptions={members}
         onChange={setSelectedMemberId}
+        onFilter={onFilter}
       />
       <Selection
         name="users"
@@ -102,6 +108,8 @@ export const UsersCapabilitiesCompareItems = ({
         dataOptions={availableUsers}
         loading={isFetching}
         value={selectedUserId}
+        disabled={!selectedMemberId}
+        onFilter={onFilter}
         placeholder={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.permissionSets.compare.user.placeholder" />}
         label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.permissionSets.compare.user" />}
       />
@@ -111,9 +119,11 @@ export const UsersCapabilitiesCompareItems = ({
         id="permissionSet"
         placeholder={intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.members.authorizationsRoles.compare.placeholder' })}
         dataOptions={availableRoles}
+        disabled={!selectedUserId}
         value={selectedRoleId}
         onChange={setSelectedRoleId}
         loading={isLoading}
+        onFilter={onFilter}
       />
       <AccordionSet>
         <Accordion
@@ -148,7 +158,6 @@ UsersCapabilitiesCompareItems.propTypes = {
   )),
   setRolesToCompare: PropTypes.func,
   columnName: PropTypes.string.isRequired,
-  initialSelectedMemberId: PropTypes.string,
   members: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,

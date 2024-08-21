@@ -7,10 +7,7 @@ import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
-import {
-  useLocation,
-  useHistory,
-} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import {
   Layer,
@@ -21,16 +18,13 @@ import {
 
 import { AUTHORIZATION_ROLES_ROUTE } from '../../../../../../constants';
 import { useConsortiumManagerContext } from '../../../../../../contexts';
-import { TENANT_ID_SEARCH_PARAMS } from '../../../users/general/PermissionSets/constants';
 import { COMPARE_ITEM_NAME } from '../../../users/general/PermissionSets/PermissionSetsCompare/constants';
 import { UsersCapabilitiesCompareItems } from '../UsersCapabilitiesCompareItems';
 
 export const UsersCapabilitiesCompare = () => {
   const history = useHistory();
-  const { search } = useLocation();
   const intl = useIntl();
 
-  const initialSelectedMemberId = useMemo(() => new URLSearchParams(search).get(TENANT_ID_SEARCH_PARAMS), [search]);
   const [rolesToCompare, setRolesToCompare] = useState({
     [COMPARE_ITEM_NAME.LEFT_COLUMN]: [],
     [COMPARE_ITEM_NAME.RIGHT_COLUMN]: [],
@@ -38,15 +32,14 @@ export const UsersCapabilitiesCompare = () => {
 
   const { selectedMembers } = useConsortiumManagerContext();
 
-  const handleRolesToCompare = useCallback((roles, columnName) => {
-    setRolesToCompare({
-      ...rolesToCompare,
+  const handleRolesToCompare = (roles, columnName) => {
+    setRolesToCompare(prevState => ({
+      ...prevState,
       [columnName]: {
         capabilities: roles.capabilities,
-        capabilitiesSets: roles.capabilitiesSets,
       },
-    });
-  }, [rolesToCompare]);
+    }));
+  };
 
   const members = useMemo(() => {
     return selectedMembers.map(({ id, name }) => ({ value: id, label: name }));
@@ -82,7 +75,6 @@ export const UsersCapabilitiesCompare = () => {
               columnName={COMPARE_ITEM_NAME.LEFT_COLUMN}
               rolesToCompare={rolesToCompare[COMPARE_ITEM_NAME.RIGHT_COLUMN]}
               setRolesToCompare={handleRolesToCompare}
-              initialSelectedMemberId={initialSelectedMemberId}
             />
           </Pane>
           <Pane
