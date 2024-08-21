@@ -192,5 +192,13 @@
     "permission.settings.networkOrdering.view": "Configurações (Consórcios): Pode visualizar o pedido de rede",
     "permission.settings.networkOrdering.edit": "Configurações (Consórcios): Pode visualizar e editar o pedido de rede",
     "settings.centralOrdering.alert.message": "Nesta versão do FOLIO, uma vez ativada, essa configuração não pode ser desabilitada.",
-    "settings.centralOrdering.confirmModal.message": "Tem certeza de que gostaria de ativar essa funcionalidade?"
+    "settings.centralOrdering.confirmModal.message": "Tem certeza de que gostaria de ativar essa funcionalidade?",
+    "consortiumManager.members.authorizationsRoles": "Funções de autorização",
+    "consortiumManager.members.authorizationsRoles.compare": "Comparar funções",
+    "consortiumManager.members.authorizationsRoles.compare.roles": "Funções de autorização",
+    "consortiumManager.members.authorizationsRoles.compare.placeholder": "Selecionar a função de autorização",
+    "consortiumManager.members.authorizationsRoles.capabilities": "Capacidades",
+    "consortiumManager.members.authorizationsRoles.capabilitiesSets": "Conjuntos de capacidades",
+    "consortiumManager.members.authorizationsRoles.capabilities.empty": "Nenhuma capacidade encontrada",
+    "consortiumManager.members.authorizationsRoles.capabilitiesSets.empty": "Nenhum conjunto de capacidades encontrado"
 }

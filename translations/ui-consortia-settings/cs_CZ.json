@@ -192,5 +192,13 @@
     "permission.settings.networkOrdering.view": "Nastavení (Konsorcia): Může zobrazit síťové uspořádání",
     "permission.settings.networkOrdering.edit": "Nastavení (Konsorcia): Může prohlížet a upravovat síťové uspořádání",
     "settings.centralOrdering.alert.message": "V této verzi FOLIO nelze toto nastavení po aktivaci zakázat.",
-    "settings.centralOrdering.confirmModal.message": "Opravdu chcete tuto funkci aktivovat?"
+    "settings.centralOrdering.confirmModal.message": "Opravdu chcete tuto funkci aktivovat?",
+    "consortiumManager.members.authorizationsRoles": "Autorizační role",
+    "consortiumManager.members.authorizationsRoles.compare": "Porovnat role",
+    "consortiumManager.members.authorizationsRoles.compare.roles": "Autorizační role",
+    "consortiumManager.members.authorizationsRoles.compare.placeholder": "Vybrat autorizační roli",
+    "consortiumManager.members.authorizationsRoles.capabilities": "Schopnosti",
+    "consortiumManager.members.authorizationsRoles.capabilitiesSets": "Sady schopností",
+    "consortiumManager.members.authorizationsRoles.capabilities.empty": "Nebyly nalezeny žádné schopnosti",
+    "consortiumManager.members.authorizationsRoles.capabilitiesSets.empty": "Nebyly nalezeny žádné sady schopností"
 }
