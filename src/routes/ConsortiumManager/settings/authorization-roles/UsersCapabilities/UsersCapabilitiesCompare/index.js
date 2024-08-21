@@ -1,0 +1,1 @@
+export { UsersCapabilitiesCompare } from './UsersCapabilitiesCompare';

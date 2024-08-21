@@ -13,19 +13,20 @@ import {
 import {
   Accordion,
   AccordionSet,
-  Selection,
   EmptyMessage,
+  Selection,
 } from '@folio/stripes/components';
 import {
   CapabilitiesSection,
   useAuthorizationRoles,
-  useRoleCapabilities,
-  useRoleCapabilitySets,
+  useUserCapabilities,
+  useUserRolesByUserIds,
 } from '@folio/stripes-authorization-components';
 
+import { useUsers } from '../../../../../../hooks';
 import { onFilter } from '../../utils';
 
-export const CapabilitiesCompareItem = ({
+export const UsersCapabilitiesCompareItems = ({
   columnName,
   members,
   rolesToCompare,
@@ -34,56 +35,61 @@ export const CapabilitiesCompareItem = ({
   const intl = useIntl();
   const [selectedRoleId, setSelectedRoleId] = useState('');
   const [selectedMemberId, setSelectedMemberId] = useState('');
+  const [selectedUserId, setSelectedUserId] = useState('');
   const isMounted = useRef(false);
 
+  const { users, isFetching } = useUsers({ tenant: selectedMemberId });
+  const { userRolesResponse } = useUserRolesByUserIds([selectedUserId]);
   const { roles, isLoading } = useAuthorizationRoles(selectedMemberId);
 
   const availableRoles = useMemo(() => {
-    return roles.map((el) => {
+    return roles.filter(role => userRolesResponse.some(userRole => userRole.roleId === role.id)).map((el) => {
       return ({
         value: el.id,
         label: el.name,
       });
     });
-  }, [roles, selectedMemberId]);
+  }, [roles, userRolesResponse]);
 
-  const {
-    groupedRoleCapabilitySetsByType,
-    capabilitySetsTotalCount,
-    isSuccess: isSuccessCapabilitiesSet,
-    initialRoleCapabilitySetsSelectedMap,
-  } = useRoleCapabilitySets(selectedRoleId, selectedMemberId);
+  const availableUsers = useMemo(() => {
+    return users.map((el) => {
+      return ({
+        value: el.id,
+        label: el.username,
+      });
+    });
+  }, [users]);
 
   const {
     capabilitiesTotalCount,
     isSuccess: isSuccessCapabilities,
-    initialRoleCapabilitiesSelectedMap,
-    groupedRoleCapabilitiesByType,
-  } = useRoleCapabilities(selectedRoleId, selectedMemberId);
+    initialUserCapabilitiesSelectedMap,
+    groupedUserCapabilitiesByType,
+  } = useUserCapabilities(selectedUserId, selectedMemberId, selectedRoleId);
 
   useEffect(() => {
-    if (isMounted.current && isSuccessCapabilitiesSet && isSuccessCapabilities) {
+    if (isMounted.current && isSuccessCapabilities) {
       setRolesToCompare({
-        capabilities: groupedRoleCapabilitiesByType,
-        capabilitiesSets: groupedRoleCapabilitySetsByType,
+        capabilities: groupedUserCapabilitiesByType,
       }, columnName);
     } else {
       isMounted.current = true;
     }
+    // adding `setRolesToCompare` as dependency will cause to infinite update loop
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     selectedRoleId,
     columnName,
-    groupedRoleCapabilitiesByType,
-    capabilitySetsTotalCount,
-    selectedMemberId,
-    isSuccessCapabilitiesSet,
+    capabilitiesTotalCount,
     isSuccessCapabilities,
-    groupedRoleCapabilitySetsByType,
   ]);
 
-  const isCapabilitySetSelected = (capabilitySetId) => !!initialRoleCapabilitySetsSelectedMap[capabilitySetId];
-  const isCapabilitySelected = (capabilityId) => !!initialRoleCapabilitiesSelectedMap[capabilityId];
+  const handleUserChange = (value) => {
+    setSelectedUserId(value);
+    setSelectedRoleId('');
+  };
+
+  const isCapabilitySelected = (capabilityId) => !!initialUserCapabilitiesSelectedMap[capabilityId];
 
   return (
     <div>
@@ -97,13 +103,24 @@ export const CapabilitiesCompareItem = ({
         onFilter={onFilter}
       />
       <Selection
+        name="users"
+        onChange={handleUserChange}
+        dataOptions={availableUsers}
+        loading={isFetching}
+        value={selectedUserId}
+        disabled={!selectedMemberId}
+        onFilter={onFilter}
+        placeholder={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.permissionSets.compare.user.placeholder" />}
+        label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.permissionSets.compare.user" />}
+      />
+      <Selection
         name="authorization-role"
         label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.compare.roles" />}
         id="permissionSet"
         placeholder={intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.members.authorizationsRoles.compare.placeholder' })}
         dataOptions={availableRoles}
+        disabled={!selectedUserId}
         value={selectedRoleId}
-        disabled={!selectedMemberId}
         onChange={setSelectedRoleId}
         loading={isLoading}
         onFilter={onFilter}
@@ -116,7 +133,7 @@ export const CapabilitiesCompareItem = ({
           {capabilitiesTotalCount ?
             <CapabilitiesSection
               isCapabilitySelected={isCapabilitySelected}
-              capabilities={groupedRoleCapabilitiesByType}
+              capabilities={groupedUserCapabilitiesByType}
               readOnly
               capabilitiesToCompare={rolesToCompare.capabilities}
               isNeedToCompare
@@ -127,30 +144,12 @@ export const CapabilitiesCompareItem = ({
             </EmptyMessage>
           }
         </Accordion>
-        <Accordion
-          closedByDefault
-          label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.capabilitiesSets" />}
-        >
-          {capabilitySetsTotalCount ?
-            <CapabilitiesSection
-              isCapabilitySelected={isCapabilitySetSelected}
-              readOnly
-              capabilities={groupedRoleCapabilitySetsByType}
-              capabilitiesToCompare={rolesToCompare.capabilitiesSets}
-              isNeedToCompare
-            />
-            :
-            <EmptyMessage>
-              <FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.capabilitiesSets.empty" />
-            </EmptyMessage>
-          }
-        </Accordion>
       </AccordionSet>
     </div>
   );
 };
 
-CapabilitiesCompareItem.propTypes = {
+UsersCapabilitiesCompareItems.propTypes = {
   rolesToCompare: PropTypes.arrayOf(PropTypes.shape(
     {
       capabilities: PropTypes.arrayOf(object),
