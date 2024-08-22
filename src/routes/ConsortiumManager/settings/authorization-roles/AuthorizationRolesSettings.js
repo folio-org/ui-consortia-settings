@@ -14,6 +14,7 @@ import { AUTHORIZATION_ROLES_ROUTE } from '../../../../constants';
 import { useMemberSelectionContext } from '../../MemberSelectionContext';
 import { AuthorizationRolesViewPage } from './AuthorizationRolesViewPage';
 import { CapabilitiesCompare } from './Capabilities';
+import { UsersCapabilitiesCompare } from './UsersCapabilities';
 
 export const AuthorizationRolesSettings = () => {
   const { activeMember } = useMemberSelectionContext();
@@ -25,6 +26,11 @@ export const AuthorizationRolesSettings = () => {
           exact
           path={`${AUTHORIZATION_ROLES_ROUTE}/compare`}
           component={CapabilitiesCompare}
+        />
+        <Route
+          exact
+          path={`${AUTHORIZATION_ROLES_ROUTE}/compare-users`}
+          component={UsersCapabilitiesCompare}
         />
         <Route
           exact

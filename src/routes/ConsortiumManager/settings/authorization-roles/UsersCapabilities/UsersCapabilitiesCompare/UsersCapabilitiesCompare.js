@@ -19,11 +19,12 @@ import {
 import { AUTHORIZATION_ROLES_ROUTE } from '../../../../../../constants';
 import { useConsortiumManagerContext } from '../../../../../../contexts';
 import { COMPARE_ITEM_NAME } from '../../../users/general/PermissionSets/PermissionSetsCompare/constants';
-import { CapabilitiesCompareItem } from '../CapabilitiesCompareItem';
+import { UsersCapabilitiesCompareItems } from '../UsersCapabilitiesCompareItems';
 
-export const CapabilitiesCompare = () => {
+export const UsersCapabilitiesCompare = () => {
   const history = useHistory();
   const intl = useIntl();
+
   const [rolesToCompare, setRolesToCompare] = useState({
     [COMPARE_ITEM_NAME.LEFT_COLUMN]: [],
     [COMPARE_ITEM_NAME.RIGHT_COLUMN]: [],
@@ -31,19 +32,18 @@ export const CapabilitiesCompare = () => {
 
   const { selectedMembers } = useConsortiumManagerContext();
 
+  const handleRolesToCompare = (roles, columnName) => {
+    setRolesToCompare(prevState => ({
+      ...prevState,
+      [columnName]: {
+        capabilities: roles.capabilities,
+      },
+    }));
+  };
+
   const members = useMemo(() => {
     return selectedMembers.map(({ id, name }) => ({ value: id, label: name }));
   }, [selectedMembers]);
-
-  const handleRolesToCompare = useCallback((roles, columnName) => {
-    setRolesToCompare({
-      ...rolesToCompare,
-      [columnName]: {
-        capabilities: roles.capabilities,
-        capabilitiesSets: roles.capabilitiesSets,
-      },
-    });
-  }, [rolesToCompare]);
 
   const onClose = () => history.push(AUTHORIZATION_ROLES_ROUTE);
 
@@ -60,7 +60,7 @@ export const CapabilitiesCompare = () => {
           <PaneHeader
             dismissible
             onClose={onClose}
-            paneTitle={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.compare" />}
+            paneTitle={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.users.compare" />}
           />
         )}
         padContent={false}
@@ -70,7 +70,7 @@ export const CapabilitiesCompare = () => {
             defaultWidth="50%"
             renderHeader={null}
           >
-            <CapabilitiesCompareItem
+            <UsersCapabilitiesCompareItems
               members={members}
               columnName={COMPARE_ITEM_NAME.LEFT_COLUMN}
               rolesToCompare={rolesToCompare[COMPARE_ITEM_NAME.RIGHT_COLUMN]}
@@ -81,7 +81,7 @@ export const CapabilitiesCompare = () => {
             defaultWidth="50%"
             renderHeader={null}
           >
-            <CapabilitiesCompareItem
+            <UsersCapabilitiesCompareItems
               members={members}
               columnName={COMPARE_ITEM_NAME.RIGHT_COLUMN}
               rolesToCompare={rolesToCompare[COMPARE_ITEM_NAME.LEFT_COLUMN]}
