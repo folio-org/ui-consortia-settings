@@ -1,1 +1,1 @@
-export { default } from './AuthorizationRolesSettings';
+export { default } from './AuthorizationRolesSettingsContainer';
