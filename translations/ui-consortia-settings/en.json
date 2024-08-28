@@ -178,6 +178,7 @@
   "consortiumManager.modal.confirmShare.all.message": "Are you sure you want to share {term} with <b>ALL</b> members?",
 
   "authorizationPolicy.search": "Search",
+  "authorizationPolicy.new": "New",
   "authorizationPolicy.meta.title": "Authorization policies",
   "authorizationPolicy.columns.name": "Name",
   "authorizationPolicy.columns.description": "Description",
