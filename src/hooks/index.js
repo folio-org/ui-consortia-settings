@@ -1,3 +1,4 @@
+export { useCommonErrorMessages } from './useCommonErrorMessages';
 export { useCurrentConsortium } from './useCurrentConsortium';
 export { useCurrentUserTenantsPermissions } from './useCurrentUserTenantsPermissions';
 export { useEventEmitter } from './useEventEmitter';

@@ -1,6 +1,14 @@
-import { isNil, noop } from 'lodash';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import isNil from 'lodash/isNil';
+import noop from 'lodash/noop';
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 
 import { AppIcon } from '@folio/stripes/core';
 import {
@@ -13,7 +21,6 @@ import {
 } from '@folio/stripes/components';
 import {
   PrevNextPagination,
-  useShowCallout,
   useSorting,
 } from '@folio/stripes-acq-components';
 import {
@@ -22,6 +29,10 @@ import {
 } from '@folio/stripes-data-transfer-components';
 
 import { MODULE_ROOT_ROUTE } from '../../../../../constants';
+import {
+  useCommonErrorMessages,
+  useTenantKy,
+} from '../../../../../hooks';
 import { useMemberSelection } from '../../../hooks';
 import {
   DEFAULT_PAGINATION,
@@ -34,13 +45,11 @@ import {
 } from '../constants';
 import { useDataExportLogs } from '../hooks';
 import { getExportJobLogsListResultsFormatter } from '../utils';
-import { useTenantKy } from '../../../../../hooks';
 
 import css from './DataExportLogs.css';
 
 export const DataExportLogs = () => {
   const intl = useIntl();
-  const showCallout = useShowCallout();
   const formatTime = useTimeFormatter();
 
   const {
@@ -57,21 +66,7 @@ export const DataExportLogs = () => {
   ] = useSorting(noop, EXPORT_JOB_LOG_SORTABLE_COLUMNS);
   const [pagination, changePage] = useState(DEFAULT_PAGINATION);
 
-  const handleLogsLoadingError = useCallback(({ response }) => {
-    const defaultMessage = intl.formatMessage({ id: 'ui-consortia-settings.errors.jobs.load.common' });
-
-    if (response?.status === 403) {
-      return showCallout({
-        message: `${defaultMessage} ${intl.formatMessage({ id: 'ui-consortia-settings.errors.permissionsRequired' })}`,
-        type: 'error',
-      });
-    }
-
-    return showCallout({
-      message: defaultMessage,
-      type: 'error',
-    });
-  }, [intl, showCallout]);
+  const { handleErrorMessages } = useCommonErrorMessages();
 
   const {
     isFetching,
@@ -85,7 +80,7 @@ export const DataExportLogs = () => {
       tenantId: activeMember,
     },
     {
-      onError: handleLogsLoadingError,
+      onError: ({ response }) => handleErrorMessages({ response }),
     },
   );
 

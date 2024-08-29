@@ -27,6 +27,7 @@ import {
   VISIBLE_COLUMNS,
 } from './constants';
 import { getResultsFormatter } from './utils';
+import { useCommonErrorMessages } from '../../../../hooks';
 
 export const AuthorizationRolesViewPage = ({ path }) => {
   const { id: roleId } = useParams();
@@ -38,7 +39,16 @@ export const AuthorizationRolesViewPage = ({ path }) => {
     setActiveMember,
   } = useMemberSelectionContext();
 
-  const { roles, isLoading, onSubmitSearch } = useAuthorizationRoles(activeMember);
+  const { handleErrorMessages } = useCommonErrorMessages();
+  const { roles, isLoading, onSubmitSearch } = useAuthorizationRoles(
+    activeMember,
+    {
+      onError: ({ response }) => handleErrorMessages({
+        response,
+        messageId: 'ui-consortia-settings.authorizationRoles.errors.loading.data',
+      }),
+    },
+  );
 
   const lastMenu = (
     <Dropdown

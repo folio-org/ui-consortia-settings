@@ -26,6 +26,7 @@ import {
   VISIBLE_COLUMNS,
 } from './constants';
 import { getResultsFormatter } from './utils';
+import { useCommonErrorMessages } from '../../../../hooks';
 
 const AuthorizationPoliciesSettings = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -47,11 +48,21 @@ const AuthorizationPoliciesSettings = () => {
     </PaneMenu>
   );
 
+  const { handleErrorMessages } = useCommonErrorMessages();
   const {
     policies,
     isLoading,
     refetch,
-  } = useAuthorizationPolicies({ searchTerm, tenantId: activeMember });
+  } = useAuthorizationPolicies({
+    searchTerm,
+    tenantId: activeMember,
+    options: {
+      onError: ({ response }) => handleErrorMessages({
+        response,
+        messageId: 'ui-consortia-settings.authorizationPolicy.errors.loading.data',
+      }),
+    },
+  });
   const { users } = useUsers(policies.map(i => i.metadata.updatedByUserId));
 
   const handleSearchSubmit = (event) => {
