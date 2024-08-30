@@ -179,11 +179,14 @@
 
   "authorizationPolicy.search": "Search",
   "authorizationPolicy.new": "New",
+  "authorizationPolicy.errors.loading.data": "Authorization policies couldn't be loaded.",
   "authorizationPolicy.meta.title": "Authorization policies",
   "authorizationPolicy.columns.name": "Name",
   "authorizationPolicy.columns.description": "Description",
   "authorizationPolicy.columns.updatedDate": "Updated",
   "authorizationPolicy.columns.updatedBy": "Updated by",
+
+  "authorizationRoles.errors.loading.data": "Authorization roles couldn't be loaded.",
 
   "settings.heading": "Network settings",
   "settings.section.general": "General",

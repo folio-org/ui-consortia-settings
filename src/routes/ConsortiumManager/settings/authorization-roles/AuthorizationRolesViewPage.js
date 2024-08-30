@@ -1,8 +1,15 @@
 import PropTypes from 'prop-types';
-import { useMemo, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import {
+  useMemo,
+  useState,
+} from 'react';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import { useParams } from 'react-router-dom';
 
+import { useShowCallout } from '@folio/stripes-acq-components';
 import {
   Button,
   Dropdown,
@@ -21,6 +28,7 @@ import {
   useAuthorizationRoles,
 } from '@folio/stripes-authorization-components';
 
+import { handleErrorMessages } from '../../../../utils';
 import { useMemberSelectionContext } from '../../MemberSelectionContext';
 import {
   COLUMN_MAPPING,
@@ -29,6 +37,8 @@ import {
 import { getResultsFormatter } from './utils';
 
 export const AuthorizationRolesViewPage = ({ path }) => {
+  const intl = useIntl();
+  const showCallout = useShowCallout();
   const { id: roleId } = useParams();
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -38,7 +48,17 @@ export const AuthorizationRolesViewPage = ({ path }) => {
     setActiveMember,
   } = useMemberSelectionContext();
 
-  const { roles, isLoading, onSubmitSearch } = useAuthorizationRoles(activeMember);
+  const { roles, isLoading, onSubmitSearch } = useAuthorizationRoles(
+    activeMember,
+    {
+      onError: ({ response }) => handleErrorMessages({
+        intl,
+        showCallout,
+        response,
+        messageId: 'ui-consortia-settings.authorizationRoles.errors.loading.data',
+      }),
+    },
+  );
 
   const lastMenu = (
     <Dropdown

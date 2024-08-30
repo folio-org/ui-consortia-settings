@@ -13,7 +13,7 @@
 * [UICONSET-167](https://folio-org.atlassian.net/browse/UICONSET-167) Compare User capabilities in full screen view.
 * [UICONSET-160](https://folio-org.atlassian.net/browse/UICONSET-160) Saving and changing authorization roles in the consortium manager.
 * [UICONSET-183](https://folio-org.atlassian.net/browse/UICONSET-183) Data export permissions in ECS
-
+* [UICONSET-185](https://folio-org.atlassian.net/browse/UICONSET-185) ECS - Add error handler for Authorization roles and policies.
 
 ## [1.1.0](https://github.com/folio-org/ui-consortia-settings/tree/v1.1.0) (2024-03-20)
 [Full Changelog](https://github.com/folio-org/ui-orders/compare/v1.0.2...v1.1.0)

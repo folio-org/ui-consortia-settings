@@ -1,8 +1,20 @@
-import { isNil, noop } from 'lodash';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import isNil from 'lodash/isNil';
+import noop from 'lodash/noop';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 
-import {AppIcon, useStripes} from '@folio/stripes/core';
+import {
+  AppIcon,
+  useStripes,
+} from '@folio/stripes/core';
 import {
   Loading,
   MultiColumnList,
@@ -22,6 +34,7 @@ import {
 } from '@folio/stripes-data-transfer-components';
 
 import { MODULE_ROOT_ROUTE } from '../../../../../constants';
+import { useTenantKy } from '../../../../../hooks';
 import { useMemberSelection } from '../../../hooks';
 import {
   DEFAULT_PAGINATION,
@@ -34,14 +47,13 @@ import {
 } from '../constants';
 import { useDataExportLogs } from '../hooks';
 import { getExportJobLogsListResultsFormatter } from '../utils';
-import { useTenantKy } from '../../../../../hooks';
 
 import css from './DataExportLogs.css';
 
 export const DataExportLogs = () => {
+  const formatTime = useTimeFormatter();
   const intl = useIntl();
   const showCallout = useShowCallout();
-  const formatTime = useTimeFormatter();
   const stripes = useStripes();
 
   const {
@@ -57,7 +69,7 @@ export const DataExportLogs = () => {
     changeSorting,
   ] = useSorting(noop, EXPORT_JOB_LOG_SORTABLE_COLUMNS);
   const [pagination, changePage] = useState(DEFAULT_PAGINATION);
-  const settingsPerms  = stripes.hasPerm('ui-data-export.settings.view') && !stripes.hasPerm('ui-data-export.view');
+  const settingsPerms = stripes.hasPerm('ui-data-export.settings.view') && !stripes.hasPerm('ui-data-export.view');
 
   const handleLogsLoadingError = useCallback(({ response }) => {
     const defaultMessage = intl.formatMessage({ id: 'ui-consortia-settings.errors.jobs.load.common' });
@@ -73,7 +85,7 @@ export const DataExportLogs = () => {
       message: defaultMessage,
       type: 'error',
     });
-  }, [intl, showCallout]);
+  }, [intl, settingsPerms, showCallout]);
 
   const {
     isFetching,
@@ -136,7 +148,7 @@ export const DataExportLogs = () => {
             <div className={css.logsList}>
               <MultiColumnList
                 autosize
-                contentData={settingsPerms ? []: jobExecutions}
+                contentData={settingsPerms ? [] : jobExecutions}
                 loading={isFetching}
                 nonInteractiveHeaders={EXPORT_JOB_LOG_NON_INTERACTIVE_HEADERS}
                 onHeaderClick={changeSorting}

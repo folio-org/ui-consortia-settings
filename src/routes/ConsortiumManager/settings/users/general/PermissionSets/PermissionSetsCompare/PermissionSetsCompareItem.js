@@ -1,5 +1,4 @@
 import {
-  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -12,15 +11,16 @@ import {
 import xor from 'lodash/xor';
 import PropTypes from 'prop-types';
 
+import { useShowCallout } from '@folio/stripes-acq-components';
 import {
   Selection,
   AccordionSet,
   Accordion,
   List,
 } from '@folio/stripes/components';
-import { useShowCallout } from '@folio/stripes-acq-components';
 
 import { useTenantPermissions } from '../../../../../../../hooks';
+import { handleErrorMessages } from '../../../../../../../utils';
 import ItemFormatter from './ItemFormatter';
 
 export function PermissionSetsCompareItem({
@@ -31,26 +31,10 @@ export function PermissionSetsCompareItem({
   initialSelectedMemberId,
 }) {
   const intl = useIntl();
+  const showCallout = useShowCallout();
   const isMounted = useRef(false);
   const [selectedMemberId, setSelectedMemberId] = useState(initialSelectedMemberId);
   const [selectedPermissionId, setSelectedPermissionId] = useState('');
-  const showCallout = useShowCallout();
-
-  const handlePermissionsLoadingError = useCallback(({ response }) => {
-    const defaultMessage = intl.formatMessage({ id: 'ui-consortia-settings.errors.permissionSets.load.common' });
-
-    if (response?.status === 403) {
-      return showCallout({
-        message: `${defaultMessage} ${intl.formatMessage({ id: 'ui-consortia-settings.errors.permissionsRequired' })}`,
-        type: 'error',
-      });
-    }
-
-    return showCallout({
-      message: defaultMessage,
-      type: 'error',
-    });
-  }, [intl, showCallout]);
 
   const {
     isFetching,
@@ -63,7 +47,14 @@ export function PermissionSetsCompareItem({
         expandSubs: true,
       },
     },
-    { onError: handlePermissionsLoadingError },
+    {
+      onError: ({ response }) => handleErrorMessages({
+        intl,
+        showCallout,
+        response,
+        messageId: 'ui-consortia-settings.errors.permissionSets.load.common',
+      }),
+    },
   );
 
   const permissionOptions = useMemo(() => {

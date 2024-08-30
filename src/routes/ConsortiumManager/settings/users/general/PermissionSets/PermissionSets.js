@@ -1,17 +1,30 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import identity from 'lodash/identity';
+import noop from 'lodash/noop';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
+import {
+  Route,
+  Switch,
+} from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { identity, noop } from 'lodash';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { Route, Switch } from 'react-router-dom';
 
-import { Selection } from '@folio/stripes/components';
-import { EntrySelector } from '@folio/stripes/smart-components';
 import { useShowCallout } from '@folio/stripes-acq-components';
+import { Selection } from '@folio/stripes/components';
 import { stripesShape } from '@folio/stripes/core';
+import { EntrySelector } from '@folio/stripes/smart-components';
 
 import { UUID_REGEX } from '../../../../../../constants';
 import { useTenantPermissions } from '../../../../../../hooks';
 import { PermissionSetDetails } from '../../../../../../temp';
+import { handleErrorMessages } from '../../../../../../utils';
 import { useMemberSelection } from '../../../../hooks';
 import { PermissionSetsActionsMenu } from './PermissionSetsActionsMenu';
 import { PermissionSetsCompare } from './PermissionSetsCompare';
@@ -49,22 +62,6 @@ export const PermissionSets = (props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultActiveMember, setActiveMember]);
 
-  const handleLogsLoadingError = useCallback(({ response }) => {
-    const defaultMessage = intl.formatMessage({ id: 'ui-consortia-settings.errors.permissionSets.load.common' });
-
-    if (response?.status === 403) {
-      return showCallout({
-        message: `${defaultMessage} ${intl.formatMessage({ id: 'ui-consortia-settings.errors.permissionsRequired' })}`,
-        type: 'error',
-      });
-    }
-
-    return showCallout({
-      message: defaultMessage,
-      type: 'error',
-    });
-  }, [intl, showCallout]);
-
   const {
     isFetching,
     permissions: contentData,
@@ -76,7 +73,14 @@ export const PermissionSets = (props) => {
         expandSubs: true,
       },
     },
-    { onError: handleLogsLoadingError },
+    {
+      onError: ({ response }) => handleErrorMessages({
+        intl,
+        response,
+        showCallout,
+        messageId: 'ui-consortia-settings.errors.permissionSets.load.common',
+      }),
+    },
   );
 
   const onMemberChange = useCallback((member) => {

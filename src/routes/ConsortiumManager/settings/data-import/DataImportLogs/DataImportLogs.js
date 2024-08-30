@@ -1,10 +1,16 @@
-import { isNil, noop } from 'lodash';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-
+import isNil from 'lodash/isNil';
+import noop from 'lodash/noop';
 import {
-  AppIcon,
-} from '@folio/stripes/core';
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
+
+import { AppIcon } from '@folio/stripes/core';
 import {
   Loading,
   MultiColumnList,
@@ -19,6 +25,7 @@ import {
 } from '@folio/stripes-acq-components';
 
 import { MODULE_ROOT_ROUTE } from '../../../../../constants';
+import { handleErrorMessages } from '../../../../../utils';
 import { useMemberSelection } from '../../../hooks';
 import {
   DEFAULT_PAGINATION,
@@ -56,22 +63,6 @@ export const DataImportLogs = () => {
     changePage(DEFAULT_PAGINATION);
   }, [activeMember, sortingField, sortingDirection]);
 
-  const handleLogsLoadingError = useCallback(({ response }) => {
-    const defaultMessage = intl.formatMessage({ id: 'ui-consortia-settings.errors.jobs.load.common' });
-
-    if (response?.status === 403) {
-      return showCallout({
-        message: `${defaultMessage} ${intl.formatMessage({ id: 'ui-consortia-settings.errors.permissionsRequired' })}`,
-        type: 'error',
-      });
-    }
-
-    return showCallout({
-      message: defaultMessage,
-      type: 'error',
-    });
-  }, [intl, showCallout]);
-
   const {
     isFetching,
     isLoading,
@@ -84,7 +75,7 @@ export const DataImportLogs = () => {
       tenantId: activeMember,
     },
     {
-      onError: handleLogsLoadingError,
+      onError: ({ response }) => handleErrorMessages({ intl, response, showCallout }),
     },
   );
 

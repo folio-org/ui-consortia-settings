@@ -2,8 +2,12 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 
+import { useShowCallout } from '@folio/stripes-acq-components';
 import {
   useAuthorizationPolicies,
   useUsers,
@@ -20,6 +24,7 @@ import {
   Selection,
 } from '@folio/stripes/components';
 
+import { handleErrorMessages } from '../../../../utils';
 import { useMemberSelection } from '../../hooks';
 import {
   COLUMN_MAPPING,
@@ -28,6 +33,8 @@ import {
 import { getResultsFormatter } from './utils';
 
 const AuthorizationPoliciesSettings = () => {
+  const intl = useIntl();
+  const showCallout = useShowCallout();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRow, setSelectedRow] = useState(null);
 
@@ -51,7 +58,18 @@ const AuthorizationPoliciesSettings = () => {
     policies,
     isLoading,
     refetch,
-  } = useAuthorizationPolicies({ searchTerm, tenantId: activeMember });
+  } = useAuthorizationPolicies({
+    searchTerm,
+    tenantId: activeMember,
+    options: {
+      onError: ({ response }) => handleErrorMessages({
+        response,
+        intl,
+        showCallout,
+        messageId: 'ui-consortia-settings.authorizationPolicy.errors.loading.data',
+      }),
+    },
+  });
   const { users } = useUsers(policies.map(i => i.metadata.updatedByUserId));
 
   const handleSearchSubmit = (event) => {
