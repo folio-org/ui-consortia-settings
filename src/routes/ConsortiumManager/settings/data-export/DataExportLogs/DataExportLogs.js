@@ -11,7 +11,10 @@ import {
   useIntl,
 } from 'react-intl';
 
-import {AppIcon, useStripes} from '@folio/stripes/core';
+import {
+  AppIcon,
+  useStripes,
+} from '@folio/stripes/core';
 import {
   Loading,
   MultiColumnList,
@@ -32,7 +35,6 @@ import {
 
 import { MODULE_ROOT_ROUTE } from '../../../../../constants';
 import { useTenantKy } from '../../../../../hooks';
-import { handleErrorMessages } from '../../../../../utils';
 import { useMemberSelection } from '../../../hooks';
 import {
   DEFAULT_PAGINATION,
@@ -67,7 +69,7 @@ export const DataExportLogs = () => {
     changeSorting,
   ] = useSorting(noop, EXPORT_JOB_LOG_SORTABLE_COLUMNS);
   const [pagination, changePage] = useState(DEFAULT_PAGINATION);
-  const settingsPerms  = stripes.hasPerm('ui-data-export.settings.view') && !stripes.hasPerm('ui-data-export.view');
+  const settingsPerms = stripes.hasPerm('ui-data-export.settings.view') && !stripes.hasPerm('ui-data-export.view');
 
   const handleLogsLoadingError = useCallback(({ response }) => {
     const defaultMessage = intl.formatMessage({ id: 'ui-consortia-settings.errors.jobs.load.common' });
@@ -83,7 +85,7 @@ export const DataExportLogs = () => {
       message: defaultMessage,
       type: 'error',
     });
-  }, [intl, showCallout]);
+  }, [intl, settingsPerms, showCallout]);
 
   const {
     isFetching,
@@ -146,7 +148,7 @@ export const DataExportLogs = () => {
             <div className={css.logsList}>
               <MultiColumnList
                 autosize
-                contentData={settingsPerms ? []: jobExecutions}
+                contentData={settingsPerms ? [] : jobExecutions}
                 loading={isFetching}
                 nonInteractiveHeaders={EXPORT_JOB_LOG_NON_INTERACTIVE_HEADERS}
                 onHeaderClick={changeSorting}
