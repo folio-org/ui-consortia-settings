@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 
-import { useNamespace } from '@folio/stripes/core';
+import {useNamespace, useStripes} from '@folio/stripes/core';
 import { buildSortingQuery } from '@folio/stripes-acq-components';
 
 import {
@@ -31,6 +31,8 @@ export const useDataExportLogs = (params = {}, options = {}) => {
 
   const [namespace] = useNamespace({ key: 'data-export-logs' });
   const ky = useTenantKy({ tenantId });
+  const stripes = useStripes();
+  const settingsPerms  = stripes.hasPerm('ui-data-export.settings.view') && !stripes.hasPerm('ui-data-export.view');
 
   const sortingQuery = buildSortingQuery({
     sorting: sorting.sortingField || DEFAULT_SORTING.sortingField,
@@ -60,7 +62,13 @@ export const useDataExportLogs = (params = {}, options = {}) => {
       sorting.sortingField,
       sorting.sortingDirection,
     ],
-    ({ signal }) => ky.get(`${DATA_EXPORT_API}/job-executions`, { searchParams, signal }).json(),
+    ({ signal }) => {
+      if (settingsPerms) {
+        options.onError();
+      }
+
+      return ky.get(`${DATA_EXPORT_API}/job-executions`, { searchParams, signal }).json();
+    },
     {
       enabled: Boolean(tenantId),
       keepPreviousData: true,
