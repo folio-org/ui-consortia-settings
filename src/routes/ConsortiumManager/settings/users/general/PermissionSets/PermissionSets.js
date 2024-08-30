@@ -1,25 +1,30 @@
 import identity from 'lodash/identity';
 import noop from 'lodash/noop';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import {
   useCallback,
   useEffect,
   useMemo,
   useState,
 } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { Route, Switch } from 'react-router-dom';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
+import {
+  Route,
+  Switch,
+} from 'react-router-dom';
+import ReactRouterPropTypes from 'react-router-prop-types';
 
+import { useShowCallout } from '@folio/stripes-acq-components';
 import { Selection } from '@folio/stripes/components';
 import { stripesShape } from '@folio/stripes/core';
 import { EntrySelector } from '@folio/stripes/smart-components';
 
 import { UUID_REGEX } from '../../../../../../constants';
-import {
-  useCommonErrorMessages,
-  useTenantPermissions,
-} from '../../../../../../hooks';
+import { useTenantPermissions } from '../../../../../../hooks';
 import { PermissionSetDetails } from '../../../../../../temp';
+import { handleErrorMessages } from '../../../../../../utils';
 import { useMemberSelection } from '../../../../hooks';
 import { PermissionSetsActionsMenu } from './PermissionSetsActionsMenu';
 import { PermissionSetsCompare } from './PermissionSetsCompare';
@@ -33,6 +38,8 @@ const nameKey = 'displayName';
 
 export const PermissionSets = (props) => {
   const { history, location, match } = props;
+  const intl = useIntl();
+  const showCallout = useShowCallout();
 
   const {
     activeMember,
@@ -55,8 +62,6 @@ export const PermissionSets = (props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultActiveMember, setActiveMember]);
 
-  const { handleErrorMessages } = useCommonErrorMessages();
-
   const {
     isFetching,
     permissions: contentData,
@@ -69,12 +74,12 @@ export const PermissionSets = (props) => {
       },
     },
     {
-      onError: ({ response }) => {
-        return handleErrorMessages({
-          response,
-          messageId: 'ui-consortia-settings.errors.permissionSets.load.common',
-        });
-      },
+      onError: ({ response }) => handleErrorMessages({
+        intl,
+        response,
+        showCallout,
+        messageId: 'ui-consortia-settings.errors.permissionSets.load.common',
+      }),
     },
   );
 

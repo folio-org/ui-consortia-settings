@@ -11,6 +11,7 @@ import {
 import xor from 'lodash/xor';
 import PropTypes from 'prop-types';
 
+import { useShowCallout } from '@folio/stripes-acq-components';
 import {
   Selection,
   AccordionSet,
@@ -18,10 +19,8 @@ import {
   List,
 } from '@folio/stripes/components';
 
-import {
-  useCommonErrorMessages,
-  useTenantPermissions,
-} from '../../../../../../../hooks';
+import { useTenantPermissions } from '../../../../../../../hooks';
+import { handleErrorMessages } from '../../../../../../../utils';
 import ItemFormatter from './ItemFormatter';
 
 export function PermissionSetsCompareItem({
@@ -32,11 +31,10 @@ export function PermissionSetsCompareItem({
   initialSelectedMemberId,
 }) {
   const intl = useIntl();
+  const showCallout = useShowCallout();
   const isMounted = useRef(false);
   const [selectedMemberId, setSelectedMemberId] = useState(initialSelectedMemberId);
   const [selectedPermissionId, setSelectedPermissionId] = useState('');
-
-  const { handleErrorMessages } = useCommonErrorMessages();
 
   const {
     isFetching,
@@ -51,6 +49,8 @@ export function PermissionSetsCompareItem({
     },
     {
       onError: ({ response }) => handleErrorMessages({
+        intl,
+        showCallout,
         response,
         messageId: 'ui-consortia-settings.errors.permissionSets.load.common',
       }),
