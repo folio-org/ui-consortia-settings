@@ -200,5 +200,16 @@
     "consortiumManager.members.authorizationsRoles.capabilities": "能力",
     "consortiumManager.members.authorizationsRoles.capabilitiesSets": "能力设置",
     "consortiumManager.members.authorizationsRoles.capabilities.empty": "未找到任何能力",
-    "consortiumManager.members.authorizationsRoles.capabilitiesSets.empty": "未找到能力设置"
+    "consortiumManager.members.authorizationsRoles.capabilitiesSets.empty": "未找到能力设置",
+    "authorizationPolicy.search": "Search",
+    "authorizationPolicy.meta.title": "Authorization policies",
+    "authorizationPolicy.columns.name": "Name",
+    "authorizationPolicy.columns.description": "Description",
+    "authorizationPolicy.columns.updatedDate": "Updated",
+    "authorizationPolicy.columns.updatedBy": "Updated by",
+    "consortiumManager.members.users.compare": "Compare users",
+    "consortiumManager.members.action.compareUsers": "Compare users",
+    "consortiumManager.members.permissionSets.compare.user": "User",
+    "consortiumManager.members.permissionSets.compare.user.placeholder": "Select User",
+    "authorizationPolicy.new": "New"
 }
