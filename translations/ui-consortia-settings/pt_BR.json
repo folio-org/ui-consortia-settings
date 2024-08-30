@@ -200,5 +200,16 @@
     "consortiumManager.members.authorizationsRoles.capabilities": "Capacidades",
     "consortiumManager.members.authorizationsRoles.capabilitiesSets": "Conjuntos de capacidades",
     "consortiumManager.members.authorizationsRoles.capabilities.empty": "Nenhuma capacidade encontrada",
-    "consortiumManager.members.authorizationsRoles.capabilitiesSets.empty": "Nenhum conjunto de capacidades encontrado"
+    "consortiumManager.members.authorizationsRoles.capabilitiesSets.empty": "Nenhum conjunto de capacidades encontrado",
+    "authorizationPolicy.search": "Busca",
+    "authorizationPolicy.meta.title": "Políticas de autorização",
+    "authorizationPolicy.columns.name": "Nome",
+    "authorizationPolicy.columns.description": "Descrição",
+    "authorizationPolicy.columns.updatedDate": "Atualizado",
+    "authorizationPolicy.columns.updatedBy": "Atualizado por",
+    "consortiumManager.members.users.compare": "Comparar usuários",
+    "consortiumManager.members.action.compareUsers": "Comparar usuários",
+    "consortiumManager.members.permissionSets.compare.user": "Usuário",
+    "consortiumManager.members.permissionSets.compare.user.placeholder": "Selecione o usuário",
+    "authorizationPolicy.new": "Novo"
 }

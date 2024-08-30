@@ -200,5 +200,16 @@
     "consortiumManager.members.authorizationsRoles.capabilities": "Schopnosti",
     "consortiumManager.members.authorizationsRoles.capabilitiesSets": "Sady schopností",
     "consortiumManager.members.authorizationsRoles.capabilities.empty": "Nebyly nalezeny žádné schopnosti",
-    "consortiumManager.members.authorizationsRoles.capabilitiesSets.empty": "Nebyly nalezeny žádné sady schopností"
+    "consortiumManager.members.authorizationsRoles.capabilitiesSets.empty": "Nebyly nalezeny žádné sady schopností",
+    "authorizationPolicy.search": "Vyhledat",
+    "authorizationPolicy.meta.title": "Pravidla autorizace",
+    "authorizationPolicy.columns.name": "Jméno",
+    "authorizationPolicy.columns.description": "Popis",
+    "authorizationPolicy.columns.updatedDate": "Aktualizováno",
+    "authorizationPolicy.columns.updatedBy": "Aktualizoval",
+    "consortiumManager.members.users.compare": "Porovnat uživatele",
+    "consortiumManager.members.action.compareUsers": "Porovnat uživatele",
+    "consortiumManager.members.permissionSets.compare.user": "Uživatel",
+    "consortiumManager.members.permissionSets.compare.user.placeholder": "Vybrat uživatele",
+    "authorizationPolicy.new": "Nový"
 }
