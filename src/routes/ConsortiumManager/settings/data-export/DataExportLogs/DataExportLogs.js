@@ -96,7 +96,7 @@ export const DataExportLogs = () => {
       tenantId: activeMember,
     },
     {
-      onError: ({ response }) => handleErrorMessages({ intl, response, showCallout }),
+      onError: handleLogsLoadingError,
     },
   );
 
