@@ -20,11 +20,12 @@ import {
 } from '@folio/stripes/components';
 import {
   PrevNextPagination,
+  useShowCallout,
   useSorting,
 } from '@folio/stripes-acq-components';
 
 import { MODULE_ROOT_ROUTE } from '../../../../../constants';
-import { useCommonErrorMessages } from '../../../../../hooks';
+import { handleErrorMessages } from '../../../../../utils';
 import { useMemberSelection } from '../../../hooks';
 import {
   DEFAULT_PAGINATION,
@@ -43,6 +44,7 @@ import css from './DataImportLogs.css';
 
 export const DataImportLogs = () => {
   const intl = useIntl();
+  const showCallout = useShowCallout();
 
   const {
     activeMember,
@@ -61,8 +63,6 @@ export const DataImportLogs = () => {
     changePage(DEFAULT_PAGINATION);
   }, [activeMember, sortingField, sortingDirection]);
 
-  const { handleErrorMessages } = useCommonErrorMessages();
-
   const {
     isFetching,
     isLoading,
@@ -75,7 +75,7 @@ export const DataImportLogs = () => {
       tenantId: activeMember,
     },
     {
-      onError: ({ response }) => handleErrorMessages({ response }),
+      onError: ({ response }) => handleErrorMessages({ intl, response, showCallout }),
     },
   );
 

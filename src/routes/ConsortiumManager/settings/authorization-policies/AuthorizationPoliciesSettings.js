@@ -2,8 +2,12 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 
+import { useShowCallout } from '@folio/stripes-acq-components';
 import {
   useAuthorizationPolicies,
   useUsers,
@@ -20,15 +24,17 @@ import {
   Selection,
 } from '@folio/stripes/components';
 
+import { handleErrorMessages } from '../../../../utils';
 import { useMemberSelection } from '../../hooks';
 import {
   COLUMN_MAPPING,
   VISIBLE_COLUMNS,
 } from './constants';
 import { getResultsFormatter } from './utils';
-import { useCommonErrorMessages } from '../../../../hooks';
 
 const AuthorizationPoliciesSettings = () => {
+  const intl = useIntl();
+  const showCallout = useShowCallout();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRow, setSelectedRow] = useState(null);
 
@@ -48,7 +54,6 @@ const AuthorizationPoliciesSettings = () => {
     </PaneMenu>
   );
 
-  const { handleErrorMessages } = useCommonErrorMessages();
   const {
     policies,
     isLoading,
@@ -59,6 +64,8 @@ const AuthorizationPoliciesSettings = () => {
     options: {
       onError: ({ response }) => handleErrorMessages({
         response,
+        intl,
+        showCallout,
         messageId: 'ui-consortia-settings.authorizationPolicy.errors.loading.data',
       }),
     },

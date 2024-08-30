@@ -21,6 +21,7 @@ import {
 } from '@folio/stripes/components';
 import {
   PrevNextPagination,
+  useShowCallout,
   useSorting,
 } from '@folio/stripes-acq-components';
 import {
@@ -29,10 +30,8 @@ import {
 } from '@folio/stripes-data-transfer-components';
 
 import { MODULE_ROOT_ROUTE } from '../../../../../constants';
-import {
-  useCommonErrorMessages,
-  useTenantKy,
-} from '../../../../../hooks';
+import { useTenantKy } from '../../../../../hooks';
+import { handleErrorMessages } from '../../../../../utils';
 import { useMemberSelection } from '../../../hooks';
 import {
   DEFAULT_PAGINATION,
@@ -49,8 +48,9 @@ import { getExportJobLogsListResultsFormatter } from '../utils';
 import css from './DataExportLogs.css';
 
 export const DataExportLogs = () => {
-  const intl = useIntl();
   const formatTime = useTimeFormatter();
+  const intl = useIntl();
+  const showCallout = useShowCallout();
 
   const {
     activeMember,
@@ -66,8 +66,6 @@ export const DataExportLogs = () => {
   ] = useSorting(noop, EXPORT_JOB_LOG_SORTABLE_COLUMNS);
   const [pagination, changePage] = useState(DEFAULT_PAGINATION);
 
-  const { handleErrorMessages } = useCommonErrorMessages();
-
   const {
     isFetching,
     isLoading,
@@ -80,7 +78,7 @@ export const DataExportLogs = () => {
       tenantId: activeMember,
     },
     {
-      onError: ({ response }) => handleErrorMessages({ response }),
+      onError: ({ response }) => handleErrorMessages({ intl, response, showCallout }),
     },
   );
 
