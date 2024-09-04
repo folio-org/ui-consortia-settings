@@ -25,7 +25,7 @@ describe('AffiliationLookupSuppressor', () => {
     emitterMock.emit.mockClear();
     useEventEmitter
       .mockClear()
-      .mockReturnValue(emitterMock);    
+      .mockReturnValue(emitterMock);
   });
 
   it('should emit the event to disable member selection lookup trigger', () => {

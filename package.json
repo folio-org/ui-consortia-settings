@@ -22,8 +22,8 @@
     "@babel/eslint-parser": "^7.17.0",
     "@babel/plugin-proposal-private-methods": "^7.18.6",
     "@babel/plugin-transform-runtime": "^7.0.0",
-    "@folio/eslint-config-stripes": "^7.0.0",
-    "@folio/jest-config-stripes": "^2.0.0",
+    "@folio/eslint-config-stripes": "^7.2.0",
+    "@folio/jest-config-stripes": "^2.1.0",
     "@folio/stripes": "^9.0.0",
     "@folio/stripes-cli": "^3.0.0",
     "@formatjs/cli": "^6.1.3",
@@ -43,8 +43,8 @@
   },
   "dependencies": {
     "@folio/stripes-acq-components": "~5.1.0",
-    "@folio/stripes-data-transfer-components": "^6.0.0",
     "@folio/stripes-authorization-components": "^1.0.0",
+    "@folio/stripes-data-transfer-components": "^6.0.0",
     "@rehooks/local-storage": "^2.4.4",
     "dom-helpers": "^3.4.0",
     "final-form": "^4.20.9",
@@ -92,6 +92,9 @@
       "orders-storage.settings": "1.0",
       "permissions": "5.6",
       "source-manager-job-executions": "3.2"
+    },
+    "optionalOkapiInterfaces": {
+      "users-keycloak": "1.0"
     },
     "stripesDeps": [
       "@folio/stripes-acq-components",

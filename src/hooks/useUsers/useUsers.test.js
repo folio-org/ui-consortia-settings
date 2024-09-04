@@ -3,7 +3,7 @@ import {
   QueryClientProvider,
 } from 'react-query';
 
-import { useOkapiKy } from "@folio/stripes/core";
+import { useOkapiKy } from '@folio/stripes/core';
 import {
   act,
   renderHook,
@@ -30,9 +30,9 @@ const wrapper = ({ children }) => (
 
 const data = {
   users: [
-    {id: '1', username: "admin"},
+    { id: '1', username: 'admin' },
   ]
-}
+};
 
 describe('useTenantPermissions', () => {
   const mockGet = jest.fn(() => ({
@@ -45,7 +45,7 @@ describe('useTenantPermissions', () => {
         get: mockGet
       }
     );
-  })
+  });
 
   it('should fetch tenant-related permissions', async () => {
     const tenantId = 'diku';

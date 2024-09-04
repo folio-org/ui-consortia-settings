@@ -1,3 +1,4 @@
+import { render } from '@folio/jest-config-stripes/testing-library/react';
 import {
   downloadFileByLink,
   getExportJobLogsListResultsFormatter,
@@ -5,7 +6,6 @@ import {
   getFileNameField, getStartedDateDateFormatter
 } from './utils';
 import { EXPORT_JOB_LOG_COLUMNS } from './constants';
-import {render} from "@folio/jest-config-stripes/testing-library/react";
 
 describe('getExportJobLogsListResultsFormatter', () => {
   const intl = {
@@ -73,7 +73,7 @@ describe('fileUtils', () => {
 
       const ky = {
         get: jest.fn(),
-      }
+      };
 
       ky.get.mockResolvedValueOnce({ ok: true, json: () => Promise.resolve({ link: expectedLink }) });
 
@@ -153,4 +153,4 @@ describe('getStartedDateDateFormatter', () => {
 
     expect(formattedDate).toEqual(expectedFormattedDate);
   });
-})
+});

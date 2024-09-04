@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 
-import {useNamespace, useStripes} from '@folio/stripes/core';
+import { useNamespace, useStripes } from '@folio/stripes/core';
 import { buildSortingQuery } from '@folio/stripes-acq-components';
 
 import {
@@ -32,7 +32,7 @@ export const useDataExportLogs = (params = {}, options = {}) => {
   const [namespace] = useNamespace({ key: 'data-export-logs' });
   const ky = useTenantKy({ tenantId });
   const stripes = useStripes();
-  const settingsPerms  = stripes.hasPerm('ui-data-export.settings.view') && !stripes.hasPerm('ui-data-export.view');
+  const settingsPerms = stripes.hasPerm('ui-data-export.settings.view') && !stripes.hasPerm('ui-data-export.view');
 
   const sortingQuery = buildSortingQuery({
     sorting: sorting.sortingField || DEFAULT_SORTING.sortingField,
