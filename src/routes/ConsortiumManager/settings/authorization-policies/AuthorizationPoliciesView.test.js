@@ -3,11 +3,11 @@ import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
 import { renderWithRouter } from 'helpers';
 import { useMemberSelection } from '../../hooks';
-import AuthorizationPoliciesSettings from './AuthorizationPoliciesSettings';
+import { AuthorizationPoliciesView } from './AuthorizationPoliciesView';
 
 jest.mock('../../hooks');
 
-describe('AuthorizationPoliciesSettings', () => {
+describe('AuthorizationPoliciesView', () => {
   const props = {
     someProp: 'someValue',
   };
@@ -28,7 +28,7 @@ describe('AuthorizationPoliciesSettings', () => {
   });
 
   it('should render the component', () => {
-    renderWithRouter(<AuthorizationPoliciesSettings {...props} />);
+    renderWithRouter(<AuthorizationPoliciesView {...props} />);
 
     expect(screen.getByLabelText('Member 1')).toBeInTheDocument();
     expect(screen.getByText('Member 2')).toBeInTheDocument();
@@ -37,7 +37,7 @@ describe('AuthorizationPoliciesSettings', () => {
   it('should call `handleSearchSubmit` on click search button', async () => {
     const searchQuery = 'test';
 
-    renderWithRouter(<AuthorizationPoliciesSettings {...props} />);
+    renderWithRouter(<AuthorizationPoliciesView {...props} />);
 
     const searchInput = screen.getByLabelText('ui-consortia-settings.authorizationPolicy.search');
 
