@@ -211,5 +211,7 @@
     "consortiumManager.members.action.compareUsers": "Compare users",
     "consortiumManager.members.permissionSets.compare.user": "User",
     "consortiumManager.members.permissionSets.compare.user.placeholder": "Select User",
-    "authorizationPolicy.new": "New"
+    "authorizationPolicy.new": "New",
+    "authorizationPolicy.errors.loading.data": "Authorization policies couldn't be loaded.",
+    "authorizationRoles.errors.loading.data": "Authorization roles couldn't be loaded."
 }

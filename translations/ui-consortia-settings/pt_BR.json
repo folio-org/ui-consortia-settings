@@ -211,5 +211,7 @@
     "consortiumManager.members.action.compareUsers": "Comparar usuários",
     "consortiumManager.members.permissionSets.compare.user": "Usuário",
     "consortiumManager.members.permissionSets.compare.user.placeholder": "Selecione o usuário",
-    "authorizationPolicy.new": "Novo"
+    "authorizationPolicy.new": "Novo",
+    "authorizationPolicy.errors.loading.data": "Não foi possível carregar as políticas de autorização.",
+    "authorizationRoles.errors.loading.data": "Não foi possível carregar as funções de autorização."
 }
