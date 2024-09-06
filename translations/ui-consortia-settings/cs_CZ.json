@@ -211,5 +211,7 @@
     "consortiumManager.members.action.compareUsers": "Porovnat uživatele",
     "consortiumManager.members.permissionSets.compare.user": "Uživatel",
     "consortiumManager.members.permissionSets.compare.user.placeholder": "Vybrat uživatele",
-    "authorizationPolicy.new": "Nový"
+    "authorizationPolicy.new": "Nový",
+    "authorizationPolicy.errors.loading.data": "Pravidla autorizace se nepodařilo načíst.",
+    "authorizationRoles.errors.loading.data": "Autorizační role se nepodařilo načíst."
 }

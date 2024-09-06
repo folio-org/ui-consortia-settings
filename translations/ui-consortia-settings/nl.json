@@ -202,7 +202,7 @@
     "consortiumManager.members.authorizationsRoles.capabilities.empty": "No capabilities found",
     "consortiumManager.members.authorizationsRoles.capabilitiesSets.empty": "No capabilities sets found",
     "authorizationPolicy.search": "Zoeken",
-    "authorizationPolicy.meta.title": "Authorization policies",
+    "authorizationPolicy.meta.title": "Autorisatiebeleid",
     "authorizationPolicy.columns.name": "Naam",
     "authorizationPolicy.columns.description": "Omschrijving",
     "authorizationPolicy.columns.updatedDate": "Bijgewerkt op",
@@ -210,6 +210,8 @@
     "consortiumManager.members.users.compare": "Compare users",
     "consortiumManager.members.action.compareUsers": "Compare users",
     "consortiumManager.members.permissionSets.compare.user": "Gebruiker",
-    "consortiumManager.members.permissionSets.compare.user.placeholder": "Select User",
-    "authorizationPolicy.new": "Nieuw"
+    "consortiumManager.members.permissionSets.compare.user.placeholder": "Gebruiker selecteren",
+    "authorizationPolicy.new": "Nieuw",
+    "authorizationPolicy.errors.loading.data": "Authorization policies couldn't be loaded.",
+    "authorizationRoles.errors.loading.data": "Authorization roles couldn't be loaded."
 }
