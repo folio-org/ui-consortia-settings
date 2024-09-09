@@ -128,6 +128,7 @@ export const AuthorizationPoliciesView = () => {
           policy={selectedRow}
           onClose={() => setSelectedRow(null)}
           onEdit={() => onEdit(selectedRow.id)}
+          tenantId={activeMember}
         />
       )}
     </Paneset>
