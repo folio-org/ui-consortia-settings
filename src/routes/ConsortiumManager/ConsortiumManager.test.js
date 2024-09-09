@@ -28,11 +28,11 @@ jest.mock('@folio/stripes/core', () => ({
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   useTimeFormatter: jest.fn(),
-}))
+}));
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useTenantPermissions: jest.fn(() => ({ permissions: [], isLoading: false, isFetching: false })),
-  useTenantKy: jest.fn()
+  useTenantKy: jest.fn(),
 }));
 jest.mock('./settings/data-export/hooks', () => ({
   useDataExportLogs: jest.fn(() => ({ jobExecutions: [], isLoading: false, isFetching: false })),
@@ -55,6 +55,7 @@ const context = {
   selectedMembers: tenants.slice(3),
   selectMembers: jest.fn(),
   selectMembersDisabled: false,
+  isNavigationPaneVisible: true,
 };
 
 const modules = {
