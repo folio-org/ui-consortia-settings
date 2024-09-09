@@ -17,6 +17,7 @@ import {
   Icon,
   MultiColumnList,
   Pane,
+  PaneBackLink,
   PaneHeader,
   PaneMenu,
   Paneset,
@@ -28,6 +29,7 @@ import {
   useAuthorizationRoles,
 } from '@folio/stripes-authorization-components';
 
+import { MODULE_ROOT_ROUTE } from '../../../../constants';
 import { handleErrorMessages } from '../../../../utils';
 import { useMemberSelectionContext } from '../../MemberSelectionContext';
 import {
@@ -120,6 +122,7 @@ export const AuthorizationRolesViewPage = ({ path }) => {
         fluidContentWidth
         renderHeader={() => (
           <PaneHeader
+            firstMenu={<PaneBackLink to={MODULE_ROOT_ROUTE} />}
             lastMenu={lastMenu}
             paneTitle={<FormattedMessage id="ui-authorization-roles.meta.title" />}
           />

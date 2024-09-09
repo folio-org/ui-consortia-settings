@@ -20,7 +20,12 @@ import {
 import { ConsortiumManagerHeader } from '../../components';
 import { MODULE_ROOT_ROUTE } from '../../constants';
 import { getModuleName } from '../../utils';
-import { SETTINGS_ROUTES } from './constants';
+import {
+  CONSORTIUM_MANAGER_SECTIONS_PANE_LABEL_ID,
+  CONSORTIUM_MANAGER_SECTIONS_LABEL_IDS_MAP,
+  CONSORTIUM_MANAGER_SECTIONS_MAP,
+  MODULES_ROUTES_MAP,
+} from './constants';
 
 import css from './ConsortiumManager.css';
 
@@ -32,21 +37,10 @@ const ChooseSettings = () => (
 
 const PanePlaceholder = () => <div className={css.panePlaceholder} />;
 
-export const ConsortiumManager = ({ location }) => {
-  const intl = useIntl();
-  const modules = useModules();
-  const stripes = useStripes();
-
-  const activeLink = `${MODULE_ROOT_ROUTE}/${location.pathname.split('/')[2]}`;
-
-  const settings = useMemo(() => (
-    modules.settings
-      .filter((m) => Boolean(SETTINGS_ROUTES[getModuleName(m)]))
-      .sort((x, y) => x.displayName.toLowerCase().localeCompare(y.displayName.toLowerCase()))
-  ), [modules.settings]);
-
-  const navLinks = useMemo(() => (
-    settings.map(({ displayName, module: name, route }) => (
+const buildModulesLinks = (modules) => {
+  return modules
+    .sort((x, y) => x.displayName.toLowerCase().localeCompare(y.displayName.toLowerCase()))
+    .map(({ displayName, module: name, route }) => (
       <NavListItem
         key={route}
         to={`${MODULE_ROOT_ROUTE}${route}`}
@@ -59,16 +53,53 @@ export const ConsortiumManager = ({ location }) => {
           {displayName}
         </AppIcon>
       </NavListItem>
-    ))
-  ), [settings]);
+    ));
+};
+
+export const ConsortiumManager = ({ location }) => {
+  const intl = useIntl();
+  const modules = useModules();
+  const stripes = useStripes();
+
+  const activeLink = `${MODULE_ROOT_ROUTE}/${location.pathname.split('/')[2]}`;
+
+  const modulesMap = useMemo(() => (
+    modules.settings.reduce((acc, m) => {
+      const moduleName = getModuleName(m);
+      const isModuleAvailable = Boolean(MODULES_ROUTES_MAP.get(moduleName));
+
+      return isModuleAvailable ? acc.set(moduleName, m) : acc;
+    }, new Map())
+  ), [modules.settings]);
+
+  const navListSections = useMemo(() => {
+    return [...CONSORTIUM_MANAGER_SECTIONS_MAP.entries()].reduce((acc, [section, sectionModulesNames]) => {
+      const sectionModules = sectionModulesNames.map((moduleName) => modulesMap.get(moduleName));
+
+      if (!sectionModules.length) return acc;
+
+      acc.push(
+        <NavListSection
+          key={section}
+          activeLink={activeLink}
+          label={intl.formatMessage({ id: CONSORTIUM_MANAGER_SECTIONS_LABEL_IDS_MAP.get(section) })}
+          className={css.navListSection}
+        >
+          {buildModulesLinks(sectionModules)}
+        </NavListSection>,
+      );
+
+      return acc;
+    }, []);
+  }, [activeLink, intl, modulesMap]);
 
   const routes = useMemo(() => (
-    settings.map((m) => (
+    [...modulesMap.values()].map((m) => (
       <Route
         path={`${MODULE_ROOT_ROUTE}${m.route}`}
         key={m.route}
         render={(props) => {
-          const Component = SETTINGS_ROUTES[getModuleName(m)];
+          const Component = MODULES_ROUTES_MAP.get(getModuleName(m));
 
           return (
             <>
@@ -80,7 +111,7 @@ export const ConsortiumManager = ({ location }) => {
         }}
       />
     ))
-  ), [settings, stripes]);
+  ), [modulesMap, stripes]);
 
   return (
     <>
@@ -89,17 +120,11 @@ export const ConsortiumManager = ({ location }) => {
         <Paneset isRoot>
           <Pane
             defaultWidth="20%"
-            paneTitle={<FormattedMessage id="stripes-core.settings" />}
+            paneTitle={<FormattedMessage id={CONSORTIUM_MANAGER_SECTIONS_PANE_LABEL_ID} />}
             id="settings-nav-pane"
           >
-            <NavList aria-label={intl.formatMessage({ id: 'stripes-core.settings' })}>
-              <NavListSection
-                activeLink={activeLink}
-                label={intl.formatMessage({ id: 'stripes-core.settings' })}
-                className={css.navListSection}
-              >
-                {navLinks}
-              </NavListSection>
+            <NavList aria-label={intl.formatMessage({ id: CONSORTIUM_MANAGER_SECTIONS_PANE_LABEL_ID })}>
+              {navListSections}
             </NavList>
           </Pane>
           <Suspense

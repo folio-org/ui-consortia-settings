@@ -14,7 +14,7 @@ import {
 import { buildStripesObject } from 'helpers';
 import { ConsortiumManagerContext } from '../../contexts';
 import { ConsortiumManager } from './ConsortiumManager';
-import { AVAILABLE_SETTINGS } from './constants';
+import { AVAILABLE_MODULES } from './constants';
 
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
@@ -55,7 +55,7 @@ const context = {
 };
 
 const modules = {
-  settings: AVAILABLE_SETTINGS.map((module) => ({
+  settings: AVAILABLE_MODULES.map((module) => ({
     displayName: module,
     module,
     route: `/${module}`,
@@ -104,12 +104,12 @@ describe('ConsortiumManager', () => {
   it('should render consortium manager settings nav links', () => {
     renderConsortiumManager();
 
-    AVAILABLE_SETTINGS.forEach(module => {
+    AVAILABLE_MODULES.forEach(module => {
       expect(screen.getByText(module)).toBeInTheDocument();
     });
   });
 
-  it.each(AVAILABLE_SETTINGS.map(module => [module]))('should render \'%s\' settings pane', async (name) => {
+  it.each(AVAILABLE_MODULES.map(module => [module]))('should render \'%s\' settings pane', async (name) => {
     await renderConsortiumManager();
 
     await userEvent.click(screen.getByText(name));
