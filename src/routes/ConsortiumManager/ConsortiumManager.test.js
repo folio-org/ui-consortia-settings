@@ -14,7 +14,10 @@ import {
 import { buildStripesObject } from 'helpers';
 import { ConsortiumManagerContext } from '../../contexts';
 import { ConsortiumManager } from './ConsortiumManager';
-import { AVAILABLE_MODULES } from './constants';
+import {
+  AVAILABLE_MODULES,
+  CONSORTIUM_MANAGER_SECTIONS_LABEL_IDS_MAP,
+} from './constants';
 
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
@@ -99,6 +102,14 @@ describe('ConsortiumManager', () => {
     renderConsortiumManager();
 
     expect(screen.getByText('ui-consortia-settings.consortiumManager.members.header.title')).toBeInTheDocument();
+  });
+
+  it('should render consortium manager nav link sections', () => {
+    renderConsortiumManager();
+
+    CONSORTIUM_MANAGER_SECTIONS_LABEL_IDS_MAP.forEach(section => {
+      expect(screen.getByText(section)).toBeInTheDocument();
+    });
   });
 
   it('should render consortium manager settings nav links', () => {
