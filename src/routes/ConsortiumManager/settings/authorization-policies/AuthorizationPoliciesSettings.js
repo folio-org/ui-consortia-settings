@@ -1,131 +1,57 @@
 import {
-  useMemo,
-  useState,
-} from 'react';
-import {
-  FormattedMessage,
-  useIntl,
-} from 'react-intl';
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useHistory,
+} from 'react-router-dom';
 
-import { useShowCallout } from '@folio/stripes-acq-components';
-import {
-  useAuthorizationPolicies,
-  useUsers,
-  PolicyDetails,
-  SearchForm,
-} from '@folio/stripes-authorization-components';
-import {
-  Button,
-  MultiColumnList,
-  Pane,
-  PaneBackLink,
-  PaneHeader,
-  PaneMenu,
-  Paneset,
-  Selection,
-} from '@folio/stripes/components';
+import { PolicyFormContainer } from '@folio/stripes-authorization-components';
 
-import { MODULE_ROOT_ROUTE } from '../../../../constants';
-import { handleErrorMessages } from '../../../../utils';
-import { useMemberSelection } from '../../hooks';
-import {
-  COLUMN_MAPPING,
-  VISIBLE_COLUMNS,
-} from './constants';
-import { getResultsFormatter } from './utils';
+import { AffiliationLookupSuppressor } from '../../../../components';
+import { AUTHORIZATION_POLICIES_ROUTE } from '../../../../constants';
+import { AuthorizationPoliciesView } from './AuthorizationPoliciesView';
 
 const AuthorizationPoliciesSettings = () => {
-  const intl = useIntl();
-  const showCallout = useShowCallout();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedRow, setSelectedRow] = useState(null);
+  const history = useHistory();
 
-  const onRowClick = (_event, row) => setSelectedRow(row);
-
-  const {
-    activeMember,
-    membersOptions,
-    setActiveMember,
-  } = useMemberSelection();
-
-  const lastMenu = (
-    <PaneMenu>
-      <Button buttonStyle="primary" marginBottom0>
-        + <FormattedMessage id="ui-consortia-settings.authorizationPolicy.new" />
-      </Button>
-    </PaneMenu>
-  );
-
-  const {
-    policies,
-    isLoading,
-    refetch,
-  } = useAuthorizationPolicies({
-    searchTerm,
-    tenantId: activeMember,
-    options: {
-      onError: ({ response }) => handleErrorMessages({
-        response,
-        intl,
-        showCallout,
-        messageId: 'ui-consortia-settings.authorizationPolicy.errors.loading.data',
-      }),
-    },
-  });
-  const { users } = useUsers(policies.map(i => i.metadata.updatedByUserId));
-
-  const handleSearchSubmit = (event) => {
-    event.preventDefault();
-    refetch();
+  const onClose = () => {
+    history.push(AUTHORIZATION_POLICIES_ROUTE);
   };
 
-  const formatter = useMemo(() => getResultsFormatter({ users }), [users]);
-
   return (
-    <Paneset>
-      <Pane
-        defaultWidth="fill"
-        renderHeader={() => (
-          <PaneHeader
-            firstMenu={<PaneBackLink to={MODULE_ROOT_ROUTE} />}
-            lastMenu={lastMenu}
-            paneTitle={
-              <FormattedMessage id="ui-consortia-settings.authorizationPolicy.meta.title" />
-            }
-          />
-        )}
-      >
-        <Selection
-          autoFocus
-          dataOptions={membersOptions}
-          id="consortium-member-select"
-          label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.selection.label" />}
-          onChange={setActiveMember}
-          value={activeMember}
+    <Router>
+      <Switch>
+        <Route
+          exact
+          path={`${AUTHORIZATION_POLICIES_ROUTE}/create`}
+          render={() => (
+            <AffiliationLookupSuppressor>
+              <PolicyFormContainer
+                onClose={onClose}
+                path={AUTHORIZATION_POLICIES_ROUTE}
+              />
+            </AffiliationLookupSuppressor>
+          )}
         />
-        <SearchForm
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          onSubmit={handleSearchSubmit}
-          searchLabelId="ui-consortia-settings.authorizationPolicy.search"
+        <Route
+          exact
+          path={`${AUTHORIZATION_POLICIES_ROUTE}/:id/edit`}
+          render={() => (
+            <AffiliationLookupSuppressor>
+              <PolicyFormContainer
+                onClose={onClose}
+                path={AUTHORIZATION_POLICIES_ROUTE}
+              />
+            </AffiliationLookupSuppressor>
+          )}
         />
-        <MultiColumnList
-          columnMapping={COLUMN_MAPPING}
-          contentData={policies}
-          formatter={formatter}
-          selectedRow={selectedRow}
-          onRowClick={onRowClick}
-          loading={isLoading}
-          visibleColumns={VISIBLE_COLUMNS}
+        <Route
+          exact
+          path={`${AUTHORIZATION_POLICIES_ROUTE}/:id?`}
+          component={AuthorizationPoliciesView}
         />
-      </Pane>
-      {selectedRow && (
-        <PolicyDetails
-          policy={selectedRow}
-          onClose={() => setSelectedRow(null)}
-        />
-      )}
-    </Paneset>
+      </Switch>
+    </Router>
   );
 };
 

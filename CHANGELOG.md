@@ -14,6 +14,7 @@
 * [UICONSET-160](https://folio-org.atlassian.net/browse/UICONSET-160) Saving and changing authorization roles in the consortium manager.
 * [UICONSET-183](https://folio-org.atlassian.net/browse/UICONSET-183) Data export permissions in ECS
 * [UICONSET-185](https://folio-org.atlassian.net/browse/UICONSET-185) ECS - Add error handler for Authorization roles and policies.
+* [UICONSET-162](https://folio-org.atlassian.net/browse/UICONSET-162) Save, edit Authorization policies for consortium.
 * [UICONSET-185](https://folio-org.atlassian.net/browse/UICONSET-168) Split consortium manager's navigation links into sections.
 
 ## [1.1.0](https://github.com/folio-org/ui-consortia-settings/tree/v1.1.0) (2024-03-20)
