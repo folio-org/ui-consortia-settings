@@ -17,6 +17,7 @@ import { useEventEmitter } from '../../hooks';
 import { FindConsortiumMember } from '../FindConsortiumMember';
 
 import css from './ConsortiumManagerHeader.css';
+import { NavigationPaneToggle } from '../NavigationPaneToggle';
 
 export const ConsortiumManagerHeader = () => {
   const paneTitleRef = useRef();
@@ -24,6 +25,7 @@ export const ConsortiumManagerHeader = () => {
   const [selectMembersDisabled, setSelectMembersDisabled] = useState();
   const {
     affiliations,
+    isNavigationPaneVisible,
     selectedMembers,
     selectMembers,
   } = useConsortiumManagerContext();
@@ -43,6 +45,12 @@ export const ConsortiumManagerHeader = () => {
     affiliations.map(({ tenantId, tenantName }) => ({ id: tenantId, name: tenantName }))
   ), [affiliations]);
 
+  const firstMenu = useMemo(() => {
+    if (selectMembersDisabled || isNavigationPaneVisible) return null;
+
+    return <NavigationPaneToggle />;
+  }, [isNavigationPaneVisible, selectMembersDisabled]);
+
   return (
     <Paneset nested>
       <PaneHeader
@@ -56,6 +64,7 @@ export const ConsortiumManagerHeader = () => {
             values={{ amount: selectedMembers.length }}
           />
         )}
+        firstMenu={firstMenu}
         lastMenu={(
           <FindConsortiumMember
             disabled={selectMembersDisabled}

@@ -17,7 +17,11 @@ import {
   Paneset,
 } from '@folio/stripes/components';
 
-import { ConsortiumManagerHeader } from '../../components';
+import {
+  ConsortiumManagerHeader,
+  NavigationPaneToggle,
+} from '../../components';
+import { useConsortiumManagerContext } from '../../contexts';
 import { MODULE_ROOT_ROUTE } from '../../constants';
 import { getModuleName } from '../../utils';
 import {
@@ -60,6 +64,8 @@ export const ConsortiumManager = ({ location }) => {
   const intl = useIntl();
   const modules = useModules();
   const stripes = useStripes();
+
+  const { isNavigationPaneVisible } = useConsortiumManagerContext();
 
   const activeLink = `${MODULE_ROOT_ROUTE}/${location.pathname.split('/')[2]}`;
 
@@ -118,15 +124,19 @@ export const ConsortiumManager = ({ location }) => {
       <ConsortiumManagerHeader />
       <div className={css.managerContent}>
         <Paneset isRoot>
-          <Pane
-            defaultWidth="20%"
-            paneTitle={<FormattedMessage id={CONSORTIUM_MANAGER_SECTIONS_PANE_LABEL_ID} />}
-            id="settings-nav-pane"
-          >
-            <NavList aria-label={intl.formatMessage({ id: CONSORTIUM_MANAGER_SECTIONS_PANE_LABEL_ID })}>
-              {navListSections}
-            </NavList>
-          </Pane>
+          {isNavigationPaneVisible && (
+            <Pane
+              defaultWidth="20%"
+              paneTitle={<FormattedMessage id={CONSORTIUM_MANAGER_SECTIONS_PANE_LABEL_ID} />}
+              id="settings-nav-pane"
+              lastMenu={<NavigationPaneToggle />}
+            >
+              <NavList aria-label={intl.formatMessage({ id: CONSORTIUM_MANAGER_SECTIONS_PANE_LABEL_ID })}>
+                {navListSections}
+              </NavList>
+            </Pane>
+          )}
+
           <Suspense
             fallback={(
               <>
