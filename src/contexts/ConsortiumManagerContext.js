@@ -23,7 +23,7 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
   const stripes = useStripes();
   const userId = stripes?.user?.user?.id;
 
-  const [isNavigationPaneVisible, setNavigationPaneVisible] = useState(true);
+  const [isNavigationPaneVisible, setIsNavigationPaneVisible] = useState(true);
 
   const {
     members,
@@ -74,7 +74,7 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
     permissionNamesMap,
     selectedMembers: members || DEFAULT_SELECTED_MEMBERS,
     selectMembers: updateMembersSelection,
-    setNavigationPaneVisible,
+    setIsNavigationPaneVisible,
   }), [
     members,
     affiliations,

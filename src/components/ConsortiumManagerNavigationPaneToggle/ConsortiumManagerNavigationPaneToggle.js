@@ -4,11 +4,11 @@ import { useConsortiumManagerContext } from '../../contexts';
 import { useCallback } from 'react';
 
 export const ConsortiumManagerNavigationPaneToggle = () => {
-  const { isNavigationPaneVisible, setNavigationPaneVisible } = useConsortiumManagerContext();
+  const { isNavigationPaneVisible, setIsNavigationPaneVisible } = useConsortiumManagerContext();
 
   const togglePane = useCallback(() => {
-    setNavigationPaneVisible(prev => !prev);
-  }, [setNavigationPaneVisible]);
+    setIsNavigationPaneVisible(prev => !prev);
+  }, [setIsNavigationPaneVisible]);
 
   return (
     <PaneHeaderIconButton
