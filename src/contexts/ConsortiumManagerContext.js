@@ -4,10 +4,10 @@ import {
   useCallback,
   useContext,
   useMemo,
+  useState,
 } from 'react';
 
 import { useStripes } from '@folio/stripes/core';
-import { useToggle } from '@folio/stripes-acq-components';
 
 import {
   useCurrentUserTenantsPermissions,
@@ -23,7 +23,7 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
   const stripes = useStripes();
   const userId = stripes?.user?.user?.id;
 
-  const [isNavigationPaneVisible, toggleNavigationPane] = useToggle(true);
+  const [isNavigationPaneVisible, setNavigationPaneVisible] = useState(true);
 
   const {
     members,
@@ -74,7 +74,7 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
     permissionNamesMap,
     selectedMembers: members || DEFAULT_SELECTED_MEMBERS,
     selectMembers: updateMembersSelection,
-    toggleNavigationPane,
+    setNavigationPaneVisible,
   }), [
     members,
     affiliations,
@@ -83,7 +83,6 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
     isNavigationPaneVisible,
     permissionNamesMap,
     updateMembersSelection,
-    toggleNavigationPane,
   ]);
 
   return (
