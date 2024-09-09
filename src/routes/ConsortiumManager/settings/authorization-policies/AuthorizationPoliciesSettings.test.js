@@ -33,17 +33,6 @@ const wrapper = ({ children }) => (
 const renderComponent = () => render(<AuthorizationPoliciesSettings />, { wrapper });
 
 describe('AuthorizationPoliciesSettings', () => {
-  // beforeEach(() => {
-  //   useMemberSelectionContext
-  //     .mockClear()
-  //     .mockReturnValue({ activeMember: 'central' });
-  //   useAuthorizationRoles.mockClear().mockReturnValue({
-  //     roles: [],
-  //     isLoading: false,
-  //     onSubmitSearch: jest.fn(),
-  //   });
-  // });
-
   it('should display authorization policy view page', async () => {
     window.location.pathname = pathname;
     renderComponent();
