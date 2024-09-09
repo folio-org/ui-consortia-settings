@@ -26,7 +26,7 @@ describe('AffiliationSelection', () => {
     renderAffiliationSelection();
 
     expect(
-      within(screen.getByRole('button', { name : /Mineral Area College/ }))
+      within(screen.getByRole('button', { name: /Mineral Area College/ }))
         .getByText(affiliations[2].tenantName),
     ).toBeInTheDocument();
 

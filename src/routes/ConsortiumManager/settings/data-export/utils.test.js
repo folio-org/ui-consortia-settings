@@ -1,11 +1,11 @@
+import { render } from '@folio/jest-config-stripes/testing-library/react';
 import {
   downloadFileByLink,
   getExportJobLogsListResultsFormatter,
   getFileLink,
-  getFileNameField, getStartedDateDateFormatter
+  getFileNameField, getStartedDateDateFormatter,
 } from './utils';
 import { EXPORT_JOB_LOG_COLUMNS } from './constants';
-import {render} from "@folio/jest-config-stripes/testing-library/react";
 
 describe('getExportJobLogsListResultsFormatter', () => {
   const intl = {
@@ -73,7 +73,7 @@ describe('fileUtils', () => {
 
       const ky = {
         get: jest.fn(),
-      }
+      };
 
       ky.get.mockResolvedValueOnce({ ok: true, json: () => Promise.resolve({ link: expectedLink }) });
 
@@ -105,19 +105,19 @@ describe('fileUtils', () => {
 describe('getFileNameField', () => {
   const recordWithExportedProgress = {
     exportedFiles: [{ fileName: 'example.txt' }],
-    progress: { exported: true }
+    progress: { exported: true },
   };
 
   const recordWithoutExportedProgress = {
     exportedFiles: [{ fileName: 'example.txt' }],
-    progress: { exported: false }
+    progress: { exported: false },
   };
 
   const kyMock = jest.fn(); // Mock the ky function if needed
 
   it('renders TextLink component when record.progress.exported is true', () => {
     const { getByTestId } = render(
-      getFileNameField(recordWithExportedProgress, kyMock)
+      getFileNameField(recordWithExportedProgress, kyMock),
     );
 
     const textLinkElement = getByTestId('text-link');
@@ -128,7 +128,7 @@ describe('getFileNameField', () => {
 
   it('renders span element when record.progress.exported is false', () => {
     const { getByText } = render(
-      getFileNameField(recordWithoutExportedProgress, kyMock)
+      getFileNameField(recordWithoutExportedProgress, kyMock),
     );
 
     const spanElement = getByText('example.txt');
@@ -153,4 +153,4 @@ describe('getStartedDateDateFormatter', () => {
 
     expect(formattedDate).toEqual(expectedFormattedDate);
   });
-})
+});

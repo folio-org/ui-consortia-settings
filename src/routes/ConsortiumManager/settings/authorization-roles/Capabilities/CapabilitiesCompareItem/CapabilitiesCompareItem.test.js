@@ -1,8 +1,8 @@
 import { MemoryRouter } from 'react-router-dom';
 
-import { 
-  render, 
-  screen, 
+import {
+  render,
+  screen,
   logDOM,
 } from '@folio/jest-config-stripes/testing-library/react';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
@@ -12,23 +12,27 @@ import {
   useRoleCapabilitySets,
 } from '@folio/stripes-authorization-components';
 
-import { 
-  tenants, 
-  groupedRoleCapabilitiesByType, 
+import {
+  tenants,
+  groupedRoleCapabilitiesByType,
   groupedRoleCapabilitySetsByType,
 } from 'fixtures';
-import {ConsortiumManagerContextProviderMock} from 'helpers';
+import { ConsortiumManagerContextProviderMock } from 'helpers';
 import { COMPARE_ITEM_NAME } from '../../../users/general/PermissionSets/PermissionSetsCompare/constants';
-import {CapabilitiesCompareItem} from './CapabilitiesCompareItem';
+import { CapabilitiesCompareItem } from './CapabilitiesCompareItem';
 
-jest.mock('@folio/stripes-authorization-components', ()=> ({
+jest.mock('@folio/stripes-authorization-components', () => ({
   ...jest.requireActual('@folio/stripes-authorization-components'),
   useRoleCapabilities: jest.fn(),
   useRoleCapabilitySets: jest.fn(),
   useAuthorizationRoles: jest.fn(),
-}))
+}));
 
-const selectedMemberOptions = tenants.filter((el, index)=> index < 3).map(({ name, id }) => ({ value: id, label: name }));
+const selectedMemberOptions = (
+  tenants
+    .filter((el, index) => index < 3)
+    .map(({ name, id }) => ({ value: id, label: name }))
+);
 
 const defaultProps = {
   rolesToCompare: [],
@@ -37,7 +41,7 @@ const defaultProps = {
   members: selectedMemberOptions,
 };
 
-const roles =  [{ id: '1', name: 'role-1' }, { id: '2', name: 'role-2' }, { id: '3', name: 'role-3' }];
+const roles = [{ id: '1', name: 'role-1' }, { id: '2', name: 'role-2' }, { id: '3', name: 'role-3' }];
 
 const wrapper = ({ children }) => (
   <MemoryRouter>
@@ -63,13 +67,12 @@ describe('CapabilitiesCompareItem', () => {
     useRoleCapabilitySets.mockClear().mockReturnValue({
       groupedRoleCapabilitySetsByType,
       initialRoleCapabilitySetsSelectedMap: 1,
-      capabilitySetsTotalCount: 2
-      }
-    );
+      capabilitySetsTotalCount: 2,
+    });
     useRoleCapabilities.mockClear().mockReturnValue({
       groupedRoleCapabilitiesByType,
       initialRoleCapabilitiesSelectedMap: 1,
-      capabilitiesTotalCount: 2
+      capabilitiesTotalCount: 2,
     });
   });
 
@@ -88,7 +91,7 @@ describe('CapabilitiesCompareItem', () => {
     await userEvent.click(screen.getByText(roles[0].name));
 
     screen.getAllByText('Capability Roles').forEach(role => {
-      expect(role).toBeInTheDocument()
-    })
+      expect(role).toBeInTheDocument();
+    });
   });
 });

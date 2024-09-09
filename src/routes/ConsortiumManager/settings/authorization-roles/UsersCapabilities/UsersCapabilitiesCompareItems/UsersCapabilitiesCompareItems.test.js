@@ -33,7 +33,11 @@ jest.mock('@folio/stripes-authorization-components', () => ({
 
 jest.mock('../../../../../../hooks/useUsers/useUsers');
 
-const selectedMemberOptions = tenants.filter((el, index) => index < 3).map(({ name, id }) => ({ value: id, label: name }));
+const selectedMemberOptions = (
+  tenants
+    .filter((el, index) => index < 3)
+    .map(({ name, id }) => ({ value: id, label: name }))
+);
 
 const defaultProps = {
   rolesToCompare: [],
