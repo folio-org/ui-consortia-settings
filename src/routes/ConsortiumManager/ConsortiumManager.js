@@ -74,9 +74,9 @@ export const ConsortiumManager = ({ location }) => {
 
   const navListSections = useMemo(() => {
     return [...CONSORTIUM_MANAGER_SECTIONS_MAP.entries()].reduce((acc, [section, sectionModulesNames]) => {
-      const sectionModules = sectionModulesNames.map((moduleName) => modulesMap.get(moduleName));
+      const sectionModules = sectionModulesNames?.map((moduleName) => modulesMap.get(moduleName));
 
-      if (!sectionModules.length) return acc;
+      if (!sectionModules?.length) return acc;
 
       acc.push(
         <NavListSection

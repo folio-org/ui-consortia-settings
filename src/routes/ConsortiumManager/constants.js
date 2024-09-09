@@ -35,7 +35,7 @@ export const CONSORTIUM_MANAGER_SECTIONS_LABEL_IDS_MAP = Object.values(CONSORTIU
 );
 
 /*
-  Defines the structure of the consortium manager's left pane
+  Defines the structure of the consortium manager's navigation pane.
 */
 export const CONSORTIUM_MANAGER_SECTIONS_MAP = new Map([
   [CONSORTIUM_MANAGER_SECTIONS.settings, [
