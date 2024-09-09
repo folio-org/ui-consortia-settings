@@ -1,50 +1,58 @@
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
+import { MemoryRouter } from 'react-router-dom';
 
-import { renderWithRouter } from 'helpers';
-import { useMemberSelection } from '../../hooks';
+import {
+  render,
+  screen,
+} from '@folio/jest-config-stripes/testing-library/react';
+
 import AuthorizationPoliciesSettings from './AuthorizationPoliciesSettings';
 
-jest.mock('../../hooks');
+jest.mock('@folio/stripes-authorization-components', () => ({
+  PolicyFormContainer: () => <div>PolicyFormContainer</div>,
+}));
+
+jest.mock('./AuthorizationPoliciesView', () => ({
+  AuthorizationPoliciesView: () => <div>AuthorizationPoliciesView</div>,
+}));
+
+const pathname = 'consortia-settings/authorization-policies';
+const queryClient = new QueryClient();
+
+const wrapper = ({ children }) => (
+  <QueryClientProvider client={queryClient}>
+    <MemoryRouter initialEntries={[{ pathname }]}>
+      {children}
+    </MemoryRouter>
+  </QueryClientProvider>
+);
+
+const renderComponent = () => render(<AuthorizationPoliciesSettings />, { wrapper });
 
 describe('AuthorizationPoliciesSettings', () => {
-  const props = {
-    someProp: 'someValue',
-  };
+  it('should display authorization policy view page', async () => {
+    window.location.pathname = pathname;
+    renderComponent();
 
-  const membersOptions = [
-    { value: 'member1', label: 'Member 1' },
-    { value: 'member2', label: 'Member 2' },
-  ];
+    const pageTitle = await screen.findByText('AuthorizationPoliciesView');
 
-  const setActiveMember = jest.fn();
-
-  beforeEach(() => {
-    useMemberSelection.mockReturnValue({
-      activeMember: 'member1',
-      membersOptions,
-      setActiveMember,
-    });
+    expect(pageTitle).toBeInTheDocument();
   });
 
-  it('should render the component', () => {
-    renderWithRouter(<AuthorizationPoliciesSettings {...props} />);
+  it('should display create authorization policy create page', () => {
+    window.location.pathname = `${pathname}/create`;
+    renderComponent();
 
-    expect(screen.getByLabelText('Member 1')).toBeInTheDocument();
-    expect(screen.getByText('Member 2')).toBeInTheDocument();
+    expect(screen.getByText('PolicyFormContainer')).toBeInTheDocument();
   });
 
-  it('should call `handleSearchSubmit` on click search button', async () => {
-    const searchQuery = 'test';
+  it('should display edit authorization policy edit page', () => {
+    window.location.pathname = `${pathname}/1/edit`;
+    renderComponent();
 
-    renderWithRouter(<AuthorizationPoliciesSettings {...props} />);
-
-    const searchInput = screen.getByLabelText('ui-consortia-settings.authorizationPolicy.search');
-
-    expect(searchInput).toBeInTheDocument();
-    await userEvent.type(searchInput, searchQuery);
-    await userEvent.click(screen.getByRole('button', { name: 'ui-consortia-settings.authorizationPolicy.search' }));
-
-    expect(screen.getByLabelText('ui-consortia-settings.authorizationPolicy.search')).toHaveDisplayValue(searchQuery);
+    expect(screen.getByText('PolicyFormContainer')).toBeInTheDocument();
   });
 });
