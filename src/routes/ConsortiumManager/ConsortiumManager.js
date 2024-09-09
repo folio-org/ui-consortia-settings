@@ -19,7 +19,7 @@ import {
 
 import {
   ConsortiumManagerHeader,
-  NavigationPaneToggle,
+  ConsortiumManagerNavigationPaneToggle,
 } from '../../components';
 import { useConsortiumManagerContext } from '../../contexts';
 import { MODULE_ROOT_ROUTE } from '../../constants';
@@ -129,7 +129,7 @@ export const ConsortiumManager = ({ location }) => {
               defaultWidth="20%"
               paneTitle={<FormattedMessage id={CONSORTIUM_MANAGER_SECTIONS_PANE_LABEL_ID} />}
               id="settings-nav-pane"
-              lastMenu={<NavigationPaneToggle />}
+              lastMenu={<ConsortiumManagerNavigationPaneToggle />}
             >
               <NavList aria-label={intl.formatMessage({ id: CONSORTIUM_MANAGER_SECTIONS_PANE_LABEL_ID })}>
                 {navListSections}

@@ -14,10 +14,10 @@ import {
 import { EVENT_EMITTER_EVENTS } from '../../constants';
 import { useConsortiumManagerContext } from '../../contexts';
 import { useEventEmitter } from '../../hooks';
+import { ConsortiumManagerNavigationPaneToggle } from '../ConsortiumManagerNavigationPaneToggle';
 import { FindConsortiumMember } from '../FindConsortiumMember';
 
 import css from './ConsortiumManagerHeader.css';
-import { NavigationPaneToggle } from '../NavigationPaneToggle';
 
 export const ConsortiumManagerHeader = () => {
   const paneTitleRef = useRef();
@@ -48,7 +48,7 @@ export const ConsortiumManagerHeader = () => {
   const firstMenu = useMemo(() => {
     if (selectMembersDisabled || isNavigationPaneVisible) return null;
 
-    return <NavigationPaneToggle />;
+    return <ConsortiumManagerNavigationPaneToggle />;
   }, [isNavigationPaneVisible, selectMembersDisabled]);
 
   return (
