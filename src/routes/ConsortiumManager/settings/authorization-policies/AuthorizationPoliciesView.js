@@ -55,7 +55,13 @@ export const AuthorizationPoliciesView = () => {
     policies,
     isLoading,
     refetch,
-  } = useAuthorizationPolicies({ searchTerm, tenantId: activeMember });
+  } = useAuthorizationPolicies({
+    searchTerm,
+    tenantId: activeMember,
+    options: {
+      enabled: Boolean(activeMember),
+    },
+  });
   const { users } = useUsers(policies.map(i => i.metadata.updatedByUserId));
 
   const handleSearchSubmit = (event) => {

@@ -60,10 +60,11 @@ export const AuthorizationRolesViewPage = ({ path }) => {
         response,
         messageId: 'ui-consortia-settings.authorizationRoles.errors.loading.data',
       }),
+      enabled: Boolean(activeMember),
     },
   );
 
-  const userIds = useMemo(() => roles.map(i => i.metadata.updatedByUserId), [roles]);
+  const userIds = useMemo(() => roles.map(i => i.metadata?.updatedByUserId), [roles]);
   const { users } = useUsers(userIds);
 
   const lastMenu = (
