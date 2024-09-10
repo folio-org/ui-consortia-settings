@@ -15,6 +15,7 @@ import {
   Button,
   MultiColumnList,
   Pane,
+  PaneBackLink,
   PaneHeader,
   PaneMenu,
   Paneset,
@@ -22,7 +23,10 @@ import {
 } from '@folio/stripes/components';
 import { IfPermission } from '@folio/stripes/core';
 
-import { AUTHORIZATION_POLICIES_ROUTE } from '../../../../constants';
+import {
+  AUTHORIZATION_POLICIES_ROUTE,
+  MODULE_ROOT_ROUTE,
+} from '../../../../constants';
 import { useMemberSelection } from '../../hooks';
 import {
   COLUMN_MAPPING,
@@ -81,6 +85,7 @@ export const AuthorizationPoliciesView = () => {
         defaultWidth="fill"
         renderHeader={() => (
           <PaneHeader
+            firstMenu={<PaneBackLink to={MODULE_ROOT_ROUTE} />}
             lastMenu={lastMenu}
             paneTitle={
               <FormattedMessage id="ui-consortia-settings.authorizationPolicy.meta.title" />

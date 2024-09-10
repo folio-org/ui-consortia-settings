@@ -14,7 +14,10 @@ import {
 import { buildStripesObject } from 'helpers';
 import { ConsortiumManagerContext } from '../../contexts';
 import { ConsortiumManager } from './ConsortiumManager';
-import { AVAILABLE_SETTINGS } from './constants';
+import {
+  AVAILABLE_MODULES,
+  CONSORTIUM_MANAGER_SECTIONS_LABEL_IDS_MAP,
+} from './constants';
 
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
@@ -25,11 +28,11 @@ jest.mock('@folio/stripes/core', () => ({
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   useTimeFormatter: jest.fn(),
-}))
+}));
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useTenantPermissions: jest.fn(() => ({ permissions: [], isLoading: false, isFetching: false })),
-  useTenantKy: jest.fn()
+  useTenantKy: jest.fn(),
 }));
 jest.mock('./settings/data-export/hooks', () => ({
   useDataExportLogs: jest.fn(() => ({ jobExecutions: [], isLoading: false, isFetching: false })),
@@ -52,10 +55,11 @@ const context = {
   selectedMembers: tenants.slice(3),
   selectMembers: jest.fn(),
   selectMembersDisabled: false,
+  isNavigationPaneVisible: true,
 };
 
 const modules = {
-  settings: AVAILABLE_SETTINGS.map((module) => ({
+  settings: AVAILABLE_MODULES.map((module) => ({
     displayName: module,
     module,
     route: `/${module}`,
@@ -101,15 +105,23 @@ describe('ConsortiumManager', () => {
     expect(screen.getByText('ui-consortia-settings.consortiumManager.members.header.title')).toBeInTheDocument();
   });
 
+  it('should render consortium manager nav link sections', () => {
+    renderConsortiumManager();
+
+    CONSORTIUM_MANAGER_SECTIONS_LABEL_IDS_MAP.forEach(section => {
+      expect(screen.getByText(section)).toBeInTheDocument();
+    });
+  });
+
   it('should render consortium manager settings nav links', () => {
     renderConsortiumManager();
 
-    AVAILABLE_SETTINGS.forEach(module => {
+    AVAILABLE_MODULES.forEach(module => {
       expect(screen.getByText(module)).toBeInTheDocument();
     });
   });
 
-  it.each(AVAILABLE_SETTINGS.map(module => [module]))('should render \'%s\' settings pane', async (name) => {
+  it.each(AVAILABLE_MODULES.map(module => [module]))('should render \'%s\' settings pane', async (name) => {
     await renderConsortiumManager();
 
     await userEvent.click(screen.getByText(name));

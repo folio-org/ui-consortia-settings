@@ -54,8 +54,8 @@ const mockRoles = [
 
 describe('AuthorizationRolesViewPage', () => {
   beforeEach(() => {
-    useRoleCapabilities.mockReturnValue({ 
-      initialRoleCapabilitiesSelectedMap: {}, 
+    useRoleCapabilities.mockReturnValue({
+      initialRoleCapabilitiesSelectedMap: {},
       isSuccess: true,
     });
     useAuthorizationRoles.mockImplementation(() => ({ roles: mockRoles }));
@@ -77,7 +77,7 @@ describe('AuthorizationRolesViewPage', () => {
 
   it('should renders role details if role id present in the path', async () => {
     useParams.mockReturnValue({ id: 'id' });
-  
+
     renderComponent();
 
     expect(screen.getByText('Role details pane')).toBeInTheDocument();
@@ -85,11 +85,12 @@ describe('AuthorizationRolesViewPage', () => {
 
   it('should filter roles on search', async () => {
     const mockFilterRoles = jest.fn();
+
     useAuthorizationRoles.mockImplementation(() => ({
       roles: mockRoles,
-      onSubmitSearch: mockFilterRoles
+      onSubmitSearch: mockFilterRoles,
     }));
-    
+
     renderComponent();
 
     const inputElement = screen.queryByTestId('search-field');

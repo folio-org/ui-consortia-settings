@@ -1,2 +1,2 @@
-export { UsersCapabilitiesCompare } from './UsersCapabilitiesCompare'
-export { UsersCapabilitiesCompareItems } from './UsersCapabilitiesCompareItems'
+export { UsersCapabilitiesCompare } from './UsersCapabilitiesCompare';
+export { UsersCapabilitiesCompareItems } from './UsersCapabilitiesCompareItems';

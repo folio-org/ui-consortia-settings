@@ -45,7 +45,7 @@ export const CapabilitiesCompareItem = ({
         label: el.name,
       });
     });
-  }, [roles, selectedMemberId]);
+  }, [roles]);
 
   const {
     groupedRoleCapabilitySetsByType,

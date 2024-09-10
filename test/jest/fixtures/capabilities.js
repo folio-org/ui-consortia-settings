@@ -150,7 +150,7 @@ export const groupedRoleCapabilitySetsByType = {
       'resource': 'Capability Roles',
     },
   ],
-}
+};
 
 export const groupedRoleCapabilitiesByType = {
   capabilitiesTotalCount: 3,
@@ -184,4 +184,4 @@ export const groupedRoleCapabilitiesByType = {
       'resource': 'Capability Roles',
     },
   ],
-}
+};

@@ -36,11 +36,11 @@ const confirmModalMessageRegEx = /alert.message .*confirmModal.message/;
 
 const handleConfirmModal = (confirm = true) => {
   return user.click(screen.getByRole('button', { name: confirm ? /confirm/ : /cancel/ }));
-}
+};
 
 const findCentralOrderingCheckbox = () => {
- return screen.findByRole('checkbox', { name: /checkbox.label/ });
-}
+  return screen.findByRole('checkbox', { name: /checkbox.label/ });
+};
 
 describe('CentralOrdering', () => {
   beforeEach(() => {

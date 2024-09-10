@@ -3,11 +3,11 @@ import {
   QueryClientProvider,
 } from 'react-query';
 
-import { useOkapiKy } from "@folio/stripes/core";
+import { useOkapiKy } from '@folio/stripes/core';
 import {
   act,
   renderHook,
-  waitFor
+  waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useUsers } from './useUsers';
@@ -30,26 +30,28 @@ const wrapper = ({ children }) => (
 
 const data = {
   users: [
-    {id: '1', username: "admin"},
-  ]
-}
+    { id: '1', username: 'admin' },
+  ],
+};
 
 describe('useTenantPermissions', () => {
   const mockGet = jest.fn(() => ({
     json: () => Promise.resolve(data),
   }));
+
   beforeEach(() => {
     queryClient.clear();
     useOkapiKy.mockClear().mockReturnValue(
       {
-        get: mockGet
-      }
+        get: mockGet,
+      },
     );
-  })
+  });
 
   it('should fetch tenant-related permissions', async () => {
     const tenantId = 'diku';
     const { result } = renderHook(() => useUsers(tenantId), { wrapper });
+
     await act(() => !result.current.isLoading);
 
     await waitFor(() => expect(result.current.isLoading).toBeFalsy());
