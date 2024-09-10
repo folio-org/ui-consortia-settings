@@ -27,6 +27,7 @@ import {
   RoleDetails,
   SearchForm,
   useAuthorizationRoles,
+  useUsers,
 } from '@folio/stripes-authorization-components';
 
 import { MODULE_ROOT_ROUTE } from '../../../../constants';
@@ -61,6 +62,9 @@ export const AuthorizationRolesViewPage = ({ path }) => {
       }),
     },
   );
+
+  const userIds = useMemo(() => roles.map(i => i.metadata.updatedByUserId), [roles]);
+  const { users } = useUsers(userIds);
 
   const lastMenu = (
     <Dropdown
@@ -113,7 +117,7 @@ export const AuthorizationRolesViewPage = ({ path }) => {
     onSubmitSearch(searchTerm);
   };
 
-  const resultsFormatter = useMemo(() => getResultsFormatter(path), [path]);
+  const resultsFormatter = useMemo(() => getResultsFormatter(path, users), [path, users]);
 
   return (
     <Paneset>
