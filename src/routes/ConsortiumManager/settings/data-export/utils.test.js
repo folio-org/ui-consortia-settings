@@ -1,11 +1,13 @@
 import { render } from '@folio/jest-config-stripes/testing-library/react';
+
+import { EXPORT_JOB_LOG_COLUMNS } from './constants';
 import {
   downloadFileByLink,
   getExportJobLogsListResultsFormatter,
   getFileLink,
-  getFileNameField, getStartedDateDateFormatter,
+  getFileNameField,
+  getStartedDateDateFormatter,
 } from './utils';
-import { EXPORT_JOB_LOG_COLUMNS } from './constants';
 
 describe('getExportJobLogsListResultsFormatter', () => {
   const intl = {

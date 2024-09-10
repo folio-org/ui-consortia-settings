@@ -1,6 +1,7 @@
+import { useCallback } from 'react';
+
 import { PaneHeaderIconButton } from '@folio/stripes/components';
 
-import { useCallback } from 'react';
 import { useConsortiumManagerContext } from '../../contexts';
 
 export const ConsortiumManagerNavigationPaneToggle = () => {
