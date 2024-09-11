@@ -43,6 +43,7 @@ const PanePlaceholder = () => <div className={css.panePlaceholder} />;
 
 const buildModulesLinks = (modules) => {
   return modules
+    .filter(Boolean)
     .sort((x, y) => x.displayName.toLowerCase().localeCompare(y.displayName.toLowerCase()))
     .map(({ displayName, module: name, route }) => (
       <NavListItem
