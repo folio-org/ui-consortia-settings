@@ -37,13 +37,14 @@ jest.mock('@folio/stripes-authorization-components', () => ({
   useAuthorizationRolesMutation: jest.fn().mockReturnValue({ duplicateAuthorizationRole: jest.fn() }),
   useShowCallout: jest.fn(),
   useUsers: jest.fn().mockReturnValue({ users: {} }),
+  useRoleById: jest.fn().mockReturnValue({ roleDetails: { name: 'name', id: 'id' } }),
   RoleDetails: ({ onDuplicate }) => {
     return (
       <div data-testid="mock-role-details">
-        <button onClick={onDuplicate}>duplicate</button>
+        <button type="button" onClick={onDuplicate}>duplicate</button>
         Role details pane
       </div>
-    )
+    );
   },
   SearchForm: ({ onSubmit }) => (
     <div>
@@ -113,7 +114,7 @@ describe('AuthorizationRolesViewPage', () => {
 
   it('should duplicate role on duplicate button click', async () => {
     const mockDuplicateRole = jest.fn(() => Promise.resolve({ id: 'new-id' }));
-    
+
     useAuthorizationRolesMutation.mockClear().mockReturnValue({
       duplicateAuthorizationRole: mockDuplicateRole,
     });

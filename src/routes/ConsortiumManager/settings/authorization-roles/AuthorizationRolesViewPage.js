@@ -31,6 +31,7 @@ import {
   SearchForm,
   useAuthorizationRoles,
   useAuthorizationRolesMutation,
+  useRoleById,
   useUsers,
 } from '@folio/stripes-authorization-components';
 
@@ -74,11 +75,12 @@ export const AuthorizationRolesViewPage = ({ path }) => {
     },
   );
 
+  const { roleDetails } = useRoleById(roleId);
   const userIds = useMemo(() => roles.map(i => i.metadata?.updatedByUserId), [roles]);
   const { users } = useUsers(userIds);
 
   const onDuplicate = () => {
-    const role = roles.find(i => i.id === roleId);
+    const roleName = roleDetails?.name;
     const messageIdPrefix = 'ui-consortia-settings.consortiumManager.members.authorizationsRoles.duplicate';
 
     duplicateAuthorizationRole(roleId)
@@ -88,13 +90,13 @@ export const AuthorizationRolesViewPage = ({ path }) => {
         showCallout({
           messageId: `${messageIdPrefix}.success`,
           type: 'success',
-          values: { name: role?.name },
+          values: { name: roleName },
         });
       }).catch(() => {
         showCallout({
           messageId: `${messageIdPrefix}.error`,
           type: 'error',
-          values: { name: role?.name },
+          values: { name: roleName },
         });
       });
   };
