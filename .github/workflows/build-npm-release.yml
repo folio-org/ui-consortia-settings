@@ -152,7 +152,7 @@ jobs:
           comment_title: Jest Unit Test Statistics
 
       - name: Publish Jest coverage report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: jest-coverage-report
@@ -160,7 +160,7 @@ jobs:
           retention-days: 30
 
       - name: Publish yarn.lock
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: yarn.lock
