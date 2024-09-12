@@ -7,7 +7,10 @@ import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
-import { useParams } from 'react-router-dom';
+import {
+  useParams,
+  useHistory,
+} from 'react-router-dom';
 
 import { useShowCallout } from '@folio/stripes-acq-components';
 import {
@@ -27,6 +30,7 @@ import {
   RoleDetails,
   SearchForm,
   useAuthorizationRoles,
+  useAuthorizationRolesMutation,
   useUsers,
 } from '@folio/stripes-authorization-components';
 
@@ -43,6 +47,8 @@ export const AuthorizationRolesViewPage = ({ path }) => {
   const intl = useIntl();
   const showCallout = useShowCallout();
   const { id: roleId } = useParams();
+  const history = useHistory();
+
   const [searchTerm, setSearchTerm] = useState('');
 
   const {
@@ -50,6 +56,10 @@ export const AuthorizationRolesViewPage = ({ path }) => {
     membersOptions,
     setActiveMember,
   } = useMemberSelectionContext();
+  const {
+    duplicateAuthorizationRole,
+    isLoading: isDuplicating,
+  } = useAuthorizationRolesMutation({ tenantId: activeMember });
 
   const { roles, isLoading, onSubmitSearch } = useAuthorizationRoles(
     activeMember,
@@ -66,6 +76,28 @@ export const AuthorizationRolesViewPage = ({ path }) => {
 
   const userIds = useMemo(() => roles.map(i => i.metadata?.updatedByUserId), [roles]);
   const { users } = useUsers(userIds);
+
+  const onDuplicate = () => {
+    const role = roles.find(i => i.id === roleId);
+    const messageIdPrefix = 'ui-consortia-settings.consortiumManager.members.authorizationsRoles.duplicate';
+
+    duplicateAuthorizationRole(roleId)
+      .then(({ id }) => {
+        history.push(`${path}/${id}`);
+
+        showCallout({
+          messageId: `${messageIdPrefix}.success`,
+          type: 'success',
+          values: { name: role?.name },
+        });
+      }).catch(() => {
+        showCallout({
+          messageId: `${messageIdPrefix}.error`,
+          type: 'error',
+          values: { name: role?.name },
+        });
+      });
+  };
 
   const lastMenu = (
     <Dropdown
@@ -158,9 +190,11 @@ export const AuthorizationRolesViewPage = ({ path }) => {
       </Pane>
       {roleId && (
         <RoleDetails
+          isLoading={isDuplicating}
+          onDuplicate={onDuplicate}
+          path={path}
           tenantId={activeMember}
           roleId={roleId}
-          path={path}
         />
       )}
     </Paneset>

@@ -33,6 +33,7 @@ jest.mock('@folio/stripes-authorization-components', () => ({
   ...jest.requireActual('@folio/stripes-authorization-components'),
   useRoleCapabilities: jest.fn(),
   useAuthorizationRoles: jest.fn(),
+  useAuthorizationRolesMutation: jest.fn().mockReturnValue({ duplicateAuthorizationRole: jest.fn() }),
   useUsers: jest.fn().mockReturnValue({ users: {} }),
   RoleDetails: () => <div data-testid="mock-role-details">Role details pane</div>,
   SearchForm: ({ onSubmit }) => (
