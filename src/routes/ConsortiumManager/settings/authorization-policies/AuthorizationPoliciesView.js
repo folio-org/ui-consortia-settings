@@ -129,6 +129,7 @@ export const AuthorizationPoliciesView = () => {
           onClose={() => setSelectedRow(null)}
           onEdit={() => onEdit(selectedRow.id)}
           tenantId={activeMember}
+          displayShareAction
         />
       )}
     </Paneset>

@@ -161,6 +161,7 @@ export const AuthorizationRolesViewPage = ({ path }) => {
           tenantId={activeMember}
           roleId={roleId}
           path={path}
+          displayShareAction
         />
       )}
     </Paneset>
