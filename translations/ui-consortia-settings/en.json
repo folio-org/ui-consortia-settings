@@ -19,6 +19,8 @@
   "consortiumManager.members.authorizationsRoles.compare.placeholder": "Select authorization role",
   "consortiumManager.members.authorizationsRoles.capabilities": "Capabilities",
   "consortiumManager.members.authorizationsRoles.capabilitiesSets": "Capabilities sets",
+  "consortiumManager.members.authorizationsRoles.duplicate.success": "The role <b>{name}</b> has been successfully <b>duplicated</b>",
+  "consortiumManager.members.authorizationsRoles.duplicate.error": "There was an error while duplicating the role <b>{name}</b>",
   "consortiumManager.members.users.compare": "Compare users",
 
 
