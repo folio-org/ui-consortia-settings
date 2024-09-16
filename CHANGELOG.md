@@ -16,6 +16,7 @@
 * [UICONSET-185](https://folio-org.atlassian.net/browse/UICONSET-185) ECS - Add error handler for Authorization roles and policies.
 * [UICONSET-162](https://folio-org.atlassian.net/browse/UICONSET-162) Save, edit Authorization policies for consortium.
 * [UICONSET-185](https://folio-org.atlassian.net/browse/UICONSET-168) Split consortium manager's navigation links into sections.
+* [UICONSET-169](https://folio-org.atlassian.net/browse/UICONSET-169) Consortia manager - Duplicate authorization role.
 * [UICONSET-173](https://folio-org.atlassian.net/browse/UICONSET-173) Share Authorization Roles for consortium.
 * [UICONSET-177](https://folio-org.atlassian.net/browse/UICONSET-177) Share Authorization Policies for consortium.
 
