@@ -3,7 +3,6 @@ import { MemoryRouter } from 'react-router-dom';
 import {
   render,
   screen,
-  logDOM,
 } from '@folio/jest-config-stripes/testing-library/react';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import {
@@ -86,8 +85,10 @@ describe('CapabilitiesCompareItem', () => {
 
     renderComponent({ setRolesToCompare });
 
+    await userEvent.click(screen.getByText('ui-consortia-settings.consortiumManager.members.permissionSets.compare.member.placeholder'));
     await userEvent.click(screen.getByText(selectedMemberOptions[0].label));
-    logDOM();
+
+    await userEvent.click(screen.getByText('ui-consortia-settings.consortiumManager.members.authorizationsRoles.compare.placeholder'));
     await userEvent.click(screen.getByText(roles[0].name));
 
     screen.getAllByText('Capability Roles').forEach(role => {

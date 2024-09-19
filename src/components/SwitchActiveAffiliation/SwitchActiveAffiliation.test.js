@@ -88,6 +88,7 @@ describe('SwitchActiveAffiliation', () => {
   it('should change active affiliation', async () => {
     renderSwitchActiveAffiliation();
 
+    await userEvent.click(screen.getByText('stripes-components.selection.controlLabel'));
     await userEvent.click(screen.getByText(tenants[2].name));
     await userEvent.click(screen.getByText(/saveAndClose/));
 
@@ -108,6 +109,7 @@ describe('SwitchActiveAffiliation', () => {
 
       renderSwitchActiveAffiliation();
 
+      await userEvent.click(screen.getByText('stripes-components.selection.controlLabel'));
       await userEvent.click(screen.getByText(tenants[2].name));
       await userEvent.click(screen.getByText(/saveAndClose/));
 
