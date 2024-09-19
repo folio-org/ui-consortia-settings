@@ -27,8 +27,10 @@ describe('AuthorizationPoliciesView', () => {
     });
   });
 
-  it('should render the component', () => {
+  it('should render the component', async () => {
     renderWithRouter(<AuthorizationPoliciesView {...props} />);
+
+    await userEvent.click(screen.getByText('stripes-components.selection.controlLabel'));
 
     expect(screen.getByLabelText('Member 1')).toBeInTheDocument();
     expect(screen.getByText('Member 2')).toBeInTheDocument();

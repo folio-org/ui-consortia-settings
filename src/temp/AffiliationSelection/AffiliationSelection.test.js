@@ -1,4 +1,5 @@
 import { render, within, screen } from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
 import { affiliations } from 'fixtures/affiliations';
 import { AffiliationSelection } from './AffiliationSelection';
@@ -22,13 +23,15 @@ const renderAffiliationSelection = (props = {}) => render(
 );
 
 describe('AffiliationSelection', () => {
-  it('should render affiliation select with provided options', () => {
+  it('should render affiliation select with provided options', async () => {
     renderAffiliationSelection();
 
     expect(
       within(screen.getByRole('button', { name: /Mineral Area College/ }))
         .getByText(affiliations[2].tenantName),
     ).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', { name: /Mineral Area College/ }));
 
     affiliations.forEach(({ tenantName, isPrimary }) => {
       screen.getAllByText(isPrimary ? `${tenantName} ui-users.affiliations.primary.label` : tenantName).forEach((el) => {
