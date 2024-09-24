@@ -87,7 +87,10 @@ describe('PermissionSetsCompareItem', () => {
 
     renderComponent({ setPermissionsToCompare });
 
+    await userEvent.click(screen.getByText('ui-consortia-settings.consortiumManager.members.permissionSets.compare.member.placeholder'));
     await userEvent.click(screen.getByText(selectedMemberOptions[0].label));
+
+    await userEvent.click(screen.getByText('ui-consortia-settings.consortiumManager.members.permissionSets.compare.permissionSet.placeholder'));
     await userEvent.click(screen.getByText(permissions[0].displayName));
 
     await waitFor(() => expect(setPermissionsToCompare).toHaveBeenCalledWith(
@@ -101,7 +104,10 @@ describe('PermissionSetsCompareItem', () => {
 
     const { container } = renderComponent({ setPermissionsToCompare, permissionsToCompare: ['Unique test permission'] });
 
+    await userEvent.click(screen.getByText('ui-consortia-settings.consortiumManager.members.permissionSets.compare.member.placeholder'));
     await userEvent.click(screen.getByText(selectedMemberOptions[0].label));
+
+    await userEvent.click(screen.getByText('ui-consortia-settings.consortiumManager.members.permissionSets.compare.permissionSet.placeholder'));
     await userEvent.click(screen.getByText(permissions[0].displayName));
 
     await waitFor(() => expect(setPermissionsToCompare).toHaveBeenCalledWith(

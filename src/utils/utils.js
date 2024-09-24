@@ -21,3 +21,5 @@ export const handleErrorMessages = ({
     type: 'error',
   });
 };
+
+export const isEurekaEnabled = (stripes) => stripes?.config?.isEureka;

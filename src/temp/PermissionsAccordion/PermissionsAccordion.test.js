@@ -121,7 +121,7 @@ describe('PermissionsAccordion', () => {
       test('unassign modal window should be shown', async () => {
         renderPermissionsAccordion();
 
-        const unassignAllButton = await screen.findByRole('button', { name: 'ui-users.permissions.unassignAllPermissions' });
+        const unassignAllButton = await screen.findByRole('button', { name: 'ui-users.permissions.unassignAllPermissions', hidden: true });
 
         await userEvent.click(unassignAllButton);
 
@@ -146,7 +146,7 @@ describe('PermissionsAccordion', () => {
 
           await userEvent.click(unassignAllButton);
 
-          const confirmButton = await screen.findByRole('button', { name: 'ui-users.yes' });
+          const confirmButton = await screen.findByRole('button', { name: 'ui-users.yes', hidden: true });
 
           await userEvent.click(confirmButton);
 
@@ -162,11 +162,9 @@ describe('PermissionsAccordion', () => {
 
           await userEvent.click(unassignAllButton);
 
-          const cancelButton = await screen.findByRole('button', { name: 'ui-users.no' });
+          const cancelButton = await screen.findByRole('button', { name: 'ui-users.no', hidden: true });
 
           await userEvent.click(cancelButton);
-
-          await waitForElementToBeRemoved(() => screen.getByText('ui-users.permissions.modal.unassignAll.header'));
 
           expect(await screen.queryByText('ui-users.permissions.modal.unassignAll.header')).not.toBeInTheDocument();
         });

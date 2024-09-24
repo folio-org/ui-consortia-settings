@@ -35,7 +35,7 @@ const mockData = { id: 'setting-id' };
 const confirmModalMessageRegEx = /alert.message .*confirmModal.message/;
 
 const handleConfirmModal = (confirm = true) => {
-  return user.click(screen.getByRole('button', { name: confirm ? /confirm/ : /cancel/ }));
+  return user.click(screen.getByRole('button', { name: confirm ? /confirm/ : /cancel/, hidden: true }));
 };
 
 const findCentralOrderingCheckbox = () => {

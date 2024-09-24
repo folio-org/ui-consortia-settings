@@ -53,23 +53,23 @@ describe('FindConsortiumMember', () => {
 
     describe('Filters', () => {
       it('should filter results by search query', async () => {
-        expect(await screen.findAllByRole('row')).toHaveLength(tenants.length + 1);
+        expect(await screen.findAllByRole('row', { hidden: true })).toHaveLength(tenants.length + 1);
 
         await userEvent.type(await screen.findByLabelText('ui-consortia-settings.consortiumManager.findMember.modal.aria.search'), tenants[0].name);
         await userEvent.click(await screen.findByText('stripes-acq-components.search'));
 
-        expect(await screen.findAllByRole('row')).toHaveLength(2);
+        expect(await screen.findAllByRole('row', { hidden: true })).toHaveLength(2);
       });
 
       it('should reset filters when \'Reset all\' button was clicked', async () => {
         await userEvent.type(await screen.findByLabelText('ui-consortia-settings.consortiumManager.findMember.modal.aria.search'), 'Community');
         await userEvent.click(await screen.findByText('stripes-acq-components.search'));
 
-        expect(await screen.findAllByRole('row')).toHaveLength(3);
+        expect(await screen.findAllByRole('row', { hidden: true })).toHaveLength(3);
 
         await userEvent.click(await screen.findByTestId('reset-button'));
 
-        expect(await screen.findAllByRole('row')).toHaveLength(tenants.length + 1);
+        expect(await screen.findAllByRole('row', { hidden: true })).toHaveLength(tenants.length + 1);
       });
     });
   });

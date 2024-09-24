@@ -117,9 +117,13 @@ describe('UsersCapabilitiesCompareItems', () => {
 
     renderComponent({ setRolesToCompare });
 
+    await userEvent.click(screen.getByText('ui-consortia-settings.consortiumManager.members.permissionSets.compare.member.placeholder'));
+    await userEvent.click(screen.getByText(selectedMemberOptions[0].label));
+
+    await userEvent.click(screen.getByText('ui-consortia-settings.consortiumManager.members.permissionSets.compare.user.placeholder'));
     await userEvent.click(screen.getByText(users[0].username));
 
-    await userEvent.click(screen.getByText(selectedMemberOptions[0].label));
+    await userEvent.click(screen.getByText('ui-consortia-settings.consortiumManager.members.authorizationsRoles.compare.placeholder'));
     await userEvent.click(screen.getByText(roles[0].name));
 
     screen.getAllByText('Capability Roles').forEach(role => {

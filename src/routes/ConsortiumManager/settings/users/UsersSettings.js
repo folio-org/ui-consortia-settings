@@ -1,43 +1,21 @@
-import sortBy from 'lodash/sortBy';
+import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { stripesShape } from '@folio/stripes/core';
 import { Settings } from '@folio/stripes/smart-components';
 
 import { MODULE_ROOT_ROUTE } from '../../../../constants';
-import {
-  Departments,
-  PatronGroups,
-  PermissionSets,
-} from './general';
-
-const sections = [
-  {
-    label: <FormattedMessage id="ui-users.settings.general" />,
-    pages: sortBy([
-      {
-        route: 'perms',
-        label: <FormattedMessage id="ui-users.settings.permissionSet" />,
-        component: PermissionSets,
-        perm: 'ui-users.settings.permsets.view',
-      },
-      {
-        route: 'groups',
-        label: <FormattedMessage id="ui-users.settings.patronGroups" />,
-        component: PatronGroups,
-        perm: 'ui-users.settings.usergroups.view',
-      },
-      {
-        route: 'departments',
-        label: <FormattedMessage id="ui-users.settings.departments" />,
-        component: Departments,
-        perm: 'ui-users.settings.departments.view',
-      },
-    ], ['label']),
-  },
-];
+import { isEurekaEnabled } from '../../../../utils';
+import { getSectionPages } from './constants';
 
 const UsersSettings = (props) => {
+  const isEureka = isEurekaEnabled(props.stripes);
+
+  const sections = useMemo(() => [{
+    label: <FormattedMessage id="ui-users.settings.general" />,
+    pages: getSectionPages(isEureka),
+  }], [isEureka]);
+
   return (
     <Settings
       {...props}

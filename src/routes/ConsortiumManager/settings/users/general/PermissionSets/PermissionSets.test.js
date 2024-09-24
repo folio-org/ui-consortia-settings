@@ -107,6 +107,7 @@ describe('PermissionsSets', () => {
   it('should handle selected member change', async () => {
     renderPermissionsSet();
 
+    await userEvent.click(screen.getByText('stripes-components.selection.controlLabel'));
     await userEvent.click(screen.getByText(tenants[4].name));
 
     expect(defaultProps.history.push).toHaveBeenCalled();
