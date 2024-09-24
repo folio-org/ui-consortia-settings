@@ -18,6 +18,8 @@
 * [UICONSET-185](https://folio-org.atlassian.net/browse/UICONSET-168) Split consortium manager's navigation links into sections.
 * [UICONSET-169](https://folio-org.atlassian.net/browse/UICONSET-169) Consortia manager - Duplicate authorization role.
 * [UICONSET-188](https://folio-org.atlassian.net/browse/UICONSET-188) ECS-NON-OKAPI Hide "Permission sets" subheading from consortia manager navigation.
+* [UICONSET-173](https://folio-org.atlassian.net/browse/UICONSET-173) Share Authorization Roles for consortium.
+* [UICONSET-177](https://folio-org.atlassian.net/browse/UICONSET-177) Share Authorization Policies for consortium.
 
 ## [1.1.0](https://github.com/folio-org/ui-consortia-settings/tree/v1.1.0) (2024-03-20)
 [Full Changelog](https://github.com/folio-org/ui-orders/compare/v1.0.2...v1.1.0)
