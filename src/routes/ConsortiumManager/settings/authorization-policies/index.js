@@ -1,1 +1,1 @@
-export { default } from './AuthorizationPoliciesSettings';
+export { default } from './AuthorizationPoliciesSettingsContainer';
