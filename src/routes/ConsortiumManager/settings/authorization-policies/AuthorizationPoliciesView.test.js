@@ -2,10 +2,13 @@ import { screen } from '@folio/jest-config-stripes/testing-library/react';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
 import { renderWithRouter } from 'helpers';
-import { useMemberSelection } from '../../hooks';
+import { useMemberSelectionContext } from '../../MemberSelectionContext';
 import { AuthorizationPoliciesView } from './AuthorizationPoliciesView';
 
-jest.mock('../../hooks');
+jest.mock('../../MemberSelectionContext', () => ({
+  ...jest.requireActual('../../MemberSelectionContext'),
+  useMemberSelectionContext: jest.fn(),
+}));
 
 describe('AuthorizationPoliciesView', () => {
   const props = {
@@ -20,7 +23,7 @@ describe('AuthorizationPoliciesView', () => {
   const setActiveMember = jest.fn();
 
   beforeEach(() => {
-    useMemberSelection.mockReturnValue({
+    useMemberSelectionContext.mockReturnValue({
       activeMember: 'member1',
       membersOptions,
       setActiveMember,
@@ -30,7 +33,7 @@ describe('AuthorizationPoliciesView', () => {
   it('should render the component', async () => {
     renderWithRouter(<AuthorizationPoliciesView {...props} />);
 
-    await userEvent.click(screen.getByText('stripes-components.selection.controlLabel'));
+    await userEvent.click(screen.getByRole('button', { name: /consortiumManager.members.selection.label/ }));
 
     expect(screen.getByLabelText('Member 1')).toBeInTheDocument();
     expect(screen.getByText('Member 2')).toBeInTheDocument();
