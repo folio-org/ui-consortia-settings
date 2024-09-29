@@ -213,5 +213,10 @@
     "consortiumManager.members.permissionSets.compare.user.placeholder": "Select User",
     "authorizationPolicy.new": "New",
     "authorizationPolicy.errors.loading.data": "Authorization policies couldn't be loaded.",
-    "authorizationRoles.errors.loading.data": "Authorization roles couldn't be loaded."
+    "authorizationRoles.errors.loading.data": "Authorization roles couldn't be loaded.",
+    "consortiumManager.sections.title": "Management",
+    "consortiumManager.sections.section.settings": "Settings",
+    "consortiumManager.sections.section.logsAndReports": "Logs & Reports",
+    "consortiumManager.members.authorizationsRoles.duplicate.success": "The role <b>{name}</b> has been successfully <b>duplicated</b>",
+    "consortiumManager.members.authorizationsRoles.duplicate.error": "There was an error while duplicating the role <b>{name}</b>"
 }

@@ -213,5 +213,10 @@
     "consortiumManager.members.permissionSets.compare.user.placeholder": "Vybrat uživatele",
     "authorizationPolicy.new": "Nový",
     "authorizationPolicy.errors.loading.data": "Pravidla autorizace se nepodařilo načíst.",
-    "authorizationRoles.errors.loading.data": "Autorizační role se nepodařilo načíst."
+    "authorizationRoles.errors.loading.data": "Autorizační role se nepodařilo načíst.",
+    "consortiumManager.sections.title": "Správa",
+    "consortiumManager.sections.section.settings": "Nastavení",
+    "consortiumManager.sections.section.logsAndReports": "Logy a zprávy",
+    "consortiumManager.members.authorizationsRoles.duplicate.success": "Role <b>{name}</b> byla úspěšně <b>duplikována</b>",
+    "consortiumManager.members.authorizationsRoles.duplicate.error": "Při duplikování role došlo k chybě <b>{name}</b>"
 }
