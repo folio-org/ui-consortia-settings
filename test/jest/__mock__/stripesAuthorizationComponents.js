@@ -6,7 +6,6 @@ jest.mock('@folio/stripes-authorization-components', () => ({
         id: 'id',
         name: 'Test Policy',
         description: 'policy description in free form',
-        type: 'REGULAR',
         metadata: {
           updatedDate: '2023-03-14T13:11:59.601+00:00',
         },
