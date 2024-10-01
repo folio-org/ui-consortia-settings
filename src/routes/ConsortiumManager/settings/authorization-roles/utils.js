@@ -9,6 +9,8 @@ import { getFullName } from '@folio/stripes/util';
 export const getResultsFormatter = (path, users) => ({
   name: (item) => <TextLink to={`${path}/${item.id}`}>{item.name}</TextLink>,
   type: (item) => {
+    if (!item?.type) return <NoValue />;
+
     return (
       <FormattedMessage
         id={`stripes-authorization-components.role.type.${item.type.toLowerCase()}`}
