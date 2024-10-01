@@ -213,5 +213,10 @@
     "consortiumManager.members.permissionSets.compare.user.placeholder": "ユーザーの選択",
     "authorizationPolicy.new": "新規",
     "authorizationPolicy.errors.loading.data": "Authorization policies couldn't be loaded.",
-    "authorizationRoles.errors.loading.data": "Authorization roles couldn't be loaded."
+    "authorizationRoles.errors.loading.data": "Authorization roles couldn't be loaded.",
+    "consortiumManager.sections.title": "Management",
+    "consortiumManager.sections.section.settings": "設定",
+    "consortiumManager.sections.section.logsAndReports": "ログ & レポート",
+    "consortiumManager.members.authorizationsRoles.duplicate.success": "The role <b>{name}</b> has been successfully <b>duplicated</b>",
+    "consortiumManager.members.authorizationsRoles.duplicate.error": "There was an error while duplicating the role <b>{name}</b>"
 }

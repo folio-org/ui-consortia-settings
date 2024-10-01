@@ -213,5 +213,10 @@
     "consortiumManager.members.permissionSets.compare.user.placeholder": "Selecione o usuário",
     "authorizationPolicy.new": "Novo",
     "authorizationPolicy.errors.loading.data": "Não foi possível carregar as políticas de autorização.",
-    "authorizationRoles.errors.loading.data": "Não foi possível carregar as funções de autorização."
+    "authorizationRoles.errors.loading.data": "Não foi possível carregar as funções de autorização.",
+    "consortiumManager.sections.title": "Gerenciamento",
+    "consortiumManager.sections.section.settings": "Configurações",
+    "consortiumManager.sections.section.logsAndReports": "Logs e Relatórios",
+    "consortiumManager.members.authorizationsRoles.duplicate.success": "A função <b>{name}</b> foi <b>duplicada</b> com sucesso",
+    "consortiumManager.members.authorizationsRoles.duplicate.error": "Ocorreu um erro ao duplicar a função <b>{name}</b>"
 }
