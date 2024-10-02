@@ -1,10 +1,18 @@
+import noop from 'lodash/noop';
 import {
   useMemo,
   useState,
 } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { useHistory } from 'react-router-dom';
+import {
+  useHistory,
+  useLocation,
+} from 'react-router-dom';
 
+import {
+  SEARCH_PARAMETER,
+  useLocationFilters,
+} from '@folio/stripes-acq-components';
 import {
   useAuthorizationPolicies,
   useUsers,
@@ -36,8 +44,15 @@ import { getResultsFormatter } from './utils';
 
 export const AuthorizationPoliciesView = () => {
   const history = useHistory();
-  const [searchTerm, setSearchTerm] = useState('');
+  const location = useLocation();
   const [selectedRow, setSelectedRow] = useState(null);
+
+  const [
+    filters,
+    searchTerm,,
+    applySearchTerm,
+    changeSearchTerm,
+  ] = useLocationFilters(location, history, noop);
 
   const onRowClick = (_event, row) => setSelectedRow(row);
 
@@ -54,19 +69,20 @@ export const AuthorizationPoliciesView = () => {
   const {
     policies,
     isLoading,
-    refetch,
   } = useAuthorizationPolicies({
-    searchTerm,
+    searchTerm: filters[SEARCH_PARAMETER],
     tenantId: activeMember,
     options: {
       enabled: Boolean(activeMember),
     },
   });
-  const { users } = useUsers(policies.map(i => i.metadata.updatedByUserId));
+
+  const userIds = useMemo(() => policies.map(i => i.metadata.updatedByUserId), [policies]);
+  const { users } = useUsers(userIds, { tenantId: activeMember });
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
-    refetch();
+    applySearchTerm();
   };
 
   const formatter = useMemo(() => getResultsFormatter({ users }), [users]);
@@ -109,7 +125,7 @@ export const AuthorizationPoliciesView = () => {
         />
         <SearchForm
           searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
+          setSearchTerm={(value) => changeSearchTerm({ target: { value } })}
           onSubmit={handleSearchSubmit}
           searchLabelId="ui-consortia-settings.authorizationPolicy.search"
         />
