@@ -62,7 +62,11 @@ export const AuthorizationRolesViewPage = ({ path }) => {
     isLoading: isDuplicating,
   } = useAuthorizationRolesMutation({ tenantId: activeMember });
 
-  const { roles, isLoading, onSubmitSearch } = useAuthorizationRoles(
+  const {
+    roles,
+    isLoading,
+    onSubmitSearch,
+  } = useAuthorizationRoles(
     activeMember,
     {
       onError: ({ response }) => handleErrorMessages({
@@ -75,9 +79,10 @@ export const AuthorizationRolesViewPage = ({ path }) => {
     },
   );
 
-  const { roleDetails } = useRoleById(roleId);
+  const { roleDetails } = useRoleById(roleId, { tenantId: activeMember });
+
   const userIds = useMemo(() => roles.map(i => i.metadata?.updatedByUserId), [roles]);
-  const { users } = useUsers(userIds);
+  const { users } = useUsers(userIds, { tenantId: activeMember });
 
   const onDuplicate = () => {
     const roleName = roleDetails?.name;
