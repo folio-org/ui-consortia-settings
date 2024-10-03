@@ -7,8 +7,8 @@ import { useShowCallout } from '@folio/stripes-acq-components';
 import { tenants } from 'fixtures';
 import { ConsortiumManagerContextProviderMock } from 'helpers';
 import { useTenantPermissions } from '../../../../../../../hooks';
-import { PermissionSetsCompareItem } from './PermissionSetsCompareItem';
 import { COMPARE_ITEM_NAME } from './constants';
+import { PermissionSetsCompareItem } from './PermissionSetsCompareItem';
 
 jest.mock('@folio/stripes-acq-components', () => ({
   ...jest.requireActual('@folio/stripes-acq-components'),
@@ -87,10 +87,10 @@ describe('PermissionSetsCompareItem', () => {
 
     renderComponent({ setPermissionsToCompare });
 
-    await userEvent.click(screen.getByText('ui-consortia-settings.consortiumManager.members.permissionSets.compare.member.placeholder'));
+    await userEvent.click(screen.getByRole('button', { name: /permissionSets.compare.member/ }));
     await userEvent.click(screen.getByText(selectedMemberOptions[0].label));
 
-    await userEvent.click(screen.getByText('ui-consortia-settings.consortiumManager.members.permissionSets.compare.permissionSet.placeholder'));
+    await userEvent.click(screen.getByRole('button', { name: /permissionSets.compare.permissionSet/ }));
     await userEvent.click(screen.getByText(permissions[0].displayName));
 
     await waitFor(() => expect(setPermissionsToCompare).toHaveBeenCalledWith(
@@ -104,10 +104,10 @@ describe('PermissionSetsCompareItem', () => {
 
     const { container } = renderComponent({ setPermissionsToCompare, permissionsToCompare: ['Unique test permission'] });
 
-    await userEvent.click(screen.getByText('ui-consortia-settings.consortiumManager.members.permissionSets.compare.member.placeholder'));
+    await userEvent.click(screen.getByRole('button', { name: /permissionSets.compare.member/ }));
     await userEvent.click(screen.getByText(selectedMemberOptions[0].label));
 
-    await userEvent.click(screen.getByText('ui-consortia-settings.consortiumManager.members.permissionSets.compare.permissionSet.placeholder'));
+    await userEvent.click(screen.getByRole('button', { name: /permissionSets.compare.permissionSet/ }));
     await userEvent.click(screen.getByText(permissions[0].displayName));
 
     await waitFor(() => expect(setPermissionsToCompare).toHaveBeenCalledWith(

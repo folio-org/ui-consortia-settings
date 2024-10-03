@@ -35,7 +35,7 @@ import {
   AUTHORIZATION_POLICIES_ROUTE,
   MODULE_ROOT_ROUTE,
 } from '../../../../constants';
-import { useMemberSelection } from '../../hooks';
+import { useMemberSelectionContext } from '../../MemberSelectionContext';
 import {
   COLUMN_MAPPING,
   VISIBLE_COLUMNS,
@@ -64,7 +64,7 @@ export const AuthorizationPoliciesView = () => {
     activeMember,
     membersOptions,
     setActiveMember,
-  } = useMemberSelection();
+  } = useMemberSelectionContext();
 
   const {
     policies,

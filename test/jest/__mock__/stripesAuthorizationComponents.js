@@ -1,5 +1,3 @@
-import React from 'react';
-
 jest.mock('@folio/stripes-authorization-components', () => ({
   ...jest.requireActual('@folio/stripes-authorization-components'),
   useAuthorizationPolicies: jest.fn().mockReturnValue({

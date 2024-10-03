@@ -109,7 +109,7 @@ describe('SwitchActiveAffiliation', () => {
 
       renderSwitchActiveAffiliation();
 
-      await userEvent.click(screen.getByText('stripes-components.selection.controlLabel'));
+      await userEvent.click(screen.getByRole('button', { name: /switchActiveAffiliation.modal.select.label/ }));
       await userEvent.click(screen.getByText(tenants[2].name));
       await userEvent.click(screen.getByText(/saveAndClose/));
 

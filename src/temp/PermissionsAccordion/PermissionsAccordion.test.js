@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitForElementToBeRemoved } from '@folio/jest-config-stripes/testing-library/react';
+import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
 import { IfPermission } from '@folio/stripes/core';
@@ -162,7 +162,9 @@ describe('PermissionsAccordion', () => {
 
           await userEvent.click(unassignAllButton);
 
-          const cancelButton = await screen.findByRole('button', { name: 'ui-users.no', hidden: true });
+          expect(screen.getByText('ui-users.permissions.modal.unassignAll.header')).toBeInTheDocument();
+
+          const cancelButton = await screen.findByRole('button', { name: 'ui-users.no' });
 
           await userEvent.click(cancelButton);
 

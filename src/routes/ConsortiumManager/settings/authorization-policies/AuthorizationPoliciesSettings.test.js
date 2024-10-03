@@ -9,10 +9,16 @@ import {
   screen,
 } from '@folio/jest-config-stripes/testing-library/react';
 
-import AuthorizationPoliciesSettings from './AuthorizationPoliciesSettings';
+import { useMemberSelectionContext } from '../../MemberSelectionContext';
+import { AuthorizationPoliciesSettings } from './AuthorizationPoliciesSettings';
 
 jest.mock('@folio/stripes-authorization-components', () => ({
   PolicyFormContainer: () => <div>PolicyFormContainer</div>,
+}));
+
+jest.mock('../../MemberSelectionContext', () => ({
+  ...jest.requireActual('../../MemberSelectionContext'),
+  useMemberSelectionContext: jest.fn(),
 }));
 
 jest.mock('./AuthorizationPoliciesView', () => ({
@@ -33,6 +39,23 @@ const wrapper = ({ children }) => (
 const renderComponent = () => render(<AuthorizationPoliciesSettings />, { wrapper });
 
 describe('AuthorizationPoliciesSettings', () => {
+  const membersOptions = [
+    { value: 'member1', label: 'Member 1' },
+    { value: 'member2', label: 'Member 2' },
+  ];
+
+  const setActiveMember = jest.fn();
+
+  beforeEach(() => {
+    useMemberSelectionContext
+      .mockClear()
+      .mockReturnValue({
+        activeMember: 'member1',
+        membersOptions,
+        setActiveMember,
+      });
+  });
+
   it('should display authorization policy view page', async () => {
     window.location.pathname = pathname;
     renderComponent();

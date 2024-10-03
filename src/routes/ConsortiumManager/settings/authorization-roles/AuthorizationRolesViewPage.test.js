@@ -58,6 +58,7 @@ const mockRoles = [
   {
     id: 'id',
     name: 'Test Role',
+    type: 'REGULAR',
     description: 'Test role description',
     metadata: {},
   },
@@ -70,10 +71,6 @@ describe('AuthorizationRolesViewPage', () => {
       isSuccess: true,
     });
     useAuthorizationRoles.mockImplementation(() => ({ roles: mockRoles }));
-  });
-
-  afterAll(() => {
-    jest.clearAllMocks();
   });
 
   const renderComponent = () => render(<AuthorizationRolesViewPage path="/consortia-settings/authorization-roles" />, { wrapper });

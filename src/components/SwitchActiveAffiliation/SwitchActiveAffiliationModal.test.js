@@ -25,7 +25,7 @@ describe('SwitchActiveAffiliationModal', () => {
   it('should render selection options', async () => {
     renderSwitchActiveAffiliationModal();
 
-    await userEvent.click(screen.getByText('stripes-components.selection.controlLabel'));
+    await userEvent.click(screen.getByRole('button', { name: /switchActiveAffiliation.modal.select.label/ }));
 
     expect(screen.getAllByText(tenants[0].name)).toHaveLength(2);
     tenants.slice(1).forEach(({ name }) => {

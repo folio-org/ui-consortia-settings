@@ -9,10 +9,12 @@ import { PolicyFormContainer } from '@folio/stripes-authorization-components';
 
 import { AffiliationLookupSuppressor } from '../../../../components';
 import { AUTHORIZATION_POLICIES_ROUTE } from '../../../../constants';
+import { useMemberSelectionContext } from '../../MemberSelectionContext';
 import { AuthorizationPoliciesView } from './AuthorizationPoliciesView';
 
-const AuthorizationPoliciesSettings = () => {
+export const AuthorizationPoliciesSettings = () => {
   const history = useHistory();
+  const { activeMember } = useMemberSelectionContext();
 
   const onClose = () => {
     history.push(AUTHORIZATION_POLICIES_ROUTE);
@@ -29,6 +31,7 @@ const AuthorizationPoliciesSettings = () => {
               <PolicyFormContainer
                 onClose={onClose}
                 path={AUTHORIZATION_POLICIES_ROUTE}
+                tenantId={activeMember}
               />
             </AffiliationLookupSuppressor>
           )}
@@ -41,6 +44,7 @@ const AuthorizationPoliciesSettings = () => {
               <PolicyFormContainer
                 onClose={onClose}
                 path={AUTHORIZATION_POLICIES_ROUTE}
+                tenantId={activeMember}
               />
             </AffiliationLookupSuppressor>
           )}
@@ -54,5 +58,3 @@ const AuthorizationPoliciesSettings = () => {
     </Router>
   );
 };
-
-export default AuthorizationPoliciesSettings;
