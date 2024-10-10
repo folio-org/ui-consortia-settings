@@ -12,7 +12,6 @@ import {
   useSettingSharing,
 } from '../../../src/hooks/consortiumManager';
 
-jest.unmock('react-final-form-arrays');
 jest.mock('@folio/stripes-acq-components', () => ({
   ...jest.requireActual('@folio/stripes-acq-components'),
   useShowCallout: jest.fn(),
