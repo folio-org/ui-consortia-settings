@@ -1,5 +1,6 @@
 export { checkConsortiumAffiliations } from './checkConsortiumAffiliations';
 export { EventEmitter } from './EventEmitter';
+export { extendKyWithTenant } from './extendKyWithTenant';
 export { getCurrentModulePath } from './getCurrentModulePath';
 export { getLegacyTokenHeader } from './getLegacyTokenHeader';
 export { getModuleName } from './getModuleName';

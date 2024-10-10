@@ -26,8 +26,11 @@ import {
   Paneset,
   Selection,
 } from '@folio/stripes/components';
+import { useOkapiKy } from '@folio/stripes/core';
 import {
+  isShared,
   RoleDetails,
+  ROLES_API,
   SearchForm,
   useAuthorizationRoles,
   useAuthorizationRolesMutation,
@@ -36,7 +39,11 @@ import {
 } from '@folio/stripes-authorization-components';
 
 import { MODULE_ROOT_ROUTE } from '../../../../constants';
-import { handleErrorMessages } from '../../../../utils';
+import { useIsRowSelected } from '../../../../hooks';
+import {
+  extendKyWithTenant,
+  handleErrorMessages,
+} from '../../../../utils';
 import { useMemberSelectionContext } from '../../MemberSelectionContext';
 import {
   COLUMN_MAPPING,
@@ -44,11 +51,27 @@ import {
 } from './constants';
 import { getResultsFormatter } from './utils';
 
+const resolveSharedRoleLocation = (ky, tenantId) => async (role, path) => {
+  const httpClient = extendKyWithTenant(ky, tenantId);
+
+  const searchParams = { query: `name=${role?.name}` };
+  const { roles } = await httpClient.get(`${ROLES_API}`, { searchParams })
+    .json()
+    .catch(() => ({ roles: [] }));
+
+  const id = roles[0]?.id;
+
+  return id ? `${path}/${id}` : path;
+};
+
 export const AuthorizationRolesViewPage = ({ path }) => {
   const intl = useIntl();
   const showCallout = useShowCallout();
   const { id: roleId } = useParams();
   const history = useHistory();
+  const ky = useOkapiKy();
+
+  const isRowSelected = useIsRowSelected(`${path}/:id`);
 
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -83,6 +106,18 @@ export const AuthorizationRolesViewPage = ({ path }) => {
 
   const userIds = useMemo(() => roles.map(i => i.metadata?.updatedByUserId), [roles]);
   const { users } = useUsers(userIds, { tenantId: activeMember });
+
+  const isRoleShared = isShared(roleDetails);
+
+  const onMemberChange = async (member) => {
+    setActiveMember(member);
+
+    const targetLocation = isRoleShared
+      ? await resolveSharedRoleLocation(ky, member)(roleDetails, path)
+      : path;
+
+    history.push(targetLocation);
+  };
 
   const onDuplicate = () => {
     const roleName = roleDetails?.name;
@@ -179,7 +214,7 @@ export const AuthorizationRolesViewPage = ({ path }) => {
           disabled={isLoading}
           id="consortium-member-select"
           label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.selection.label" />}
-          onChange={setActiveMember}
+          onChange={onMemberChange}
           value={activeMember}
         />
         <SearchForm
@@ -191,6 +226,7 @@ export const AuthorizationRolesViewPage = ({ path }) => {
           columnMapping={COLUMN_MAPPING}
           contentData={roles}
           formatter={resultsFormatter}
+          isSelected={isRowSelected}
           loading={isLoading}
           visibleColumns={VISIBLE_COLUMNS}
         />

@@ -6,6 +6,10 @@ import { IfPermission } from '@folio/stripes/core';
 
 import PermissionsAccordion from './PermissionsAccordion';
 
+jest.mock('react-final-form-arrays', () => ({
+  ...jest.requireActual('react-final-form-arrays'),
+  FieldArray: () => <div>FieldArray</div>,
+}));
 jest.unmock('@folio/stripes/components');
 jest.mock('@folio/stripes/core', () => ({
   IfPermission: jest.fn(({ children }) => <>{children}</>),
