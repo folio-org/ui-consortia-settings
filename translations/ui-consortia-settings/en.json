@@ -19,6 +19,7 @@
   "consortiumManager.members.authorizationsRoles.compare.placeholder": "Select authorization role",
   "consortiumManager.members.authorizationsRoles.capabilities": "Capabilities",
   "consortiumManager.members.authorizationsRoles.capabilitiesSets": "Capabilities sets",
+  "consortiumManager.members.authorizationsRoles.roles.capabilitiesSets": "Capability sets",
   "consortiumManager.members.authorizationsRoles.duplicate.success": "The role <b>{name}</b> has been successfully <b>duplicated</b>",
   "consortiumManager.members.authorizationsRoles.duplicate.error": "There was an error while duplicating the role <b>{name}</b>",
   "consortiumManager.members.users.compare": "Compare users",
@@ -33,7 +34,7 @@
   "consortiumManager.controlledVocab.common.termDeleted": "<b>{term}</b> was successfully <b>deleted</b> for <b>{members}</b> {count, select, 1 {library} other {libraries}}.",
   "consortiumManager.controlledVocab.common.termUpdated": "<b>{term}</b> was successfully <b>updated</b> for <b>{members}</b> {count, select, 1 {library} other {libraries}}.",
   "consortiumManager.members.authorizationsRoles.capabilities.empty": "No capabilities found",
-  "consortiumManager.members.authorizationsRoles.capabilitiesSets.empty": "No capabilities sets found",
+  "consortiumManager.members.authorizationsRoles.capabilitiesSets.empty": "No capability sets found",
 
   "consortiumManager.controlledVocab.alternativeTitleTypes.cannotDeleteTermHeader": "Cannot delete the alternative title type",
   "consortiumManager.controlledVocab.alternativeTitleTypes.cannotDeleteTermMessage": "This alternative title type cannot be deleted, as it is in use by one or more records.",
@@ -178,7 +179,7 @@
   "consortiumManager.modal.confirmCreate.message": "<b>{term}</b> will be saved for the member libraries:",
   "consortiumManager.modal.confirmShare.all.heading": "Confirm share to all",
   "consortiumManager.modal.confirmShare.all.message": "Are you sure you want to share {term} with <b>ALL</b> members?",
-  
+
   "consortiumManager.sections.title": "Management",
   "consortiumManager.sections.section.settings": "Settings",
   "consortiumManager.sections.section.logsAndReports": "Logs & Reports",

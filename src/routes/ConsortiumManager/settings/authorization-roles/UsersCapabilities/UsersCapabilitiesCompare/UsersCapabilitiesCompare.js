@@ -36,6 +36,7 @@ export const UsersCapabilitiesCompare = () => {
       ...prevState,
       [columnName]: {
         capabilities: roles.capabilities,
+        capabilitiesSets: roles.capabilitiesSets,
       },
     }));
   };
