@@ -42,6 +42,12 @@ import {
 } from './constants';
 import { getResultsFormatter } from './utils';
 
+/*
+  Create should be disabled for the current release.
+  https://folio-org.atlassian.net/browse/UICONSET-201
+*/
+const IS_POLICIES_FEATURE_ENABLED = false;
+
 export const AuthorizationPoliciesView = () => {
   const history = useHistory();
   const location = useLocation();
@@ -87,7 +93,7 @@ export const AuthorizationPoliciesView = () => {
 
   const formatter = useMemo(() => getResultsFormatter({ users }), [users]);
 
-  const lastMenu = (
+  const lastMenu = IS_POLICIES_FEATURE_ENABLED && (
     <PaneMenu>
       <IfPermission perm="policies.item.post">
         <Button

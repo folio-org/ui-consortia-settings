@@ -21,6 +21,7 @@
 * [UICONSET-173](https://folio-org.atlassian.net/browse/UICONSET-173) Share Authorization Roles for consortium.
 * [UICONSET-177](https://folio-org.atlassian.net/browse/UICONSET-177) Share Authorization Policies for consortium.
 * [UICONSET-190](https://folio-org.atlassian.net/browse/UICONSET-190) Update the filtering so it works the same for both authorization roles and policies.
+* [UICONSET-201](https://folio-org.atlassian.net/browse/UICONSET-201) Hide create policy action in "Consortium Manager".
 
 ## [1.1.0](https://github.com/folio-org/ui-consortia-settings/tree/v1.1.0) (2024-03-20)
 [Full Changelog](https://github.com/folio-org/ui-orders/compare/v1.0.2...v1.1.0)
