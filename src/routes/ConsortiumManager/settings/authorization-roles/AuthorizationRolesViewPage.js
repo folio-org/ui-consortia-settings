@@ -167,7 +167,7 @@ export const AuthorizationRolesViewPage = ({ path }) => {
             marginBottom0
           >
             <Icon size="small" icon="transfer">
-              <FormattedMessage id="ui-consortia-settings.consortiumManager.members.action.compare" />
+              <FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.compare" />
             </Icon>
           </Button>
         </PaneMenu>

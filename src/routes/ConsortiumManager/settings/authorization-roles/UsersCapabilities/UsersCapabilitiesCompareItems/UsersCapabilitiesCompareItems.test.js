@@ -7,6 +7,8 @@ import {
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import {
   useAuthorizationRoles,
+  useRoleCapabilities,
+  useRoleCapabilitySets,
   useUserCapabilities,
   useUserCapabilitiesSets,
   useUserRolesByUserIds,
@@ -29,6 +31,8 @@ jest.mock('@folio/stripes-authorization-components', () => ({
   useUserCapabilitiesSets: jest.fn(),
   useAuthorizationRoles: jest.fn(),
   useUserRolesByUserIds: jest.fn(),
+  useRoleCapabilities: jest.fn(),
+  useRoleCapabilitySets: jest.fn(),
 }));
 
 jest.mock('../../../../../../hooks/useUsers/useUsers');
@@ -103,6 +107,16 @@ describe('UsersCapabilitiesCompareItems', () => {
     useUserCapabilities.mockClear().mockReturnValue({
       groupedUserCapabilitiesByType: groupedRoleCapabilitiesByType,
       initialUserCapabilitiesSelectedMap: 1,
+      capabilitiesTotalCount: 2,
+    });
+    useRoleCapabilitySets.mockClear().mockReturnValue({
+      groupedRoleCapabilitySetsByType,
+      initialRoleCapabilitySetsSelectedMap: 1,
+      capabilitySetsTotalCount: 2,
+    });
+    useRoleCapabilities.mockClear().mockReturnValue({
+      groupedRoleCapabilitiesByType,
+      initialRoleCapabilitiesSelectedMap: 1,
       capabilitiesTotalCount: 2,
     });
   });

@@ -19,12 +19,15 @@ import {
 import {
   CapabilitiesSection,
   useAuthorizationRoles,
+  useRoleCapabilities,
+  useRoleCapabilitySets,
   useUserCapabilities,
+  useUserCapabilitiesSets,
   useUserRolesByUserIds,
 } from '@folio/stripes-authorization-components';
 
 import { useUsers } from '../../../../../../hooks';
-import { onFilter } from '../../utils';
+import { mergeAndGetUniqueById, onFilter } from '../../utils';
 
 export const UsersCapabilitiesCompareItems = ({
   columnName,
@@ -36,6 +39,10 @@ export const UsersCapabilitiesCompareItems = ({
   const [selectedRoleId, setSelectedRoleId] = useState('');
   const [selectedMemberId, setSelectedMemberId] = useState('');
   const [selectedUserId, setSelectedUserId] = useState('');
+  const [isAccordionOpen, setIsAccordionOpen] = useState({
+    capabilities: false,
+    capabilitiesSets: false,
+  });
   const isMounted = useRef(false);
 
   const { users, isFetching } = useUsers({ tenant: selectedMemberId });
@@ -65,12 +72,34 @@ export const UsersCapabilitiesCompareItems = ({
     isSuccess: isSuccessCapabilities,
     initialUserCapabilitiesSelectedMap,
     groupedUserCapabilitiesByType,
-  } = useUserCapabilities(selectedUserId, selectedMemberId, selectedRoleId);
+  } = useUserCapabilities(selectedUserId, selectedMemberId);
+
+  const {
+    groupedUserCapabilitySetsByType,
+    capabilitySetsTotalCount,
+    isSuccess: isSuccessCapabilitiesSet,
+    initialUserCapabilitySetsSelectedMap,
+  } = useUserCapabilitiesSets(selectedUserId, selectedMemberId);
+
+  const {
+    groupedRoleCapabilitySetsByType,
+    capabilitySetsTotalCount: setsByRoleTotalCount,
+    isSuccess: isSuccessRoleCapabilitiesSet,
+  } = useRoleCapabilitySets(selectedRoleId, selectedMemberId);
+
+  const {
+    capabilitiesTotalCount: capabilitiesByRoleCountTotal,
+    groupedRoleCapabilitiesByType,
+    isSuccess: isSuccessRoleCapabilities,
+  } = useRoleCapabilities(selectedRoleId, selectedMemberId);
 
   useEffect(() => {
-    if (isMounted.current && isSuccessCapabilities) {
+    if (isMounted.current &&
+      (isSuccessCapabilitiesSet || isSuccessRoleCapabilitiesSet)
+      && (isSuccessCapabilities || isSuccessRoleCapabilities)) {
       setRolesToCompare({
-        capabilities: groupedUserCapabilitiesByType,
+        capabilities: mergeAndGetUniqueById(groupedUserCapabilitiesByType, groupedRoleCapabilitiesByType),
+        capabilitiesSets: mergeAndGetUniqueById(groupedUserCapabilitySetsByType, groupedRoleCapabilitySetsByType),
       }, columnName);
     } else {
       isMounted.current = true;
@@ -81,15 +110,42 @@ export const UsersCapabilitiesCompareItems = ({
     selectedRoleId,
     columnName,
     capabilitiesTotalCount,
+    capabilitiesByRoleCountTotal,
+    setsByRoleTotalCount,
+    isSuccessRoleCapabilitiesSet,
+    isSuccessRoleCapabilities,
     isSuccessCapabilities,
+    isSuccessCapabilitiesSet,
   ]);
 
   const handleUserChange = (value) => {
     setSelectedUserId(value);
     setSelectedRoleId('');
+
+    setIsAccordionOpen({
+      capabilities: true,
+      capabilitiesSets: true,
+    });
+
+    setRolesToCompare({
+      capabilities: [],
+      capabilitiesSets: [],
+    }, columnName);
+  };
+
+  const handleMemberChange = (value) => {
+    setSelectedUserId('');
+    setSelectedRoleId('');
+    setSelectedMemberId(value);
+
+    setRolesToCompare({
+      capabilities: [],
+      capabilitiesSets: [],
+    }, columnName);
   };
 
   const isCapabilitySelected = (capabilityId) => !!initialUserCapabilitiesSelectedMap[capabilityId];
+  const isCapabilitySetSelected = (capabilitySetId) => !!initialUserCapabilitySetsSelectedMap[capabilitySetId];
 
   return (
     <div>
@@ -99,7 +155,7 @@ export const UsersCapabilitiesCompareItems = ({
         id="memberSelect"
         placeholder={intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.members.permissionSets.compare.member.placeholder' })}
         dataOptions={members}
-        onChange={setSelectedMemberId}
+        onChange={handleMemberChange}
         onFilter={onFilter}
       />
       <Selection
@@ -128,12 +184,17 @@ export const UsersCapabilitiesCompareItems = ({
       <AccordionSet>
         <Accordion
           closedByDefault
+          open={isAccordionOpen.capabilities}
+          onToggle={() => setIsAccordionOpen(prevState => ({
+            ...prevState,
+            capabilities: !prevState.capabilities,
+          }))}
           label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.capabilities" />}
         >
-          {capabilitiesTotalCount ?
+          {capabilitiesTotalCount || capabilitiesByRoleCountTotal ?
             <CapabilitiesSection
               isCapabilitySelected={isCapabilitySelected}
-              capabilities={groupedUserCapabilitiesByType}
+              capabilities={mergeAndGetUniqueById(groupedUserCapabilitiesByType, groupedRoleCapabilitiesByType)}
               readOnly
               capabilitiesToCompare={rolesToCompare.capabilities}
               isNeedToCompare
@@ -141,6 +202,29 @@ export const UsersCapabilitiesCompareItems = ({
             :
             <EmptyMessage>
               <FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.capabilities.empty" />
+            </EmptyMessage>
+          }
+        </Accordion>
+        <Accordion
+          closedByDefault
+          open={isAccordionOpen.capabilitiesSets}
+          onToggle={() => setIsAccordionOpen(prevState => ({
+            ...prevState,
+            capabilitiesSets: !prevState.capabilitiesSets,
+          }))}
+          label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.capabilitiesSets" />}
+        >
+          {capabilitySetsTotalCount || setsByRoleTotalCount ?
+            <CapabilitiesSection
+              isCapabilitySelected={isCapabilitySetSelected}
+              readOnly
+              capabilities={mergeAndGetUniqueById(groupedUserCapabilitySetsByType, groupedRoleCapabilitySetsByType)}
+              capabilitiesToCompare={rolesToCompare.capabilitiesSets}
+              isNeedToCompare
+            />
+            :
+            <EmptyMessage>
+              <FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.capabilitiesSets.empty" />
             </EmptyMessage>
           }
         </Accordion>
