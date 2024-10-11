@@ -1,8 +1,13 @@
-import { MemoryRouter, useParams } from 'react-router-dom';
+import {
+  MemoryRouter,
+  useParams,
+  useHistory,
+} from 'react-router-dom';
 
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { screen, render } from '@folio/jest-config-stripes/testing-library/react';
 import {
+  useRoleById,
   useRoleCapabilities,
   useAuthorizationRoles,
   useAuthorizationRolesMutation,
@@ -10,6 +15,7 @@ import {
 import { Paneset } from '@folio/stripes/components';
 
 import { ConsortiumManagerContextProviderMock } from 'helpers';
+import { extendKyWithTenant } from '../../../../utils';
 import { MemberSelectionContextProvider } from '../../MemberSelectionContext';
 import { AuthorizationRolesViewPage } from './AuthorizationRolesViewPage';
 
@@ -27,6 +33,7 @@ const wrapper = ({ children }) => (
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
+  useHistory: jest.fn().mockReturnValue({}),
   useParams: jest.fn().mockReturnValue({}),
 }));
 
@@ -53,6 +60,10 @@ jest.mock('@folio/stripes-authorization-components', () => ({
     </div>
   ),
 }));
+jest.mock('../../../../utils', () => ({
+  ...jest.requireActual('../../../../utils'),
+  extendKyWithTenant: jest.fn(),
+}));
 
 const mockRoles = [
   {
@@ -64,13 +75,27 @@ const mockRoles = [
   },
 ];
 
+const mockKy = {
+  get: jest.fn(() => ({
+    json: jest.fn(() => Promise.resolve({ roles: [{ id: 'role-id' }] })),
+  })),
+};
+
+const history = {
+  push: jest.fn(),
+};
+
 describe('AuthorizationRolesViewPage', () => {
   beforeEach(() => {
+    jest.clearAllMocks();
+
+    extendKyWithTenant.mockReturnValue(mockKy);
+    useAuthorizationRoles.mockImplementation(() => ({ roles: mockRoles }));
     useRoleCapabilities.mockReturnValue({
       initialRoleCapabilitiesSelectedMap: {},
       isSuccess: true,
     });
-    useAuthorizationRoles.mockImplementation(() => ({ roles: mockRoles }));
+    useHistory.mockReturnValue(history);
   });
 
   const renderComponent = () => render(<AuthorizationRolesViewPage path="/consortia-settings/authorization-roles" />, { wrapper });
@@ -122,5 +147,35 @@ describe('AuthorizationRolesViewPage', () => {
     await userEvent.click(screen.getByRole('button', { name: 'duplicate' }));
 
     expect(mockDuplicateRole).toHaveBeenCalled();
+  });
+
+  describe('Change selected member', () => {
+    it('should close non-shared role\'s details pane on selected member change', async () => {
+      renderComponent();
+
+      await userEvent.click(screen.getByRole('button', { name: /consortiumManager.members.selection/ }));
+      await userEvent.click(screen.getByText(/Three Rivers College/));
+
+      expect(history.push).toHaveBeenCalledWith('/consortia-settings/authorization-roles');
+      expect(mockKy.get).not.toHaveBeenCalled();
+    });
+
+    it('should resolve shared role\'s ID in the selected member and open details pane', async () => {
+      useRoleById.mockReturnValue({
+        roleDetails: {
+          name: 'name',
+          id: 'id',
+          type: 'CONSORTIUM',
+        },
+      });
+
+      renderComponent();
+
+      await userEvent.click(screen.getByRole('button', { name: /consortiumManager.members.selection/ }));
+      await userEvent.click(screen.getByText(/Three Rivers College/));
+
+      expect(history.push).toHaveBeenCalledWith('/consortia-settings/authorization-roles/role-id');
+      expect(mockKy.get).toHaveBeenCalled();
+    });
   });
 });
