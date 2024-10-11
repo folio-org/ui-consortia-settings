@@ -35,11 +35,10 @@ export const onFilter = (value, dataOptions) => {
 
 export const mergeAndGetUniqueById = (obj1, obj2) => {
   const allData = [...obj1.data, ...obj1.procedural, ...obj1.settings,
-    ...obj2.data, ...obj2.procedural, ...obj2.settings]; // Объединяем все массивы
+    ...obj2.data, ...obj2.procedural, ...obj2.settings];
 
   const seen = new Set();
 
-  // Функция для фильтрации уникальных объектов по id
   const uniqueData = allData.filter(item => {
     if (!seen.has(item.id)) {
       seen.add(item.id);
@@ -50,7 +49,6 @@ export const mergeAndGetUniqueById = (obj1, obj2) => {
     return false;
   });
 
-  // Структурируем данные в соответствии с исходным форматом
   return {
     data: uniqueData.filter(item => obj1.data.includes(item) || obj2.data.includes(item)),
     procedural: uniqueData.filter(item => obj1.procedural.includes(item) || obj2.procedural.includes(item)),

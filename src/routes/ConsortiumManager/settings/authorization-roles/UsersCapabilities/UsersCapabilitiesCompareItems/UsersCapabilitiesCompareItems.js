@@ -72,14 +72,14 @@ export const UsersCapabilitiesCompareItems = ({
     isSuccess: isSuccessCapabilities,
     initialUserCapabilitiesSelectedMap,
     groupedUserCapabilitiesByType,
-  } = useUserCapabilities(selectedUserId, selectedMemberId, selectedRoleId);
+  } = useUserCapabilities(selectedUserId, selectedMemberId);
 
   const {
     groupedUserCapabilitySetsByType,
     capabilitySetsTotalCount,
     isSuccess: isSuccessCapabilitiesSet,
     initialUserCapabilitySetsSelectedMap,
-  } = useUserCapabilitiesSets(selectedUserId, selectedMemberId, selectedRoleId);
+  } = useUserCapabilitiesSets(selectedUserId, selectedMemberId);
 
   const {
     groupedRoleCapabilitySetsByType,
