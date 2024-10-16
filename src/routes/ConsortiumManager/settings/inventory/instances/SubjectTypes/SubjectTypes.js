@@ -18,6 +18,8 @@ import {
 import { validateNameRequired } from '../../../../utils';
 import { DEFAULT_ITEM_TEMPLATE } from '../../constants';
 
+const suppress = getSourceSuppressor(RECORD_SOURCE.FOLIO);
+
 const FIELDS_MAP = {
   name: 'name',
   source: 'source',
@@ -29,16 +31,12 @@ const COLUMN_MAPPING = {
   [FIELDS_MAP.name]: <FormattedMessage id="ui-inventory.name" />,
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
-const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.subjectTypes');
 const UNIQUE_FIELDS = [FIELDS_MAP.name];
 const PERMISSIONS = {
   create: 'inventory-storage.subject-types.item.post',
-  delete: 'inventory-storage.subject-types.item.delete',
   update: 'inventory-storage.subject-types.item.put',
+  delete: 'inventory-storage.subject-types.item.delete',
 };
-
-const suppress = getSourceSuppressor(RECORD_SOURCE.FOLIO);
-const actionSuppression = { edit: suppress, delete: suppress };
 
 export const SubjectTypes = () => {
   const intl = useIntl();
@@ -52,8 +50,8 @@ export const SubjectTypes = () => {
       path={SUBJECT_TYPES_API}
       permissions={PERMISSIONS}
       records="subjectTypes"
-      translations={TRANSLATIONS}
-      actionSuppression={actionSuppression}
+      translations={getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.subjectTypes')}
+      actionSuppression={{ edit: suppress, delete: suppress }}
       itemTemplate={DEFAULT_ITEM_TEMPLATE}
       readOnlyFields={READONLY_FIELDS}
       uniqueFields={UNIQUE_FIELDS}
