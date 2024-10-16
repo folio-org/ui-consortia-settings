@@ -20,6 +20,8 @@ import {
   NatureOfContentTerms,
   ResourceIdentifierTypes,
   ResourceTypes,
+  SubjectSources,
+  SubjectTypes,
 } from './instances';
 import {
   StatisticalCodes,
@@ -95,6 +97,18 @@ const sections = [
         label: <FormattedMessage id="ui-inventory.resourceTypes" />,
         component: ResourceTypes,
         perm: 'ui-inventory.settings.instance-types',
+      },
+      {
+        route: 'subject-sources',
+        label: <FormattedMessage id="ui-inventory.subjectSources" />,
+        component: SubjectSources,
+        perm: 'ui-inventory.settings.subject-sources',
+      },
+      {
+        route: 'subject-types',
+        label: <FormattedMessage id="ui-inventory.subjectTypes" />,
+        component: SubjectTypes,
+        perm: 'ui-inventory.settings.subject-types',
       },
     ],
   },
