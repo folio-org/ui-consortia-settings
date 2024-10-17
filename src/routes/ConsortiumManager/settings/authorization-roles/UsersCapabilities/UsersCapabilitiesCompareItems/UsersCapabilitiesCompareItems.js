@@ -10,6 +10,7 @@ import {
   useIntl,
 } from 'react-intl';
 
+import { useShowCallout } from '@folio/stripes-acq-components';
 import {
   Accordion,
   AccordionSet,
@@ -23,6 +24,7 @@ import {
   useUserRolesByUserIds,
 } from '@folio/stripes-authorization-components';
 
+import { handleErrorMessages } from '../../../../../../utils';
 import { useUsers } from '../../../../../../hooks';
 import { onFilter } from '../../utils';
 
@@ -33,14 +35,30 @@ export const UsersCapabilitiesCompareItems = ({
   setRolesToCompare,
 }) => {
   const intl = useIntl();
+  const showCallout = useShowCallout();
   const [selectedRoleId, setSelectedRoleId] = useState('');
   const [selectedMemberId, setSelectedMemberId] = useState('');
   const [selectedUserId, setSelectedUserId] = useState('');
   const isMounted = useRef(false);
 
-  const { users, isFetching } = useUsers({ tenant: selectedMemberId });
+  const { users, isFetching } = useUsers({ tenant: selectedMemberId }, {
+    onError: ({ response }) => handleErrorMessages({
+      intl,
+      showCallout,
+      response,
+      messageId: 'ui-consortia-settings.authorizationRoles.errors.loading.users',
+    }),
+  });
   const { userRolesResponse } = useUserRolesByUserIds([selectedUserId]);
-  const { roles, isLoading } = useAuthorizationRoles(selectedMemberId);
+  const { roles, isLoading } = useAuthorizationRoles(selectedMemberId, {
+    onError: ({ response }) => handleErrorMessages({
+      intl,
+      showCallout,
+      response,
+      messageId: 'ui-consortia-settings.authorizationRoles.errors.loading.roles',
+    }),
+    enabled: Boolean(selectedUserId),
+  });
 
   const availableRoles = useMemo(() => {
     return roles.filter(role => userRolesResponse.some(userRole => userRole.roleId === role.id)).map((el) => {
