@@ -96,7 +96,7 @@ export const AuthorizationRolesViewPage = ({ path }) => {
         intl,
         showCallout,
         response,
-        messageId: 'ui-consortia-settings.authorizationRoles.errors.loading.data',
+        messageId: 'ui-consortia-settings.authorizationRoles.errors.loading.roles',
       }),
       enabled: Boolean(activeMember),
     },
