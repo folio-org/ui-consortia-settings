@@ -22,6 +22,12 @@
 * [UICONSET-177](https://folio-org.atlassian.net/browse/UICONSET-177) Share Authorization Policies for consortium.
 * [UICONSET-190](https://folio-org.atlassian.net/browse/UICONSET-190) Update the filtering so it works the same for both authorization roles and policies.
 * [UICONSET-201](https://folio-org.atlassian.net/browse/UICONSET-201) Hide create policy action in "Consortium Manager".
+* [UICONSET-195](https://folio-org.atlassian.net/browse/UICONSET-195) View consortium-wide settings for Inventory - Instances - Subject sources.
+* [UICONSET-193](https://folio-org.atlassian.net/browse/UICONSET-193) Save consortium-wide settings for Inventory - Instances - Subject sources.
+* [UICONSET-194](https://folio-org.atlassian.net/browse/UICONSET-194) Allow user to share Inventory - Instances - Subject sources.
+* [UICONSET-198](https://folio-org.atlassian.net/browse/UICONSET-198) View consortium-wide settings for Inventory - Instances - Subject types.
+* [UICONSET-196](https://folio-org.atlassian.net/browse/UICONSET-196) Save consortium-wide settings for Inventory - Instances - Subject types.
+* [UICONSET-197](https://folio-org.atlassian.net/browse/UICONSET-197) Allow user to share Inventory - Instances - Subject types.
 
 ## [1.1.0](https://github.com/folio-org/ui-consortia-settings/tree/v1.1.0) (2024-03-20)
 [Full Changelog](https://github.com/folio-org/ui-orders/compare/v1.0.2...v1.1.0)

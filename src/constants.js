@@ -38,6 +38,8 @@ export const PUBLICATIONS_API = 'publications';
 export const SETTINGS_SHARING_API = 'sharing/settings';
 export const STATISTICAL_CODE_TYPES_API = 'statistical-code-types';
 export const STATISTICAL_CODES_API = 'statistical-codes';
+export const SUBJECT_SOURCES_API = 'subject-sources';
+export const SUBJECT_TYPES_API = 'subject-types';
 export const CAPABILITIES_LIMIT = 5000;
 /*  */
 
