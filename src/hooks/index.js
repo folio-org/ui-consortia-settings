@@ -1,6 +1,7 @@
 export { useCurrentConsortium } from './useCurrentConsortium';
 export { useCurrentUserTenantsPermissions } from './useCurrentUserTenantsPermissions';
 export { useEventEmitter } from './useEventEmitter';
+export { useIsRowSelected } from './useIsRowSelected';
 export { useMembersSelection } from './useMembersSelection';
 export { usePublishCoordinator } from './usePublishCoordinator';
 export { useTenantKy } from './useTenantKy';

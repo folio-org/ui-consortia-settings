@@ -38,6 +38,10 @@ export const CapabilitiesCompareItem = ({
   const [selectedRoleId, setSelectedRoleId] = useState('');
   const [selectedMemberId, setSelectedMemberId] = useState('');
   const isMounted = useRef(false);
+  const [isAccordionOpen, setIsAccordionOpen] = useState({
+    capabilities: false,
+    capabilitiesSets: false,
+  });
 
   const { roles, isLoading } = useAuthorizationRoles(selectedMemberId, {
     onError: ({ response }) => handleErrorMessages({
@@ -94,6 +98,23 @@ export const CapabilitiesCompareItem = ({
 
   const isCapabilitySetSelected = (capabilitySetId) => !!initialRoleCapabilitySetsSelectedMap[capabilitySetId];
   const isCapabilitySelected = (capabilityId) => !!initialRoleCapabilitiesSelectedMap[capabilityId];
+  const handleMemberChange = (value) => {
+    setSelectedMemberId(value);
+    setSelectedRoleId('');
+
+    setRolesToCompare({
+      capabilities: [],
+      capabilitiesSets: [],
+    }, columnName);
+  };
+  const handleRoleChange = (value) => {
+    setSelectedRoleId(value);
+
+    setIsAccordionOpen({
+      capabilities: true,
+      capabilitiesSets: true,
+    });
+  };
 
   return (
     <div>
@@ -103,7 +124,7 @@ export const CapabilitiesCompareItem = ({
         id="memberSelect"
         placeholder={intl.formatMessage({ id: 'ui-consortia-settings.consortiumManager.members.permissionSets.compare.member.placeholder' })}
         dataOptions={members}
-        onChange={setSelectedMemberId}
+        onChange={handleMemberChange}
         onFilter={onFilter}
       />
       <Selection
@@ -114,13 +135,18 @@ export const CapabilitiesCompareItem = ({
         dataOptions={availableRoles}
         value={selectedRoleId}
         disabled={!selectedMemberId}
-        onChange={setSelectedRoleId}
+        onChange={handleRoleChange}
         loading={isLoading}
         onFilter={onFilter}
       />
       <AccordionSet>
         <Accordion
           closedByDefault
+          open={isAccordionOpen.capabilities}
+          onToggle={() => setIsAccordionOpen(prevState => ({
+            ...prevState,
+            capabilities: !prevState.capabilities,
+          }))}
           label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.capabilities" />}
         >
           {capabilitiesTotalCount ?
@@ -139,7 +165,12 @@ export const CapabilitiesCompareItem = ({
         </Accordion>
         <Accordion
           closedByDefault
-          label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.capabilitiesSets" />}
+          open={isAccordionOpen.capabilitiesSets}
+          onToggle={() => setIsAccordionOpen(prevState => ({
+            ...prevState,
+            capabilitiesSets: !prevState.capabilitiesSets,
+          }))}
+          label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.roles.capabilitiesSets" />}
         >
           {capabilitySetsTotalCount ?
             <CapabilitiesSection
