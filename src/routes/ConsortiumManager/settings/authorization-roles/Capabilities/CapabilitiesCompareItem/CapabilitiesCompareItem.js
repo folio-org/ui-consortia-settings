@@ -10,6 +10,7 @@ import {
   useIntl,
 } from 'react-intl';
 
+import { useShowCallout } from '@folio/stripes-acq-components';
 import {
   Accordion,
   AccordionSet,
@@ -23,6 +24,7 @@ import {
   useRoleCapabilitySets,
 } from '@folio/stripes-authorization-components';
 
+import { handleErrorMessages } from '../../../../../../utils';
 import { onFilter } from '../../utils';
 
 export const CapabilitiesCompareItem = ({
@@ -32,6 +34,7 @@ export const CapabilitiesCompareItem = ({
   setRolesToCompare,
 }) => {
   const intl = useIntl();
+  const showCallout = useShowCallout();
   const [selectedRoleId, setSelectedRoleId] = useState('');
   const [selectedMemberId, setSelectedMemberId] = useState('');
   const isMounted = useRef(false);
@@ -40,7 +43,14 @@ export const CapabilitiesCompareItem = ({
     capabilitiesSets: false,
   });
 
-  const { roles, isLoading } = useAuthorizationRoles(selectedMemberId);
+  const { roles, isLoading } = useAuthorizationRoles(selectedMemberId, {
+    onError: ({ response }) => handleErrorMessages({
+      intl,
+      showCallout,
+      response,
+      messageId: 'ui-consortia-settings.authorizationRoles.errors.loading.roles',
+    }),
+  });
 
   const availableRoles = useMemo(() => {
     return roles.map((el) => {

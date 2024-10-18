@@ -203,7 +203,8 @@
   "authorizationPolicy.columns.updatedDate": "Updated",
   "authorizationPolicy.columns.updatedBy": "Updated by",
 
-  "authorizationRoles.errors.loading.data": "Authorization roles couldn't be loaded.",
+  "authorizationRoles.errors.loading.roles": "Could not load authorization roles.",
+  "authorizationRoles.errors.loading.users": "Could not load users.",
 
   "settings.heading": "Network settings",
   "settings.section.general": "General",

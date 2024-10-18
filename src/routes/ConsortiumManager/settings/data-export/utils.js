@@ -4,7 +4,10 @@ import { get } from 'lodash';
 import { TextLink } from '@folio/stripes/components';
 import { getFullName } from '@folio/stripes/util';
 
-import { EXPORT_JOB_LOG_COLUMNS } from './constants';
+import {
+  EXPORT_JOB_LOG_COLUMNS,
+  EXPORT_JOB_STATUSES,
+} from './constants';
 
 import css from './DataExportLogs/DataExportLogs.css';
 
@@ -63,9 +66,13 @@ const downloadExportFile = async (record, ky) => {
 
 export const getFileNameField = (record, ky) => {
   const fileName = get(record.exportedFiles, '0.fileName');
+  const hasDownloadLink = (
+    record.progress?.exported
+    && ![EXPORT_JOB_STATUSES.FAIL, EXPORT_JOB_STATUSES.IN_PROGRESS].includes(record.status)
+  );
 
   return (
-    record.progress?.exported ? (
+    hasDownloadLink ? (
       <TextLink
         onClick={() => downloadExportFile(record, ky)}
         data-testid="text-link"

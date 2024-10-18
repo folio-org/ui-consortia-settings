@@ -4,7 +4,7 @@ import { useNamespace, useOkapiKy } from '@folio/stripes/core';
 
 import { USERS_LIMIT } from '../../constants';
 
-export const useUsers = ({ tenant = '' }) => {
+export const useUsers = ({ tenant = '' }, options = {}) => {
   const [namespaceKey] = useNamespace({ key: 'relatedUsers' });
   const ky = useOkapiKy({ tenant });
 
@@ -17,6 +17,7 @@ export const useUsers = ({ tenant = '' }) => {
             limit: USERS_LIMIT,
           },
         }).json(),
+      ...options,
     },
   );
 

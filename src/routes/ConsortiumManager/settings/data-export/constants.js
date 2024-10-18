@@ -10,6 +10,14 @@ import {
   DEFAULT_JOB_LOGS_COLUMN_WIDTHS,
 } from '@folio/stripes-data-transfer-components';
 
+export const EXPORT_JOB_STATUSES = {
+  NEW: 'NEW',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  COMPLETED_WITH_ERRORS: 'COMPLETED_WITH_ERRORS',
+  FAIL: 'FAIL',
+};
+
 export const EXPORT_JOB_LOG_COLUMNS = {
   ...DEFAULT_JOB_LOGS_COLUMNS.reduce((acc, curr) => ({ ...acc, [curr]: curr }), {}),
   errors: 'errors',
