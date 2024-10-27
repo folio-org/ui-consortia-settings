@@ -218,7 +218,7 @@
     "consortiumManager.sections.section.logsAndReports": "Logy a zprávy",
     "consortiumManager.members.authorizationsRoles.duplicate.success": "Role <b>{name}</b> byla úspěšně <b>duplikována</b>",
     "consortiumManager.members.authorizationsRoles.duplicate.error": "Při duplikování role došlo k chybě <b>{name}</b>",
-    "consortiumManager.members.authorizationsRoles.roles.capabilitiesSets": "Capability sets",
+    "consortiumManager.members.authorizationsRoles.roles.capabilitiesSets": "Sady schopností",
     "authorizationRoles.errors.loading.roles": "Could not load authorization roles.",
     "authorizationRoles.errors.loading.users": "Could not load users.",
     "consortiumManager.controlledVocab.subjectSources.cannotDeleteTermHeader": "Cannot delete the subject source",
