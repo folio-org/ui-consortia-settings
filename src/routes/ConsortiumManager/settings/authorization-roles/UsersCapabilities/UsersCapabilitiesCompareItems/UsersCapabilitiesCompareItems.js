@@ -230,7 +230,7 @@ export const UsersCapabilitiesCompareItems = ({
             ...prevState,
             capabilitiesSets: !prevState.capabilitiesSets,
           }))}
-          label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.capabilitiesSets" />}
+          label={<FormattedMessage id="ui-consortia-settings.consortiumManager.members.authorizationsRoles.roles.capabilitiesSets" />}
         >
           {capabilitySetsTotalCount || setsByRoleTotalCount ?
             <CapabilitiesSection
