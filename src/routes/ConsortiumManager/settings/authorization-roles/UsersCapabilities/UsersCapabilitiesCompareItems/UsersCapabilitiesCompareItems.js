@@ -90,7 +90,7 @@ export const UsersCapabilitiesCompareItems = ({
     isSuccess: isSuccessCapabilities,
     initialUserCapabilitiesSelectedMap,
     groupedUserCapabilitiesByType,
-  } = useUserCapabilities(selectedUserId, selectedMemberId);
+  } = useUserCapabilities(selectedUserId, selectedMemberId, true);
 
   const {
     groupedUserCapabilitySetsByType,
@@ -109,7 +109,7 @@ export const UsersCapabilitiesCompareItems = ({
     capabilitiesTotalCount: capabilitiesByRoleCountTotal,
     groupedRoleCapabilitiesByType,
     isSuccess: isSuccessRoleCapabilities,
-  } = useRoleCapabilities(selectedRoleId, selectedMemberId);
+  } = useRoleCapabilities(selectedRoleId, selectedMemberId, true);
 
   useEffect(() => {
     if (isMounted.current &&
