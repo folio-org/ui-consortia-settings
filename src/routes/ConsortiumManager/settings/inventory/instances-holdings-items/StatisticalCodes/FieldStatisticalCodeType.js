@@ -6,6 +6,8 @@ import { useIntl } from 'react-intl';
 
 import { Select } from '@folio/stripes/components';
 
+import { getStatisticalCodeTypeOptions } from './utils';
+
 export const FieldStatisticalCodeType = ({
   field,
   fieldProps,
@@ -14,17 +16,15 @@ export const FieldStatisticalCodeType = ({
 }) => {
   const intl = useIntl();
   const { values } = useFormState();
-  const { id, tenantId, shared } = get(values, `${field}[${rowIndex}]`, {});
+  const { id, tenantId, shared, statisticalCodeTypeId } = get(values, `${field}[${rowIndex}]`, {});
 
-  const dataOptions = useMemo(() => {
-    const mapKey = shared || !id ? 'shared' : `local[${tenantId}]`;
-
-    return (
-      get(groupedStatisticalCodeTypes, mapKey, [])
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .map(({ id: _id, name }) => ({ label: name, value: _id }))
-    );
-  }, [groupedStatisticalCodeTypes, id, shared, tenantId]);
+  const dataOptions = useMemo(() => getStatisticalCodeTypeOptions({
+    id,
+    shared,
+    tenantId,
+    statisticalCodeTypeId,
+    groupedStatisticalCodeTypes,
+  }), [groupedStatisticalCodeTypes, id, shared, statisticalCodeTypeId, tenantId]);
 
   return (
     <Field
