@@ -1,6 +1,5 @@
 import { getCurrentStatisticalCodeType } from "./utils";
 
-
 describe('getCurrentStatisticalCodeType', () => {
   it('should return current statistical code type', () => {
     const codeTypes = {
