@@ -73,7 +73,7 @@ export const CapabilitiesCompareItem = ({
     isSuccess: isSuccessCapabilities,
     initialRoleCapabilitiesSelectedMap,
     groupedRoleCapabilitiesByType,
-  } = useRoleCapabilities(selectedRoleId, selectedMemberId);
+  } = useRoleCapabilities(selectedRoleId, selectedMemberId, true);
 
   useEffect(() => {
     if (isMounted.current && isSuccessCapabilitiesSet && isSuccessCapabilities) {
