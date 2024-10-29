@@ -11,7 +11,7 @@ import {
   useRoleCapabilitySets,
   useUserCapabilities,
   useUserCapabilitiesSets,
-  useUserRolesByUserIds,
+  useUserRolesById,
 } from '@folio/stripes-authorization-components';
 
 import {
@@ -30,7 +30,7 @@ jest.mock('@folio/stripes-authorization-components', () => ({
   useUserCapabilities: jest.fn(),
   useUserCapabilitiesSets: jest.fn(),
   useAuthorizationRoles: jest.fn(),
-  useUserRolesByUserIds: jest.fn(),
+  useUserRolesById: jest.fn(),
   useRoleCapabilities: jest.fn(),
   useRoleCapabilitySets: jest.fn(),
 }));
@@ -96,7 +96,7 @@ describe('UsersCapabilitiesCompareItems', () => {
     useUsers.mockClear().mockReturnValue({
       users,
     });
-    useUserRolesByUserIds.mockClear().mockReturnValue({
+    useUserRolesById.mockClear().mockReturnValue({
       userRolesResponse,
     });
     useUserCapabilitiesSets.mockClear().mockReturnValue({

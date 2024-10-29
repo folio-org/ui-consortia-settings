@@ -24,7 +24,7 @@ import {
   useRoleCapabilitySets,
   useUserCapabilities,
   useUserCapabilitiesSets,
-  useUserRolesByUserIds,
+  useUserRolesById,
 } from '@folio/stripes-authorization-components';
 
 import { handleErrorMessages } from '../../../../../../utils';
@@ -56,7 +56,7 @@ export const UsersCapabilitiesCompareItems = ({
       messageId: 'ui-consortia-settings.authorizationRoles.errors.loading.users',
     }),
   });
-  const { userRolesResponse } = useUserRolesByUserIds([selectedUserId]);
+  const { userRolesResponse } = useUserRolesById(selectedUserId, { tenantId: selectedMemberId });
   const { roles, isLoading } = useAuthorizationRoles(selectedMemberId, {
     onError: ({ response }) => handleErrorMessages({
       intl,
@@ -90,7 +90,7 @@ export const UsersCapabilitiesCompareItems = ({
     isSuccess: isSuccessCapabilities,
     initialUserCapabilitiesSelectedMap,
     groupedUserCapabilitiesByType,
-  } = useUserCapabilities(selectedUserId, selectedMemberId);
+  } = useUserCapabilities(selectedUserId, selectedMemberId, true);
 
   const {
     groupedUserCapabilitySetsByType,
@@ -109,7 +109,7 @@ export const UsersCapabilitiesCompareItems = ({
     capabilitiesTotalCount: capabilitiesByRoleCountTotal,
     groupedRoleCapabilitiesByType,
     isSuccess: isSuccessRoleCapabilities,
-  } = useRoleCapabilities(selectedRoleId, selectedMemberId);
+  } = useRoleCapabilities(selectedRoleId, selectedMemberId, true);
 
   useEffect(() => {
     if (isMounted.current &&

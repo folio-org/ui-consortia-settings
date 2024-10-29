@@ -29,6 +29,7 @@
 * [UICONSET-196](https://folio-org.atlassian.net/browse/UICONSET-196) Save consortium-wide settings for Inventory - Instances - Subject types.
 * [UICONSET-197](https://folio-org.atlassian.net/browse/UICONSET-197) Allow user to share Inventory - Instances - Subject types.
 * [UICONSET-204](https://folio-org.atlassian.net/browse/UICONSET-204) Refactor ui-inventory permissions.
+* [UICONSET-206](https://folio-org.atlassian.net/browse/UICONSET-206) ECS | Eureka | Request to central tenant instead of member when compare users in "Consortium manager".
 * [UICONSET-200](https://folio-org.atlassian.net/browse/UICONSET-200) ECS - display shared statistical code types on edit mode for member tenants.
 
 ## [1.1.0](https://github.com/folio-org/ui-consortia-settings/tree/v1.1.0) (2024-03-20)
