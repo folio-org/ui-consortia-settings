@@ -2,6 +2,8 @@
 
 ## 2.1.0 (IN PROGRESS)
 
+* [UICONSET-208](https://folio-org.atlassian.net/browse/UICONSET-208) Restore error handling for policies loading.
+
 ## [2.0.0](https://github.com/folio-org/ui-consortia-settings/tree/v2.0.0) (2024-11-01)
 [Full Changelog](https://github.com/folio-org/ui-orders/compare/v1.1.0...v2.0.0)
 
