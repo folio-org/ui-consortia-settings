@@ -3,7 +3,10 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import {
   useHistory,
   useLocation,
@@ -12,6 +15,7 @@ import {
 import {
   SEARCH_PARAMETER,
   useLocationFilters,
+  useShowCallout,
 } from '@folio/stripes-acq-components';
 import {
   useAuthorizationPolicies,
@@ -35,6 +39,9 @@ import {
   AUTHORIZATION_POLICIES_ROUTE,
   MODULE_ROOT_ROUTE,
 } from '../../../../constants';
+import {
+  handleErrorMessages,
+} from '../../../../utils';
 import { useMemberSelectionContext } from '../../MemberSelectionContext';
 import {
   COLUMN_MAPPING,
@@ -49,8 +56,12 @@ import { getResultsFormatter } from './utils';
 const IS_POLICIES_FEATURE_ENABLED = false;
 
 export const AuthorizationPoliciesView = () => {
+  const intl = useIntl();
   const history = useHistory();
   const location = useLocation();
+
+  const showCallout = useShowCallout();
+
   const [selectedRow, setSelectedRow] = useState(null);
 
   const [
@@ -79,6 +90,12 @@ export const AuthorizationPoliciesView = () => {
     searchTerm: filters[SEARCH_PARAMETER],
     tenantId: activeMember,
     options: {
+      onError: ({ response }) => handleErrorMessages({
+        intl,
+        showCallout,
+        response,
+        messageId: 'ui-consortia-settings.authorizationPolicy.errors.loading.data',
+      }),
       enabled: Boolean(activeMember),
     },
   });
