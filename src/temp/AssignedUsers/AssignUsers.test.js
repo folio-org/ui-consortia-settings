@@ -12,6 +12,11 @@ jest.unmock('@folio/stripes/util');
 const stripes = {
   config: {},
   hasPerm: jest.fn().mockReturnValue(true),
+  user: {
+    user: {
+      tenants: [{ id: 'college', name: 'College' }],
+    },
+  },
 };
 
 const renderComponent = (props) => render(<AssignUsers {...props} />);

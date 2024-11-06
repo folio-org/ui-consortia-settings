@@ -23,6 +23,7 @@
   "consortiumManager.members.authorizationsRoles.duplicate.success": "The role <b>{name}</b> has been successfully <b>duplicated</b>",
   "consortiumManager.members.authorizationsRoles.duplicate.error": "There was an error while duplicating the role <b>{name}</b>",
   "consortiumManager.members.users.compare": "Compare users",
+  "consortiumManager.members.users.selectUser.modal.label": "Select user ({tenant})",
 
 
   "duplicatesWithOthers": "{failedOther}, {failedSrs} duplicate(s)",
