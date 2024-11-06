@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
+import keyBy from 'lodash/keyBy';
 import PropTypes from 'prop-types';
+import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { keyBy } from 'lodash';
 
 import {
   Pluggable,
@@ -14,6 +14,11 @@ const buttonLabel = <FormattedMessage id="ui-users.permissions.assignUsers.actio
 
 const AssignUsers = ({ assignUsers, stripes, selectedUsers, tenantId }) => {
   const initialSelectedUsers = useMemo(() => keyBy(selectedUsers, 'id'), [selectedUsers]);
+  const tenantName = useMemo(() => {
+    const foundTenant = stripes.user?.user?.tenants?.find(tenant => tenant.id === tenantId);
+
+    return foundTenant?.name || tenantId;
+  }, [stripes.user?.user?.tenants, tenantId]);
 
   return (
     <div className={styles.AssignUsersWrapper}>
@@ -27,6 +32,12 @@ const AssignUsers = ({ assignUsers, stripes, selectedUsers, tenantId }) => {
         selectUsers={assignUsers}
         initialSelectedUsers={initialSelectedUsers}
         tenantId={tenantId}
+        modalTitle={(
+          <FormattedMessage
+            id="ui-consortia-settings.consortiumManager.members.users.selectUser.modal.label"
+            values={{ tenant: tenantName }}
+          />
+      )}
       >
         <FormattedMessage id="ui-users.permissions.assignUsers.actions.assign.notAvailable" />
       </Pluggable>
