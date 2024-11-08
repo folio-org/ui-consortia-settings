@@ -2,11 +2,14 @@
 
 ## 2.1.0 (IN PROGRESS)
 
+## [2.0.1](https://github.com/folio-org/ui-consortia-settings/tree/v2.0.1) (2024-11-08)
+[Full Changelog](https://github.com/folio-org/ui-consortia-settings/compare/v2.0.0...v2.0.1)
+
 * [UICONSET-208](https://folio-org.atlassian.net/browse/UICONSET-208) Restore error handling for policies loading.
 * [UICONSET-205](https://folio-org.atlassian.net/browse/UICONSET-205) ECS- Add Tenant identifier to title of Select user modal.
 
 ## [2.0.0](https://github.com/folio-org/ui-consortia-settings/tree/v2.0.0) (2024-11-01)
-[Full Changelog](https://github.com/folio-org/ui-orders/compare/v1.1.0...v2.0.0)
+[Full Changelog](https://github.com/folio-org/ui-consortia-settings/compare/v1.1.0...v2.0.0)
 
 * [UICONSET-152](https://folio-org.atlassian.net/browse/UICONSET-152) *BREAKING* Implement settings for central ordering across consortium.
 * [UICONSET-172](https://folio-org.atlassian.net/browse/UICONSET-172) Downloading Files from Consortia Manager
@@ -39,19 +42,19 @@
 * [UICONSET-200](https://folio-org.atlassian.net/browse/UICONSET-200) ECS - display shared statistical code types on edit mode for member tenants.
 
 ## [1.1.0](https://github.com/folio-org/ui-consortia-settings/tree/v1.1.0) (2024-03-20)
-[Full Changelog](https://github.com/folio-org/ui-orders/compare/v1.0.2...v1.1.0)
+[Full Changelog](https://github.com/folio-org/ui-consortia-settings/compare/v1.0.2...v1.1.0)
 
 * [UICONSET-156](https://issues.folio.org/browse/UICONSET-156) Create an event on affiliation change for listeners in other modules.
 * [UICONSET-157](https://issues.folio.org/browse/UICONSET-157) stripes.route is incorrectly imported from package.json.
 * [UICONSET-158](https://issues.folio.org/browse/UICONSET-158) UI adjustments for reworked Data Export in Consortia module.
 
 ## [1.0.2](https://github.com/folio-org/ui-consortia-settings/tree/v1.0.2) (2023-11-21)
-[Full Changelog](https://github.com/folio-org/ui-orders/compare/v1.0.1...v1.0.2)
+[Full Changelog](https://github.com/folio-org/ui-consortia-settings/compare/v1.0.1...v1.0.2)
 
 * [UICONSET-150](https://issues.folio.org/browse/UICONSET-150) Permissions are not rendered in edit permission set form.
 
 ## [1.0.1](https://github.com/folio-org/ui-consortia-settings/tree/v1.0.1) (2023-11-07)
-[Full Changelog](https://github.com/folio-org/ui-orders/compare/v1.0.0...v1.0.1)
+[Full Changelog](https://github.com/folio-org/ui-consortia-settings/compare/v1.0.0...v1.0.1)
 
 * [UICONSET-148](https://issues.folio.org/browse/UICONSET-148) Fix "Manage permissions sets" through "Consortium Manager" fails due to different Okapi token.
 
