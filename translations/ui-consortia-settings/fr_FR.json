@@ -20,11 +20,11 @@
     "settings.membership.error.duplicate.code": "The code must be unique.",
     "settings.membership.list.tenantCode": "Code",
     "affiliation.primary.suffix": "(Primary)",
-    "switchActiveAffiliation.userDropdown.label": "Switch active affiliation",
+    "switchActiveAffiliation.userDropdown.label": "Changer d'affiliation active",
     "switchActiveAffiliation.modal.heading": "Select affiliation",
     "switchActiveAffiliation.modal.select.label": "Consortium members",
     "errors.jobs.load.common": "Could not load jobs data.",
-    "errors.permissionsRequired": "User does not have required permissions.",
+    "errors.permissionsRequired": "L'utilisateur n'a pas les autorisations nécessaires",
     "consortiumManager.findMember.trigger.label": "Sélectionnez des membres",
     "consortiumManager.findMember.modal.aria.search": "Rechercher des membres",
     "consortiumManager.findMember.modal.aria.select": "Sélectionner un membre",
@@ -230,5 +230,6 @@
     "consortiumManager.controlledVocab.subjectTypes.cannotDeleteTermMessage": "This subject type cannot be deleted, as it is in use by one or more records.",
     "consortiumManager.controlledVocab.subjectTypes.deleteEntry": "Delete subject type",
     "consortiumManager.controlledVocab.subjectTypes.termDeleted": "The subject type <b>{term}</b> was successfully <b>deleted</b>.",
-    "consortiumManager.controlledVocab.subjectTypes.termWillBeDeleted": "The subject type <b>{term}</b> will be <b>deleted</b>."
+    "consortiumManager.controlledVocab.subjectTypes.termWillBeDeleted": "The subject type <b>{term}</b> will be <b>deleted</b>.",
+    "consortiumManager.members.users.selectUser.modal.label": "Select user ({tenant})"
 }

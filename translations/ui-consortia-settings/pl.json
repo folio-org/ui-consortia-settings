@@ -206,10 +206,10 @@
     "authorizationPolicy.columns.name": "Nazwa",
     "authorizationPolicy.columns.description": "Opis",
     "authorizationPolicy.columns.updatedDate": "Updated",
-    "authorizationPolicy.columns.updatedBy": "Updated by",
+    "authorizationPolicy.columns.updatedBy": "Zaktualizowane przez",
     "consortiumManager.members.users.compare": "Compare users",
     "consortiumManager.members.action.compareUsers": "Compare users",
-    "consortiumManager.members.permissionSets.compare.user": "User",
+    "consortiumManager.members.permissionSets.compare.user": "Użytkownik",
     "consortiumManager.members.permissionSets.compare.user.placeholder": "Select User",
     "authorizationPolicy.new": "New",
     "authorizationPolicy.errors.loading.data": "Authorization policies couldn't be loaded.",
@@ -230,5 +230,6 @@
     "consortiumManager.controlledVocab.subjectTypes.cannotDeleteTermMessage": "This subject type cannot be deleted, as it is in use by one or more records.",
     "consortiumManager.controlledVocab.subjectTypes.deleteEntry": "Delete subject type",
     "consortiumManager.controlledVocab.subjectTypes.termDeleted": "The subject type <b>{term}</b> was successfully <b>deleted</b>.",
-    "consortiumManager.controlledVocab.subjectTypes.termWillBeDeleted": "The subject type <b>{term}</b> will be <b>deleted</b>."
+    "consortiumManager.controlledVocab.subjectTypes.termWillBeDeleted": "The subject type <b>{term}</b> will be <b>deleted</b>.",
+    "consortiumManager.members.users.selectUser.modal.label": "Select user ({tenant})"
 }
