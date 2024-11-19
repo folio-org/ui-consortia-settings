@@ -26,7 +26,7 @@
     "errors.jobs.load.common": "Não foi possível carregar os dados dos trabalhos.",
     "errors.permissionsRequired": "O usuário não tem as permissões necessárias.",
     "consortiumManager.findMember.trigger.label": "Selecionar membros",
-    "consortiumManager.findMember.modal.aria.search": "Pesquisar membros",
+    "consortiumManager.findMember.modal.aria.search": "Buscar membros",
     "consortiumManager.findMember.modal.aria.select": "Selecione membro",
     "consortiumManager.findMember.modal.aria.selectAll": "Selecione todos os membros",
     "consortiumManager.findMember.modal.results.subTitle": "{amount, plural, one {# membro } other {# membros }} encontrados",
