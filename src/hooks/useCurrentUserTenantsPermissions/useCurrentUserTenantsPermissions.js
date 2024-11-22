@@ -1,8 +1,8 @@
 import { useQuery } from 'react-query';
 
-import { useNamespace } from '@folio/stripes/core';
+import { useNamespace, useStripes } from '@folio/stripes/core';
 
-import { BL_USERS_API } from '../../constants';
+import { BL_USERS_API, USERS_KEYCLOAK_API } from '../../constants';
 import { usePublishCoordinator } from '../usePublishCoordinator';
 
 const DEFAULT_DATA = {};
@@ -16,6 +16,8 @@ export const useCurrentUserTenantsPermissions = (params = {}, options = {}) => {
     tenants,
   } = params;
 
+  const stripes = useStripes();
+
   const {
     isFetching,
     data = DEFAULT_DATA,
@@ -26,8 +28,10 @@ export const useCurrentUserTenantsPermissions = (params = {}, options = {}) => {
         expandPermissions,
       });
 
+      const apiURL = stripes.hasInterface('users-keycloak') ? USERS_KEYCLOAK_API : BL_USERS_API;
+
       const { publicationResults } = await initPublicationRequest({
-        url: `${BL_USERS_API}/_self?${searchParams.toString()}`,
+        url: `${apiURL}/_self?${searchParams.toString()}`,
         method: 'GET',
         tenants,
       });
