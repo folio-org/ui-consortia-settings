@@ -13,7 +13,12 @@ import { useCurrentUserTenantsPermissions } from './useCurrentUserTenantsPermiss
 
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
-  useStripes: jest.fn(() => ({ hasInterface: () => false })),
+  useStripes: jest.fn(() => ({ hasInterface: () => false,
+    user: {
+      user: {
+        consortium: { id: 'consortium' },
+      },
+    } })),
   useNamespace: jest.fn(() => ['namespace']),
 }));
 
