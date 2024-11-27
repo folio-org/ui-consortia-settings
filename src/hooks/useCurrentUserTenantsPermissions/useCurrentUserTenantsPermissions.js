@@ -43,7 +43,7 @@ export const useCurrentUserTenantsPermissions = (params = {}, options = {}) => {
       }, {});
     },
     {
-      enabled: Boolean(tenants?.length) && !!stripes.user?.user?.consortium,
+      enabled: Boolean(tenants?.length) && Boolean(stripes.user?.user?.consortium),
       keepPreviousData: true,
       ...options,
     },
