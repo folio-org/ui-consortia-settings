@@ -3,7 +3,7 @@
     "settings.heading": "Ustawienia sieci",
     "settings.section.general": "Ogólne",
     "settings.membership.heading": "Addresses",
-    "settings.membership.label": "Membership",
+    "settings.membership.label": "Członkostwo",
     "settings.membership.list.cannotDeleteTermHeader": "Cannot delete the member",
     "settings.membership.list.cannotDeleteTermMessage": "This member cannot be deleted, as it is in use by one or more records.",
     "settings.membership.list.deleteEntry": "Delete member",
