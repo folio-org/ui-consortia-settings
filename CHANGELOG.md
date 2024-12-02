@@ -2,6 +2,8 @@
 
 ## 2.1.0 (IN PROGRESS)
 
+* [UICONSET-213](https://folio-org.atlassian.net/browse/UICONSET-213) Align query for import jobs logs with the `ui-data-import`.
+
 ## [2.0.1](https://github.com/folio-org/ui-consortia-settings/tree/v2.0.1) (2024-11-08)
 [Full Changelog](https://github.com/folio-org/ui-consortia-settings/compare/v2.0.0...v2.0.1)
 

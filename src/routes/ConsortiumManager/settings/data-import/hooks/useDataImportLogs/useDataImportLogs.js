@@ -9,6 +9,8 @@ import {
 } from '../../../../../../constants';
 import { useTenantKy } from '../../../../../../hooks';
 import {
+  BULK_EDIT_JOB_PROFILE_NAME,
+  COMPOSITE_PARENT,
   DEFAULT_PAGINATION,
   DEFAULT_SORTING,
   IMPORT_JOB_LOG_SORT_MAP,
@@ -35,6 +37,8 @@ export const useDataImportLogs = (params = {}, options = {}) => {
       FILE_STATUSES.ERROR,
       FILE_STATUSES.CANCELLED,
     ],
+    subordinationTypeNotAny: COMPOSITE_PARENT,
+    excludeJobProfileName: BULK_EDIT_JOB_PROFILE_NAME,
     ...getSortingParams({
       sortingField: sorting.sortingField || DEFAULT_SORTING.sortingField,
       sortingDirection: sorting.sortingDirection || DEFAULT_SORTING.sortingDirection,

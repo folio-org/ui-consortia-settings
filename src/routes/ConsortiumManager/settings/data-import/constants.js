@@ -54,3 +54,6 @@ export const DEFAULT_SORTING = {
   sortingField: IMPORT_JOB_LOG_COLUMNS.completedDate,
   sortingDirection: DESC_DIRECTION,
 };
+
+export const COMPOSITE_PARENT = 'COMPOSITE_PARENT';
+export const BULK_EDIT_JOB_PROFILE_NAME = 'Bulk operations data import job profile-*';
