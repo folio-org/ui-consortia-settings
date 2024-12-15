@@ -220,7 +220,7 @@
     "consortiumManager.members.authorizationsRoles.duplicate.error": "Při duplikování role došlo k chybě <b>{name}</b>",
     "consortiumManager.members.authorizationsRoles.roles.capabilitiesSets": "Sady schopností",
     "authorizationRoles.errors.loading.roles": "Could not load authorization roles.",
-    "authorizationRoles.errors.loading.users": "Could not load users.",
+    "authorizationRoles.errors.loading.users": "Nelze načíst uživatele.",
     "consortiumManager.controlledVocab.subjectSources.cannotDeleteTermHeader": "Zdroj předmětu nelze smazat",
     "consortiumManager.controlledVocab.subjectSources.cannotDeleteTermMessage": "Tento zdroj předmětu nelze smazat, protože jej používá jeden nebo více záznamů.",
     "consortiumManager.controlledVocab.subjectSources.deleteEntry": "Smazat zdroj předmětu",
