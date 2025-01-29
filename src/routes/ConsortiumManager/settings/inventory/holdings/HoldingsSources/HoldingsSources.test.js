@@ -23,7 +23,7 @@ const entries = [
       createdByUserId: '8943a949-9fef-452c-b528-1c3b29f4a88d',
       updatedDate: '2023-10-22T23:54:24.964+00:00',
       updatedByUserId: '8943a949-9fef-452c-b528-1c3b29f4a88d',
-    }
+    },
   },
   {
     id: '036ee84a-6afd-4c3c-9ad3-4a12ab875f59',

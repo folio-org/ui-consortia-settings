@@ -18,13 +18,14 @@ const FIELDS_MAP = {
   source: 'source',
   lastUpdated: 'lastUpdated',
 };
-const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
-const READONLY_FIELDS = [FIELDS_MAP.source];
+
 const COLUMN_MAPPING = {
   [FIELDS_MAP.name]: <FormattedMessage id="ui-inventory.name" />,
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
+const READONLY_FIELDS = [FIELDS_MAP.source];
 const TRANSLATIONS = getControlledVocabTranslations('ui-consortia-settings.consortiumManager.controlledVocab.holdingsSources');
+const VISIBLE_FIELDS = Object.values(FIELDS_MAP);
 const PERMISSIONS = {
   create: 'inventory-storage.holdings-sources.item.post',
   delete: 'inventory-storage.holdings-sources.item.delete',
