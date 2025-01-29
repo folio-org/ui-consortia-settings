@@ -2,6 +2,8 @@
 
 ## 2.1.0 (IN PROGRESS)
 
+* [UICONSET-215](https://folio-org.atlassian.net/browse/UICONSET-215) Manage consortium-wide settings for Inventory - Holdings - Holdings sources.
+
 ## [2.0.2](https://github.com/folio-org/ui-consortia-settings/tree/v2.0.2) (2024-12-02)
 [Full Changelog](https://github.com/folio-org/ui-consortia-settings/compare/v2.0.1...v2.0.2)
 

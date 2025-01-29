@@ -38,7 +38,7 @@ const entries = [
 ];
 
 wrapConsortiaControlledVocabularyDescribe({ entries })('HoldingsTypes', () => {
-  it('should render controlled vocabulary list with holdings note types', async () => {
+  it('should render controlled vocabulary list with holdings types', async () => {
     renderHoldingsTypes();
 
     entries.forEach(({ name }) => {
