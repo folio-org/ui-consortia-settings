@@ -6,6 +6,7 @@ import { Settings } from '@folio/stripes/smart-components';
 import { MODULE_ROOT_ROUTE } from '../../../../constants';
 import {
   HoldingsNoteTypes,
+  HoldingsSources,
   HoldingsTypes,
 } from './holdings';
 import { CallNumberTypes } from './holdings-items';
@@ -120,6 +121,12 @@ const sections = [
         label: <FormattedMessage id="ui-inventory.holdingsNoteTypes" />,
         component: HoldingsNoteTypes,
         perm: 'ui-inventory.settings.holdings-note-types',
+      },
+      {
+        route: 'holdings-sources',
+        label: <FormattedMessage id="ui-inventory.holdingsSources" />,
+        component: HoldingsSources,
+        perm: 'ui-inventory.settings.holdings-sources',
       },
       {
         route: 'holdings-types',
