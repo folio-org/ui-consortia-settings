@@ -231,5 +231,10 @@
     "consortiumManager.controlledVocab.subjectTypes.deleteEntry": "Delete subject type",
     "consortiumManager.controlledVocab.subjectTypes.termDeleted": "The subject type <b>{term}</b> was successfully <b>deleted</b>.",
     "consortiumManager.controlledVocab.subjectTypes.termWillBeDeleted": "The subject type <b>{term}</b> will be <b>deleted</b>.",
-    "consortiumManager.members.users.selectUser.modal.label": "Select user ({tenant})"
+    "consortiumManager.members.users.selectUser.modal.label": "Select user ({tenant})",
+    "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermHeader": "Cannot delete the holdings source",
+    "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermMessage": "This holdings source cannot be deleted, as it is in use by one or more records.",
+    "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "Delete holdings source",
+    "consortiumManager.controlledVocab.holdingsSources.termDeleted": "The holdings source <b>{term}</b> was successfully <b>deleted</b>.",
+    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "The holdings source <b>{term}</b> will be <b>deleted</b>."
 }
