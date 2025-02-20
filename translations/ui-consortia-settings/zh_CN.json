@@ -186,7 +186,7 @@
     "document.settings.title": "联盟管理器设置",
     "settings.section.networkOrdering": "网络订购",
     "settings.centralOrdering.label": "中心订购",
-    "settings.centralOrdering.checkbox.label": "允许用户从其他隶属关系中选择中心订单的位置",
+    "settings.centralOrdering.checkbox.label": "允许用户从其他隶属关系中选择中心订单的馆藏地",
     "settings.centralOrdering.submit.success": "中心订购设置已成功更新",
     "settings.centralOrdering.submit.error.generic": "中心订购设置更新失败",
     "permission.settings.networkOrdering.view": "设置（联盟）：可查看网络订购",
@@ -231,5 +231,10 @@
     "consortiumManager.controlledVocab.subjectTypes.deleteEntry": "删除主题类型",
     "consortiumManager.controlledVocab.subjectTypes.termDeleted": "主题类型<b> {term} </b>已成功<b>删除</b> 。",
     "consortiumManager.controlledVocab.subjectTypes.termWillBeDeleted": "主题类型<b> {term} </b>将被<b>删除</b> 。",
-    "consortiumManager.members.users.selectUser.modal.label": "选择用户 ( {tenant} )"
+    "consortiumManager.members.users.selectUser.modal.label": "选择用户 ( {tenant} )",
+    "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermHeader": "无法删除馆藏来源",
+    "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermMessage": "无法删除此馆藏来源，因为它正在被一条或多条记录使用。",
+    "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "删除馆藏来源",
+    "consortiumManager.controlledVocab.holdingsSources.termDeleted": "馆藏来源<b> {term} </b>已成功<b>删除</b> 。",
+    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "馆藏来源<b> {term} </b>将被<b>删除</b> 。"
 }
