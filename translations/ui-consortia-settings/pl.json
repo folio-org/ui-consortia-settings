@@ -232,9 +232,9 @@
     "consortiumManager.controlledVocab.subjectTypes.termDeleted": "The subject type <b>{term}</b> was successfully <b>deleted</b>.",
     "consortiumManager.controlledVocab.subjectTypes.termWillBeDeleted": "The subject type <b>{term}</b> will be <b>deleted</b>.",
     "consortiumManager.members.users.selectUser.modal.label": "Select user ({tenant})",
-    "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermHeader": "Cannot delete the holdings source",
-    "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermMessage": "This holdings source cannot be deleted, as it is in use by one or more records.",
-    "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "Delete holdings source",
-    "consortiumManager.controlledVocab.holdingsSources.termDeleted": "The holdings source <b>{term}</b> was successfully <b>deleted</b>.",
-    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "The holdings source <b>{term}</b> will be <b>deleted</b>."
+    "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermHeader": "Nie można usunąć źródła zasobów",
+    "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermMessage": "Tego źródła zasobów nie można usunąć, ponieważ jest ono używane przez jeden lub więcej rekordów.",
+    "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "Usuń źródło zasobów",
+    "consortiumManager.controlledVocab.holdingsSources.termDeleted": "Źródło zasobów <b>{term}</b> zostało pomyślnie <b>usunięte</b>.",
+    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "Źródło zasobów <b>{term}</b> zostanie <b>usunięte</b>."
 }
