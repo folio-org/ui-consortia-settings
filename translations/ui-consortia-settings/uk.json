@@ -206,7 +206,7 @@
     "authorizationPolicy.columns.name": "Name",
     "authorizationPolicy.columns.description": "Description",
     "authorizationPolicy.columns.updatedDate": "Updated",
-    "authorizationPolicy.columns.updatedBy": "Updated by",
+    "authorizationPolicy.columns.updatedBy": "Оновлено за",
     "consortiumManager.members.users.compare": "Compare users",
     "consortiumManager.members.action.compareUsers": "Compare users",
     "consortiumManager.members.permissionSets.compare.user": "User",
