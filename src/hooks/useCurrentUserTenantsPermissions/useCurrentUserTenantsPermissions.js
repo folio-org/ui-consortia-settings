@@ -8,7 +8,7 @@ import { usePublishCoordinator } from '../usePublishCoordinator';
 const DEFAULT_DATA = {};
 
 export const useCurrentUserTenantsPermissions = (params = {}, options = {}) => {
-  const [namespace] = useNamespace('current-user-tenants-permissions');
+  const [namespace] = useNamespace({ key: 'current-user-tenants-permissions' });
   const { initPublicationRequest } = usePublishCoordinator();
 
   const {
