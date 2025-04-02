@@ -204,7 +204,7 @@
     "authorizationPolicy.search": "Search",
     "authorizationPolicy.meta.title": "Authorization policies",
     "authorizationPolicy.columns.name": "Name",
-    "authorizationPolicy.columns.description": "Description",
+    "authorizationPolicy.columns.description": "Опис",
     "authorizationPolicy.columns.updatedDate": "Updated",
     "authorizationPolicy.columns.updatedBy": "Оновлено за",
     "consortiumManager.members.users.compare": "Compare users",
