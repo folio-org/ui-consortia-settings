@@ -70,7 +70,8 @@ export const DataExportLogs = () => {
   ] = useSorting(noop, EXPORT_JOB_LOG_SORTABLE_COLUMNS);
   const [pagination, changePage] = useState(DEFAULT_PAGINATION);
 
-  const handleLogsLoadingError = (({ response }) => {
+  const handleLogsLoadingError = ((error) => {
+    const response = error.response;
     const defaultMessage = intl.formatMessage({ id: 'ui-consortia-settings.errors.jobs.load.common' });
     const permissionMessage = intl.formatMessage({ id: 'ui-consortia-settings.errors.permissionsRequired' });
 

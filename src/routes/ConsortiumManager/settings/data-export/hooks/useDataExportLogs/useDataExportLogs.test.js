@@ -92,7 +92,7 @@ describe('useDataExportLogs', () => {
     renderHook(() => useDataExportLogs({ tenantId: 'T1' }));
 
     expect(() => capturedQueryFn({ signal: undefined }))
-      .toThrowError();
+      .toThrowError(Object.assign(new Error(), { response: { status: 403 } }));
   });
 
   it('calls ky.get with correct URL and searchParams', async () => {
