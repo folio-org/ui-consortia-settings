@@ -9,6 +9,8 @@ import {
   useStripes,
 } from '@folio/stripes/core';
 import {
+  Layout,
+  Loading,
   LoadingPane,
   NavList,
   NavListItem,
@@ -66,7 +68,7 @@ export const ConsortiumManager = ({ location }) => {
   const modules = useModules();
   const stripes = useStripes();
 
-  const { isNavigationPaneVisible } = useConsortiumManagerContext();
+  const { isNavigationPaneVisible, isFetching } = useConsortiumManagerContext();
 
   const activeLink = `${MODULE_ROOT_ROUTE}/${location.pathname.split('/')[2]}`;
 
@@ -119,6 +121,14 @@ export const ConsortiumManager = ({ location }) => {
       />
     ))
   ), [modulesMap, stripes]);
+
+  if (isFetching) {
+    return (
+      <Layout className="display-flex centerContent">
+        <Loading size="large" />
+      </Layout>
+    );
+  }
 
   return (
     <>
