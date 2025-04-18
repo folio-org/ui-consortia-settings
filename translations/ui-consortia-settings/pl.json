@@ -194,7 +194,7 @@
     "settings.centralOrdering.alert.message": "In this version of FOLIO, once activated this setting cannot be disabled.",
     "settings.centralOrdering.confirmModal.message": "Are you sure you would like to activate this functionality?",
     "consortiumManager.members.authorizationsRoles": "Authorization roles",
-    "consortiumManager.members.authorizationsRoles.compare": "Compare roles",
+    "consortiumManager.members.authorizationsRoles.compare": "Porównaj role",
     "consortiumManager.members.authorizationsRoles.compare.roles": "Authorization roles",
     "consortiumManager.members.authorizationsRoles.compare.placeholder": "Select authorization role",
     "consortiumManager.members.authorizationsRoles.capabilities": "Capabilities",
