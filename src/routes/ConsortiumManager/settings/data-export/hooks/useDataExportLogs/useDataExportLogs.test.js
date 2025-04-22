@@ -6,7 +6,6 @@ import { buildSortingQuery } from '@folio/stripes-acq-components';
 
 import {
   useDataExportLogs,
-  DATA_EXPORT_LOGS_QUERY_KEY,
 } from './useDataExportLogs';
 import {
   DEFAULT_PAGINATION,
@@ -70,7 +69,6 @@ describe('useDataExportLogs', () => {
     const { result } = renderHook(() => useDataExportLogs());
 
     expect(capturedQueryKey).toEqual([
-      DATA_EXPORT_LOGS_QUERY_KEY,
       'ns',
       undefined,
       DEFAULT_PAGINATION.limit,

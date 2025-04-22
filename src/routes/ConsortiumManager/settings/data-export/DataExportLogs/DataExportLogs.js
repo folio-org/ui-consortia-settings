@@ -13,6 +13,7 @@ import { useQueryClient } from 'react-query';
 
 import {
   AppIcon,
+  useNamespace,
 } from '@folio/stripes/core';
 import {
   Loading,
@@ -55,6 +56,7 @@ export const DataExportLogs = () => {
   const formatTime = useTimeFormatter();
   const intl = useIntl();
   const showCallout = useShowCallout();
+  const [dataExportLogsKey] = useNamespace({ key: DATA_EXPORT_LOGS_QUERY_KEY });
 
   const {
     activeMember,
@@ -82,7 +84,7 @@ export const DataExportLogs = () => {
       });
 
       // Reset the query data to an empty if the user doesn't have permissions to view the logs
-      queryClient.setQueryData([DATA_EXPORT_LOGS_QUERY_KEY], []);
+      queryClient.setQueryData([dataExportLogsKey], []);
     } else {
       showCallout({
         message: defaultMessage,

@@ -57,7 +57,6 @@ export const useDataExportLogs = (params = {}, options = {}) => {
     data,
   } = useQuery(
     [
-      DATA_EXPORT_LOGS_QUERY_KEY,
       namespace,
       tenantId,
       pagination.limit,
