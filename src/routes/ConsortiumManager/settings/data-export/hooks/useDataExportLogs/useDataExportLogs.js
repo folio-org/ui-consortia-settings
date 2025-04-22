@@ -34,7 +34,7 @@ export const useDataExportLogs = (params = {}, options = {}) => {
 
   const [namespace] = useNamespace({ key: DATA_EXPORT_LOGS_QUERY_KEY });
   const ky = useTenantKy({ tenantId });
-  const { hasPerm } = useConsortiumManagerContext();
+  const { hasTenantPerm } = useConsortiumManagerContext();
 
   const sortingQuery = buildSortingQuery({
     sorting: sorting.sortingField || DEFAULT_SORTING.sortingField,
@@ -65,7 +65,7 @@ export const useDataExportLogs = (params = {}, options = {}) => {
       sorting.sortingDirection,
     ],
     ({ signal }) => {
-      const hasViewPerms = hasPerm(tenantId, 'ui-data-export.view');
+      const hasViewPerms = hasTenantPerm(tenantId, 'ui-data-export.view');
 
       // If the user doesn't have permissions to view the logs for the current tenant, throw an error
       if (!hasViewPerms) {

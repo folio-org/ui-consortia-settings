@@ -113,7 +113,7 @@ export const ConsortiaControlledVocabulary = ({
   const [activeDialog, setActiveDialog] = useState(null);
 
   const {
-    hasPerm,
+    hasTenantPerm,
     permissionNamesMap,
     selectedMembers,
     isFetching: isContextDataFetching,
@@ -268,8 +268,8 @@ export const ConsortiaControlledVocabulary = ({
   const hasRequiredPerms = useCallback((item, perms) => {
     return item.shared
       ? stripes.hasPerm('ui-consortia-settings.consortium-manager.share')
-      : hasPerm(item.tenantId, perms);
-  }, [hasPerm, stripes]);
+      : hasTenantPerm(item.tenantId, perms);
+  }, [hasTenantPerm, stripes]);
 
   const showSuccessCallout = useCallback(({ actionType, entry }) => {
     const translationKey = TRANSLATION_KEYS_MAP[actionType];
