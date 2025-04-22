@@ -3,7 +3,7 @@ import { affiliations, tenants } from '../fixtures';
 
 const defaultContext = {
   affiliations,
-  hasPerm: jest.fn(() => true),
+  hasTenantPerm: jest.fn(() => true),
   permissionNamesMap: tenants.reduce((acc, { id }) => ({
     ...acc,
     [id]: {

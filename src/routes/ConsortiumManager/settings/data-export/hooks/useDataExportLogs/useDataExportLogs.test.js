@@ -39,7 +39,7 @@ describe('useDataExportLogs', () => {
     getExportJobLogsSortMap.mockReturnValue({ /* dummy sort map */ });
     buildSortingQuery.mockReturnValue('sortQuery');
     useConsortiumManagerContext.mockReturnValue({
-      hasPerm: () => true,
+      hasTenantPerm: () => true,
     });
     useTenantKy.mockReturnValue({
       get: jest.fn().mockReturnValue({
@@ -84,7 +84,7 @@ describe('useDataExportLogs', () => {
 
   it('throws a 403 error when user lacks view permission', async () => {
     useConsortiumManagerContext.mockReturnValue({
-      hasPerm: () => false,
+      hasTenantPerm: () => false,
     });
 
     renderHook(() => useDataExportLogs({ tenantId: 'T1' }));
