@@ -24,6 +24,7 @@ jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
   useModules: jest.fn(),
   useStripes: jest.fn(),
+  useNamespace: jest.fn(() => ['namespace']),
 }));
 
 jest.mock('@folio/stripes/components', () => ({
