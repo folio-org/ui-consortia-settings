@@ -59,7 +59,7 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
     return acc;
   }, {}), [tenantsPermissions]);
 
-  const hasPerm = useCallback((tenantIds, permissions) => {
+  const hasTenantPerm = useCallback((tenantIds, permissions) => {
     const tenants = (Array.isArray(tenantIds) ? tenantIds : [tenantIds]).filter(Boolean);
     const perms = (Array.isArray(permissions) ? permissions : [permissions]).filter(Boolean);
 
@@ -68,7 +68,7 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
 
   const contextValue = useMemo(() => ({
     affiliations,
-    hasPerm,
+    hasTenantPerm,
     isFetching,
     isNavigationPaneVisible,
     permissionNamesMap,
@@ -78,7 +78,7 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
   }), [
     members,
     affiliations,
-    hasPerm,
+    hasTenantPerm,
     isFetching,
     isNavigationPaneVisible,
     permissionNamesMap,

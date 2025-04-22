@@ -1,4 +1,5 @@
 import { MemoryRouter, withRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
@@ -23,6 +24,7 @@ jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
   useModules: jest.fn(),
   useStripes: jest.fn(),
+  useNamespace: jest.fn(() => ['namespace']),
 }));
 
 jest.mock('@folio/stripes/components', () => ({
@@ -67,11 +69,13 @@ const modules = {
 };
 
 const wrapper = ({ children }) => (
-  <MemoryRouter>
-    <ConsortiumManagerContext.Provider value={context}>
-      {children}
-    </ConsortiumManagerContext.Provider>
-  </MemoryRouter>
+  <QueryClientProvider client={new QueryClient()}>
+    <MemoryRouter>
+      <ConsortiumManagerContext.Provider value={context}>
+        {children}
+      </ConsortiumManagerContext.Provider>
+    </MemoryRouter>
+  </QueryClientProvider>
 );
 
 const TestComponent = withRouter(ConsortiumManager);

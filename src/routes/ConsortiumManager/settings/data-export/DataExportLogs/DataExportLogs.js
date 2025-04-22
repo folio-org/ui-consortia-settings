@@ -1,7 +1,6 @@
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
 import {
-  useCallback,
   useEffect,
   useMemo,
   useState,
@@ -10,10 +9,11 @@ import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
+import { useQueryClient } from 'react-query';
 
 import {
   AppIcon,
-  useStripes,
+  useNamespace,
 } from '@folio/stripes/core';
 import {
   Loading,
@@ -47,14 +47,16 @@ import {
 } from '../constants';
 import { useDataExportLogs } from '../hooks';
 import { getExportJobLogsListResultsFormatter } from '../utils';
+import { DATA_EXPORT_LOGS_QUERY_KEY } from '../hooks/useDataExportLogs/useDataExportLogs';
 
 import css from './DataExportLogs.css';
 
 export const DataExportLogs = () => {
+  const queryClient = useQueryClient();
   const formatTime = useTimeFormatter();
   const intl = useIntl();
   const showCallout = useShowCallout();
-  const stripes = useStripes();
+  const [dataExportLogsKey] = useNamespace({ key: DATA_EXPORT_LOGS_QUERY_KEY });
 
   const {
     activeMember,
@@ -69,23 +71,27 @@ export const DataExportLogs = () => {
     changeSorting,
   ] = useSorting(noop, EXPORT_JOB_LOG_SORTABLE_COLUMNS);
   const [pagination, changePage] = useState(DEFAULT_PAGINATION);
-  const settingsPerms = stripes.hasPerm('ui-data-export.settings.view') && !stripes.hasPerm('ui-data-export.view');
 
-  const handleLogsLoadingError = useCallback(({ response }) => {
+  const handleLogsLoadingError = ((error) => {
+    const response = error.response;
     const defaultMessage = intl.formatMessage({ id: 'ui-consortia-settings.errors.jobs.load.common' });
+    const permissionMessage = intl.formatMessage({ id: 'ui-consortia-settings.errors.permissionsRequired' });
 
-    if (response?.status === 403 || settingsPerms) {
-      return showCallout({
-        message: `${defaultMessage} ${intl.formatMessage({ id: 'ui-consortia-settings.errors.permissionsRequired' })}`,
+    if (response?.status === 403) {
+      showCallout({
+        message: `${defaultMessage} ${permissionMessage}`,
+        type: 'error',
+      });
+
+      // Reset the query data to an empty if the user doesn't have permissions to view the logs
+      queryClient.setQueryData([dataExportLogsKey], []);
+    } else {
+      showCallout({
+        message: defaultMessage,
         type: 'error',
       });
     }
-
-    return showCallout({
-      message: defaultMessage,
-      type: 'error',
-    });
-  }, [intl, settingsPerms, showCallout]);
+  });
 
   const {
     isFetching,
@@ -148,7 +154,7 @@ export const DataExportLogs = () => {
             <div className={css.logsList}>
               <MultiColumnList
                 autosize
-                contentData={settingsPerms ? [] : jobExecutions}
+                contentData={jobExecutions}
                 loading={isFetching}
                 nonInteractiveHeaders={EXPORT_JOB_LOG_NON_INTERACTIVE_HEADERS}
                 onHeaderClick={changeSorting}

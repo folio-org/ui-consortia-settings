@@ -1,89 +1,121 @@
-import {
-  QueryClient,
-  QueryClientProvider,
-} from 'react-query';
+import * as reactQuery from 'react-query';
+
+import { renderHook } from '@folio/jest-config-stripes/testing-library/react';
+import { useNamespace } from '@folio/stripes/core';
+import { buildSortingQuery } from '@folio/stripes-acq-components';
 
 import {
-  renderHook,
-  waitFor,
-} from '@folio/jest-config-stripes/testing-library/react';
+  useDataExportLogs,
+} from './useDataExportLogs';
 import {
-  ASC_DIRECTION,
-  LIMIT_PARAMETER,
-  OFFSET_PARAMETER,
-} from '@folio/stripes-acq-components';
+  DEFAULT_PAGINATION,
+  DEFAULT_SORTING,
+} from '../../constants';
 
-import { useTenantKy } from '../../../../../../hooks';
-import { useDataExportLogs } from './useDataExportLogs';
-import { DATA_EXPORT_API } from '../../../../../../constants';
-import { EXPORT_JOB_LOG_COLUMNS } from '../../constants';
 import { getExportJobLogsSortMap } from '../../utils';
+import { useTenantKy } from '../../../../../../hooks';
+import { useConsortiumManagerContext } from '../../../../../../contexts';
 
+jest.mock('@folio/stripes-acq-components', () => ({
+  buildSortingQuery: jest.fn(),
+}));
+jest.mock('../../utils', () => ({
+  getExportJobLogsSortMap: jest.fn(),
+}));
 jest.mock('../../../../../../hooks', () => ({
-  ...jest.requireActual('../../../../../../hooks'),
   useTenantKy: jest.fn(),
 }));
-
-const jobExecutions = [
-  { id: 'job-1' },
-  { id: 'job-2' },
-];
-
-const queryClient = new QueryClient();
-
-// eslint-disable-next-line react/prop-types
-const wrapper = ({ children }) => (
-  <QueryClientProvider client={queryClient}>
-    {children}
-  </QueryClientProvider>
-);
-
-const kyMock = {
-  get: jest.fn(() => ({
-    json: () => Promise.resolve({
-      jobExecutions,
-      totalRecords: jobExecutions.length,
-    }),
-  })),
-};
+jest.mock('../../../../../../contexts', () => ({
+  useConsortiumManagerContext: jest.fn(),
+}));
 
 describe('useDataExportLogs', () => {
+  let capturedQueryKey;
+  let capturedQueryFn;
+  let capturedOptions;
+
   beforeEach(() => {
-    kyMock.get.mockClear();
-    useTenantKy.mockClear().mockReturnValue(kyMock);
+    useNamespace.mockReturnValue(['ns']);
+    getExportJobLogsSortMap.mockReturnValue({ /* dummy sort map */ });
+    buildSortingQuery.mockReturnValue('sortQuery');
+    useConsortiumManagerContext.mockReturnValue({
+      hasTenantPerm: () => true,
+    });
+    useTenantKy.mockReturnValue({
+      get: jest.fn().mockReturnValue({
+        json: jest.fn().mockResolvedValue({ jobExecutions: ['X'], totalRecords: 42 }),
+      }),
+    });
+
+    jest.spyOn(reactQuery, 'useQuery')
+      .mockImplementation((queryKey, queryFn, options) => {
+        capturedQueryKey = queryKey;
+        capturedQueryFn = queryFn;
+        capturedOptions = options;
+
+        return {
+          isLoading: false,
+          isFetching: false,
+          data: { jobExecutions: ['X'], totalRecords: 42 },
+        };
+      });
   });
 
-  it('should fetch user\'s consortium affiliations by user\'s id', async () => {
-    const tenantId = 'college';
-    const { result } = renderHook(() => useDataExportLogs({ tenantId }), { wrapper });
-
-    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
-
-    expect(result.current.jobExecutions).toEqual(jobExecutions);
-    expect(kyMock.get).toHaveBeenCalledWith(`${DATA_EXPORT_API}/job-executions`, expect.objectContaining({}));
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
-  it('should apply pagination and sorting in the request', async () => {
-    const tenantId = 'university';
-    const pagination = { [LIMIT_PARAMETER]: 200, [OFFSET_PARAMETER]: 300 };
-    const sorting = { sortingField: EXPORT_JOB_LOG_COLUMNS.status, sortingDirection: ASC_DIRECTION };
-    const { result } = renderHook(() => useDataExportLogs({ tenantId, pagination, sorting }), { wrapper });
+  it('builds the correct query key and disables query when no tenantId', () => {
+    const { result } = renderHook(() => useDataExportLogs());
 
-    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
+    expect(capturedQueryKey).toEqual([
+      'ns',
+      undefined,
+      DEFAULT_PAGINATION.limit,
+      DEFAULT_PAGINATION.offset,
+      DEFAULT_SORTING.sortingField,
+      DEFAULT_SORTING.sortingDirection,
+    ]);
 
-    const {
-      limit,
-      offset,
-      query,
-    } = kyMock.get.mock.calls[0][kyMock.get.mock.calls[0].length - 1].searchParams;
+    expect(capturedOptions.enabled).toBe(false);
+    expect(result.current.jobExecutions).toEqual(['X']);
+    expect(result.current.totalRecords).toBe(42);
+  });
 
-    expect(result.current.jobExecutions).toEqual(jobExecutions);
-    expect(limit).toBe(200);
-    expect(offset).toBe(300);
-    expect(query).toEqual(
-      expect.stringMatching(
-        new RegExp(`sortby ${getExportJobLogsSortMap({ sortingDirection: sorting.sortingDirection })[sorting.sortingField]}/sort.${sorting.sortingDirection}`),
-      ),
-    );
+  it('throws a 403 error when user lacks view permission', async () => {
+    useConsortiumManagerContext.mockReturnValue({
+      hasTenantPerm: () => false,
+    });
+
+    renderHook(() => useDataExportLogs({ tenantId: 'T1' }));
+
+    expect(() => capturedQueryFn({ signal: undefined }))
+      .toThrowError(Object.assign(new Error(), { response: { status: 403 } }));
+  });
+
+  it('calls ky.get with correct URL and searchParams', async () => {
+    const mockGet = jest.fn().mockReturnValue({
+      json: jest.fn().mockResolvedValue({ jobExecutions: [], totalRecords: 0 }),
+    });
+
+    useTenantKy.mockReturnValue({ get: mockGet });
+
+    const params = {
+      tenantId: 'T42',
+      pagination: { limit: 5, offset: 10 },
+      sorting: { sortingField: 'foo', sortingDirection: 'desc' },
+    };
+
+    renderHook(() => useDataExportLogs(params));
+
+    await capturedQueryFn({ signal: 'SIG' });
+
+    const callArgs = mockGet.mock.calls[0][1];
+    const { searchParams } = callArgs;
+    const { query } = searchParams;
+
+    expect(query).toContain('status=(');
+    expect(query).toContain('sortQuery');
+    expect(query).toContain('total/number');
   });
 });
