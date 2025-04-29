@@ -2,6 +2,10 @@
 
 ## 3.1.0 (IN PROGRESS)
 
+## [3.0.1](https://github.com/folio-org/ui-consortia-settings/tree/v3.0.1) (2025-04-29)
+[Full Changelog](https://github.com/folio-org/ui-consortia-settings/compare/v3.0.3...v3.0.1)
+* Bump stripes-authorization-components to v2.0.2
+
 ## [3.0.0](https://github.com/folio-org/ui-consortia-settings/tree/v3.0.0) (2025-03-13)
 [Full Changelog](https://github.com/folio-org/ui-consortia-settings/compare/v2.0.2...v3.0.0)
 
