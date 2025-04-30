@@ -233,12 +233,13 @@ export const AuthorizationRolesViewPage = ({ path }) => {
       </Pane>
       {roleId && (
         <RoleDetails
+          displayShareAction
+          hideUserLink
           isLoading={isDuplicating}
           onDuplicate={onDuplicate}
           path={path}
           tenantId={activeMember}
           roleId={roleId}
-          displayShareAction
         />
       )}
     </Paneset>
