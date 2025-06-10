@@ -76,11 +76,13 @@ export const ConsortiumManager = ({ location }) => {
   const modulesMap = useMemo(() => (
     modules.settings.reduce((acc, m) => {
       const moduleName = getModuleName(m);
-      const isModuleAvailable = Boolean(MODULES_ROUTES_MAP.get(moduleName)) && isModuleInterfacesAvailable(stripes, moduleName);
+      const isModuleAvailable = Boolean(
+        MODULES_ROUTES_MAP.get(moduleName) && isModuleInterfacesAvailable(stripes, moduleName)
+      );
 
       return isModuleAvailable ? acc.set(moduleName, m) : acc;
     }, new Map())
-  ), [modules.settings]);
+  ), [modules.settings, stripes]);
 
   const navListSections = useMemo(() => {
     return [...CONSORTIUM_MANAGER_SECTIONS_MAP.entries()].reduce((acc, [section, sectionModulesNames]) => {
