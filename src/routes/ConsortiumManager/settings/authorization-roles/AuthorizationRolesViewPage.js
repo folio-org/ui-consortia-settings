@@ -26,7 +26,10 @@ import {
   Paneset,
   Selection,
 } from '@folio/stripes/components';
-import { useOkapiKy } from '@folio/stripes/core';
+import {
+  useOkapiKy,
+  useStripes,
+} from '@folio/stripes/core';
 import {
   isShared,
   RoleDetails,
@@ -49,7 +52,10 @@ import {
   COLUMN_MAPPING,
   VISIBLE_COLUMNS,
 } from './constants';
-import { getResultsFormatter } from './utils';
+import {
+  getResultsFormatter,
+  hasInteractionRequiredInterfaces,
+} from './utils';
 
 const resolveSharedRoleLocation = (ky, tenantId) => async (role, path) => {
   const httpClient = extendKyWithTenant(ky, tenantId);
@@ -65,6 +71,7 @@ const resolveSharedRoleLocation = (ky, tenantId) => async (role, path) => {
 };
 
 export const AuthorizationRolesViewPage = ({ path }) => {
+  const stripes = useStripes();
   const intl = useIntl();
   const showCallout = useShowCallout();
   const { id: roleId } = useParams();
@@ -192,7 +199,7 @@ export const AuthorizationRolesViewPage = ({ path }) => {
     onSubmitSearch(searchTerm);
   };
 
-  const resultsFormatter = useMemo(() => getResultsFormatter(path, users), [path, users]);
+  const resultsFormatter = useMemo(() => getResultsFormatter(path, users, stripes), [path, stripes, users]);
 
   return (
     <Paneset>
@@ -231,7 +238,7 @@ export const AuthorizationRolesViewPage = ({ path }) => {
           visibleColumns={VISIBLE_COLUMNS}
         />
       </Pane>
-      {roleId && (
+      {roleId && hasInteractionRequiredInterfaces(stripes) && (
         <RoleDetails
           displayShareAction
           hideUserLink

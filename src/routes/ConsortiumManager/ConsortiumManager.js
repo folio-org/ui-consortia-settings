@@ -32,6 +32,7 @@ import {
   CONSORTIUM_MANAGER_SECTIONS_MAP,
   MODULES_ROUTES_MAP,
 } from './constants';
+import { isModuleInterfacesAvailable } from './utils';
 
 import css from './ConsortiumManager.css';
 
@@ -75,7 +76,7 @@ export const ConsortiumManager = ({ location }) => {
   const modulesMap = useMemo(() => (
     modules.settings.reduce((acc, m) => {
       const moduleName = getModuleName(m);
-      const isModuleAvailable = Boolean(MODULES_ROUTES_MAP.get(moduleName));
+      const isModuleAvailable = Boolean(MODULES_ROUTES_MAP.get(moduleName)) && isModuleInterfacesAvailable(stripes, moduleName);
 
       return isModuleAvailable ? acc.set(moduleName, m) : acc;
     }, new Map())
