@@ -1,5 +1,7 @@
 import { FormattedMessage } from 'react-intl';
 
+import { BE_INTERFACE } from '../../../../constants';
+
 export const COLUMN_NAMES = {
   description: 'description',
   name: 'name',
@@ -22,4 +24,12 @@ export const VISIBLE_COLUMNS = [
   COLUMN_NAMES.type,
   COLUMN_NAMES.updated,
   COLUMN_NAMES.updatedBy,
+];
+
+export const INTERACTION_REQUIRED_INTERFACES = [
+  BE_INTERFACE.CAPABILITIES,
+  BE_INTERFACE.CAPABILITY_SETS,
+  BE_INTERFACE.ROLE_CAPABILITIES,
+  BE_INTERFACE.ROLE_CAPABILITY_SETS,
+  BE_INTERFACE.ROLES_USER,
 ];

@@ -6,20 +6,25 @@ import { Settings } from '@folio/stripes/smart-components';
 
 import { MODULE_ROOT_ROUTE } from '../../../../constants';
 import { isEurekaEnabled } from '../../../../utils';
+import { filterSectionsByInterfaces } from '../../utils';
 import { getSectionPages } from './constants';
 
-const UsersSettings = (props) => {
-  const isEureka = isEurekaEnabled(props.stripes);
+const UsersSettings = ({ stripes, ...props }) => {
+  const isEureka = isEurekaEnabled(stripes);
 
-  const sections = useMemo(() => [{
-    label: <FormattedMessage id="ui-users.settings.general" />,
-    pages: getSectionPages(isEureka),
-  }], [isEureka]);
+  const sections = useMemo(() => filterSectionsByInterfaces(
+    stripes,
+    [{
+      label: <FormattedMessage id="ui-users.settings.general" />,
+      pages: getSectionPages(isEureka),
+    }],
+  ), [isEureka, stripes]);
 
   return (
     <Settings
       {...props}
       sections={sections}
+      stripes={stripes}
       paneTitle={<FormattedMessage id="ui-users.settings.label" />}
       paneBackLink={MODULE_ROOT_ROUTE}
     />

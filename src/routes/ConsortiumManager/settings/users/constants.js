@@ -1,6 +1,7 @@
 import sortBy from 'lodash/sortBy';
 import { FormattedMessage } from 'react-intl';
 
+import { BE_INTERFACE } from '../../../../constants';
 import {
   Departments,
   PatronGroups,
@@ -20,6 +21,7 @@ export const SECTION_PAGES = [
     component: PermissionSets,
     perm: 'ui-users.settings.permsets.view',
     isEurekaEnabled: false,
+    _interfaces: [BE_INTERFACE.USERS],
   },
   {
     route: SECTION_NAMES.groups,
@@ -27,6 +29,7 @@ export const SECTION_PAGES = [
     component: PatronGroups,
     perm: 'ui-users.settings.usergroups.view',
     isEurekaEnabled: true,
+    _interfaces: [BE_INTERFACE.USERS],
   },
   {
     route: SECTION_NAMES.departments,
@@ -34,6 +37,7 @@ export const SECTION_PAGES = [
     component: Departments,
     perm: 'ui-users.settings.departments.view',
     isEurekaEnabled: true,
+    _interfaces: [BE_INTERFACE.USERS],
   },
 ];
 

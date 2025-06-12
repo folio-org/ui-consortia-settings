@@ -3,11 +3,24 @@ import {
   FormattedMessage,
 } from 'react-intl';
 
-import { NoValue, TextLink } from '@folio/stripes/components';
+import {
+  NoValue,
+  TextLink,
+} from '@folio/stripes/components';
 import { getFullName } from '@folio/stripes/util';
 
-export const getResultsFormatter = (path, users) => ({
-  name: (item) => <TextLink to={`${path}/${item.id}`}>{item.name}</TextLink>,
+import { INTERACTION_REQUIRED_INTERFACES } from './constants';
+
+export const hasInteractionRequiredInterfaces = (stripes) => {
+  return INTERACTION_REQUIRED_INTERFACES.every((interfaceName) => stripes.hasInterface(interfaceName));
+};
+
+export const getResultsFormatter = (path, users, stripes) => ({
+  name: (item) => {
+    return hasInteractionRequiredInterfaces(stripes) && item.id
+      ? <TextLink to={`${path}/${item.id}`}>{item.name}</TextLink>
+      : item.name;
+  },
   type: (item) => {
     if (!item?.type) return <NoValue />;
 

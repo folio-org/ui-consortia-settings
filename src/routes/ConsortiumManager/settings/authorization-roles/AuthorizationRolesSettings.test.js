@@ -12,6 +12,7 @@ import { useAuthorizationRoles } from '@folio/stripes-authorization-components';
 
 import { useMemberSelectionContext } from '../../MemberSelectionContext';
 import { AuthorizationRolesSettings } from './AuthorizationRolesSettings';
+import { hasInteractionRequiredInterfaces } from './utils';
 
 jest.mock('@folio/stripes-authorization-components', () => ({
   RoleCreate: () => <div>RoleCreate</div>,
@@ -24,6 +25,16 @@ jest.mock('../../MemberSelectionContext', () => ({
 }));
 jest.mock('./AuthorizationRolesViewPage', () => ({
   AuthorizationRolesViewPage: () => <div>AuthorizationRolesViewPage</div>,
+}));
+jest.mock('./Capabilities', () => ({
+  CapabilitiesCompare: () => <div>CapabilitiesCompare</div>,
+}));
+jest.mock('./UsersCapabilities', () => ({
+  UsersCapabilitiesCompare: () => <div>UsersCapabilitiesCompare</div>,
+}));
+jest.mock('./utils', () => ({
+  ...jest.requireActual('./utils'),
+  hasInteractionRequiredInterfaces: jest.fn(),
 }));
 
 const queryClient = new QueryClient();
@@ -44,14 +55,17 @@ const renderComponent = () => render(<AuthorizationRolesSettings />, { wrapper }
 
 describe('AuthorizationRolesSettings', () => {
   beforeEach(() => {
-    useMemberSelectionContext
-      .mockClear()
-      .mockReturnValue({ activeMember: 'central' });
-    useAuthorizationRoles.mockClear().mockReturnValue({
+    hasInteractionRequiredInterfaces.mockReturnValue(true);
+    useMemberSelectionContext.mockReturnValue({ activeMember: 'central' });
+    useAuthorizationRoles.mockReturnValue({
       roles: [],
       isLoading: false,
       onSubmitSearch: jest.fn(),
     });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should display authorization roles page', async () => {
@@ -70,10 +84,60 @@ describe('AuthorizationRolesSettings', () => {
     expect(screen.getByText('RoleCreate')).toBeInTheDocument();
   });
 
+  it('should redirect from the create page to the roles page if there are no required interfaces', async () => {
+    window.location.pathname = '/consortia-settings/authorization-roles/create';
+    hasInteractionRequiredInterfaces.mockReturnValue(false);
+
+    renderComponent();
+
+    expect(screen.getByText('AuthorizationRolesViewPage')).toBeInTheDocument();
+  });
+
   it('should display edit authorization roles page', async () => {
     window.location.pathname = '/consortia-settings/authorization-roles/1/edit';
     renderComponent();
 
     expect(screen.getByText('RoleEdit')).toBeInTheDocument();
+  });
+
+  it('should redirect from the edit page to the roles page if there are no required interfaces', async () => {
+    window.location.pathname = '/consortia-settings/authorization-roles/1/edit';
+    hasInteractionRequiredInterfaces.mockReturnValue(false);
+
+    renderComponent();
+
+    expect(screen.getByText('AuthorizationRolesViewPage')).toBeInTheDocument();
+  });
+
+  it('should display capabilities compare page', async () => {
+    window.location.pathname = '/consortia-settings/authorization-roles/compare';
+    renderComponent();
+
+    expect(screen.getByText('CapabilitiesCompare')).toBeInTheDocument();
+  });
+
+  it('should redirect from the capabilities compare page to the roles page if there are no required interfaces', async () => {
+    window.location.pathname = '/consortia-settings/authorization-roles/compare';
+    hasInteractionRequiredInterfaces.mockReturnValue(false);
+
+    renderComponent();
+
+    expect(screen.getByText('AuthorizationRolesViewPage')).toBeInTheDocument();
+  });
+
+  it('should display users capabilities compare page', async () => {
+    window.location.pathname = '/consortia-settings/authorization-roles/compare-users';
+    renderComponent();
+
+    expect(screen.getByText('UsersCapabilitiesCompare')).toBeInTheDocument();
+  });
+
+  it('should redirect from the users capabilities compare page to the roles page if there are no required interfaces', async () => {
+    window.location.pathname = '/consortia-settings/authorization-roles/compare-users';
+    hasInteractionRequiredInterfaces.mockReturnValue(false);
+
+    renderComponent();
+
+    expect(screen.getByText('AuthorizationRolesViewPage')).toBeInTheDocument();
   });
 });
