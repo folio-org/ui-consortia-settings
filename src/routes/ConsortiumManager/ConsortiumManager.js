@@ -77,7 +77,7 @@ export const ConsortiumManager = ({ location }) => {
     modules.settings.reduce((acc, m) => {
       const moduleName = getModuleName(m);
       const isModuleAvailable = Boolean(
-        MODULES_ROUTES_MAP.get(moduleName) && isModuleInterfacesAvailable(stripes, moduleName)
+        MODULES_ROUTES_MAP.get(moduleName) && isModuleInterfacesAvailable(stripes, moduleName),
       );
 
       return isModuleAvailable ? acc.set(moduleName, m) : acc;
