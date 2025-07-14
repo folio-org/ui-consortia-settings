@@ -5,6 +5,7 @@
 * [UICONSET-216](https://folio-org.atlassian.net/browse/UICONSET-216) Issues with displaying data export logs from Member tenant in Consortium manager.
 * [UICONSET-228](https://folio-org.atlassian.net/browse/UICONSET-228) Add newly added 'hideUserLink' prop to 'RoleDetails' component to remove link from users.
 * [UICONSET-229](https://folio-org.atlassian.net/browse/UICONSET-229) Add logic to handle provided interfaces and render components conditionally, only when the required interface is available.
+* [UICONSET-226](https://folio-org.atlassian.net/browse/UICONSET-226) Protect actions from interaction by an unauthorized user.
 
 ## [3.0.0](https://github.com/folio-org/ui-consortia-settings/tree/v3.0.0) (2025-03-13)
 [Full Changelog](https://github.com/folio-org/ui-consortia-settings/compare/v2.0.2...v3.0.0)

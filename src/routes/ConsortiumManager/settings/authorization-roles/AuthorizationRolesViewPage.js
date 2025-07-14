@@ -78,6 +78,7 @@ export const AuthorizationRolesViewPage = ({ path }) => {
   const history = useHistory();
   const ky = useOkapiKy();
 
+  const isConsortiumManagerEditPermitted = stripes.hasPerm('ui-consortia-settings.consortium-manager.edit');
   const isRowSelected = useIsRowSelected(`${path}/:id`);
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -155,16 +156,18 @@ export const AuthorizationRolesViewPage = ({ path }) => {
     >
       <DropdownMenu>
         <PaneMenu>
-          <Button
-            id="clickable-create-role"
-            buttonStyle="dropdownItem"
-            marginBottom0
-            to={`${path}/create`}
-          >
-            <Icon size="small" icon="plus-sign">
-              <FormattedMessage id="stripes-components.button.new" />
-            </Icon>
-          </Button>
+          {isConsortiumManagerEditPermitted && (
+            <Button
+              id="clickable-create-role"
+              buttonStyle="dropdownItem"
+              marginBottom0
+              to={`${path}/create`}
+            >
+              <Icon size="small" icon="plus-sign">
+                <FormattedMessage id="stripes-components.button.new" />
+              </Icon>
+            </Button>
+          )}
         </PaneMenu>
         <PaneMenu>
           <Button
@@ -240,6 +243,9 @@ export const AuthorizationRolesViewPage = ({ path }) => {
       </Pane>
       {roleId && hasInteractionRequiredInterfaces(stripes) && (
         <RoleDetails
+          canCreate={isConsortiumManagerEditPermitted}
+          canDelete={isConsortiumManagerEditPermitted}
+          canEdit={isConsortiumManagerEditPermitted}
           displayShareAction
           hideUserLink
           isLoading={isDuplicating}

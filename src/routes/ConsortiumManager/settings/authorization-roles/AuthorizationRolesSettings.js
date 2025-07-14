@@ -24,6 +24,8 @@ export const AuthorizationRolesSettings = () => {
 
   const { activeMember } = useMemberSelectionContext();
 
+  const isConsortiumManagerEditPermitted = stripes.hasPerm('ui-consortia-settings.consortium-manager.edit');
+
   return (
     <Router>
       <Switch>
@@ -49,7 +51,7 @@ export const AuthorizationRolesSettings = () => {
           exact
           path={`${AUTHORIZATION_ROLES_ROUTE}/create`}
           render={() => {
-            if (!hasInteractionRequiredInterfaces(stripes)) {
+            if (!hasInteractionRequiredInterfaces(stripes) || !isConsortiumManagerEditPermitted) {
               return <Redirect to={AUTHORIZATION_ROLES_ROUTE} />;
             }
 
@@ -67,7 +69,7 @@ export const AuthorizationRolesSettings = () => {
           exact
           path={`${AUTHORIZATION_ROLES_ROUTE}/:id/edit`}
           render={() => {
-            if (!hasInteractionRequiredInterfaces(stripes)) {
+            if (!hasInteractionRequiredInterfaces(stripes) || !isConsortiumManagerEditPermitted) {
               return <Redirect to={AUTHORIZATION_ROLES_ROUTE} />;
             }
 

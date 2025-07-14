@@ -82,27 +82,41 @@ const getMembersNamesString = (selectedMembers, members) => {
 // Used in a translation to indicate a plural value.
 const SHARED_MEMBERS_COUNT = Number.MAX_SAFE_INTEGER;
 
+const defaultProps = {
+  actionSuppression: {
+    delete: () => false,
+    edit: () => false,
+  },
+  columnMapping: {},
+  fieldComponents: {},
+  formatter: {},
+  id: uniqueId(),
+  readOnlyFields: [],
+  uniqueFields: [],
+  visibleFields: [],
+};
+
 export const ConsortiaControlledVocabulary = ({
-  actionSuppression: actionSuppressionProp,
-  canCreate: canCreateProp,
-  columnMapping: columnMappingProp,
-  fieldComponents: fieldComponentsProp,
+  actionSuppression: actionSuppressionProp = defaultProps.actionSuppression,
+  canCreate: canCreateProp = true,
+  columnMapping: columnMappingProp = defaultProps.columnMapping,
+  fieldComponents: fieldComponentsProp = defaultProps.fieldComponents,
   firstMenu,
-  formatter: formatterProp,
-  id,
+  formatter: formatterProp = defaultProps.formatter,
+  id = defaultProps.id,
   isLoading: isLoadingProp,
   label,
   path,
   permissions,
   primaryField: primaryFieldProp,
-  readOnlyFields: readOnlyFieldsProp,
+  readOnlyFields: readOnlyFieldsProp = defaultProps.readOnlyFields,
   records,
   sortby: sortbyProp,
   squashSharedSetting,
   translations,
-  uniqueFields,
-  validate,
-  visibleFields: visibleFieldsProp,
+  uniqueFields = defaultProps.uniqueFields,
+  validate = noop,
+  visibleFields: visibleFieldsProp = defaultProps.visibleFields,
   itemTemplate,
 }) => {
   const intl = useIntl();
@@ -466,12 +480,26 @@ export const ConsortiaControlledVocabulary = ({
     'shared',
   ], [visibleFieldsProp]);
 
-  const canCreate = Boolean(selectedMembers?.length && canCreateProp);
+  const isConsortiumManagerEditPermitted = stripes.hasPerm('ui-consortia-settings.consortium-manager.edit');
+
+  const canCreate = Boolean(
+    selectedMembers?.length
+    && canCreateProp
+    && isConsortiumManagerEditPermitted,
+  );
 
   const actionSuppression = useMemo(() => ({
-    delete: (item) => actionSuppressionProp.delete(item) || !hasRequiredPerms(item, permissions[ACTION_TYPES.delete]),
-    edit: (item) => actionSuppressionProp.edit(item) || !hasRequiredPerms(item, permissions[ACTION_TYPES.update]),
-  }), [actionSuppressionProp, hasRequiredPerms, permissions]);
+    delete: (item) => (
+      !isConsortiumManagerEditPermitted
+      || actionSuppressionProp.delete(item)
+      || !hasRequiredPerms(item, permissions[ACTION_TYPES.delete])
+    ),
+    edit: (item) => (
+      !isConsortiumManagerEditPermitted
+      || actionSuppressionProp.edit(item)
+      || !hasRequiredPerms(item, permissions[ACTION_TYPES.update])
+    ),
+  }), [actionSuppressionProp, hasRequiredPerms, isConsortiumManagerEditPermitted, permissions]);
 
   const isLoading = (
     isLoadingProp
@@ -514,22 +542,6 @@ export const ConsortiaControlledVocabulary = ({
       </Pane>
     </Paneset>
   );
-};
-
-ConsortiaControlledVocabulary.defaultProps = {
-  actionSuppression: {
-    delete: () => false,
-    edit: () => false,
-  },
-  canCreate: true,
-  columnMapping: {},
-  fieldComponents: {},
-  formatter: {},
-  id: uniqueId(),
-  readOnlyFields: [],
-  uniqueFields: [],
-  validate: noop,
-  visibleFields: [],
 };
 
 ConsortiaControlledVocabulary.propTypes = {
