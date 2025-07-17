@@ -234,7 +234,7 @@
     "consortiumManager.members.users.selectUser.modal.label": "Вибрати користувача ({tenant})",
     "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermHeader": "Неможливо видалити джерело даних про фонди (холдінгси)",
     "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermMessage": "Це джерело даних про фонди (холдінгси) неможливо видалити, оскільки воно використовується одним або кількома записами.",
-    "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "Delete holdings source",
+    "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "Видалити джерело даних про фонди (холдінгси)",
     "consortiumManager.controlledVocab.holdingsSources.termDeleted": "Джерело даних про фонди (холдінгси) <b>{term}</b> було успішно <b>видалене</b>.",
     "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "Джерело даних про фонди (холдінгси) <b>{term}</b> буде <b>видалене</b>."
 }
