@@ -231,7 +231,7 @@
     "consortiumManager.controlledVocab.subjectTypes.deleteEntry": "Usuń rodzaj hasła przedmiotowego",
     "consortiumManager.controlledVocab.subjectTypes.termDeleted": "Rodzaj hasła przedmiotowego <b>{term}</b> został pomyślnie <b>usunięty</b>.",
     "consortiumManager.controlledVocab.subjectTypes.termWillBeDeleted": "Rodzaj hasła przedmiotowego <b>{term}</b> zostanie <b>usunięty</b>.",
-    "consortiumManager.members.users.selectUser.modal.label": "Select user ({tenant})",
+    "consortiumManager.members.users.selectUser.modal.label": "Wybierz użytkownika ({tenant})",
     "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermHeader": "Nie można usunąć źródła zasobów",
     "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermMessage": "Tego źródła zasobów nie można usunąć, ponieważ jest ono używane przez jeden lub więcej rekordów.",
     "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "Usuń źródło zasobów",
