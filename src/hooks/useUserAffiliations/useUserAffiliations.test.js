@@ -3,9 +3,10 @@ import {
   QueryClientProvider,
 } from 'react-query';
 
-import '@folio/stripes-acq-components/test/jest/__mock__';
-
-import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  renderHook,
+  waitFor,
+} from '@folio/jest-config-stripes/testing-library/react';
 import { useStripes } from '@folio/stripes/core';
 
 import { tenants } from 'fixtures';
@@ -23,8 +24,6 @@ const consortium = {
 const affiliations = tenants.map(({ id, name }) => ({ tenantId: id, tenantName: name }));
 
 const queryClient = new QueryClient();
-
-// eslint-disable-next-line react/prop-types
 const wrapper = ({ children }) => (
   <QueryClientProvider client={queryClient}>
     {children}
@@ -61,6 +60,7 @@ describe('useUserAffiliations', () => {
       stripes,
       consortium.centralTenantId,
       { id: consortium.id },
+      { signal: expect.any(AbortSignal) },
     );
     expect(result.current.affiliations).toEqual(affiliations);
   });

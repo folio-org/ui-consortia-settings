@@ -1,5 +1,4 @@
 import groupBy from 'lodash/groupBy';
-import omit from 'lodash/omit';
 import { v4 } from 'uuid';
 
 import { UNIQUE_FIELD_KEY } from '../constants';
@@ -15,11 +14,13 @@ const defaultSquashFn = (sharedSettingRecords) => {
   As a workaround, we squash records metadata from different tenants.
  */
 const squashRecordMetadata = (sharedSettingRecords, consortium) => {
-  const centralTenantRecord = sharedSettingRecords.find(({ pcTenantId }) => pcTenantId === consortium?.centralTenantId);
+  const centralTenantRecord = sharedSettingRecords.find(({ _pcTenantId }) => {
+    return _pcTenantId === consortium?.centralTenantId;
+  });
 
-  return sharedSettingRecords.map(({ metadata, ...rest }) => ({
+  return sharedSettingRecords.map(({ metadata, _pcTenantId, ...rest }) => ({
     metadata: centralTenantRecord?.metadata || metadata,
-    ...omit(rest, ['pcTenantId']),
+    ...rest,
   }));
 };
 
@@ -40,9 +41,10 @@ export const hydrateSharedRecords = (
 
       const additive = {
         [UNIQUE_FIELD_KEY]: v4(),
-        tenantId: shared ? undefined : tenantId,
-        pcTenantId: tenantId, // Tenant associated with the record in publication response
         shared,
+        tenantId: shared ? undefined : tenantId,
+        // Tenant associated with the record in publication response. Used to squash records metadata.
+        ...{ _pcTenantId: shared ? tenantId : undefined },
       };
 
       return { ...item, ...additive };
