@@ -32,7 +32,14 @@ export const fetchConsortium = ({ okapi }, tenant) => {
     .then(data => data.consortia[0]);
 };
 
-export const fetchConsortiumUserTenants = ({ okapi }, tenant, { id: consortiumId }) => {
+export const fetchConsortiumUserTenants = (
+  { okapi },
+  tenant,
+  { id: consortiumId },
+  options = {},
+) => {
+  const { signal } = options;
+
   return fetch(`${okapi.url}/consortia/${consortiumId}/_self`, {
     credentials: 'include',
     headers: {
@@ -40,6 +47,7 @@ export const fetchConsortiumUserTenants = ({ okapi }, tenant, { id: consortiumId
       [CONTENT_TYPE_HEADER]: 'application/json',
       ...getLegacyTokenHeader(okapi),
     },
+    signal,
   })
     .then(resp => resp.json())
     .then(data => orderBy(data.userTenants || [], 'tenantName'));

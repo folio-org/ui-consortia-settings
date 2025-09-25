@@ -11,11 +11,12 @@ export const useUsers = ({ tenant = '' }, options = {}) => {
   const { data, isFetching } = useQuery(
     {
       queryKey: [namespaceKey, tenant],
-      queryFn: () => ky.get('users',
+      queryFn: ({ signal }) => ky.get('users',
         {
           searchParams: {
             limit: USERS_LIMIT,
           },
+          signal,
         }).json(),
       ...options,
     },

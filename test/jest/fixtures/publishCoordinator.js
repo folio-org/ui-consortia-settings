@@ -24,18 +24,38 @@ export const pcPublicationResults = {
     {
       tenantId: 'central',
       response: JSON.stringify({
-        items: [{
-          name: 'Test-1',
-        }],
+        items: [
+          {
+            id: 'foo',
+            name: 'Test-1',
+            metadata: { createdByUserId: 'user-1' },
+          },
+          {
+            id: 'bar',
+            name: 'Test-2',
+            source: 'consortium',
+            metadata: { createdByUserId: 'user-1' },
+          },
+        ],
       }),
       statusCode: 200,
     },
     {
       tenantId: 'secondary',
       response: JSON.stringify({
-        items: [{
-          name: 'Test-2',
-        }],
+        items: [
+          {
+            id: 'baz',
+            name: 'Test-3',
+            metadata: { createdByUserId: 'user-1' },
+          },
+          {
+            id: 'bar',
+            name: 'Test-2',
+            source: 'consortium',
+            metadata: { createdByUserId: 'user-2' },
+          },
+        ],
       }),
       statusCode: 200,
     },

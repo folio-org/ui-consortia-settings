@@ -7,8 +7,8 @@ export const useCurrentConsortium = (options = {}) => {
 
   const { isLoading, data } = useQuery(
     ['consortium'],
-    async () => {
-      const { consortia } = await ky.get('consortia').json();
+    async ({ signal }) => {
+      const { consortia } = await ky.get('consortia', { signal }).json();
 
       return consortia[0];
     },

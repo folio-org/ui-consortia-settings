@@ -1,8 +1,6 @@
 import { useQuery } from 'react-query';
 
-import {
-  useStripes,
-} from '@folio/stripes/core';
+import { useStripes } from '@folio/stripes/core';
 
 import { fetchConsortiumUserTenants } from '../../services';
 
@@ -24,8 +22,13 @@ export const useUserAffiliations = ({ userId } = {}, options = {}) => {
     refetch,
   } = useQuery(
     ['consortium', 'self', userId],
-    () => {
-      return fetchConsortiumUserTenants(stripes, consortium?.centralTenantId, { id: consortium.id });
+    ({ signal }) => {
+      return fetchConsortiumUserTenants(
+        stripes,
+        consortium?.centralTenantId,
+        { id: consortium.id },
+        { signal },
+      );
     },
     {
       enabled,

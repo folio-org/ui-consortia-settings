@@ -63,7 +63,7 @@ export const useSettings = (params = {}, options = {}) => {
         const { publicationErrors, ...response } = await initPublicationRequest(publication);
 
         const entries = flow(
-          hydrateSharedRecords(records, squashSharedSetting),
+          hydrateSharedRecords(records, squashSharedSetting, { consortium }),
           sortBy([sortby || 'name', 'tenantId']),
         )(response);
 

@@ -9,10 +9,10 @@ import { getFullName } from '@folio/stripes/util';
 
 import css from './ConsortiaControlledVocabulary.css';
 
-export const renderLastUpdated = (metadata, users) => {
+export const renderLastUpdated = (metadata, usersMap) => {
   if (!metadata) return <NoValue />;
 
-  const record = users?.find(r => r.id === metadata.updatedByUserId);
+  const record = usersMap?.get(metadata.updatedByUserId);
   const name = getFullName(record);
   const user = record
     ? <Link to={`/users/view/${metadata.updatedByUserId}`}>{name}</Link>
