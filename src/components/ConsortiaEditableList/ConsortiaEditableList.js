@@ -1,86 +1,80 @@
-import {
-  memo,
-} from 'react';
-import { FormattedMessage } from 'react-intl';
+import noop from 'lodash/noop';
 import PropTypes from 'prop-types';
-import {
-  noop,
-} from 'lodash';
+import { memo } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import { EditableList } from '@folio/stripes/smart-components';
 
-import {
-  UNIQUE_FIELD_KEY,
-} from '../../constants';
+import { UNIQUE_FIELD_KEY } from '../../constants';
 
 const CREATE_BUTTON_LABEL = <FormattedMessage id="stripes-core.button.new" />;
 
 const EditableListMemoized = memo(EditableList);
 
 const ConsortiaEditableListComponent = ({
-  label,
-  contentData,
-  totalCount,
-  fieldComponents,
-  itemTemplate,
-  formatter,
-  columnMapping,
-  readOnlyFields,
-  visibleFields,
   actionSuppression,
   canCreate,
+  columnMapping,
+  contentData,
+  fieldComponents,
+  formatter,
+  itemTemplate,
+  label,
   onCreate,
-  onUpdate,
   onDelete,
   onStatusChange,
+  onUpdate,
+  readOnlyFields,
+  totalCount,
   validate,
+  visibleFields,
 }) => {
   return (
     <EditableListMemoized
-      formType="final-form"
-      label={label}
-      createButtonLabel={CREATE_BUTTON_LABEL}
-      contentData={contentData}
-      totalCount={totalCount}
-      fieldComponents={fieldComponents}
-      itemTemplate={itemTemplate}
-      formatter={formatter}
-      columnMapping={columnMapping}
-      readOnlyFields={readOnlyFields}
-      visibleFields={visibleFields}
       actionSuppression={actionSuppression}
       canCreate={canCreate}
+      columnMapping={columnMapping}
+      contentData={contentData}
+      createButtonLabel={CREATE_BUTTON_LABEL}
+      fieldComponents={fieldComponents}
+      formatter={formatter}
+      formType="final-form"
+      itemTemplate={itemTemplate}
+      label={label}
       onCreate={onCreate}
-      onUpdate={onUpdate}
       onDelete={onDelete}
-      onSubmit={noop}
       onStatusChange={onStatusChange}
-      validate={validate}
+      onSubmit={noop}
+      onUpdate={onUpdate}
+      readOnlyFields={readOnlyFields}
+      totalCount={totalCount}
       uniqueField={UNIQUE_FIELD_KEY}
+      validate={validate}
+      visibleFields={visibleFields}
     />
   );
 };
 
 ConsortiaEditableListComponent.propTypes = {
-  label: PropTypes.string,
-  contentData: PropTypes.arrayOf(PropTypes.object),
-  totalCount: PropTypes.number,
-  fieldComponents: PropTypes.object,
-  itemTemplate: PropTypes.object,
-  formatter: PropTypes.object,
-  columnMapping: PropTypes.object,
-  readOnlyFields: PropTypes.arrayOf(PropTypes.string),
-  visibleFields: PropTypes.arrayOf(PropTypes.string),
   actionSuppression: PropTypes.shape({
     delete: PropTypes.func,
     edit: PropTypes.func,
   }),
   canCreate: PropTypes.bool,
+  columnMapping: PropTypes.object,
+  contentData: PropTypes.arrayOf(PropTypes.object),
+  fieldComponents: PropTypes.object,
+  formatter: PropTypes.object,
+  label: PropTypes.string,
+  itemTemplate: PropTypes.object,
   onCreate: PropTypes.func,
-  onUpdate: PropTypes.func,
   onDelete: PropTypes.func,
   onStatusChange: PropTypes.func,
+  onUpdate: PropTypes.func,
+  readOnlyFields: PropTypes.arrayOf(PropTypes.string),
+  totalCount: PropTypes.number,
   validate: PropTypes.func,
+  visibleFields: PropTypes.arrayOf(PropTypes.string),
 };
 
 export const ConsortiaEditableList = memo(ConsortiaEditableListComponent);

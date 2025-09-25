@@ -456,7 +456,7 @@ export const ConsortiaControlledVocabulary = ({
   }), [fieldComponentsProp]);
 
   const formatter = useMemo(() => ({
-    lastUpdated: ({ metadata }) => renderLastUpdated(metadata, users),
+    lastUpdated: ({ metadata }) => renderLastUpdated(metadata, new Map(users.map(user => [user.id, user]))),
     shared: ({ tenantId, shared }) => (
       shared ? allMembersLabel : selectedMembers?.find(({ id: _id }) => _id === tenantId)?.name
     ),

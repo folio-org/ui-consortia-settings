@@ -25,11 +25,11 @@ export const useConsortiumPermissions = () => {
     data = {},
   } = useQuery(
     [namespace, user?.id],
-    async () => {
+    async ({ signal }) => {
       try {
         const { id } = await ky.get(
           `perms/users/${user.id}`,
-          { searchParams: { indexField: 'userId' } },
+          { searchParams: { indexField: 'userId' }, signal },
         ).json();
         const { permissions } = await ky.get(
           'perms/permissions',
