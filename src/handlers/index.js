@@ -3,12 +3,12 @@ import {
 } from '@folio/stripes/core';
 
 import { handleLogin } from './handleLogin';
-import { handleChangeAffilication } from './handleChangeAffilication';
+import { handleChangeAffiliation } from './handleChangeAffiliation';
 
 export const HANDLERS = {
   [coreEvents.LOGIN]: stripes => {
     handleLogin(stripes)
       .catch(() => {});
   },
-  CHANGE_ACTIVE_AFFILIATION: handleChangeAffilication,
+  CHANGE_ACTIVE_AFFILIATION: handleChangeAffiliation,
 };
