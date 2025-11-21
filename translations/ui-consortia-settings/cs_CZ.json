@@ -206,7 +206,7 @@
     "authorizationPolicy.columns.name": "Jméno",
     "authorizationPolicy.columns.description": "Popis",
     "authorizationPolicy.columns.updatedDate": "Aktualizováno",
-    "authorizationPolicy.columns.updatedBy": "Aktualizoval",
+    "authorizationPolicy.columns.updatedBy": "Aktualizoval/a",
     "consortiumManager.members.users.compare": "Porovnat uživatele",
     "consortiumManager.members.action.compareUsers": "Porovnat uživatele",
     "consortiumManager.members.permissionSets.compare.user": "Uživatel",
