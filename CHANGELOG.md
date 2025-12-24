@@ -7,6 +7,7 @@
 * [UICONSET-229](https://folio-org.atlassian.net/browse/UICONSET-229) Add logic to handle provided interfaces and render components conditionally, only when the required interface is available.
 * [UICONSET-226](https://folio-org.atlassian.net/browse/UICONSET-226) Protect actions from interaction by an unauthorized user.
 * [UICONSET-231](https://folio-org.atlassian.net/browse/UICONSET-231) Use metadata from the central tenant for shared records.
+* [UICONSET-241](https://folio-org.atlassian.net/browse/UICONSET-241) Update the message for sharing a role to indicate that it can be a lengthy process.
 
 ## [3.0.0](https://github.com/folio-org/ui-consortia-settings/tree/v3.0.0) (2025-03-13)
 [Full Changelog](https://github.com/folio-org/ui-consortia-settings/compare/v2.0.2...v3.0.0)

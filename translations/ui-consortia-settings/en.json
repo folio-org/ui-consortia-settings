@@ -194,7 +194,7 @@
   "consortiumManager.modal.confirmCreate.heading": "Confirm member libraries",
   "consortiumManager.modal.confirmCreate.message": "<b>{term}</b> will be saved for the member libraries:",
   "consortiumManager.modal.confirmShare.all.heading": "Confirm share to all",
-  "consortiumManager.modal.confirmShare.all.message": "Are you sure you want to share {term} with <b>ALL</b> members?",
+  "consortiumManager.modal.confirmShare.all.messages": "Are you sure you want to share {term} with <b>ALL</b> members?<br />Sharing a role with a large number of capabilities or capability sets may take several minutes to complete, especially on clusters with many tenants.",
 
   "consortiumManager.sections.title": "Management",
   "consortiumManager.sections.section.settings": "Settings",

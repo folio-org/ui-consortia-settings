@@ -16,7 +16,7 @@ export const ConfirmShareEntryModal = ({
       heading={<FormattedMessage id="ui-consortia-settings.consortiumManager.modal.confirmShare.all.heading" />}
       message={(
         <FormattedMessage
-          id="ui-consortia-settings.consortiumManager.modal.confirmShare.all.message"
+          id="ui-consortia-settings.consortiumManager.modal.confirmShare.all.messages"
           values={{ term }}
         />
       )}
