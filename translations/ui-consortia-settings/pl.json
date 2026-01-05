@@ -202,7 +202,7 @@
     "consortiumManager.members.authorizationsRoles.capabilities.empty": "Nie znaleziono możliwości",
     "consortiumManager.members.authorizationsRoles.capabilitiesSets.empty": "Nie znaleziono zestawów uprawnień",
     "authorizationPolicy.search": "Szukaj",
-    "authorizationPolicy.meta.title": "Authorization policies",
+    "authorizationPolicy.meta.title": "Reguły autoryzacji",
     "authorizationPolicy.columns.name": "Nazwa",
     "authorizationPolicy.columns.description": "Opis",
     "authorizationPolicy.columns.updatedDate": "Zaktualizowano",
