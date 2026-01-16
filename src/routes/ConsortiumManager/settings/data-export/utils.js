@@ -73,11 +73,11 @@ const downloadExportFile = async (record, ky) => {
 
 export const getFileNameField = (record, ky) => {
   const fileName = get(record.exportedFiles, '0.fileName');
-  const isDeleted = !record.jobProfileId;
+  const isJobProfileDeleted = !record.jobProfileId;
   const isExported = record.progress?.exported;
   const isNotCompleted = [EXPORT_JOB_STATUSES.FAIL, EXPORT_JOB_STATUSES.IN_PROGRESS].includes(record.status);
 
-  if (!isExported || isNotCompleted || isDeleted) return <span>{fileName}</span>;
+  if (!isExported || isNotCompleted || isJobProfileDeleted) return <span>{fileName}</span>;
 
   return (
     <TextLink
