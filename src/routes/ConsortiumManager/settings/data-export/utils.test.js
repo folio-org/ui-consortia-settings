@@ -12,24 +12,58 @@ import {
 describe('getExportJobLogsListResultsFormatter', () => {
   const intl = {
     formatNumber: jest.fn(arg => Number(arg)),
-    formatMessage: jest.fn(({ id }) => id),
+    formatMessage: jest.fn(({ id }, values) => {
+      if (values) {
+        return `${id}:${JSON.stringify(values)}`;
+      }
+
+      return id;
+    }),
   };
 
-  it('formats the errors correctly', () => {
+  it('formats the errors correctly when only failed records exist', () => {
     const formatter = getExportJobLogsListResultsFormatter({ intl });
-    // Test cases for different error scenarios
-    const record1 = { progress: { failed: 5, duplicatedSrs: 0 } };
-    const record2 = { progress: { failed: 5, duplicatedSrs: 3 } };
-    const record3 = { progress: { failed: 0, duplicatedSrs: 3 } };
+    const record = { progress: { failed: 5, duplicatedSrs: 0 } };
 
-    const result1 = formatter[EXPORT_JOB_LOG_COLUMNS.errors](record1);
-    const result2 = formatter[EXPORT_JOB_LOG_COLUMNS.errors](record2);
-    const result3 = formatter[EXPORT_JOB_LOG_COLUMNS.errors](record3);
+    const result = formatter[EXPORT_JOB_LOG_COLUMNS.errors](record);
 
-    // Assert based on the expected error messages for each scenario
-    expect(result1).toBe(5);
-    expect(result2).toBe('ui-consortia-settings.duplicatesWithOthers'); // Replace 'formattedError' with the expected error message
-    expect(result3).toBe('ui-consortia-settings.duplicates'); // Replace 'formattedError' with the expected error message
+    expect(result).toBe(5);
+    expect(intl.formatNumber).toHaveBeenCalledWith(5);
+  });
+
+  it('formats the errors correctly when both failed and duplicatedSrs exist', () => {
+    const formatter = getExportJobLogsListResultsFormatter({ intl });
+    const record = { progress: { failed: 5, duplicatedSrs: 3 } };
+
+    const result = formatter[EXPORT_JOB_LOG_COLUMNS.errors](record);
+
+    expect(result).toBe('ui-consortia-settings.duplicatesWithOthers:{"failedOther":5,"failedSrs":3}');
+    expect(intl.formatMessage).toHaveBeenCalledWith(
+      { id: 'ui-consortia-settings.duplicatesWithOthers' },
+      { failedOther: 5, failedSrs: 3 },
+    );
+  });
+
+  it('formats the errors correctly when only duplicatedSrs exist', () => {
+    const formatter = getExportJobLogsListResultsFormatter({ intl });
+    const record = { progress: { failed: 0, duplicatedSrs: 3 } };
+
+    const result = formatter[EXPORT_JOB_LOG_COLUMNS.errors](record);
+
+    expect(result).toBe('ui-consortia-settings.duplicates:{"failedSrs":3}');
+    expect(intl.formatMessage).toHaveBeenCalledWith(
+      { id: 'ui-consortia-settings.duplicates' },
+      { failedSrs: 3 },
+    );
+  });
+
+  it('returns empty string when no errors exist', () => {
+    const formatter = getExportJobLogsListResultsFormatter({ intl });
+    const record = { progress: { failed: 0, duplicatedSrs: 0 } };
+
+    const result = formatter[EXPORT_JOB_LOG_COLUMNS.errors](record);
+
+    expect(result).toBe('');
   });
 });
 
@@ -108,16 +142,40 @@ describe('getFileNameField', () => {
   const recordWithExportedProgress = {
     exportedFiles: [{ fileName: 'example.txt' }],
     progress: { exported: true },
+    jobProfileId: 'profile-123',
+    status: 'COMPLETED',
   };
 
   const recordWithoutExportedProgress = {
     exportedFiles: [{ fileName: 'example.txt' }],
     progress: { exported: false },
+    status: 'COMPLETED',
+  };
+
+  const recordWithFailStatus = {
+    exportedFiles: [{ fileName: 'example.txt' }],
+    progress: { exported: true },
+    jobProfileId: 'profile-123',
+    status: 'FAIL',
+  };
+
+  const recordWithInProgressStatus = {
+    exportedFiles: [{ fileName: 'example.txt' }],
+    progress: { exported: true },
+    jobProfileId: 'profile-123',
+    status: 'IN_PROGRESS',
+  };
+
+  const recordWithDeletedProfile = {
+    exportedFiles: [{ fileName: 'example.txt' }],
+    progress: { exported: true },
+    jobProfileId: null,
+    status: 'COMPLETED',
   };
 
   const kyMock = jest.fn(); // Mock the ky function if needed
 
-  it('renders TextLink component when record.progress.exported is true', () => {
+  it('renders TextLink component when record is exported, completed, and not deleted', () => {
     const { getByTestId } = render(
       getFileNameField(recordWithExportedProgress, kyMock),
     );
@@ -131,6 +189,36 @@ describe('getFileNameField', () => {
   it('renders span element when record.progress.exported is false', () => {
     const { getByText } = render(
       getFileNameField(recordWithoutExportedProgress, kyMock),
+    );
+
+    const spanElement = getByText('example.txt');
+
+    expect(spanElement).toBeInTheDocument();
+  });
+
+  it('renders span element when record status is FAIL', () => {
+    const { getByText } = render(
+      getFileNameField(recordWithFailStatus, kyMock),
+    );
+
+    const spanElement = getByText('example.txt');
+
+    expect(spanElement).toBeInTheDocument();
+  });
+
+  it('renders span element when record status is IN_PROGRESS', () => {
+    const { getByText } = render(
+      getFileNameField(recordWithInProgressStatus, kyMock),
+    );
+
+    const spanElement = getByText('example.txt');
+
+    expect(spanElement).toBeInTheDocument();
+  });
+
+  it('renders span element when job profile is deleted', () => {
+    const { getByText } = render(
+      getFileNameField(recordWithDeletedProfile, kyMock),
     );
 
     const spanElement = getByText('example.txt');
