@@ -6,6 +6,7 @@ import {
   getExportJobLogsListResultsFormatter,
   getFileLink,
   getFileNameField,
+  getFormattedJobProfileName,
   getStartedDateDateFormatter,
 } from './utils';
 
@@ -21,49 +22,276 @@ describe('getExportJobLogsListResultsFormatter', () => {
     }),
   };
 
-  it('formats the errors correctly when only failed records exist', () => {
-    const formatter = getExportJobLogsListResultsFormatter({ intl });
-    const record = { progress: { failed: 5, duplicatedSrs: 0 } };
-
-    const result = formatter[EXPORT_JOB_LOG_COLUMNS.errors](record);
-
-    expect(result).toBe(5);
-    expect(intl.formatNumber).toHaveBeenCalledWith(5);
+  const ky = jest.fn();
+  const formatTime = jest.fn((date, options) => {
+    return new Intl.DateTimeFormat('en-US', options).format(date);
   });
 
-  it('formats the errors correctly when both failed and duplicatedSrs exist', () => {
-    const formatter = getExportJobLogsListResultsFormatter({ intl });
-    const record = { progress: { failed: 5, duplicatedSrs: 3 } };
-
-    const result = formatter[EXPORT_JOB_LOG_COLUMNS.errors](record);
-
-    expect(result).toBe('ui-consortia-settings.duplicatesWithOthers:{"failedOther":5,"failedSrs":3}');
-    expect(intl.formatMessage).toHaveBeenCalledWith(
-      { id: 'ui-consortia-settings.duplicatesWithOthers' },
-      { failedOther: 5, failedSrs: 3 },
-    );
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('formats the errors correctly when only duplicatedSrs exist', () => {
-    const formatter = getExportJobLogsListResultsFormatter({ intl });
-    const record = { progress: { failed: 0, duplicatedSrs: 3 } };
+  describe('fileName formatter', () => {
+    it('formats fileName field correctly', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = {
+        exportedFiles: [{ fileName: 'test.csv' }],
+        progress: { exported: true },
+        jobProfileId: 'profile-123',
+        status: 'COMPLETED',
+      };
 
-    const result = formatter[EXPORT_JOB_LOG_COLUMNS.errors](record);
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.fileName](record);
 
-    expect(result).toBe('ui-consortia-settings.duplicates:{"failedSrs":3}');
-    expect(intl.formatMessage).toHaveBeenCalledWith(
-      { id: 'ui-consortia-settings.duplicates' },
-      { failedSrs: 3 },
-    );
+      expect(result).toBeDefined();
+    });
   });
 
-  it('returns empty string when no errors exist', () => {
-    const formatter = getExportJobLogsListResultsFormatter({ intl });
-    const record = { progress: { failed: 0, duplicatedSrs: 0 } };
+  describe('status formatter', () => {
+    it('formats status field correctly', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = { status: 'COMPLETED' };
 
-    const result = formatter[EXPORT_JOB_LOG_COLUMNS.errors](record);
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.status](record);
 
-    expect(result).toBe('');
+      expect(result).toBe('ui-data-export.jobStatus.completed');
+      expect(intl.formatMessage).toHaveBeenCalledWith({ id: 'ui-data-export.jobStatus.completed' });
+    });
+
+    it('formats status field with IN_PROGRESS status', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = { status: 'IN_PROGRESS' };
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.status](record);
+
+      expect(result).toBe('ui-data-export.jobStatus.inProgress');
+      expect(intl.formatMessage).toHaveBeenCalledWith({ id: 'ui-data-export.jobStatus.inProgress' });
+    });
+
+    it('formats status field with FAIL status', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = { status: 'FAIL' };
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.status](record);
+
+      expect(result).toBe('ui-data-export.jobStatus.fail');
+      expect(intl.formatMessage).toHaveBeenCalledWith({ id: 'ui-data-export.jobStatus.fail' });
+    });
+  });
+
+  describe('runBy formatter', () => {
+    it('formats runBy field with full name', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = {
+        runBy: {
+          firstName: 'John',
+          lastName: 'Doe',
+        },
+      };
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.runBy](record);
+
+      expect(result).toBe('Doe, John');
+    });
+
+    it('formats runBy field with only last name', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = {
+        runBy: {
+          lastName: 'Doe',
+        },
+      };
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.runBy](record);
+
+      expect(result).toBe('Doe');
+    });
+
+    it('formats runBy field with empty personal data', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = {
+        runBy: {},
+      };
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.runBy](record);
+
+      expect(result).toBe('');
+    });
+  });
+
+  describe('totalRecords formatter', () => {
+    it('formats totalRecords field correctly', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = { progress: { total: 1000 } };
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.totalRecords](record);
+
+      expect(result).toBe(1000);
+      expect(intl.formatNumber).toHaveBeenCalledWith(1000);
+    });
+
+    it('handles undefined progress.total', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = { progress: {} };
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.totalRecords](record);
+
+      expect(result).toBe(NaN);
+      expect(intl.formatNumber).toHaveBeenCalledWith(undefined);
+    });
+  });
+
+  describe('errors formatter', () => {
+    it('formats the errors correctly when only failed records exist', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = { progress: { failed: 5, duplicatedSrs: 0 } };
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.errors](record);
+
+      expect(result).toBe(5);
+      expect(intl.formatNumber).toHaveBeenCalledWith(5);
+    });
+
+    it('formats the errors correctly when both failed and duplicatedSrs exist', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = { progress: { failed: 5, duplicatedSrs: 3 } };
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.errors](record);
+
+      expect(result).toBe('ui-consortia-settings.duplicatesWithOthers:{"failedOther":5,"failedSrs":3}');
+      expect(intl.formatMessage).toHaveBeenCalledWith(
+        { id: 'ui-consortia-settings.duplicatesWithOthers' },
+        { failedOther: 5, failedSrs: 3 },
+      );
+    });
+
+    it('formats the errors correctly when only duplicatedSrs exist', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = { progress: { failed: 0, duplicatedSrs: 3 } };
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.errors](record);
+
+      expect(result).toBe('ui-consortia-settings.duplicates:{"failedSrs":3}');
+      expect(intl.formatMessage).toHaveBeenCalledWith(
+        { id: 'ui-consortia-settings.duplicates' },
+        { failedSrs: 3 },
+      );
+    });
+
+    it('returns empty string when no errors exist', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = { progress: { failed: 0, duplicatedSrs: 0 } };
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.errors](record);
+
+      expect(result).toBe('');
+    });
+
+    it('returns empty string when progress is undefined', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = {};
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.errors](record);
+
+      expect(result).toBe('');
+    });
+  });
+
+  describe('exported formatter', () => {
+    it('formats exported field correctly', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = { progress: { exported: 950 } };
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.exported](record);
+
+      expect(result).toBe(950);
+      expect(intl.formatNumber).toHaveBeenCalledWith(950);
+    });
+
+    it('returns empty string when exported is 0', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = { progress: { exported: 0 } };
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.exported](record);
+
+      expect(result).toBe('');
+    });
+
+    it('returns empty string when exported is undefined', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = { progress: {} };
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.exported](record);
+
+      expect(result).toBe('');
+    });
+
+    it('returns empty string when progress is undefined', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = {};
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.exported](record);
+
+      expect(result).toBe('');
+    });
+  });
+
+  describe('startedDate formatter', () => {
+    it('formats startedDate field correctly', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = { startedDate: new Date('2023-02-15') };
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.startedDate](record);
+
+      expect(result).toBe('2/15/2023');
+      expect(formatTime).toHaveBeenCalledWith(
+        new Date('2023-02-15'),
+        {
+          day: 'numeric',
+          month: 'numeric',
+          year: 'numeric',
+        },
+      );
+    });
+  });
+
+  describe('jobProfileName formatter', () => {
+    it('formats jobProfileName field correctly for active profile', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = {
+        jobProfileName: 'Test Profile',
+        jobProfileId: 'profile-123',
+      };
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.jobProfileName](record);
+
+      expect(result).toBe('Test Profile');
+    });
+
+    it('formats jobProfileName field with deleted notation', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = {
+        jobProfileName: 'Test Profile',
+        jobProfileId: null,
+      };
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.jobProfileName](record);
+
+      expect(result).toBe('Test Profile (ui-consortia-settings.deleted)');
+      expect(intl.formatMessage).toHaveBeenCalledWith({ id: 'ui-consortia-settings.deleted' });
+    });
+
+    it('handles empty jobProfileName', () => {
+      const formatter = getExportJobLogsListResultsFormatter({ intl, ky, formatTime });
+      const record = {
+        jobProfileName: '',
+        jobProfileId: 'profile-123',
+      };
+
+      const result = formatter[EXPORT_JOB_LOG_COLUMNS.jobProfileName](record);
+
+      expect(result).toBe('');
+    });
   });
 });
 
@@ -242,5 +470,61 @@ describe('getStartedDateDateFormatter', () => {
     const expectedFormattedDate = '2/15/2023';
 
     expect(formattedDate).toEqual(expectedFormattedDate);
+  });
+});
+
+describe('getFormattedJobProfileName', () => {
+  const intl = {
+    formatMessage: jest.fn(({ id }) => id),
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('returns job profile name with deleted suffix when profile is deleted', () => {
+    const record = {
+      jobProfileName: 'Test Export Profile',
+      jobProfileId: null,
+    };
+
+    const result = getFormattedJobProfileName(record, intl);
+
+    expect(result).toBe('Test Export Profile (ui-consortia-settings.deleted)');
+    expect(intl.formatMessage).toHaveBeenCalledWith({ id: 'ui-consortia-settings.deleted' });
+  });
+
+  it('returns job profile name with deleted suffix when jobProfileId is undefined', () => {
+    const record = {
+      jobProfileName: 'Test Export Profile',
+    };
+
+    const result = getFormattedJobProfileName(record, intl);
+
+    expect(result).toBe('Test Export Profile (ui-consortia-settings.deleted)');
+    expect(intl.formatMessage).toHaveBeenCalledWith({ id: 'ui-consortia-settings.deleted' });
+  });
+
+  it('handles empty job profile name with deleted suffix', () => {
+    const record = {
+      jobProfileName: '',
+      jobProfileId: null,
+    };
+
+    const result = getFormattedJobProfileName(record, intl);
+
+    expect(result).toBe(' (ui-consortia-settings.deleted)');
+    expect(intl.formatMessage).toHaveBeenCalledWith({ id: 'ui-consortia-settings.deleted' });
+  });
+
+  it('handles missing job profile name with deleted suffix', () => {
+    const record = {
+      jobProfileId: null,
+    };
+
+    const result = getFormattedJobProfileName(record, intl);
+
+    expect(result).toBe(' (ui-consortia-settings.deleted)');
+    expect(intl.formatMessage).toHaveBeenCalledWith({ id: 'ui-consortia-settings.deleted' });
   });
 });
