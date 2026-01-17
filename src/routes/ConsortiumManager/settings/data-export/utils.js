@@ -26,6 +26,13 @@ export const getStartedDateDateFormatter = format => {
   };
 };
 
+export const getFormattedJobProfileName = (record, intl) => {
+  const isProfileDeleted = !record.jobProfileId;
+  const deletedProfileSuffix = ` (${intl.formatMessage({ id: 'ui-consortia-settings.deleted' })})`;
+
+  return `${record.jobProfileName || ''}${isProfileDeleted ? deletedProfileSuffix : ''}`;
+};
+
 export const downloadFileByLink = (fileName, downloadLink) => {
   if (!fileName || !downloadLink) return;
 
@@ -66,23 +73,20 @@ const downloadExportFile = async (record, ky) => {
 
 export const getFileNameField = (record, ky) => {
   const fileName = get(record.exportedFiles, '0.fileName');
-  const hasDownloadLink = (
-    record.progress?.exported
-    && ![EXPORT_JOB_STATUSES.FAIL, EXPORT_JOB_STATUSES.IN_PROGRESS].includes(record.status)
-  );
+  const isJobProfileDeleted = !record.jobProfileId;
+  const isExported = record.progress?.exported;
+  const isNotCompleted = [EXPORT_JOB_STATUSES.FAIL, EXPORT_JOB_STATUSES.IN_PROGRESS].includes(record.status);
+
+  if (!isExported || isNotCompleted || isJobProfileDeleted) return <span>{fileName}</span>;
 
   return (
-    hasDownloadLink ? (
-      <TextLink
-        onClick={() => downloadExportFile(record, ky)}
-        data-testid="text-link"
-        className={css.pointer}
-      >
-        {fileName}
-      </TextLink>
-    ) : (
-      <span>{fileName}</span>
-    )
+    <TextLink
+      onClick={() => downloadExportFile(record, ky)}
+      data-testid="text-link"
+      className={css.pointer}
+    >
+      {fileName}
+    </TextLink>
   );
 };
 
@@ -117,6 +121,7 @@ export const getExportJobLogsListResultsFormatter = ({ intl, ky, formatTime }) =
   },
   [EXPORT_JOB_LOG_COLUMNS.exported]: record => intl.formatNumber(record.progress?.exported) || '',
   [EXPORT_JOB_LOG_COLUMNS.startedDate]: getStartedDateDateFormatter(formatTime),
+  [EXPORT_JOB_LOG_COLUMNS.jobProfileName]: record => getFormattedJobProfileName(record, intl),
 });
 
 export const getExportJobLogsSortMap = ({ sortingDirection }) => ({
