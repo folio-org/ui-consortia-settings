@@ -241,6 +241,7 @@
   "settings.membership.objectLabel": "Address",
 
   "share": "Share",
+  "deleted": "deleted",
 
   "switchActiveAffiliation.userDropdown.label": "Switch active affiliation",
   "switchActiveAffiliation.modal.heading": "Select affiliation",
