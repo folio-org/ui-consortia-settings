@@ -236,5 +236,6 @@
     "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermMessage": "Tento zdroj holdingu nelze smazat, protože jej používá jeden nebo více záznamů.",
     "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "Smazat zdroj holdingu",
     "consortiumManager.controlledVocab.holdingsSources.termDeleted": "Zdroj holdingu <b> {term} </b> byl úspěšně <b> smazán </b>.",
-    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "Zdroj holdingu <b> {term} </b> bude <b> smazán </b>."
+    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "Zdroj holdingu <b> {term} </b> bude <b> smazán </b>.",
+    "deleted": "deleted"
 }

@@ -236,5 +236,6 @@
     "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermMessage": "لا يمكن حذف مصدر المقتنيات لأنه قيد الاستخدام بواسطة تسجيلة واحدة أو أكثر.",
     "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "حذف مصدر المقتنيات",
     "consortiumManager.controlledVocab.holdingsSources.termDeleted": "تم <b>حذف</b> مصدر المقتنيات <b>{term}</b> بنجاح.",
-    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "سيتم <b>حذف</b> مصدر المقتنيات <b>{term}</b>."
+    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "سيتم <b>حذف</b> مصدر المقتنيات <b>{term}</b>.",
+    "deleted": "deleted"
 }

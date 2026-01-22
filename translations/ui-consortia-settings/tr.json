@@ -236,5 +236,6 @@
     "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermMessage": "Bir veya daha fazla kayıt tarafından kullanılmakta olduğu için bu koleksiyon kaynağı silinemez.",
     "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "Koleksiyon kaynağını sil",
     "consortiumManager.controlledVocab.holdingsSources.termDeleted": "Koleksiyon kaynağı <b>{term}</b> başarıyla <b>silindi</b>.",
-    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "Holding kaynağı <b>{term}</b> <b>silinecektir</b>."
+    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "Holding kaynağı <b>{term}</b> <b>silinecektir</b>.",
+    "deleted": "deleted"
 }

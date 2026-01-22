@@ -236,5 +236,6 @@
     "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermMessage": "无法删除此馆藏来源，因为它正在被一条或多条记录使用。",
     "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "删除馆藏来源",
     "consortiumManager.controlledVocab.holdingsSources.termDeleted": "馆藏来源<b> {term} </b>已成功<b>删除</b> 。",
-    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "馆藏来源<b> {term} </b>将被<b>删除</b> 。"
+    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "馆藏来源<b> {term} </b>将被<b>删除</b> 。",
+    "deleted": "deleted"
 }

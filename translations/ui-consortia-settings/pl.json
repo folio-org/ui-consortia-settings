@@ -236,5 +236,6 @@
     "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermMessage": "Tego źródła zasobów nie można usunąć, ponieważ jest ono używane przez jeden lub więcej rekordów.",
     "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "Usuń źródło zasobów",
     "consortiumManager.controlledVocab.holdingsSources.termDeleted": "Źródło zasobów <b>{term}</b> zostało pomyślnie <b>usunięte</b>.",
-    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "Źródło zasobów <b>{term}</b> zostanie <b>usunięte</b>."
+    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "Źródło zasobów <b>{term}</b> zostanie <b>usunięte</b>.",
+    "deleted": "deleted"
 }
