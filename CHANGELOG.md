@@ -8,6 +8,7 @@
 * [UICONSET-226](https://folio-org.atlassian.net/browse/UICONSET-226) Protect actions from interaction by an unauthorized user.
 * [UICONSET-231](https://folio-org.atlassian.net/browse/UICONSET-231) Use metadata from the central tenant for shared records.
 * [UICONSET-242](https://folio-org.atlassian.net/browse/UICONSET-242) Update displaying deleted job profiles in the Consortium manager.
+* [UICONSET-243](https://folio-org.atlassian.net/browse/UICONSET-243) Exclude patron users from roles compare.
 
 ## [3.0.0](https://github.com/folio-org/ui-consortia-settings/tree/v3.0.0) (2025-03-13)
 [Full Changelog](https://github.com/folio-org/ui-consortia-settings/compare/v2.0.2...v3.0.0)

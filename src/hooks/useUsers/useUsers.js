@@ -15,6 +15,7 @@ export const useUsers = ({ tenant = '' }, options = {}) => {
         {
           searchParams: {
             limit: USERS_LIMIT,
+            query: '(type<>"patron")',
           },
           signal,
         }).json(),
