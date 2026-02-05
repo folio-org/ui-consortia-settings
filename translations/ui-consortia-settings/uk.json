@@ -206,7 +206,7 @@
     "authorizationPolicy.columns.name": "Ім'я/Назва",
     "authorizationPolicy.columns.description": "Опис",
     "authorizationPolicy.columns.updatedDate": "Оновлено",
-    "authorizationPolicy.columns.updatedBy": "Оновлено за",
+    "authorizationPolicy.columns.updatedBy": "Оновлено (ким)",
     "consortiumManager.members.users.compare": "Порівняти користувачів",
     "consortiumManager.members.action.compareUsers": "Порівняти користувачів",
     "consortiumManager.members.permissionSets.compare.user": "Користувач",
@@ -237,5 +237,5 @@
     "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "Видалити джерело даних про фонди (холдінгси)",
     "consortiumManager.controlledVocab.holdingsSources.termDeleted": "Джерело даних про фонди (холдінгси) <b>{term}</b> було успішно <b>видалене</b>.",
     "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "Джерело даних про фонди (холдінгси) <b>{term}</b> буде <b>видалене</b>.",
-    "deleted": "deleted"
+    "deleted": "видалено"
 }

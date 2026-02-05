@@ -237,5 +237,5 @@
     "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "Bestandsquellen löschen",
     "consortiumManager.controlledVocab.holdingsSources.termDeleted": "Die Bestandsquelle <b>{term}</b> wurde erfolgreich <b>gelöscht</b>.",
     "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "Die Bestandsquelle <b>{term}</b> wird <b>gelöscht</b>.",
-    "deleted": "deleted"
+    "deleted": "gelöscht"
 }

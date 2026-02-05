@@ -237,5 +237,5 @@
     "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "Delete holdings source",
     "consortiumManager.controlledVocab.holdingsSources.termDeleted": "The holdings source <b>{term}</b> was successfully <b>deleted</b>.",
     "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "The holdings source <b>{term}</b> will be <b>deleted</b>.",
-    "deleted": "deleted"
+    "deleted": "Suprimido"
 }
