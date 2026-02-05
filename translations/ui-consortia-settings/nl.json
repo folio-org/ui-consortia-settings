@@ -237,5 +237,5 @@
     "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "Bron Holdings verwijderen",
     "consortiumManager.controlledVocab.holdingsSources.termDeleted": "Bron van de holdings <b>{term}</b> is succesvol <b>verwijderd</b>.",
     "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "Bron van de holdings <b>{term}</b> wordt <b>verwijderd</b>.",
-    "deleted": "deleted"
+    "deleted": "verwijderd"
 }
