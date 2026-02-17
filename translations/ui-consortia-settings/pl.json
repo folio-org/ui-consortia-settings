@@ -165,7 +165,7 @@
     "consortiumManager.members.permissionSets.create.permissionSet.contentLabel": "Permissions set form",
     "consortiumManager.members.permissionSets.remove.permissionSet.success": "The permission set <strong>{permissionName}</strong> was successfully <strong>deleted</strong>.",
     "consortiumManager.members.permissionSets.save.permissionSet.success": "The permission set <strong>{permissionName}</strong> was successfully <strong>saved</strong>.",
-    "button.confirm": "Confirm",
+    "button.confirm": "Potwierdź",
     "consortiumManager.modal.confirmShare.all.heading": "Confirm share to all",
     "consortiumManager.modal.confirmShare.all.message": "Are you sure you want to share {term} with <b>ALL</b> members?",
     "consortiumManager.error.forbiddenMembers": "You do not have permissions at one or more members: <b>{members}</b>",
