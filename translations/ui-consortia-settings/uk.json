@@ -8,12 +8,12 @@
     "settings.membership.list.cannotDeleteTermMessage": "Цього учасника неможливо видалити, оскільки він використовується одним або кількома записами.",
     "settings.membership.list.deleteEntry": "Видалити учасника",
     "settings.membership.list.tenantName": "Ім'я/Назва",
-    "settings.membership.list.tenantAddress": "Адреса клієнта",
+    "settings.membership.list.tenantAddress": "Адреса клієнта (тенанта)",
     "settings.membership.list.termDeleted": "Учасник <b>{term}</b> був успішно <b>видалений</b>",
     "settings.membership.list.termWillBeDeleted": "Учасник <b>{term}</b> буде <b>видалений.</b>",
     "settings.membership.objectLabel": "Адреса",
     "settings.membership.error.duplicate": "Не вдалося зберегти ім'я/назву. Це ім'я/назва вже використовується в консорціумі.",
-    "settings.membership.error.nameExceedsLength": "Назва клієнта не повинна бути довшою за {count} символів.",
+    "settings.membership.error.nameExceedsLength": "Назва клієнта (тенанта) не повинна бути довшою за {count} символів.",
     "permission.settings.membership.view": "Налаштування (Консорціуми): Перегляд участі у консорціумі",
     "permission.settings.membership.edit": "Налаштування (Консорціуми): Перегляд та редагування участі у консорціумі",
     "settings.membership.error.codeExceedsLength": "Код не повинен містити більше ніж {count} буквено-цифрових символів.",
@@ -206,7 +206,7 @@
     "authorizationPolicy.columns.name": "Ім'я/Назва",
     "authorizationPolicy.columns.description": "Опис",
     "authorizationPolicy.columns.updatedDate": "Оновлено",
-    "authorizationPolicy.columns.updatedBy": "Оновлено за",
+    "authorizationPolicy.columns.updatedBy": "Оновлено (ким)",
     "consortiumManager.members.users.compare": "Порівняти користувачів",
     "consortiumManager.members.action.compareUsers": "Порівняти користувачів",
     "consortiumManager.members.permissionSets.compare.user": "Користувач",
@@ -236,5 +236,6 @@
     "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermMessage": "Це джерело даних про фонди (холдінгси) неможливо видалити, оскільки воно використовується одним або кількома записами.",
     "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "Видалити джерело даних про фонди (холдінгси)",
     "consortiumManager.controlledVocab.holdingsSources.termDeleted": "Джерело даних про фонди (холдінгси) <b>{term}</b> було успішно <b>видалене</b>.",
-    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "Джерело даних про фонди (холдінгси) <b>{term}</b> буде <b>видалене</b>."
+    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "Джерело даних про фонди (холдінгси) <b>{term}</b> буде <b>видалене</b>.",
+    "deleted": "видалено"
 }

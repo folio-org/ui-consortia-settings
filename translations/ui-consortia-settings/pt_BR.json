@@ -236,5 +236,6 @@
     "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermMessage": "Esse acervo de origem não pode ser excluída, pois está sendo usada por um ou mais registros.",
     "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "Excluir acervo de origem",
     "consortiumManager.controlledVocab.holdingsSources.termDeleted": "O acervo de origem <b>{term}</b> foi <b>excluído</b>.",
-    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "O acervo de origem <b>{term}</b> será <b>excluído</b>."
+    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "O acervo de origem <b>{term}</b> será <b>excluído</b>.",
+    "deleted": "excluído"
 }

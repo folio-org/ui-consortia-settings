@@ -236,5 +236,6 @@
     "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermMessage": "Deze bron van holdings kan niet worden verwijderd, omdat deze in gebruik is door één of meer records.",
     "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "Bron Holdings verwijderen",
     "consortiumManager.controlledVocab.holdingsSources.termDeleted": "Bron van de holdings <b>{term}</b> is succesvol <b>verwijderd</b>.",
-    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "Bron van de holdings <b>{term}</b> wordt <b>verwijderd</b>."
+    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "Bron van de holdings <b>{term}</b> wordt <b>verwijderd</b>.",
+    "deleted": "verwijderd"
 }

@@ -193,9 +193,9 @@
     "permission.settings.networkOrdering.edit": "Settings (Consortia): Can view and edit network ordering",
     "settings.centralOrdering.alert.message": "このバージョンの FOLIO では、この設定を一度有効にすると無効にすることはできません。",
     "settings.centralOrdering.confirmModal.message": "Are you sure you would like to activate this functionality?",
-    "consortiumManager.members.authorizationsRoles": "Authorization roles",
+    "consortiumManager.members.authorizationsRoles": "認可ロール",
     "consortiumManager.members.authorizationsRoles.compare": "Compare roles",
-    "consortiumManager.members.authorizationsRoles.compare.roles": "Authorization roles",
+    "consortiumManager.members.authorizationsRoles.compare.roles": "認可ロール",
     "consortiumManager.members.authorizationsRoles.compare.placeholder": "Select authorization role",
     "consortiumManager.members.authorizationsRoles.capabilities": "Capabilities",
     "consortiumManager.members.authorizationsRoles.capabilitiesSets": "Capabilities sets",
@@ -219,7 +219,7 @@
     "consortiumManager.members.authorizationsRoles.duplicate.success": "ロール<b> {name} </b>が正常に<b>複製</b>されました",
     "consortiumManager.members.authorizationsRoles.duplicate.error": "ロール<b> {name} </b>の複製中にエラーが発生しました",
     "consortiumManager.members.authorizationsRoles.roles.capabilitiesSets": "Capability sets",
-    "authorizationRoles.errors.loading.roles": "Could not load authorization roles.",
+    "authorizationRoles.errors.loading.roles": "認可ロール（authorization role）をロードできませんでした。",
     "authorizationRoles.errors.loading.users": "Could not load users.",
     "consortiumManager.controlledVocab.subjectSources.cannotDeleteTermHeader": "Cannot delete the subject source",
     "consortiumManager.controlledVocab.subjectSources.cannotDeleteTermMessage": "This subject source cannot be deleted, as it is in use by one or more records.",
@@ -236,5 +236,6 @@
     "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermMessage": "This holdings source cannot be deleted, as it is in use by one or more records.",
     "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "Delete holdings source",
     "consortiumManager.controlledVocab.holdingsSources.termDeleted": "The holdings source <b>{term}</b> was successfully <b>deleted</b>.",
-    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "The holdings source <b>{term}</b> will be <b>deleted</b>."
+    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "The holdings source <b>{term}</b> will be <b>deleted</b>.",
+    "deleted": "deleted"
 }

@@ -236,5 +236,6 @@
     "consortiumManager.controlledVocab.holdingsSources.cannotDeleteTermMessage": "This holdings source cannot be deleted, as it is in use by one or more records.",
     "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "Delete holdings source",
     "consortiumManager.controlledVocab.holdingsSources.termDeleted": "The holdings source <b>{term}</b> was successfully <b>deleted</b>.",
-    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "The holdings source <b>{term}</b> will be <b>deleted</b>."
+    "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "The holdings source <b>{term}</b> will be <b>deleted</b>.",
+    "deleted": "Suprimido"
 }
