@@ -237,5 +237,5 @@
     "consortiumManager.controlledVocab.holdingsSources.deleteEntry": "删除馆藏来源",
     "consortiumManager.controlledVocab.holdingsSources.termDeleted": "馆藏来源<b> {term} </b>已成功<b>删除</b> 。",
     "consortiumManager.controlledVocab.holdingsSources.termWillBeDeleted": "馆藏来源<b> {term} </b>将被<b>删除</b> 。",
-    "deleted": "deleted"
+    "deleted": "已删除"
 }
