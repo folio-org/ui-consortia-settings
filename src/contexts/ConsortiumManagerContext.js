@@ -33,7 +33,7 @@ export const ConsortiumManagerContextProvider = ({ children }) => {
 
   const {
     affiliations,
-    isFetching: isAffiliationsFetching,
+    isLoading: isAffiliationsFetching,
   } = useUserAffiliations(
     { userId },
     { onSuccess: initMembersSelection },
