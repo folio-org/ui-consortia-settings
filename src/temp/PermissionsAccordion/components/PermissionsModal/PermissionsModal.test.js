@@ -1,4 +1,9 @@
-import { render, screen, fireEvent, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  render,
+  screen,
+  waitFor,
+} from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
 import PermissionsModal from './PermissionsModal';
 
@@ -217,8 +222,8 @@ describe('PermissionsModal', () => {
     };
 
     await expect(renderPermissionsModal(props)).toBeDefined();
-    fireEvent.change(document.querySelector('[data-test-search-field="true"]'), { target: { value: 'Permissions' } });
-    fireEvent.click(screen.getByText('ui-users.search'));
+    await userEvent.type(document.querySelector('[data-test-search-field="true"]'), 'Permissions');
+    await userEvent.click(screen.getByText('ui-users.search'));
     expect(screen.getAllByText('stripes-components.tableEmpty')).toBeDefined();
   });
 
@@ -243,7 +248,7 @@ describe('PermissionsModal', () => {
     };
 
     await expect(renderPermissionsModal(props)).toBeDefined();
-    fireEvent.click(document.querySelector('[aria-labelledby="collapse-filter-pane-button-tooltip-text"]'));
+    await userEvent.click(document.querySelector('[aria-labelledby="collapse-filter-pane-button-tooltip-text"]'));
     expect(document.querySelector('[aria-label="caret-right"]')).toBeDefined();
   });
 
@@ -270,22 +275,22 @@ describe('PermissionsModal', () => {
     await expect(renderPermissionsModal(props)).toBeDefined();
 
     // screen.debug(document.querySelector('[data-test-filter-groups="true"]'));
-    fireEvent.click(screen.getByText('Permissionsets'));
+    await userEvent.click(screen.getByText('Permissionsets'));
 
     // for else condition
-    fireEvent.click(screen.getByText('Permissionsets'));
+    await userEvent.click(screen.getByText('Permissionsets'));
 
     // reset form button check
-    fireEvent.click(document.querySelector('[data-test-reset-all-button="true"]'));
+    await userEvent.click(document.querySelector('[data-test-reset-all-button="true"]'));
 
     // clear filters Button check
-    fireEvent.click(screen.getByText('Permissionsets'));
-    fireEvent.click(document.querySelector('[data-test-clear-button="true"]'));
+    await userEvent.click(screen.getByText('Permissionsets'));
+    await userEvent.click(document.querySelector('[data-test-clear-button="true"]'));
 
-    fireEvent.click(screen.getByText('permissionsss'));
+    await userEvent.click(screen.getByText('permissionsss'));
 
-    fireEvent.click(screen.getByText('assigned'));
-    fireEvent.click(document.querySelector('[data-test-clear-button="true"]'));
+    await userEvent.click(screen.getByText('assigned'));
+    await userEvent.click(document.querySelector('[data-test-clear-button="true"]'));
   });
 
   it('Save and toggle Permissions', async () => {
@@ -311,16 +316,16 @@ describe('PermissionsModal', () => {
     expect.assertions(1);
     await waitFor(() => expect(renderPermissionsModal(props)).toBeDefined());
     // add permission
-    fireEvent.click(document.querySelector('[data-permission-name="ui-agreements.resources.edit"]'));
+    await userEvent.click(document.querySelector('[data-permission-name="ui-agreements.resources.edit"]'));
 
     // save
-    fireEvent.click(screen.getByText(/saveAndClose/));
+    await userEvent.click(screen.getByText(/saveAndClose/));
 
     // removes permission if clicked twice
-    fireEvent.click(document.querySelector('[data-permission-name="ui-agreements.resources.edit"]'));
+    await userEvent.click(document.querySelector('[data-permission-name="ui-agreements.resources.edit"]'));
 
     // select all permission
-    fireEvent.click(document.querySelector('[data-permission-name="select-all"]'));
+    await userEvent.click(document.querySelector('[data-permission-name="select-all"]'));
   });
 
   it('Save and toggle Permissions', async () => {
@@ -345,8 +350,8 @@ describe('PermissionsModal', () => {
 
     expect.assertions(1);
     await waitFor(() => expect(renderPermissionsModal(props)).toBeDefined());
-    fireEvent.change(document.querySelector('[data-test-search-field="true"]'), { target: { value: 'Search' } });
-    fireEvent.click(screen.getByText('ui-users.search'));
+    await userEvent.type(document.querySelector('[data-test-search-field="true"]'), 'Search');
+    await userEvent.click(screen.getByText('ui-users.search'));
   });
 
   it('Saves invisible permissions', async () => {
@@ -384,7 +389,7 @@ describe('PermissionsModal', () => {
 
     expect.assertions(2);
     await waitFor(() => expect(renderPermissionsModal(props)).toBeDefined());
-    fireEvent.click(screen.getByText(/saveAndClose/));
+    await userEvent.click(screen.getByText(/saveAndClose/));
     // Previously, saving a new set of permissions via the modal would delete
     // any invisible permissions that were assigned. Thus, we should have the
     // same number of (invisible) perms that we started with.
