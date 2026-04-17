@@ -1,6 +1,6 @@
 {
   "name": "@folio/consortia-settings",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Consortia settings",
   "main": "src/index.js",
   "repository": {
@@ -42,7 +42,7 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@folio/stripes-acq-components": "~7.0.0",
+    "@folio/stripes-acq-components": "~7.1.0",
     "@folio/stripes-data-transfer-components": "^7.0.0",
     "@folio/stripes-authorization-components": "^2.0.0",
     "@rehooks/local-storage": "^2.4.4",
