@@ -1,6 +1,9 @@
 # Change history for ui-consortia-settings
 
-## 3.1.0 (IN PROGRESS)
+## 3.2.0 (IN PROGRESS)
+
+## [3.1.0](https://github.com/folio-org/ui-consortia-settings/tree/v3.1.0) (2026-04-17)
+[Full Changelog](https://github.com/folio-org/ui-consortia-settings/compare/v3.0.0...v3.1.0)
 
 * [UICONSET-216](https://folio-org.atlassian.net/browse/UICONSET-216) Issues with displaying data export logs from Member tenant in Consortium manager.
 * [UICONSET-228](https://folio-org.atlassian.net/browse/UICONSET-228) Add newly added 'hideUserLink' prop to 'RoleDetails' component to remove link from users.
