@@ -1,6 +1,7 @@
 # Change history for ui-consortia-settings
 
 ## 3.2.0 (IN PROGRESS)
+* [UICONSET-246](https://folio-org.atlassian.net/browse/UICONSET-246) Fix focus moving incorrectly to the "Skip to main content" link when the navigation pane is expanded/collapsed.
 
 ## [3.1.0](https://github.com/folio-org/ui-consortia-settings/tree/v3.1.0) (2026-04-17)
 [Full Changelog](https://github.com/folio-org/ui-consortia-settings/compare/v3.0.0...v3.1.0)
