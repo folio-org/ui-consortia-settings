@@ -75,7 +75,7 @@ describe('useSettings', () => {
 
     await waitFor(() => expect(result.current.isFetching).toBeFalsy());
 
-    expect(initPublicationRequest).toHaveBeenCalledWith(publication);
+    expect(initPublicationRequest).toHaveBeenCalledWith(publication, { signal: expect.anything() });
   });
 
   it('should hydrate settings with \'tenantId\' and \'shared\' values', async () => {
