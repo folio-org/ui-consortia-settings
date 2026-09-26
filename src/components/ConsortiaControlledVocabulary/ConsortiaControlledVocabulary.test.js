@@ -275,4 +275,30 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
       }));
     });
   });
+
+  describe('Dismissible', () => {
+    describe('when dismissible is set', () => {
+      it('should render a dismissal button when dismissible is set', () => {
+        renderConsortiaControlledVocabulary({
+          dismissible: true,
+        });
+
+        expect(screen.getByLabelText('stripes-components.closeItem')).toBeInTheDocument();
+      });
+    });
+
+    describe('when dismissible and onClose are set', () => {
+      it('should call the onClose method when dismissal button is clicked', async () => {
+        const close = jest.fn();
+        renderConsortiaControlledVocabulary({
+          dismissible: true,
+          onClose: close,
+        });
+
+        await userEvent.click(screen.getByLabelText('stripes-components.closeItem'));
+
+        expect(close).toHaveBeenCalled();
+      });
+    });
+  });
 });

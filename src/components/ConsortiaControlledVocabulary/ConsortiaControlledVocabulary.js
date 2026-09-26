@@ -100,12 +100,15 @@ export const ConsortiaControlledVocabulary = ({
   actionSuppression: actionSuppressionProp = defaultProps.actionSuppression,
   canCreate: canCreateProp = true,
   columnMapping: columnMappingProp = defaultProps.columnMapping,
+  columnWidths,
+  dismissible,
   fieldComponents: fieldComponentsProp = defaultProps.fieldComponents,
   firstMenu,
   formatter: formatterProp = defaultProps.formatter,
   id = defaultProps.id,
   isLoading: isLoadingProp,
   label,
+  onClose,
   path,
   permissions,
   primaryField: primaryFieldProp,
@@ -517,6 +520,8 @@ export const ConsortiaControlledVocabulary = ({
         paneTitle={label}
         paneTitleRef={paneTitleRef}
         id="consortia-controlled-vocabulary-pane"
+        dismissible={dismissible}
+        onClose={onClose}
       >
         {isLoading ? <Loading /> : (
           <ConsortiaEditableList
@@ -527,6 +532,7 @@ export const ConsortiaControlledVocabulary = ({
             itemTemplate={itemTemplate}
             formatter={formatter}
             columnMapping={columnMapping}
+            columnWidths={columnWidths}
             readOnlyFields={readOnlyFields}
             visibleFields={visibleFields}
             actionSuppression={actionSuppression}
@@ -551,12 +557,15 @@ ConsortiaControlledVocabulary.propTypes = {
   }),
   canCreate: PropTypes.bool,
   columnMapping: PropTypes.object,
+  columnWidths: PropTypes.object,
+  dismissible: PropTypes.boolean,
   fieldComponents: PropTypes.object,
   firstMenu: PropTypes.element,
   formatter: PropTypes.object,
   id: PropTypes.string,
   isLoading: PropTypes.bool,
   label: PropTypes.string,
+  onClose: PropTypes.func,
   path: PropTypes.string.isRequired,
   permissions: PropTypes.shape({
     create: PropTypes.string.isRequired,
