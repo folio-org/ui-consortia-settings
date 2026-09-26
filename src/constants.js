@@ -24,6 +24,7 @@ export const HOLDINGS_NOTE_TYPES_API = 'holdings-note-types';
 export const HOLDINGS_SOURCES_API = 'holdings-sources';
 export const HOLDINGS_TYPES_API = 'holdings-types';
 export const IDENTIFIERS_TYPES_API = 'identifier-types';
+export const INSTANCE_CUSTOM_LINKS_API = 'instance-custom-links';
 export const INSTANCE_FORMATS_API = 'instance-formats';
 export const INSTANCE_NOTE_TYPES_API = 'instance-note-types';
 export const INSTANCE_STATUSES_API = 'instance-statuses';
@@ -118,6 +119,7 @@ export const BE_INTERFACE = {
   HOLDINGS_SOURCES: 'holdings-sources',
   HOLDINGS_TYPES: 'holdings-types',
   IDENTIFIERS_TYPES: 'identifier-types',
+  INSTANCE_CUSTOM_LINKS: 'instance-custom-links',
   INSTANCE_FORMATS: 'instance-formats',
   INSTANCE_NOTE_TYPES: 'instance-note-types',
   INSTANCE_STATUSES: 'instance-statuses',

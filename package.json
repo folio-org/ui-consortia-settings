@@ -104,6 +104,7 @@
       "holdings-sources": "1.0",
       "holdings-types": "1.0",
       "identifier-types": "1.2",
+      "instance-custom-links": "1.0",
       "instance-formats": "2.0",
       "instance-note-types": "1.0",
       "instance-statuses": "1.0",
