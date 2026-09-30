@@ -290,6 +290,7 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
     describe('when dismissible and onClose are set', () => {
       it('should call the onClose method when dismissal button is clicked', async () => {
         const close = jest.fn();
+
         renderConsortiaControlledVocabulary({
           dismissible: true,
           onClose: close,

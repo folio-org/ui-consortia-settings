@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { Checkbox, Layer, Paneset } from '@folio/stripes/components';
 import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 
+import { useCentralTenantSettingsCount } from '../../../../../../hooks/consortiumManager';
 import { ConsortiaControlledVocabulary } from '../../../../../../components';
 import { SETTINGS } from '../../../../constants';
 import {
@@ -23,6 +24,7 @@ const formatHeader = (id) => {
   );
 };
 
+const LINK_LIMIT = 10;
 const FIELDS_MAP = {
   name: 'name',
   linkText: 'linkText',
@@ -42,7 +44,8 @@ const COLUMN_WIDTHS = {
   name: '12%',
   linkText: '12%',
   link: '20%',
-  show: '5%'
+  show: '5%',
+  lastUpdated: '12%',
 };
 const UNIQUE_FIELDS = [FIELDS_MAP.name, FIELDS_MAP.linkText, FIELDS_MAP.link];
 const READONLY_FIELDS = [FIELDS_MAP.source];
@@ -138,13 +141,14 @@ const validator = (item) => {
   return {
     ...linkErrors,
     ...linkTextErrors,
-    ...nameErrors
+    ...nameErrors,
   };
 };
 
 export const InstanceCustomLinks = () => {
   const intl = useIntl();
   const history = useHistory();
+  const { count } = useCentralTenantSettingsCount(INSTANCE_CUSTOM_LINKS_API);
 
   const onClose = () => {
     history.push({
@@ -157,7 +161,7 @@ export const InstanceCustomLinks = () => {
       <Paneset isRoot>
         <ConsortiaControlledVocabulary
           id="instance-custom-links"
-          dismissible={true}
+          dismissible
           onClose={onClose}
           columnMapping={COLUMN_MAPPING}
           columnWidths={COLUMN_WIDTHS}
@@ -174,6 +178,7 @@ export const InstanceCustomLinks = () => {
           uniqueFields={UNIQUE_FIELDS}
           validate={validator}
           visibleFields={VISIBLE_FIELDS}
+          canCreate={count < LINK_LIMIT}
         />
       </Paneset>
     </Layer>

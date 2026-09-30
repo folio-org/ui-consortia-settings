@@ -558,7 +558,7 @@ ConsortiaControlledVocabulary.propTypes = {
   canCreate: PropTypes.bool,
   columnMapping: PropTypes.object,
   columnWidths: PropTypes.object,
-  dismissible: PropTypes.boolean,
+  dismissible: PropTypes.bool,
   fieldComponents: PropTypes.object,
   firstMenu: PropTypes.element,
   formatter: PropTypes.object,

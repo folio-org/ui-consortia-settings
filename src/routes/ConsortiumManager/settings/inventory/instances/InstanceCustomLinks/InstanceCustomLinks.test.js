@@ -1,18 +1,22 @@
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
-import { Paneset } from '@folio/stripes/components'; 
+import { Paneset } from '@folio/stripes/components';
 
 import { ConsortiaControlledVocabularyWrapper } from 'helpers';
 import { wrapConsortiaControlledVocabularyDescribe } from 'helpers/wrapConsortiaControlledVocabularyDescribe';
 
+import { INSTANCE_CUSTOM_LINKS_API } from '../../../../../../constants';
+import { useCentralTenantSettingsCount } from '../../../../../../hooks/consortiumManager';
 import { InstanceCustomLinks } from './InstanceCustomLinks';
 
 const wrapper = ({ children }) => {
-  return <ConsortiaControlledVocabularyWrapper>
-    <Paneset>
-      {children}
-    </Paneset>
-  </ConsortiaControlledVocabularyWrapper>;
+  return (
+    <ConsortiaControlledVocabularyWrapper>
+      <Paneset>
+        {children}
+      </Paneset>
+    </ConsortiaControlledVocabularyWrapper>
+  );
 };
 
 const renderInstanceCustomLinks = (props = {}) => render(
@@ -54,6 +58,10 @@ const entries = [
 ];
 
 wrapConsortiaControlledVocabularyDescribe({ entries })('InstanceCustomLinks', () => {
+  beforeEach(() => {
+    useCentralTenantSettingsCount.mockClear().mockReturnValue({ count: entries.length, isFetching: false });
+  });
+
   it('should render controlled vocabulary list with instance custom links', async () => {
     renderInstanceCustomLinks();
 
@@ -67,6 +75,20 @@ wrapConsortiaControlledVocabularyDescribe({ entries })('InstanceCustomLinks', ()
 
     expect(await screen.findAllByRole('checkbox', { checked: true })).toHaveLength(1);
     expect(await screen.findAllByRole('checkbox', { checked: false })).toHaveLength(1);
+  });
+
+  it('should request the count of central tenant instance custom links', () => {
+    renderInstanceCustomLinks();
+
+    expect(useCentralTenantSettingsCount).toHaveBeenCalledWith(INSTANCE_CUSTOM_LINKS_API);
+  });
+
+  it('should not allow creating a new link when the central tenant limit is reached', () => {
+    useCentralTenantSettingsCount.mockReturnValue({ count: 10, isFetching: false });
+
+    renderInstanceCustomLinks();
+
+    expect(screen.queryByText('stripes-core.button.new')).not.toBeInTheDocument();
   });
 
   it('should validate required fields', async () => {
