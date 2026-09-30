@@ -3,14 +3,14 @@ import { useQuery } from 'react-query';
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { OKAPI_TENANT_HEADER } from '../../constants';
 
+const searchParams = { limit: 0 };
+
 export const useCentralTenantSettingsCount = (path, options = {}) => {
   const ky = useOkapiKy();
   const stripes = useStripes();
   const centralTenantId = stripes.user?.user?.consortium?.centralTenantId;
 
-  const searchParams = { limit: 0 };
-
-  const { data, isFetching } = useQuery(
+  const { data, isFetching, isLoading } = useQuery(
     ['central-tenant-settings-count', path, centralTenantId],
     ({ signal }) => ky.extend({
       hooks: {
@@ -26,5 +26,6 @@ export const useCentralTenantSettingsCount = (path, options = {}) => {
   return {
     count: data?.totalRecords ?? 0,
     isFetching,
+    isLoading,
   };
 };

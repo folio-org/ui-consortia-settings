@@ -62,7 +62,7 @@ wrapConsortiaControlledVocabularyDescribe({ entries })('InstanceCustomLinks', ()
     useCentralTenantSettingsCount.mockClear().mockReturnValue({ count: entries.length, isFetching: false });
   });
 
-  it('should render controlled vocabulary list with instance custom links', async () => {
+  it('should render controlled vocabulary list with instance custom links', () => {
     renderInstanceCustomLinks();
 
     entries.forEach(({ name }) => {
@@ -100,5 +100,13 @@ wrapConsortiaControlledVocabularyDescribe({ entries })('InstanceCustomLinks', ()
     expect(screen.getByText('stripes-core.label.missingRequiredField')).toBeInTheDocument();
     expect(screen.getByText('ui-inventory.instanceCustomLinks.error.linkTextRequired')).toBeInTheDocument();
     expect(screen.getByText('ui-inventory.instanceCustomLinks.error.linkRequired')).toBeInTheDocument();
+  });
+
+  it('should not allow creating a new link while the count is loading', () => {
+    useCentralTenantSettingsCount.mockReturnValue({ count: 0, isLoading: true });
+
+    renderInstanceCustomLinks();
+
+    expect(screen.queryByText('stripes-core.button.new')).not.toBeInTheDocument();
   });
 });
