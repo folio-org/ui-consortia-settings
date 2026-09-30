@@ -50,7 +50,7 @@ export const useSettings = (params = {}, options = {}) => {
     refetch,
   } = useQuery(
     queryKey,
-    async () => {
+    async ({ signal }) => {
       if (!selectedMembers?.length) return {};
 
       const publication = {
@@ -60,7 +60,7 @@ export const useSettings = (params = {}, options = {}) => {
       };
 
       try {
-        const { publicationErrors, ...response } = await initPublicationRequest(publication);
+        const { publicationErrors, ...response } = await initPublicationRequest(publication, { signal });
 
         const entries = flow(
           hydrateSharedRecords(records, squashSharedSetting, { consortium }),

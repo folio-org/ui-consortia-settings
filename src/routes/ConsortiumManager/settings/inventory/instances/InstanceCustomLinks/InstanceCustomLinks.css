@@ -1,0 +1,9 @@
+.showField {
+  text-align: center;
+  width: 100%;
+}
+
+.required {
+  color: var(--color--text-danger, #900);
+  margin-left: 0.25em;
+}

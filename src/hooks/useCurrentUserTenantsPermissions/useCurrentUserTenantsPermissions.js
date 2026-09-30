@@ -23,7 +23,7 @@ export const useCurrentUserTenantsPermissions = (params = {}, options = {}) => {
     data = DEFAULT_DATA,
   } = useQuery(
     [namespace, expandPermissions, tenants],
-    async () => {
+    async ({ signal }) => {
       const searchParams = new URLSearchParams({
         expandPermissions,
       });
@@ -34,7 +34,7 @@ export const useCurrentUserTenantsPermissions = (params = {}, options = {}) => {
         url: `${apiURL}/_self?${searchParams.toString()}`,
         method: 'GET',
         tenants,
-      });
+      }, { signal });
 
       return publicationResults.reduce((acc, { response, tenantId }) => {
         acc[tenantId] = response.permissions?.permissions || [];

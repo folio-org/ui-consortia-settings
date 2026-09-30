@@ -94,7 +94,7 @@ const renderConsortiaControlledVocabulary = (props = {}) => render(
   { wrapper: ConsortiaControlledVocabularyWrapper },
 );
 
-wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('ConsortiaControlledVocabulary', ({ mutations, sharing, callout }) => {
+wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('ConsortiaControlledVocabulary', ({ entries, mutations, sharing, callout }) => {
   it('should render consortia-related controlled vocabulary', () => {
     renderConsortiaControlledVocabulary();
 
@@ -273,6 +273,94 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
           members: tenants[4].name,
         },
       }));
+    });
+  });
+
+  describe('onEntriesChange', () => {
+    const onEntriesChange = jest.fn(() => Promise.resolve());
+
+    beforeEach(() => {
+      onEntriesChange.mockClear();
+    });
+
+    // The shared mutation mocks resolve to `undefined`, which fails result handling before
+    // the refetch step, so the success cases below resolve with a result object.
+    it('should call onEntriesChange and refetch entries after a record is created', async () => {
+      mutations.createEntry.mockResolvedValueOnce(pcPublicationResults);
+      renderConsortiaControlledVocabulary({ onEntriesChange });
+
+      await userEvent.click(await screen.findByText('stripes-core.button.new'));
+      await userEvent.type(await screen.findByPlaceholderText('foo'), 'New');
+      await userEvent.type(await screen.findByPlaceholderText('bar'), 'Record');
+      await userEvent.click(await screen.findByText('stripes-core.button.save'));
+      await userEvent.click(await screen.findByText('ui-consortia-settings.button.confirm'));
+
+      await waitFor(() => expect(onEntriesChange).toHaveBeenCalledTimes(1));
+      expect(entries.refetch).toHaveBeenCalled();
+    });
+
+    it('should call onEntriesChange after a record is updated', async () => {
+      mutations.updateEntry.mockResolvedValueOnce({});
+      renderConsortiaControlledVocabulary({ onEntriesChange });
+
+      await userEvent.click(screen.getAllByLabelText('stripes-components.editThisItem')[0]);
+
+      const input = await screen.findByPlaceholderText('foo');
+
+      await userEvent.clear(input);
+      await userEvent.type(input, 'Updated');
+      await userEvent.click(await screen.findByText('stripes-core.button.save'));
+
+      await waitFor(() => expect(onEntriesChange).toHaveBeenCalledTimes(1));
+    });
+
+    it('should call onEntriesChange after a record is deleted', async () => {
+      mutations.deleteEntry.mockResolvedValueOnce({});
+      renderConsortiaControlledVocabulary({ onEntriesChange });
+
+      await userEvent.click(screen.getAllByLabelText('stripes-components.deleteThisItem')[0]);
+      await userEvent.click(await screen.findByText('stripes-core.button.delete'));
+
+      await waitFor(() => expect(onEntriesChange).toHaveBeenCalledTimes(1));
+      expect(entries.refetch).toHaveBeenCalled();
+    });
+
+    it('should not call onEntriesChange when a deletion fails', async () => {
+      mutations.deleteEntry.mockRejectedValueOnce({ status: 422 });
+      renderConsortiaControlledVocabulary({ onEntriesChange });
+
+      await userEvent.click(screen.getAllByLabelText('stripes-components.deleteThisItem')[0]);
+      await userEvent.click(await screen.findByText('stripes-core.button.delete'));
+
+      expect(await screen.findByText('ui-app.cannotDeleteTermMessage')).toBeInTheDocument();
+      expect(onEntriesChange).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Dismissible', () => {
+    describe('when dismissible is set', () => {
+      it('should render a dismissal button when dismissible is set', () => {
+        renderConsortiaControlledVocabulary({
+          dismissible: true,
+        });
+
+        expect(screen.getByLabelText('stripes-components.closeItem')).toBeInTheDocument();
+      });
+    });
+
+    describe('when dismissible and onClose are set', () => {
+      it('should call the onClose method when dismissal button is clicked', async () => {
+        const close = jest.fn();
+
+        renderConsortiaControlledVocabulary({
+          dismissible: true,
+          onClose: close,
+        });
+
+        await userEvent.click(screen.getByLabelText('stripes-components.closeItem'));
+
+        expect(close).toHaveBeenCalled();
+      });
     });
   });
 });

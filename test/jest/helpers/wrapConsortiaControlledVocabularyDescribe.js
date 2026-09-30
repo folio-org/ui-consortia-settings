@@ -21,6 +21,7 @@ jest.mock('../../../src/hooks/consortiumManager', () => ({
   useSettings: jest.fn(),
   useSettingMutation: jest.fn(),
   useSettingSharing: jest.fn(),
+  useCentralTenantSettingsCount: jest.fn(),
 }));
 
 export const wrapConsortiaControlledVocabularyDescribe = ({

@@ -15,6 +15,7 @@ const ConsortiaEditableListComponent = ({
   actionSuppression,
   canCreate,
   columnMapping,
+  columnWidths,
   contentData,
   fieldComponents,
   formatter,
@@ -34,6 +35,7 @@ const ConsortiaEditableListComponent = ({
       actionSuppression={actionSuppression}
       canCreate={canCreate}
       columnMapping={columnMapping}
+      columnWidths={columnWidths}
       contentData={contentData}
       createButtonLabel={CREATE_BUTTON_LABEL}
       fieldComponents={fieldComponents}
@@ -62,6 +64,7 @@ ConsortiaEditableListComponent.propTypes = {
   }),
   canCreate: PropTypes.bool,
   columnMapping: PropTypes.object,
+  columnWidths: PropTypes.object,
   contentData: PropTypes.arrayOf(PropTypes.object),
   fieldComponents: PropTypes.object,
   formatter: PropTypes.object,
