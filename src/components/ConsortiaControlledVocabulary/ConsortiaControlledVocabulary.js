@@ -109,6 +109,7 @@ export const ConsortiaControlledVocabulary = ({
   isLoading: isLoadingProp,
   label,
   onClose,
+  onEntriesChange = noop,
   path,
   permissions,
   primaryField: primaryFieldProp,
@@ -189,6 +190,11 @@ export const ConsortiaControlledVocabulary = ({
       onSuccess: handleSettingsLoading,
     },
   );
+
+  // `onEntriesChange` must not reject: a rejection after a delete would be reported as "item in use".
+  const handleEntriesChange = useCallback(() => {
+    return Promise.all([refetch(), onEntriesChange()]);
+  }, [onEntriesChange, refetch]);
 
   const {
     createEntry,
@@ -407,10 +413,10 @@ export const ConsortiaControlledVocabulary = ({
         results,
       });
     })
-      .then(refetch)
+      .then(handleEntriesChange)
       .finally(() => eventEmitter.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, false))
       .catch(skipAborted);
-  }, [eventEmitter, onShare, handleCreateEntry, handleResolvedActionResults, refetch]);
+  }, [eventEmitter, onShare, handleCreateEntry, handleEntriesChange, handleResolvedActionResults]);
 
   const onUpdate = useCallback(async (hydratedEntry) => {
     const entry = dehydrateEntry(hydratedEntry);
@@ -425,10 +431,10 @@ export const ConsortiaControlledVocabulary = ({
         results,
       });
     })
-      .then(refetch)
+      .then(handleEntriesChange)
       .finally(() => eventEmitter.emit(EVENT_EMITTER_EVENTS.DISABLE_SELECT_MEMBERS, false))
       .catch(skipAborted);
-  }, [eventEmitter, handleResolvedActionResults, onShare, refetch, updateEntry]);
+  }, [eventEmitter, handleEntriesChange, handleResolvedActionResults, onShare, updateEntry]);
 
   const handleDeleteEntry = useCallback((hydratedEntry) => {
     const entry = dehydrateEntry(hydratedEntry);
@@ -442,9 +448,9 @@ export const ConsortiaControlledVocabulary = ({
           results,
         });
       })
-      .then(refetch)
+      .then(handleEntriesChange)
       .catch(() => buildDialog({ type: DIALOG_TYPES.itemInUse }));
-  }, [buildDialog, deleteEntry, deleteSharedSetting, handleResolvedActionResults, refetch]);
+  }, [buildDialog, deleteEntry, deleteSharedSetting, handleEntriesChange, handleResolvedActionResults]);
 
   const onDelete = useCallback((uniqueFieldValue) => {
     const entryToDelete = entries.find(entry => entry[UNIQUE_FIELD_KEY] === uniqueFieldValue);
@@ -566,6 +572,7 @@ ConsortiaControlledVocabulary.propTypes = {
   isLoading: PropTypes.bool,
   label: PropTypes.string,
   onClose: PropTypes.func,
+  onEntriesChange: PropTypes.func,
   path: PropTypes.string.isRequired,
   permissions: PropTypes.shape({
     create: PropTypes.string.isRequired,

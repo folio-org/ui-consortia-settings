@@ -16,6 +16,14 @@ import { DEFAULT_ITEM_TEMPLATE } from '../../constants';
 
 import css from './InstanceCustomLinks.css';
 
+const formatHeader = (id) => {
+  return (
+    <>
+      <FormattedMessage id={id} /> <span className={css.required}>*</span>
+    </>
+  );
+};
+
 const LINK_LIMIT = 10;
 const FIELDS_MAP = {
   name: 'name',
@@ -68,14 +76,6 @@ const fieldComponents = {
       />
     </div>
   ),
-};
-
-const formatHeader = (id) => {
-  return (
-    <>
-      <FormattedMessage id={id} /> <span className={css.required}>*</span>
-    </>
-  );
 };
 
 // Validation will come from stripes-acq-components and replace the placeholder functions here.
@@ -153,7 +153,11 @@ export const InstanceCustomLinks = () => {
   // The central tenant's total custom link count is used as a stand-in for overall
   // tenant custom link availability - so long as there's room for more links in the
   // central tenant, assume most other tenants also have room.
-  const { count, isLoading } = useCentralTenantSettingsCount(INSTANCE_CUSTOM_LINKS_API);
+  const {
+    count,
+    isLoading,
+    refetch: refetchCount,
+  } = useCentralTenantSettingsCount(INSTANCE_CUSTOM_LINKS_API);
 
   // Due to the width of the link field, make this pane full-width. Provide a
   // way to close the pane instead of firstMenu, which is responsive and is only
@@ -169,6 +173,7 @@ export const InstanceCustomLinks = () => {
           id="instance-custom-links"
           dismissible
           onClose={onClose}
+          onEntriesChange={refetchCount}
           columnMapping={COLUMN_MAPPING}
           columnWidths={COLUMN_WIDTHS}
           fieldComponents={fieldComponents}
