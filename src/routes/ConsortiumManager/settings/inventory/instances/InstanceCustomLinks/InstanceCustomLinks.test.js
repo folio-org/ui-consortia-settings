@@ -1,5 +1,5 @@
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
+import { render, screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { Paneset } from '@folio/stripes/components';
 
 import { ConsortiaControlledVocabularyWrapper } from 'helpers';
@@ -57,9 +57,16 @@ const entries = [
   },
 ];
 
-wrapConsortiaControlledVocabularyDescribe({ entries })('InstanceCustomLinks', () => {
+wrapConsortiaControlledVocabularyDescribe({ entries })('InstanceCustomLinks', ({ mutations }) => {
+  const refetchCount = jest.fn(() => Promise.resolve());
+
   beforeEach(() => {
-    useCentralTenantSettingsCount.mockClear().mockReturnValue({ count: entries.length, isFetching: false });
+    refetchCount.mockClear();
+    useCentralTenantSettingsCount.mockClear().mockReturnValue({
+      count: entries.length,
+      isFetching: false,
+      refetch: refetchCount,
+    });
   });
 
   it('should render controlled vocabulary list with instance custom links', () => {
@@ -108,5 +115,16 @@ wrapConsortiaControlledVocabularyDescribe({ entries })('InstanceCustomLinks', ()
     renderInstanceCustomLinks();
 
     expect(screen.queryByText('stripes-core.button.new')).not.toBeInTheDocument();
+  });
+
+  it('should refetch the central tenant count after a link is deleted', async () => {
+    mutations.deleteEntry.mockResolvedValueOnce({});
+    renderInstanceCustomLinks();
+
+    await userEvent.click(screen.getAllByLabelText('stripes-components.deleteThisItem')[0]);
+    await userEvent.click(await screen.findByText('stripes-core.button.delete'));
+
+    await waitFor(() => expect(mutations.deleteEntry).toHaveBeenCalled());
+    await waitFor(() => expect(refetchCount).toHaveBeenCalled());
   });
 });

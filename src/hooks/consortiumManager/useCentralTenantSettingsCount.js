@@ -10,7 +10,12 @@ export const useCentralTenantSettingsCount = (path, options = {}) => {
   const stripes = useStripes();
   const centralTenantId = stripes.user?.user?.consortium?.centralTenantId;
 
-  const { data, isFetching, isLoading } = useQuery(
+  const {
+    data,
+    isFetching,
+    isLoading,
+    refetch,
+  } = useQuery(
     ['central-tenant-settings-count', path, centralTenantId],
     ({ signal }) => ky.extend({
       hooks: {
@@ -27,5 +32,6 @@ export const useCentralTenantSettingsCount = (path, options = {}) => {
     count: data?.totalRecords ?? 0,
     isFetching,
     isLoading,
+    refetch,
   };
 };

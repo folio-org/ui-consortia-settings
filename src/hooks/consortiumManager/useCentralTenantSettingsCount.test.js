@@ -66,6 +66,15 @@ describe('useCentralTenantSettingsCount', () => {
     expect(result.current.count).toEqual(totalRecords);
   });
 
+  it('should refetch the count on demand', async () => {
+    const { result } = renderHook(() => useCentralTenantSettingsCount(path), { wrapper });
+
+    await waitFor(() => expect(result.current.isFetching).toBeFalsy());
+    await result.current.refetch();
+
+    expect(kyMock.get).toHaveBeenCalledTimes(2);
+  });
+
   it('should set the central tenant ID in the request tenant header', async () => {
     const { result } = renderHook(() => useCentralTenantSettingsCount(path), { wrapper });
 
