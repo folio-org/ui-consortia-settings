@@ -96,7 +96,7 @@ const sections = [
         route: 'custom-links',
         label: <FormattedMessage id="ui-inventory.instanceCustomLinks" />,
         component: InstanceCustomLinks,
-        perm: 'ui-inventory.settings.instance-custom-links',
+        perm: 'ui-inventory.settings.instance-custom-links.manage',
         _interfaces: [INSTANCE_CUSTOM_LINKS],
       },
       {

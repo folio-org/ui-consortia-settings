@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { Checkbox, Layer, Paneset } from '@folio/stripes/components';
 import {
   getControlledVocabTranslations,
-  validateCustomLinks,
+  validateCustomLink,
 } from '@folio/stripes-acq-components';
 
 import { useCentralTenantSettingsCount } from '../../../../../../hooks/consortiumManager';
@@ -121,7 +121,7 @@ export const InstanceCustomLinks = () => {
           itemTemplate={LINK_ITEM_TEMPLATE}
           readOnlyFields={READONLY_FIELDS}
           uniqueFields={UNIQUE_FIELDS}
-          validate={validateCustomLinks}
+          validate={validateCustomLink}
           visibleFields={VISIBLE_FIELDS}
           canCreate={!isLoading && count < LINK_LIMIT}
         />
