@@ -3,7 +3,10 @@ import { Field } from 'react-final-form';
 import { useHistory } from 'react-router-dom';
 
 import { Checkbox, Layer, Paneset } from '@folio/stripes/components';
-import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
+import {
+  getControlledVocabTranslations,
+  validateCustomLinks,
+} from '@folio/stripes-acq-components';
 
 import { useCentralTenantSettingsCount } from '../../../../../../hooks/consortiumManager';
 import { ConsortiaControlledVocabulary } from '../../../../../../components';
@@ -78,75 +81,6 @@ const fieldComponents = {
   ),
 };
 
-// Validation will come from stripes-acq-components and replace the placeholder functions here.
-const validateName = (item) => {
-  const errors = {};
-
-  if (!item.name) {
-    errors.name = <FormattedMessage id="ui-inventory.fillIn" />;
-  }
-
-  if (item?.name?.length > 150) {
-    errors.name = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.nameTooLong" />;
-  }
-
-  return errors;
-};
-
-const patterns = /\{\{(UUID|HRID|indexTitle)\}\}/;
-
-const validateLink = (item) => {
-  const errors = {};
-
-  if (!item.link) {
-    errors.link = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkRequired" />;
-  }
-
-  if (item.link && !item.link.toLowerCase().startsWith('https://') && !item.link.toLowerCase().startsWith('http://')) {
-    errors.link = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkProtocol" />;
-  }
-
-  if (item.link && !patterns.test(item.link) && item.link.includes('{{') && item.link.includes('}}')) {
-    errors.link = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkParameter" />;
-  }
-
-  if (item?.link?.length > 1000) {
-    errors.link = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkTooLong" />;
-  }
-
-  return errors;
-};
-
-const validateLinkText = (item) => {
-  const errors = {};
-
-  if (!item.linkText) {
-    errors.linkText = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkTextRequired" />;
-  }
-
-  if (item?.linkText?.length > 40) {
-    errors.linkText = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkTextTooLong" />;
-  }
-
-  if (item?.linkText?.trim() === '') {
-    errors.linkText = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkTextBlank" />;
-  }
-
-  return errors;
-};
-
-const validator = (item) => {
-  const nameErrors = validateName(item);
-  const linkTextErrors = validateLinkText(item);
-  const linkErrors = validateLink(item);
-
-  return {
-    ...linkErrors,
-    ...linkTextErrors,
-    ...nameErrors,
-  };
-};
-
 export const InstanceCustomLinks = () => {
   const intl = useIntl();
   const history = useHistory();
@@ -187,7 +121,7 @@ export const InstanceCustomLinks = () => {
           itemTemplate={LINK_ITEM_TEMPLATE}
           readOnlyFields={READONLY_FIELDS}
           uniqueFields={UNIQUE_FIELDS}
-          validate={validator}
+          validate={validateCustomLinks}
           visibleFields={VISIBLE_FIELDS}
           canCreate={!isLoading && count < LINK_LIMIT}
         />
