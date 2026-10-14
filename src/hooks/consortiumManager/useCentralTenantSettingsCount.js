@@ -21,7 +21,7 @@ export const useCentralTenantSettingsCount = (path, options = {}) => {
       hooks: {
         beforeRequest: [(r) => r.headers.set(OKAPI_TENANT_HEADER, centralTenantId)],
       },
-    }).get(`${path}?${stringify(searchParams)}`, { signal }).json(),
+    }).get(path, { signal, searchParams }).json(),
     {
       enabled: Boolean(path && centralTenantId),
       ...options,

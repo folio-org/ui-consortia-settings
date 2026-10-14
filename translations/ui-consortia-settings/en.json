@@ -25,7 +25,6 @@
   "consortiumManager.members.users.compare": "Compare users",
   "consortiumManager.members.users.selectUser.modal.label": "Select user ({tenant})",
 
-
   "duplicatesWithOthers": "{failedOther}, {failedSrs} duplicate(s)",
   "duplicates": "{failedSrs} duplicate(s)",
 
