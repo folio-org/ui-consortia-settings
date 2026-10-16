@@ -260,5 +260,8 @@
   "permission.settings.membership.view": "Settings (Consortia): Can view consortia membership",
   "permission.settings.membership.edit": "Settings (Consortia): Can view and edit consortia membership",
   "permission.settings.networkOrdering.view": "Settings (Consortia): Can view network ordering",
-  "permission.settings.networkOrdering.edit": "Settings (Consortia): Can view and edit network ordering"
+  "permission.settings.networkOrdering.edit": "Settings (Consortia): Can view and edit network ordering",
+
+  "collapse.management.pane.button.tooltip": "Collapse management pane",
+  "expand.management.pane.button.tooltip": "Expand management pane"
 }
