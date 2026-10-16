@@ -15,7 +15,7 @@ jest.mock('@folio/stripes/smart-components', () => ({
   },
 }));
 
-const PANE_TOGGLE_BUTTON_SELECTOR = '[data-testid="consortium-manager-navigation-pane-toggle-button"]';
+const PANE_TOGGLE_BUTTON_SELECTOR = '#consortium-manager-navigation-pane-toggle-button';
 const COLLAPSE_TOOLTIP = 'ui-consortia-settings.collapse.management.pane.button.tooltip';
 const EXPAND_TOOLTIP = 'ui-consortia-settings.expand.management.pane.button.tooltip';
 
@@ -54,7 +54,9 @@ describe('ConsortiumManagerNavigationPaneToggle', () => {
 
     renderComponent({ setIsNavigationPaneVisible });
 
-    await userEvent.click(screen.getByRole('button', { name: COLLAPSE_TOOLTIP }));
+    const toggleButton = screen.getByRole('button', { name: COLLAPSE_TOOLTIP });
+
+    await userEvent.click(toggleButton);
 
     expect(setIsNavigationPaneVisible).toHaveBeenCalledTimes(1);
 
@@ -63,6 +65,8 @@ describe('ConsortiumManagerNavigationPaneToggle', () => {
     expect(updater(true)).toBe(false);
     expect(updater(false)).toBe(true);
     expect(mockRestorePaneToggleFocus).toHaveBeenCalledWith(PANE_TOGGLE_BUTTON_SELECTOR);
+    expect(document.querySelectorAll(PANE_TOGGLE_BUTTON_SELECTOR)).toHaveLength(1);
+    expect(document.querySelector(PANE_TOGGLE_BUTTON_SELECTOR)).toBe(toggleButton);
   });
 
   it('should toggle navigation pane visibility when restorePaneToggleFocus is not available', async () => {

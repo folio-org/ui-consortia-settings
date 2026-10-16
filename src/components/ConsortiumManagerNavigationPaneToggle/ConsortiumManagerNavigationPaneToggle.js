@@ -12,7 +12,7 @@ import { useConsortiumManagerContext } from '../../contexts';
 // The button that triggers the toggle is unmounted/replaced by its counterpart
 // (expand <-> collapse), rendered in a different, always-mounted pane, as a
 // result of this action. See STCOM-1521.
-const PANE_TOGGLE_BUTTON_SELECTOR = '[data-testid="consortium-manager-navigation-pane-toggle-button"]';
+const PANE_TOGGLE_BUTTON_ID = 'consortium-manager-navigation-pane-toggle-button';
 
 export const ConsortiumManagerNavigationPaneToggle = () => {
   const intl = useIntl();
@@ -20,7 +20,7 @@ export const ConsortiumManagerNavigationPaneToggle = () => {
 
   const togglePane = useCallback(() => {
     setIsNavigationPaneVisible(prev => !prev);
-    restorePaneToggleFocus?.(PANE_TOGGLE_BUTTON_SELECTOR);
+    restorePaneToggleFocus?.(`#${PANE_TOGGLE_BUTTON_ID}`);
   }, [setIsNavigationPaneVisible]);
 
   return (
@@ -35,6 +35,7 @@ export const ConsortiumManagerNavigationPaneToggle = () => {
       {({ ref, ariaIds }) => (
         <PaneHeaderIconButton
           ref={ref}
+          id={PANE_TOGGLE_BUTTON_ID}
           aria-labelledby={ariaIds.text}
           data-testid="consortium-manager-navigation-pane-toggle-button"
           icon={`caret-${isNavigationPaneVisible ? 'left' : 'right'}`}
