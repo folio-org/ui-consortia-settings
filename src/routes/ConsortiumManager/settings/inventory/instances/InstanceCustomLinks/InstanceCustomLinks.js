@@ -1,8 +1,9 @@
+import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Field } from 'react-final-form';
 import { useHistory } from 'react-router-dom';
 
-import { Checkbox, Layer, Paneset } from '@folio/stripes/components';
+import { Checkbox, Icon, Layer, Paneset } from '@folio/stripes/components';
 import {
   getControlledVocabTranslations,
   validateCustomLink,
@@ -19,14 +20,6 @@ import { DEFAULT_ITEM_TEMPLATE } from '../../constants';
 
 import css from './InstanceCustomLinks.css';
 
-const formatHeader = (id) => {
-  return (
-    <>
-      <FormattedMessage id={id} /> <span className={css.required}>*</span>
-    </>
-  );
-};
-
 const LINK_LIMIT = 10;
 const FIELDS_MAP = {
   name: 'name',
@@ -37,9 +30,9 @@ const FIELDS_MAP = {
   lastUpdated: 'lastUpdated',
 };
 const COLUMN_MAPPING = {
-  [FIELDS_MAP.name]: formatHeader('ui-inventory.name'),
-  [FIELDS_MAP.linkText]: formatHeader('ui-inventory.linkText'),
-  [FIELDS_MAP.link]: formatHeader('ui-inventory.link'),
+  [FIELDS_MAP.name]: <FormattedMessage id="ui-inventory.name" />,
+  [FIELDS_MAP.linkText]: <FormattedMessage id="ui-inventory.linkText" />,
+  [FIELDS_MAP.link]: <FormattedMessage id="ui-inventory.link" />,
   [FIELDS_MAP.show]: <FormattedMessage id="ui-inventory.show" />,
   [FIELDS_MAP.source]: <FormattedMessage id="ui-inventory.source" />,
 };
@@ -60,14 +53,6 @@ const PERMISSIONS = {
   update: 'inventory-storage.instance-custom-links.item.put',
 };
 const LINK_ITEM_TEMPLATE = { ...DEFAULT_ITEM_TEMPLATE, [FIELDS_MAP.show]: true };
-
-const formatter = {
-  [FIELDS_MAP.show]: ({ show }) => (
-    <div className={css.showField}>
-      <Checkbox checked={show} disabled />
-    </div>
-  ),
-};
 
 const fieldComponents = {
   [FIELDS_MAP.show]: ({ fieldProps }) => (
@@ -99,6 +84,19 @@ export const InstanceCustomLinks = () => {
   const onClose = () => {
     history.push(`${MODULE_ROOT_ROUTE}/${SETTINGS.inventory}`);
   };
+
+  const formatter = useMemo(() => {
+    return {
+      [FIELDS_MAP.show]: ({ show }) => (
+        show ?
+          <div className={css.showField} data-testid="formatter-column-show">
+            <Icon icon="check-circle" aria-label={intl.formatMessage({ id: 'ui-inventory.show' })} />
+          </div>
+        :
+          null
+      ),
+    };
+  }, [intl]);
 
   return (
     <Layer isOpen>

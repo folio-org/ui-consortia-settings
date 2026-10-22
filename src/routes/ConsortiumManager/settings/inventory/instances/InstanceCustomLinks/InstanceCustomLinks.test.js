@@ -77,11 +77,10 @@ wrapConsortiaControlledVocabularyDescribe({ entries })('InstanceCustomLinks', ({
     });
   });
 
-  it('should render the show field as a checkbox', async () => {
+  it('should render the show field as an icon only for links that are shown', async () => {
     renderInstanceCustomLinks();
 
-    expect(await screen.findAllByRole('checkbox', { checked: true })).toHaveLength(1);
-    expect(await screen.findAllByRole('checkbox', { checked: false })).toHaveLength(1);
+    expect(await screen.findAllByTestId('formatter-column-show')).toHaveLength(1);
   });
 
   it('should request the count of central tenant instance custom links', () => {
@@ -105,8 +104,8 @@ wrapConsortiaControlledVocabularyDescribe({ entries })('InstanceCustomLinks', ({
     await userEvent.click(screen.getByText('stripes-core.button.save'));
 
     expect(screen.getByText('stripes-core.label.missingRequiredField')).toBeInTheDocument();
-    expect(screen.getByText('ui-inventory.instanceCustomLinks.error.linkTextRequired')).toBeInTheDocument();
-    expect(screen.getByText('ui-inventory.instanceCustomLinks.error.linkRequired')).toBeInTheDocument();
+    expect(screen.getByText('stripes-acq-components.validation.customLink.linkTextRequired')).toBeInTheDocument();
+    expect(screen.getByText('stripes-acq-components.validation.customLink.linkRequired')).toBeInTheDocument();
   });
 
   it('should not allow creating a new link while the count is loading', () => {
