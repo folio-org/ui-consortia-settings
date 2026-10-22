@@ -54,6 +54,17 @@ const PERMISSIONS = {
 };
 const LINK_ITEM_TEMPLATE = { ...DEFAULT_ITEM_TEMPLATE, [FIELDS_MAP.show]: true };
 
+const getFormatter = (intl) => ({
+  [FIELDS_MAP.show]: ({ show }) => (
+    show ?
+      <div className={css.showField} data-testid="formatter-column-show">
+        <Icon icon="check-circle" aria-label={intl.formatMessage({ id: 'ui-inventory.show' })} />
+      </div>
+      :
+      null
+  ),
+});
+
 const fieldComponents = {
   [FIELDS_MAP.show]: ({ fieldProps }) => (
     <div className={css.showField}>
@@ -85,18 +96,7 @@ export const InstanceCustomLinks = () => {
     history.push(`${MODULE_ROOT_ROUTE}/${SETTINGS.inventory}`);
   };
 
-  const formatter = useMemo(() => {
-    return {
-      [FIELDS_MAP.show]: ({ show }) => (
-        show ?
-          <div className={css.showField} data-testid="formatter-column-show">
-            <Icon icon="check-circle" aria-label={intl.formatMessage({ id: 'ui-inventory.show' })} />
-          </div>
-        :
-          null
-      ),
-    };
-  }, [intl]);
+  const formatter = useMemo(() => getFormatter(intl), [intl]);
 
   return (
     <Layer isOpen>
