@@ -1,4 +1,3 @@
-import { stringify } from 'query-string';
 import { useQuery } from 'react-query';
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { OKAPI_TENANT_HEADER } from '../../constants';
