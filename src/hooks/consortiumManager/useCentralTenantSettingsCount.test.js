@@ -62,7 +62,7 @@ describe('useCentralTenantSettingsCount', () => {
 
     await waitFor(() => expect(result.current.isFetching).toBeFalsy());
 
-    expect(kyMock.get).toHaveBeenCalledWith(`${path}?limit=0`, { signal: expect.anything() });
+    expect(kyMock.get).toHaveBeenCalledWith(path, { searchParams: { limit: 0 }, signal: expect.anything() });
     expect(result.current.count).toEqual(totalRecords);
   });
 
