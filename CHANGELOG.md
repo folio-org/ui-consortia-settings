@@ -2,6 +2,7 @@
 
 ## 3.2.0 (IN PROGRESS)
 * [UICONSET-246](https://folio-org.atlassian.net/browse/UICONSET-246) Keep the Collapse pane (<) and Expand pane (>) buttons focused after clicking them.
+* [UICONSET-248](https://folio-org.atlassian.net/browse/UICONSET-248) Add Inventory instance custom links to Consortium Manager.
 
 ## [3.1.0](https://github.com/folio-org/ui-consortia-settings/tree/v3.1.0) (2026-04-17)
 [Full Changelog](https://github.com/folio-org/ui-consortia-settings/compare/v3.0.0...v3.1.0)
