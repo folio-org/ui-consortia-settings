@@ -13,7 +13,6 @@ import {
 } from '@folio/stripes/core';
 
 import { buildStripesObject } from 'helpers';
-import { OKAPI_TENANT_HEADER } from '../../constants';
 import { useCentralTenantSettingsCount } from './useCentralTenantSettingsCount';
 
 jest.mock('@folio/stripes/core', () => ({
@@ -40,7 +39,6 @@ const buildStripesWithConsortium = (consortium) => buildStripesObject({
 });
 
 const kyMock = {
-  extend: jest.fn(() => kyMock),
   get: jest.fn(() => ({
     json: () => Promise.resolve({ totalRecords }),
   })),
@@ -55,6 +53,12 @@ describe('useCentralTenantSettingsCount', () => {
   afterEach(() => {
     queryClient.clear();
     jest.clearAllMocks();
+  });
+
+  it('should create a ky instance scoped to the central tenant', () => {
+    renderHook(() => useCentralTenantSettingsCount(path), { wrapper });
+
+    expect(useOkapiKy).toHaveBeenCalledWith({ tenant: centralTenantId });
   });
 
   it('should send a request to the central tenant to get settings count', async () => {
@@ -73,19 +77,6 @@ describe('useCentralTenantSettingsCount', () => {
     await result.current.refetch();
 
     expect(kyMock.get).toHaveBeenCalledTimes(2);
-  });
-
-  it('should set the central tenant ID in the request tenant header', async () => {
-    const { result } = renderHook(() => useCentralTenantSettingsCount(path), { wrapper });
-
-    await waitFor(() => expect(result.current.isFetching).toBeFalsy());
-
-    const [beforeRequestHook] = kyMock.extend.mock.calls[0][0].hooks.beforeRequest;
-    const request = { headers: { set: jest.fn() } };
-
-    beforeRequestHook(request);
-
-    expect(request.headers.set).toHaveBeenCalledWith(OKAPI_TENANT_HEADER, centralTenantId);
   });
 
   it('should return zero count when response does not contain total records', async () => {
