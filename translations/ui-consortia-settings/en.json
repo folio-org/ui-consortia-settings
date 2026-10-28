@@ -25,7 +25,6 @@
   "consortiumManager.members.users.compare": "Compare users",
   "consortiumManager.members.users.selectUser.modal.label": "Select user ({tenant})",
 
-
   "duplicatesWithOthers": "{failedOther}, {failedSrs} duplicate(s)",
   "duplicates": "{failedSrs} duplicate(s)",
 
@@ -82,6 +81,11 @@
   "consortiumManager.controlledVocab.holdingsTypes.deleteEntry": "Delete holdings type",
   "consortiumManager.controlledVocab.holdingsTypes.termDeleted": "The holdings type <b>{term}</b> was successfully <b>deleted</b>.",
   "consortiumManager.controlledVocab.holdingsTypes.termWillBeDeleted": "The holdings type <b>{term}</b> will be <b>deleted</b>.",
+  "consortiumManager.controlledVocab.instanceCustomLinks.cannotDeleteTermHeader": "Cannot delete the custom link",
+  "consortiumManager.controlledVocab.instanceCustomLinks.cannotDeleteTermMessage": "This custom link cannot be deleted, as it is in use by one or more records.",
+  "consortiumManager.controlledVocab.instanceCustomLinks.deleteEntry": "Delete custom link",
+  "consortiumManager.controlledVocab.instanceCustomLinks.termDeleted": "The custom link <b>{term}</b> was successfully <b>deleted</b>.",
+  "consortiumManager.controlledVocab.instanceCustomLinks.termWillBeDeleted": "The custom link <b>{term}</b> will be <b>deleted</b>.",
   "consortiumManager.controlledVocab.instanceNoteTypes.cannotDeleteTermHeader": "Cannot delete the instance note type",
   "consortiumManager.controlledVocab.instanceNoteTypes.cannotDeleteTermMessage": "This instance note type cannot be deleted, as it is in use by one or more records.",
   "consortiumManager.controlledVocab.instanceNoteTypes.deleteEntry": "Delete instance note type",

@@ -2,6 +2,7 @@ export { AlternativeTitleTypes } from './AlternativeTitleTypes';
 export { ClassificationTypes } from './ClassificationTypes';
 export { ContributorTypes } from './ContributorTypes';
 export { Formats } from './Formats';
+export { InstanceCustomLinks } from './InstanceCustomLinks';
 export { InstanceNoteTypes } from './InstanceNoteTypes';
 export { InstanceStatusTypes } from './InstanceStatusTypes';
 export { ModesOfIssuance } from './ModesOfIssuance';
