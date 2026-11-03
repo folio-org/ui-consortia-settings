@@ -181,7 +181,7 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
       it('should handle shared record deletion - partial failure', async () => {
         sharing.deleteSharedSetting.mockResolvedValue({
           ...pcPublicationResults,
-          publicationErrors: [{ tenantId: 'another' }],
+          publicationErrors: [{ tenantId: tenants[3].id }],
         });
 
         renderConsortiaControlledVocabulary();
@@ -194,6 +194,25 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
         await waitFor(() => expect(screen.queryByText('stripes-core.button.delete')).not.toBeInTheDocument());
 
         expect(sharing.deleteSharedSetting).toHaveBeenCalledWith({ entry: dehydrateEntry(response[records][2]) });
+        expect(callout).toHaveBeenCalledWith(expect.objectContaining({ type: 'error' }));
+      });
+
+      it('should report failures for non-selected members of a shared record', async () => {
+        callout.mockClear();
+        sharing.deleteSharedSetting.mockResolvedValue({
+          publicationResults: [{ tenantId: tenants[3].id }],
+          publicationErrors: [{ tenantId: tenants[0].id }],
+        });
+
+        renderConsortiaControlledVocabulary();
+
+        const btns = await screen.findAllByLabelText('stripes-components.deleteThisItem');
+
+        await userEvent.click(btns[2]);
+        await waitFor(() => expect(screen.getByText('ui-app.termWillBeDeleted')).toBeInTheDocument());
+        await userEvent.click(await screen.findByText('stripes-core.button.delete'));
+        await waitFor(() => expect(screen.queryByText('stripes-core.button.delete')).not.toBeInTheDocument());
+
         expect(callout).toHaveBeenCalledWith(expect.objectContaining({ type: 'error' }));
       });
     });
