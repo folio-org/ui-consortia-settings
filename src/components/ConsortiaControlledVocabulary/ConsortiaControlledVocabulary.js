@@ -448,7 +448,8 @@ export const ConsortiaControlledVocabulary = ({
       .then((results) => {
         handleResolvedActionResults({
           actionType: ACTION_TYPES.delete,
-          entry,
+          // `shared` is stripped by dehydration, but results handling needs it.
+          entry: hydratedEntry,
           results,
         });
       })

@@ -5,6 +5,7 @@ import { render, screen, waitFor } from '@folio/jest-config-stripes/testing-libr
 import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 
 import {
+  affiliations,
   pcPublicationResults,
   tenants,
 } from 'fixtures';
@@ -172,7 +173,8 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
         expect(callout).toHaveBeenCalledWith({
           messageId: 'ui-app.termDeleted',
           values: expect.objectContaining({
-            count: 1,
+            count: Number.MAX_SAFE_INTEGER,
+            members: 'ui-consortia-settings.consortiumManager.all',
             term: response[records][2].foo,
           }),
         });
@@ -213,7 +215,14 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
         await userEvent.click(await screen.findByText('stripes-core.button.delete'));
         await waitFor(() => expect(screen.queryByText('stripes-core.button.delete')).not.toBeInTheDocument());
 
-        expect(callout).toHaveBeenCalledWith(expect.objectContaining({ type: 'error' }));
+        const { message } = callout.mock.calls.find(([arg]) => arg.type === 'error')[0];
+        const [failure, success] = message.props.children.filter(Boolean);
+
+        expect(failure.props.values.members).toBe(affiliations[0].tenantName);
+        expect(success.props.values).toEqual(expect.objectContaining({
+          count: 1,
+          members: affiliations[3].tenantName,
+        }));
       });
     });
   });
