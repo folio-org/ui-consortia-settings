@@ -5,6 +5,7 @@ import { render, screen, waitFor } from '@folio/jest-config-stripes/testing-libr
 import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 
 import {
+  affiliations,
   pcPublicationResults,
   tenants,
 } from 'fixtures';
@@ -172,7 +173,8 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
         expect(callout).toHaveBeenCalledWith({
           messageId: 'ui-app.termDeleted',
           values: expect.objectContaining({
-            count: 1,
+            count: Number.MAX_SAFE_INTEGER,
+            members: 'ui-consortia-settings.consortiumManager.all',
             term: response[records][2].foo,
           }),
         });
@@ -181,7 +183,7 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
       it('should handle shared record deletion - partial failure', async () => {
         sharing.deleteSharedSetting.mockResolvedValue({
           ...pcPublicationResults,
-          publicationErrors: [{ tenantId: 'another' }],
+          publicationErrors: [{ tenantId: tenants[3].id }],
         });
 
         renderConsortiaControlledVocabulary();
@@ -195,6 +197,32 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
 
         expect(sharing.deleteSharedSetting).toHaveBeenCalledWith({ entry: dehydrateEntry(response[records][2]) });
         expect(callout).toHaveBeenCalledWith(expect.objectContaining({ type: 'error' }));
+      });
+
+      it('should report failures for non-selected members of a shared record', async () => {
+        callout.mockClear();
+        sharing.deleteSharedSetting.mockResolvedValue({
+          publicationResults: [{ tenantId: tenants[3].id }],
+          publicationErrors: [{ tenantId: tenants[0].id }],
+        });
+
+        renderConsortiaControlledVocabulary();
+
+        const btns = await screen.findAllByLabelText('stripes-components.deleteThisItem');
+
+        await userEvent.click(btns[2]);
+        await waitFor(() => expect(screen.getByText('ui-app.termWillBeDeleted')).toBeInTheDocument());
+        await userEvent.click(await screen.findByText('stripes-core.button.delete'));
+        await waitFor(() => expect(screen.queryByText('stripes-core.button.delete')).not.toBeInTheDocument());
+
+        const { message } = callout.mock.calls.find(([arg]) => arg.type === 'error')[0];
+        const [failure, success] = message.props.children.filter(Boolean);
+
+        expect(failure.props.values.members).toBe(affiliations[0].tenantName);
+        expect(success.props.values).toEqual(expect.objectContaining({
+          count: 1,
+          members: affiliations[3].tenantName,
+        }));
       });
     });
   });
