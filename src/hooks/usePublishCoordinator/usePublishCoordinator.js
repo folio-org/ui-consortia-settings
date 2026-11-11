@@ -14,6 +14,8 @@ import {
 
 export const TIMEOUT = 2500;
 
+const createAbortError = () => new DOMException('The operation was aborted.', 'AbortError');
+
 const formatPublicationResult = ({ publicationResults, totalRecords }) => {
   const [results, errors] = partititon(publicationResults, ({ statusCode }) => statusCode >= 200 && statusCode < 300);
 
@@ -56,9 +58,9 @@ export const usePublishCoordinator = (options = {}) => {
 
     await new Promise((resolve) => setTimeout(resolve, TIMEOUT));
 
-    return !signal?.aborted
-      ? getPublicationDetails(id, { signal })
-      : Promise.reject(signal);
+    if (signal?.aborted) return Promise.reject(createAbortError());
+
+    return getPublicationDetails(id, { signal });
   }, [baseApi, getPublicationResults, ky]);
 
   const getPublicationResponse = useCallback(({ id, status }, { signal }) => {
@@ -67,9 +69,18 @@ export const usePublishCoordinator = (options = {}) => {
     return getPublicationDetails(id, { signal });
   }, [getPublicationDetails, getPublicationResults]);
 
-  const initPublicationRequest = useCallback(({ url, ...publication }) => {
-    abortController.current = new AbortController();
-    const signal = options.signal || abortController.current.signal;
+  const initPublicationRequest = useCallback(({ url, ...publication }, { signal: callSignal } = {}) => {
+    let signal = callSignal || options.signal;
+
+    // Only fall back to our own ref-managed controller when the caller doesn't supply a signal.
+    // Callers that pass their own signal (e.g. a react-query queryFn) manage cancellation themselves,
+    // so this hook's unmount-triggered abort (see useEffect above) must not cancel their request too -
+    // that unmount fires on every mount in React 18 StrictMode and would abort the very first fetch.
+    if (!signal) {
+      abortController.current = new AbortController();
+      signal = abortController.current.signal;
+    }
+
     const json = {
       // Publications API requires `url` value to start with slash (`/`)
       url: url.startsWith('/') ? url : `/${url}`,

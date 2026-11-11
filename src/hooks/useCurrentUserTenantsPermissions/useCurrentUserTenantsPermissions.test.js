@@ -63,7 +63,7 @@ describe('useCurrentUserTenantsPermissions', () => {
       method: 'GET',
       tenants,
       url: expect.stringContaining(`${BL_USERS_API}/_self`),
-    });
+    }, { signal: expect.anything() });
     expect(result.current.tenantsPermissions).toEqual(expect.objectContaining(
       tenants.reduce((acc, tenantId) => ({ ...acc, [tenantId]: permissions }), {}),
     ));
