@@ -73,7 +73,7 @@ const getMembersNamesString = (selectedMembers, members) => {
   return members.reduce((acc, { tenantId }) => {
     const memberName = selectedMembers.find(({ id: _id }) => tenantId === _id)?.name;
 
-    acc.push(memberName);
+    acc.push(memberName || tenantId);
 
     return acc;
   }, []).join(', ');
@@ -132,6 +132,7 @@ export const ConsortiaControlledVocabulary = ({
 
   const {
     hasTenantPerm,
+    affiliations,
     permissionNamesMap,
     selectedMembers,
     isFetching: isContextDataFetching,
@@ -325,7 +326,7 @@ export const ConsortiaControlledVocabulary = ({
     entry,
     results,
   }) => {
-    const { publicationErrors, publicationResults } = results;
+    const { publicationErrors, publicationResults = [] } = results;
 
     // Publish coordinator response might be successful for some tenants and failed for others.
     if (publicationErrors?.length) {
@@ -336,13 +337,16 @@ export const ConsortiaControlledVocabulary = ({
       };
       const [partialSuccessKey, partialFailureKey] = translationKeysMap[actionType];
       const term = entry[primaryField];
-      const processedMembers = getMembersNamesString(selectedMembers, publicationResults);
+      const namedMembers = entry.shared
+        ? affiliations.map(({ tenantId, tenantName }) => ({ id: tenantId, name: tenantName }))
+        : selectedMembers;
+      const processedMembers = getMembersNamesString(namedMembers, publicationResults);
       const message = (
         <span>
           <FormattedMessage
             tagName="p"
             id={`ui-consortia-settings.consortiumManager.error.publishCoordinator.partialFailure.${partialFailureKey}`}
-            values={{ term, members: getMembersNamesString(selectedMembers, publicationErrors) }}
+            values={{ term, members: getMembersNamesString(namedMembers, publicationErrors) }}
           />
           {Boolean(publicationResults.length) && (
             <FormattedMessage
@@ -351,7 +355,7 @@ export const ConsortiaControlledVocabulary = ({
               values={{
                 term,
                 members: processedMembers,
-                count: processedMembers.length,
+                count: publicationResults.length,
               }}
             />
           )}
@@ -362,7 +366,7 @@ export const ConsortiaControlledVocabulary = ({
     } else {
       showSuccessCallout({ actionType, entry });
     }
-  }, [primaryField, selectedMembers, showCallout, showSuccessCallout]);
+  }, [affiliations, primaryField, selectedMembers, showCallout, showSuccessCallout]);
 
   const onShare = useCallback((entryToShare) => {
     const initEntryValue = entries.find(_entry => _entry[UNIQUE_FIELD_KEY] === entryToShare[UNIQUE_FIELD_KEY]);
@@ -444,7 +448,8 @@ export const ConsortiaControlledVocabulary = ({
       .then((results) => {
         handleResolvedActionResults({
           actionType: ACTION_TYPES.delete,
-          entry,
+          // `shared` is stripped by dehydration, but results handling needs it.
+          entry: hydratedEntry,
           results,
         });
       })
