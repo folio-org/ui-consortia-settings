@@ -69,6 +69,9 @@
   "optionalDependencies": {
     "@folio/plugin-find-user": "^8.0.0"
   },
+  "resolutions": {
+    "compute-scroll-into-view": "3.1.1"
+  },
   "stripes": {
     "actsAs": [
       "app",
