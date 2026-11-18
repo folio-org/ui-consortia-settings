@@ -207,7 +207,8 @@ export const AuthorizationRolesViewPage = ({ path }) => {
   return (
     <Paneset>
       <Pane
-        defaultWidth="100"
+        defaultWidth="fill"
+        id="roles-list-pane"
         fluidContentWidth
         renderHeader={() => (
           <PaneHeader
