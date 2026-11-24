@@ -1,3 +1,4 @@
+export { useConsortiumTenants } from './useConsortiumTenants';
 export { useCurrentConsortium } from './useCurrentConsortium';
 export { useCurrentUserTenantsPermissions } from './useCurrentUserTenantsPermissions';
 export { useEventEmitter } from './useEventEmitter';

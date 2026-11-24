@@ -5,13 +5,13 @@ import { render, screen, waitFor } from '@folio/jest-config-stripes/testing-libr
 import { getControlledVocabTranslations } from '@folio/stripes-acq-components';
 
 import {
-  affiliations,
   pcPublicationResults,
   tenants,
 } from 'fixtures';
 import { ConsortiaControlledVocabularyWrapper } from 'helpers';
 import { wrapConsortiaControlledVocabularyDescribe } from 'helpers/wrapConsortiaControlledVocabularyDescribe';
 import { UNIQUE_FIELD_KEY } from '../../constants';
+import { useConsortiumTenants } from '../../hooks';
 import { useSettings } from '../../hooks/consortiumManager';
 import { ConsortiaControlledVocabulary } from './ConsortiaControlledVocabulary';
 
@@ -96,6 +96,10 @@ const renderConsortiaControlledVocabulary = (props = {}) => render(
 );
 
 wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('ConsortiaControlledVocabulary', ({ entries, mutations, sharing, callout }) => {
+  beforeEach(() => {
+    useConsortiumTenants.mockReturnValue({ tenants, isLoading: false });
+  });
+
   it('should render consortia-related controlled vocabulary', () => {
     renderConsortiaControlledVocabulary();
 
@@ -218,10 +222,10 @@ wrapConsortiaControlledVocabularyDescribe({ entries: response[records] })('Conso
         const { message } = callout.mock.calls.find(([arg]) => arg.type === 'error')[0];
         const [failure, success] = message.props.children.filter(Boolean);
 
-        expect(failure.props.values.members).toBe(affiliations[0].tenantName);
+        expect(failure.props.values.members).toBe(tenants[0].name);
         expect(success.props.values).toEqual(expect.objectContaining({
           count: 1,
-          members: affiliations[3].tenantName,
+          members: tenants[3].name,
         }));
       });
     });

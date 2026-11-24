@@ -34,7 +34,7 @@ import {
   UNIQUE_FIELD_KEY,
 } from '../../constants';
 import { useConsortiumManagerContext } from '../../contexts';
-import { useEventEmitter } from '../../hooks';
+import { useConsortiumTenants, useEventEmitter } from '../../hooks';
 import {
   useSettings,
   useSettingMutation,
@@ -132,11 +132,11 @@ export const ConsortiaControlledVocabulary = ({
 
   const {
     hasTenantPerm,
-    affiliations,
     permissionNamesMap,
     selectedMembers,
     isFetching: isContextDataFetching,
   } = useConsortiumManagerContext();
+  const { tenants } = useConsortiumTenants();
 
   useEffect(() => {
     return () => {
@@ -338,7 +338,7 @@ export const ConsortiaControlledVocabulary = ({
       const [partialSuccessKey, partialFailureKey] = translationKeysMap[actionType];
       const term = entry[primaryField];
       const namedMembers = entry.shared
-        ? affiliations.map(({ tenantId, tenantName }) => ({ id: tenantId, name: tenantName }))
+        ? tenants
         : selectedMembers;
       const processedMembers = getMembersNamesString(namedMembers, publicationResults);
       const message = (
@@ -366,7 +366,7 @@ export const ConsortiaControlledVocabulary = ({
     } else {
       showSuccessCallout({ actionType, entry });
     }
-  }, [affiliations, primaryField, selectedMembers, showCallout, showSuccessCallout]);
+  }, [primaryField, selectedMembers, showCallout, showSuccessCallout, tenants]);
 
   const onShare = useCallback((entryToShare) => {
     const initEntryValue = entries.find(_entry => _entry[UNIQUE_FIELD_KEY] === entryToShare[UNIQUE_FIELD_KEY]);

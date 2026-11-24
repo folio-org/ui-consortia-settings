@@ -1,0 +1,1 @@
+export { useConsortiumTenants } from './useConsortiumTenants';
